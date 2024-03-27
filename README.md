@@ -1,1 +1,5 @@
-## On ne connait pas encore le nom mais ca arrive bientot
+# O'Note
+
+## Commande pour les lectures écritures de fichiers
+
+`chmod -R 777 src/back-end/traitement/fichier`
