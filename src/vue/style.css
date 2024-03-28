@@ -79,7 +79,8 @@ body {
 	--ombre-value: 0vh 0vh 1.2vh 0.1vw #bebaba;
 
 	/* Arrondi */
-	--arrondi : 12px;
+	--arrondi: 12px;
+	--arrondi-entete: 12px 12px 0 0;
 
 	/* Utilisation : color: var(--violet-fonce); */
 }

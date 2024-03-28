@@ -22,7 +22,7 @@
 	font-family: "Inter Tight", serif;
 	color: white;
 	background-color: var(--violet-moyen);
-	border-radius: 12px 12px 0 0;
+	border-radius: var(--arrondi-entete);
 	padding: 1.06vh 0;
 }
 
@@ -66,4 +66,78 @@ button {
 	padding: 0.9vh 2.15vw;
 	font-weight: 550;
 	font-size: 120%;
+}
+
+.popup-ajout-semestre {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	text-align: center;
+	background-color: white;
+}
+
+.titre-popup {
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--violet-fonce);
+	padding: 1.96vh 10.25vw;
+	border-radius: var(--arrondi-entete);
+	font-weight: 600;
+	font-size: 1.58em;
+	margin-bottom: 3.27vh;
+}
+
+.sous-titre {
+	color: var(--violet-fonce);
+	font-weight: 600;
+	font-size: 1.1em;
+	padding: 1vh 0;
+}
+
+#choix-semestre {
+	background-color: white;
+	border: 1px solid var(--violet-fonce);
+	border-radius: var(--arrondi);
+	padding: 0.8vh 10vw;
+	text-align: center;
+	color: var(--violet-fonce);
+	font-size: 1em;
+	margin-bottom: 3vh;
+}
+
+.btn-imports {
+	display: flex;
+	justify-content: center;
+}
+
+.ajout-document {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--orange-peps);
+	font-weight: 500;
+	padding: 0 0.8vw;
+}
+
+.btns-popup {
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-popup {
+	padding: 0.6vh 3.7vw;
+	margin: 3vh 5vw;
+	font-size: 1.1em;
+}
+
+.btn-annuler {
+	background: var(--violet-fonce);
+}
+
+.btn-valider {
+	background: var(--orange-peps);
 }
