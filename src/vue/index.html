@@ -2,11 +2,34 @@
 <html>
 	<head>
 		<title>O'Notes</title>
+		<link rel="stylesheet" href="./style.css"/>
+		<link href="./ressources/logo.png" rel="icon" type ="image/x-icon" />
 	</head>
 	<body>
-		<form action="../../back-end/traitement/fichier/traitement.php" method="post" enctype="multipart/form-data">
-			<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-			<input type="submit">
-		</form>
+		<div class="container">
+			<div class="navbar">
+				<div class="logo">
+					<span>
+						<img src="./ressources/logo.png" alt="Logo Menu"/>
+					</span>
+				</div>
+				<div class="menu">
+					<ul>
+						<li>
+							<a href="./importer/importer.html">Importation</a>
+						</li>
+						<li>
+							<a href="./visualiser/visualiser.html">Visualisation</a>
+						</li>
+						<li>
+							<a href="./exporter/exporter.html">Exportation</a>
+						</li>
+					</ul>
+				</div>
+				<div class="button">
+					<a href="#" class="connecter">Se connecter</a>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
