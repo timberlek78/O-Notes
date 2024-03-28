@@ -68,16 +68,23 @@ button {
 	font-size: 120%;
 }
 
-.popup-ajout-semestre {
+#popup-ajout-semestre {
 	display: none;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%) scale(0);
 	box-shadow: var(--ombre-value);
 	border-radius: var(--arrondi);
 	text-align: center;
 	background-color: white;
+	z-index: 9999;
+	transition: transform 0.5s ease-in-out;
+}
+
+#popup-ajout-semestre.open {
+	display: block;
+	transform: translate(-50%, -50%) scale(1);
 }
 
 .titre-popup {
