@@ -5,7 +5,7 @@ class CompetenceMatiere
 	private int $idCompetence;
 	private int $idMatiere;
 
-	public function __construct( int $idCompetence, int $idMatiere )
+	public function __construct( int $idCompetence=-1, int $idMatiere=-1 )
 	{
 		$this->idCompetence = $idCompetence;
 		$this->idMatiere    = $idMatiere;

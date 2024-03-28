@@ -5,16 +5,16 @@ class Etudiant
 	private int $id;
 
 	//attributs
-	private int    $codeNIP;
-	private string $nom;
-	private string $prenom;
-	private string $parcours;
-	private string $promotion;
+	private ?int    $codeNIP;
+	private ?string $nom;
+	private ?string $prenom;
+	private ?string $parcours;
+	private ?string $promotion;
 
 	//clé étrangère
 	private int $idIllustration;
 
-	public function __construct( int $codeNIP, string $nom, string $prenom, string $parcours, string $promotion, int $idIllustration )
+	public function __construct( int $codeNIP=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idIllustration=-1 )
 	{
 		$this->codeNIP        = $codeNIP;
 		$this->nom            = $nom;
