@@ -1,8 +1,13 @@
 <?php
+
+	include ("Identifiant.inc.php");
+	include ("../donnee/Etudiant.inc.php");
+
 	class DB
 	{
 		private static $instance = null; // instance DB pour le singleton
 		private $connect         = null;
+		private static $schema   = 'onote.';
 
 		/******************************************/
 		/*           Connexion à la DB            */
@@ -12,7 +17,7 @@
 		private function __construct()
 		{
 			//Connexion à la base de données
-			$connStr = 'pgsql:host=localhost port=5432 dbname='. Identifiant::$user;
+			$connStr = 'pgsql:host=woody port=5432 dbname='. Identifiant::$user;
 			try
 			{
 				//Connexion à la base
@@ -57,6 +62,7 @@
 
 		public  function close    () { $this->connect = null; }
 
+		/*
 		private function execQuery($requete, $tparam,$nomClasse)
 		{
 			//préparation de la requête
@@ -86,6 +92,26 @@
 			}
 			return $tab;
 		}
+		*/
+
+		private function execQuery($requete, $tparam, $nomClasse)
+		{
+			// Préparation de la requête
+			$prepareStatement = $this->connect->prepare($requete);
+
+			// Execution de la requête avec les paramètres fournis
+			$prepareStatement->execute($tparam);
+
+			echo $nomClasse;
+			echo '--';
+			// Récupération des résultats sous forme d'objet de la classe $nomClasse
+			$prepareStatement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse);
+			
+			// Récupération de tous les résultats dans un tableau
+			$tab = $prepareStatement->fetchAll();
+
+			return $tab;
+		}
 
 		private function execMaj($ordreSQl,$tparam)
 		{
@@ -102,14 +128,14 @@
 		// Méthode select
 		public function selectAll($nomClasse)
 		{
-			$requete = 'SELECT * FROM '. $nomClasse;
+			$requete = 'SELECT * FROM '.DB::$schema.$nomClasse;
 			return $this->execQuery($requete,null,$nomClasse);
 		}
 
 		// Méthode delete
 		public function delete($nomClasse, $id, $libId)
 		{
-			$requete = 'DELETE FROM '. $nomClasse .' WHERE '. $libId.' = ?';
+			$requete = 'DELETE FROM '.DB::$schema.$nomClasse .' WHERE '. $libId.' = ?';
 			$tparam  = array($id);
 			return $this->execMaj($requete,$tparam);
 		}
@@ -117,7 +143,7 @@
 		// Méthode d'insert
 		public function insert($nomClasse, $tabAttribut)
 		{
-			$requete = 'INSERT INTO '.$nomClasse.' VALUES ';
+			$requete = 'INSERT INTO '.$this->schema.$nomClasse.' VALUES ';
 
 			$parametres = "(";
 			
@@ -142,10 +168,9 @@
 			return $this->execMaj($requete,$tparam);
 		}
 
-
-		public function constructionRequeteUpdate($nomTable, $tabAttribut, $tabValeurAttribut, $tabCondition)
+		public function constructionRequeteUpdate($nomClasse, $tabAttribut, $tabValeurAttribut, $tabCondition)
 		{
-			$requete    = 'UPDATE ' . $nomTable . ' SET ';
+			$requete    = 'UPDATE ' . $this->schema.$nomClasse . ' SET ';
 			$parametres = '';
 
 			// Construction de la partie SET de la requête
@@ -173,6 +198,4 @@
 		}
 
 	}
-
-
 ?>

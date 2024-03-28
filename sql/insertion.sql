@@ -14,7 +14,7 @@ INSERT INTO onote.Competence (numCompt, libelle) VALUES
 INSERT INTO onote.Matiere (numMatiere, moyenne, coeff, alternant, libelle) VALUES
 (1, 15.5, 2, TRUE, 'Mathématiques'),
 (2, 14.2, 3, FALSE, 'Physique'),
-(3, 16.8, 1, TRUE, 'Français');
+(3, 16.8, 1, TRUE, 'Francais');
 
 -- Insertion dans la table Utilisateur
 INSERT INTO onote.Utilisateur (idUser, nom, mdp) VALUES
@@ -29,10 +29,10 @@ INSERT INTO onote.Illustration (idIllustration, alternative) VALUES
 (3, 'Illustration 3');
 
 -- Insertion dans la table FPE
-INSERT INTO onote.FPE (idFPE, nomDirecteur, anneePromo) VALUES
-(1, 'Directeur 1', '2023-2024'),
-(2, 'Directeur 2', '2022-2023'),
-(3, 'Directeur 3', '2021-2022');
+INSERT INTO onote.FPE (idFPE, nomDirecteur, anneePromoFin, anneePromoDebut) VALUES
+(1, 'Directeur 1', 2024, 2023),
+(2, 'Directeur 2', 2023, 2022),
+(3, 'Directeur 3', 2022, 2021);
 
 -- Insertion dans la table Etudiant
 INSERT INTO onote.Etudiant (idEtudiant, codeNIP, nom, prenom, parcours, promotion, idIllustration) VALUES
@@ -48,9 +48,9 @@ INSERT INTO onote.Etude (idEtude, specialite, typeBac, idEtudiant) VALUES
 
 -- Insertion dans la table EtudiantSemestre
 INSERT INTO onote.EtudiantSemestre (idEtudiant, numSemestre, passage, rang, nbAbsences) VALUES
-(1, 1, 'O', 1, 0),
-(2, 2, 'O', 2, 1),
-(3, 3, 'R', 3, 2);
+(1, 1, 'ADM', 1, 0),
+(2, 2, 'ADSUP', 2, 1),
+(3, 3, 'AJ', 3, 2);
 
 -- Insertion dans la table CompetenceMatiere
 INSERT INTO onote.CompetenceMatiere (numCompt, numMatiere) VALUES
@@ -60,9 +60,9 @@ INSERT INTO onote.CompetenceMatiere (numCompt, numMatiere) VALUES
 
 -- Insertion dans la table Cursus
 INSERT INTO onote.Cursus (idEtudiant, numSemestre, numCompt, admission) VALUES
-(1, 1, 1, 'Admis'),
-(2, 2, 2, 'Admis'),
-(3, 3, 3, 'Refusé');
+(1, 1, 1, 'ADM'),
+(2, 2, 2, 'NAR'),
+(3, 3, 3, 'NAR');
 
 -- Insertion dans la table Possede
 INSERT INTO onote.Possede (idIllustration, idFPE) VALUES
