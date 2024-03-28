@@ -19,11 +19,11 @@
 			$identifiants = new Identifiant();
 
 			//Connexion à la base de données
-			$connStr = 'pgsql:host=localhost port=5432 dbname='. $identifiants->$user;
+			$connStr = 'pgsql:host=localhost port=5432 dbname='. $identifiants->user;
 			try
 			{
 				//Connexion à la base
-				$this->connect = new PDO($connStr,$identifiants->$user,$identifiants->$mdp);
+				$this->connect = new PDO($connStr,$identifiants->user,$identifiants->mdp);
 
 				//Configutation facultative à la connexion
 				$this->connect->setAttribute(PDO::ATTR_CASE   , PDO::CASE_LOWER       );
