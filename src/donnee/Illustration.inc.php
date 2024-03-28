@@ -5,10 +5,10 @@ class Illustration
 	private int $id;
 
 	//attributs
-	private string $img;
-	private string $alternative;
+	private ?string $img;
+	private ?string $alternative;
 
-	public function __construct( string $img, string $alternative )
+	public function __construct( string $img="", string $alternative="" )
 	{
 		$this->img         = $img;
 		$this->alternative = $alternative;

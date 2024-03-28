@@ -5,9 +5,9 @@ class Competence
 	private int $id;
 
 	//attributs
-	private string $libelle;
+	private ?string $libelle;
 
-	public function __construct( string $libelle )
+	public function __construct( string $libelle="" )
 	{
 		$this->libelle = $libelle;
 	}

@@ -5,13 +5,15 @@ class FPE
 	private int $id;
 
 	//attributs
-	private string $nomDirecteur;
-	private int $anneePromo;
+	private ?string $nomDirecteur;
+	private ?int    $anneePromoDebut;
+	private ?int    $anneePromoFin;
 
-	public function __construct( string $nomDirecteur, int $anneePromo )
+	public function __construct( string $nomDirecteur="", int $anneePromoDebut=-1, int $anneePromoFin=-1 )
 	{
-		$this->nomDirecteur = $nomDirecteur;
-		$this->anneePromo   = $anneePromo;
+		$this->nomDirecteur    = $nomDirecteur;
+		$this->anneePromoDebut = $anneePromoDebut;
+		$this->anneePromoFin   = $anneePromoFin;
 	}
 
 	public function getId(): int
@@ -24,9 +26,14 @@ class FPE
 		return $this->nomDirecteur;
 	}
 
-	public function getAnneePromo(): int
+	public function getAnneePromoDebut(): int
 	{
 		return $this->anneePromo;
+	}
+
+	public function getAnneePromoFin(): int
+	{
+		return $this->anneePromoFin;
 	}
 
 	private function setId( int $id ): void
@@ -39,9 +46,14 @@ class FPE
 		$this->nomDirecteur = $nomDirecteur;
 	}
 
-	public function setAnneePromo( int $anneePromo ): void
+	public function setAnneePromoDebut( int $anneePromoDebut ): void
 	{
-		$this->anneePromo = $anneePromo;
+		$this->anneePromoDebut = $anneePromoDebut;
+	}
+
+	public function setAnneePromoFin( int $anneePromoFin ): void
+	{
+		$this->anneePromoFin = $anneePromoFin;
 	}
 }
 ?>

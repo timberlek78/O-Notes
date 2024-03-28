@@ -6,11 +6,11 @@ class EtudiantSemestre
 	private int $idSemestre;
 
 	//attributs
-	private string $passage;
-	private int $rang;
-	private int $nbAbsences;
+	private ?string $passage;
+	private ?int $rang;
+	private ?int $nbAbsences;
 
-	public function __construct( int $idEtudiant, int $idSemestre, string $passage, int $rang, int $nbAbsences )
+	public function __construct( int $idEtudiant=-1, int $idSemestre=-1, string $passage="", int $rang=-1, int $nbAbsences=-1 )
 	{
 		$this->idEtudiant = $idEtudiant;
 		$this->idSemestre = $idSemestre;

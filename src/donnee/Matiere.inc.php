@@ -5,12 +5,12 @@ class Matiere
 	private int $id;
 
 	//attributs
-	private floatval $note;
-	private int      $coeff;
-	private boolval  $alternant;
-	private string   $libelle;
+	private ?float  $note;
+	private ?int    $coeff;
+	private ?bool   $alternant;
+	private ?string $libelle;
 
-	public function __construct( floatval $note, int $coeff, boolval $alternant, string $libelle )
+	public function __construct( float $note=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
 	{
 		$this->note      = $note;
 		$this->coeff     = $coeff;

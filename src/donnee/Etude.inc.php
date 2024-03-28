@@ -5,13 +5,13 @@ class Etude
 	private int $id;
 
 	//attributs
-	private string $specialite;
-	private string $typeBac;
+	private ?string $specialite;
+	private ?string $typeBac;
 
 	//clé étrangère
-	private int $idEtudiant;
+	private ?int $idEtudiant;
 
-	public function __construct( string $specialite, string $typeBac, int $idEtudiant )
+	public function __construct( string $specialite="", string $typeBac="", int $idEtudiant=-1 )
 	{
 		$this->specialite = $specialite;
 		$this->typeBac    = $typeBac;

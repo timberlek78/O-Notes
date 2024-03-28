@@ -5,7 +5,7 @@ class Possede
 	private int $idIllustration;
 	private int $idFPE;
 
-	public function __construct( int $idIllustration, int $idFPE )
+	public function __construct( int $idIllustration=-1, int $idFPE=-1 )
 	{
 		$this->idIllustration = $idIllustration;
 		$this->idFPE          = $idFPE;

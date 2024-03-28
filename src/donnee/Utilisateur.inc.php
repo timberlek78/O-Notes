@@ -5,10 +5,10 @@ class Utilisateur
 	private int $id;
 
 	//attributs
-	private string $nom;
-	private string $mdp;
+	private ?string $nom;
+	private ?string $mdp;
 
-	public function __construct( string $nom, string $mdp )
+	public function __construct( string $nom="", string $mdp="" )
 	{
 		$this->nom = $nom;
 		$this->mdp = $mdp;

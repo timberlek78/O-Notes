@@ -2,12 +2,12 @@
 class Cursus
 {
 	//clé primaire
-	private int    $idEtudiant;
-	private int    $idSemestre;
-	private int    $idCompetence;
-	private string $admission;
+	private int     $idEtudiant;
+	private int     $idSemestre;
+	private int     $idCompetence;
+	private ?string $admission;
 
-	public function __construct( int $idEtudiant, int $idSemestre, int $idCompetence, string $admission )
+	public function __construct( int $idEtudiant=-1, int $idSemestre=-1, int $idCompetence=-1, string $admission="" )
 	{
 		$this->idEtudiant  = $idEtudiant;
 		$this->idSemestre  = $idSemestre;
