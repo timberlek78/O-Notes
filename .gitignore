@@ -1,2 +1,3 @@
 // ignorer les logins et mots de passe pour la bd
 login.txt
+controleur/.env
