@@ -97,10 +97,10 @@ body {
 	align-items: center;
 	justify-content: flex-start;
 	background-color: var(--violet-fonce);
-	border-radius: 12px;
+	border-radius: var(--arrondi);
 	padding: 5vh;
 	padding-top: 10.5vh;
-	box-shadow: 0px 0px 10px 5px #bababa;
+	box-shadow: var(--ombre-value);
 	z-index: -1;
 }
 
