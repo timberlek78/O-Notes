@@ -1,2 +1,2 @@
-**/Identifiant.inc.php
-Identifiant.inc.php
+// ignorer les logins et mots de passe pour la bd
+login.txt
