@@ -1,0 +1,9 @@
+:root {
+	--violet-fonce: #5B374D;
+	--violet-moyen: #96527A;
+	--violet-action: #CD6889;
+	--orange-peps: #FE895E;
+	--orange-pale: #F99F72;
+
+	/* Utilisation : color: var(--violet-fonce); */
+}
