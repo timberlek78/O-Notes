@@ -76,7 +76,7 @@ body {
 	/* EN DESSOUS CA MARCHE PAS */
 
 	/* Ombre */
-	--ombre-value: 0vh 0vh 1.2vh 0.1vw #bebaba;
+	--ombre-value: 0vh 0vh 1.2vh 0.1vw rgba(65, 65, 65, 0.5);
 
 	/* Arrondi */
 	--arrondi: 12px;
