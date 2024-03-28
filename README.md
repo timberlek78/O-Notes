@@ -7,3 +7,6 @@
 ## Lien vers le site
 
 http://localhost/~USER/REPERTOIRE_PROJET/src/front-end/html/index.html
+
+
+php -S localhost:8000 -t public

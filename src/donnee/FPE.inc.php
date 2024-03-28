@@ -2,28 +2,28 @@
 class FPE
 {
 	//clé primaire
-	private int $id;
+	private int $idfpe;
 
 	//attributs
-	private ?string $nomDirecteur;
-	private ?int    $anneePromoDebut;
-	private ?int    $anneePromoFin;
+	private ?string $nomdirecteur;
+	private ?int    $anneepromodebut;
+	private ?int    $anneepromofin;
 
-	public function __construct( string $nomDirecteur="", int $anneePromoDebut=-1, int $anneePromoFin=-1 )
+	public function __construct( string $nomdirecteur="", int $anneepromodebut=-1, int $anneepromofin=-1 )
 	{
-		$this->nomDirecteur    = $nomDirecteur;
-		$this->anneePromoDebut = $anneePromoDebut;
-		$this->anneePromoFin   = $anneePromoFin;
+		$this->nomdirecteur    = $nomdirecteur;
+		$this->anneepromodebut = $anneepromodebut;
+		$this->anneepromofin   = $anneepromofin;
 	}
 
-	public function getId(): int
+	public function getIdFpe(): int
 	{
-		return $this->id;
+		return $this->idfpe;
 	}
 
 	public function getNomDirecteur(): string
 	{
-		return $this->nomDirecteur;
+		return $this->nomdirecteur;
 	}
 
 	public function getAnneePromoDebut(): int
@@ -33,27 +33,27 @@ class FPE
 
 	public function getAnneePromoFin(): int
 	{
-		return $this->anneePromoFin;
+		return $this->anneepromofin;
 	}
 
-	private function setId( int $id ): void
+	private function setIdFpe( int $idfpe ): voidfpe
 	{
-		$this->id = $id;
+		$this->idfpe = $idfpe;
 	}
 
-	public function setNomDirecteur( string $nomDirecteur ): void
+	public function setNomDirecteur( string $nomdirecteur ): voidfpe
 	{
-		$this->nomDirecteur = $nomDirecteur;
+		$this->nomdirecteur = $nomdirecteur;
 	}
 
-	public function setAnneePromoDebut( int $anneePromoDebut ): void
+	public function setAnneePromoDebut( int $anneepromodebut ): voidfpe
 	{
-		$this->anneePromoDebut = $anneePromoDebut;
+		$this->anneepromodebut = $anneepromodebut;
 	}
 
-	public function setAnneePromoFin( int $anneePromoFin ): void
+	public function setAnneePromoFin( int $anneepromofin ): voidfpe
 	{
-		$this->anneePromoFin = $anneePromoFin;
+		$this->anneepromofin = $anneepromofin;
 	}
 }
 ?>

@@ -23,9 +23,9 @@
 		private function __construct()
 		{
 			//$identifiants = new Identifiant();
-
+			$ip = 'woody';
 			//Connexion à la base de données
-			$connStr = 'pgsql:host=woody port=5432 dbname=bt220243';
+			$connStr = 'pgsql:host='.$ip.' port=5432 dbname=bt220243';
 			try
 			{
 				//Connexion à la base
@@ -37,6 +37,7 @@
 			}
 			catch(PDOException $e)
 			{
+					echo $ip;
 					echo "problème de connexion : ".$e->getMessage();
 				return null;
 			}

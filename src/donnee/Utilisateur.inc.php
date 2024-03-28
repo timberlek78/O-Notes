@@ -2,7 +2,7 @@
 class Utilisateur
 {
 	//clé primaire
-	private int $id;
+	private int $iduser;
 
 	//attributs
 	private ?string $nom;
@@ -14,9 +14,9 @@ class Utilisateur
 		$this->mdp = $mdp;
 	}
 
-	public function getId(): int
+	public function getIdUser(): int
 	{
-		return $this->id;
+		return $this->iduser;
 	}
 
 	public function getNom(): string
@@ -29,17 +29,17 @@ class Utilisateur
 		return $this->mdp;
 	}
 
-	private function setId( int $id ): void
+	private function setIdUser( int $iduser ): void
 	{
-		$this->id = $id;
+		$this->iduser = $iduser;
 	}
 
-	public function setNom( string $nom ): void
+	public function setNom( string $nom ): voiduser
 	{
 		$this->nom = $nom;
 	}
 
-	public function setMdp( string $mdp ): void
+	public function setMdp( string $mdp ): voiduser
 	{
 		$this->mdp = $mdp;
 	}

@@ -2,33 +2,33 @@
 class Possede
 {
 	//clé primaire
-	private int $idIllustration;
-	private int $idFPE;
+	private int $idillustration;
+	private int $idfpe;
 
-	public function __construct( int $idIllustration=-1, int $idFPE=-1 )
+	public function __construct( int $idillustration=-1, int $idfpe=-1 )
 	{
-		$this->idIllustration = $idIllustration;
-		$this->idFPE          = $idFPE;
+		$this->idillustration = $idillustration;
+		$this->idfpe          = $idfpe;
 	}
 
 	public function getIdIllustration(): int
 	{
-		return $this->idIllustration;
+		return $this->idillustration;
 	}
 
-	public function getIdFPE(): int
+	public function getIdFpe(): int
 	{
-		return $this->idFPE;
+		return $this->idfpe;
 	}
 
-	private function setIdIllustration( int $idIllustration ): void
+	private function setIdIllustration( int $idillustration ): void
 	{
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idillustration;
 	}
 
-	private function setIdFPE( int $idFPE ): void
+	private function setidfpe( int $idfpe ): void
 	{
-		$this->idFPE = $idFPE;
+		$this->idfpe = $idfpe;
 	}
 }
 ?>

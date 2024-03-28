@@ -2,30 +2,30 @@
 class Matiere
 {
 	//clé primaire
-	private int $id;
+	private int $nummatiere;
 
 	//attributs
-	private ?float  $note;
+	private ?float  $moyenne;
 	private ?int    $coeff;
 	private ?bool   $alternant;
 	private ?string $libelle;
 
-	public function __construct( float $note=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
+	public function __construct( float $moyenne=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
 	{
-		$this->note      = $note;
+		$this->moyenne      = $moyenne;
 		$this->coeff     = $coeff;
 		$this->alternant = $alternant;
 		$this->libelle   = $libelle;
 	}
 
-	public function getId(): int
+	public function getnummatiere(): int
 	{
-		return $this->id;
+		return $this->nummatiere;
 	}
 
-	public function getNote(): floatval
+	public function getmoyenne(): floatval
 	{
-		return $this->note;
+		return $this->moyenne;
 	}
 
 	public function getCoeff(): int
@@ -43,27 +43,27 @@ class Matiere
 		return $this->libelle;
 	}
 
-	private function setId( int $id ): void
+	private function setnummatiere( int $nummatiere ): vonummatiere
 	{
-		$this->id = $id;
+		$this->nummatiere = $nummatiere;
 	}
 
-	public function setNote( floatval $note ): void
+	public function setmoyenne( floatval $moyenne ): vonummatiere
 	{
-		$this->note = $note;
+		$this->moyenne = $moyenne;
 	}
 
-	public function setCoeff( int $coeff ): void
+	public function setCoeff( int $coeff ): vonummatiere
 	{
 		$this->coeff = $coeff;
 	}
 
-	public function setAlternant( boolval $alternant ): void
+	public function setAlternant( boolval $alternant ): vonummatiere
 	{
 		$this->alternant = $alternant;
 	}
 
-	public function setLibelle( string $libelle ): void
+	public function setLibelle( string $libelle ): vonummatiere
 	{
 		$this->libelle = $libelle;
 	}

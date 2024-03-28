@@ -2,20 +2,20 @@
 class Semestre
 {
 	//clé primaire
-	private int $id;
+	private int $numsemestre;
 
 	public function __construct( )
 	{
 	}
 
-	public function getId(): int
+	public function getnumsemestre(): int
 	{
-		return $this->id;
+		return $this->numsemestre;
 	}
 
-	private function setId( int $id ): void
+	private function setnumsemestre( int $numsemestre ): vonumsemestre
 	{
-		$this->id = $id;
+		$this->numsemestre = $numsemestre;
 	}
 }
 ?>

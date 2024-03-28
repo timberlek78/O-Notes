@@ -2,7 +2,7 @@
 class Illustration
 {
 	//clé primaire
-	private int $id;
+	private int $idillustration;
 
 	//attributs
 	private ?string $img;
@@ -14,9 +14,9 @@ class Illustration
 		$this->alternative = $alternative;
 	}
 
-	public function getId(): int
+	public function getIdIllustration(): int
 	{
-		return $this->id;
+		return $this->idillustration;
 	}
 
 	public function getImg(): string
@@ -29,17 +29,17 @@ class Illustration
 		return $this->alternative;
 	}
 
-	private function setId( int $id ): void
+	private function setIdIllustration( int $idillustration ): voidillustration
 	{
-		$this->id = $id;
+		$this->idillustration = $idillustration;
 	}
 
-	public function setImg( string $img ): void
+	public function setImg( string $img ): voidillustration
 	{
 		$this->img = $img;
 	}
 
-	public function setAlternative( string $alternative ): void
+	public function setAlternative( string $alternative ): voidillustration
 	{
 		$this->alternative = $alternative;
 	}

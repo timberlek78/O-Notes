@@ -2,31 +2,31 @@
 class EtudiantSemestre
 {
 	//clé primaire
-	private int $idEtudiant;
-	private int $idSemestre;
+	private int $idetudiant;
+	private int $numsemestre;
 
 	//attributs
 	private ?string $passage;
 	private ?int $rang;
-	private ?int $nbAbsences;
+	private ?int $nbabsences;
 
-	public function __construct( int $idEtudiant=-1, int $idSemestre=-1, string $passage="", int $rang=-1, int $nbAbsences=-1 )
+	public function __construct( int $idetudiant=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
 	{
-		$this->idEtudiant = $idEtudiant;
-		$this->idSemestre = $idSemestre;
+		$this->idetudiant = $idetudiant;
+		$this->numsemestre = $numsemestre;
 		$this->passage    = $passage;
 		$this->rang       = $rang;
-		$this->nbAbsences = $nbAbsences;
+		$this->nbabsences = $nbabsences;
 	}
 
 	public function getIdEtudiant(): int
 	{
-		return $this->idEtudiant;
+		return $this->idetudiant;
 	}
 
-	public function getIdSemestre(): int
+	public function getNumSemestre(): int
 	{
-		return $this->idSemestre;
+		return $this->numsemestre;
 	}
 
 	public function getPassage(): string
@@ -41,17 +41,17 @@ class EtudiantSemestre
 
 	public function getNbAbsences(): int
 	{
-		return $this->nbAbsences;
+		return $this->nbabsences;
 	}
 
-	public function setIdEtudiant( int $idEtudiant ): void
+	public function setidetudiant( int $idetudiant ): void
 	{
-		$this->idEtudiant = $idEtudiant;
+		$this->idetudiant = $idetudiant;
 	}
 
-	public function setIdSemestre( int $idSemestre ): void
+	public function setnumsemestre( int $numsemestre ): void
 	{
-		$this->idSemestre = $idSemestre;
+		$this->numsemestre = $numsemestre;
 	}
 
 	public function setPassage( string $passage ): void
@@ -64,9 +64,9 @@ class EtudiantSemestre
 		$this->rang = $rang;
 	}
 
-	public function setNbAbsences( int $nbAbsences ): void
+	public function setnbabsences( int $nbabsences ): void
 	{
-		$this->nbAbsences = $nbAbsences;
+		$this->nbabsences = $nbabsences;
 	}
 }
 ?>

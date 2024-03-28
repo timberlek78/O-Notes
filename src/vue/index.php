@@ -13,14 +13,9 @@
 			include ("../controleur/ControleurDB.inc.php");
 
 			$db = DB::getInstance();
-
-			$tabEtud = $db->selectAll('Etude');
-
-			foreach($tabEtud as $etudiant)
-			{
-				echo $etudiant->getTypeBac() ."'\n";
-			}
-			
 		?>
+		<form action="./metier/importation.php">
+			<input type="file" />
+		</form>
 	</body>
 </html>
