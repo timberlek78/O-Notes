@@ -1,13 +1,150 @@
 @import url(../style.css);
 
-.container {
+.conteneur-import {
 	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-template-rows: auto auto auto;
-	grid-gap: 50px;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-column-gap: 10.5vw;
+	grid-row-gap: 6.08vh;
+
+	padding: 5.45vh 0;
 }
 
 .cadre-import {
+	text-align: center;
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	width: 25.6vw;
+	height: 15.73vh;
+}
+
+.titre {
+	font-family: "Inter Tight", serif;
+	color: white;
 	background-color: var(--violet-moyen);
-	border: 1px solid black;
+	border-radius: var(--arrondi-entete);
+	padding: 1.06vh 0;
+}
+
+.infos-import {
+	margin: 1.06vh 0;
+}
+
+.btn-supprimer {
+	background-color: var(--violet-moyen);
+	border-radius: var(--arrondi);
+	color: white;
+	padding: 0.6vh 1.05vw;
+	cursor: pointer;
+	border: none;
+	font-size: 80%;
+	font-weight: 600;
+}
+
+button {
+	border-radius: var(--arrondi);
+	color: white;
+	cursor: pointer;
+	border: none
+}
+
+.pied-de-page {
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-ajout-semestre {
+	background-color: var(--violet-moyen);
+}
+
+.btn-import {
+	background-color: var(--orange-peps);
+}
+
+.btn-pied {
+	height: 5.46vh;
+	padding: 0.9vh 2.15vw;
+	font-weight: 550;
+	font-size: 120%;
+}
+
+#popup-ajout-semestre {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	text-align: center;
+	background-color: white;
+	z-index: 9999;
+	transition: transform 0.5s ease-in-out;
+}
+
+#popup-ajout-semestre.open {
+	display: block;
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.titre-popup {
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--violet-fonce);
+	padding: 1.96vh 10.25vw;
+	border-radius: var(--arrondi-entete);
+	font-weight: 600;
+	font-size: 1.58em;
+	margin-bottom: 3.27vh;
+}
+
+.sous-titre {
+	color: var(--violet-fonce);
+	font-weight: 600;
+	font-size: 1.1em;
+	padding: 1vh 0;
+}
+
+#choix-semestre {
+	background-color: white;
+	border: 1px solid var(--violet-fonce);
+	border-radius: var(--arrondi);
+	padding: 0.8vh 10vw;
+	text-align: center;
+	color: var(--violet-fonce);
+	font-size: 1em;
+	margin-bottom: 3vh;
+}
+
+.btn-imports {
+	display: flex;
+	justify-content: center;
+}
+
+.ajout-document {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--orange-peps);
+	font-weight: 500;
+	padding: 0 0.8vw;
+}
+
+.btns-popup {
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-popup {
+	padding: 0.6vh 3.7vw;
+	margin: 3vh 5vw;
+	font-size: 1.1em;
+}
+
+.btn-annuler {
+	background: var(--violet-fonce);
+}
+
+.btn-valider {
+	background: var(--orange-peps);
 }

@@ -1,4 +1,5 @@
-@import url(style.css);
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 .container {
 	width: 100%;
 	height: 100%;
@@ -61,13 +62,26 @@
 	text-transform: uppercase;
 }
 
+body {
+	font-family: 'Urbanist', sans-serif;
+}
 
 :root {
+	/* Couleurs */
 	--violet-fonce: #5B374D;
 	--violet-moyen: #96527A;
 	--violet-action: #CD6889;
 	--orange-peps: #FE895E;
 	--orange-pale: #F99F72;
+
+	/* EN DESSOUS CA MARCHE PAS */
+
+	/* Ombre */
+	--ombre-value: 0vh 0vh 1.2vh 0.1vw #bebaba;
+
+	/* Arrondi */
+	--arrondi: 12px;
+	--arrondi-entete: 12px 12px 0 0;
 
 	/* Utilisation : color: var(--violet-fonce); */
 }
