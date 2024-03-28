@@ -2,33 +2,33 @@
 class CompetenceMatiere
 {
 	//clé primaire
-	private int $idCompetence;
-	private int $idMatiere;
+	private int $numcompt;
+	private int $nummatiere;
 
-	public function __construct( int $idCompetence=-1, int $idMatiere=-1 )
+	public function __construct( int $numcompt=-1, int $nummatiere=-1 )
 	{
-		$this->idCompetence = $idCompetence;
-		$this->idMatiere    = $idMatiere;
+		$this->numcompt = $numcompt;
+		$this->nummatiere    = $nummatiere;
 	}
 
-	public function getIdCompetence(): int
+	public function getNumCompt(): int
 	{
-		return $this->idCompetence;
+		return $this->numcompt;
 	}
 
-	public function getIdMatiere(): int
+	public function getNumMatiere(): int
 	{
-		return $this->idMatiere;
+		return $this->nummatiere;
 	}
 
-	private function setIdCompetence( int $idCompetence ): void
+	private function setNumCompt( int $numcompt ): void
 	{
-		$this->idCompetence = $idCompetence;
+		$this->numcompt = $numcompt;
 	}
 
-	private function setIdMatiere( int $idMatiere ): void
+	private function setNumMatiere( int $nummatiere ): void
 	{
-		$this->idMatiere = $idMatiere;
+		$this->nummatiere = $nummatiere;
 	}
 }
 ?>

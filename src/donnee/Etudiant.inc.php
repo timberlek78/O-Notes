@@ -5,23 +5,23 @@ class Etudiant
 	private int $id;
 
 	//attributs
-	private ?int    $codeNIP;
+	private ?int    $codenip;
 	private ?string $nom;
 	private ?string $prenom;
 	private ?string $parcours;
 	private ?string $promotion;
 
 	//clé étrangère
-	private int $idIllustration;
+	private int $idillustration;
 
-	public function __construct( int $codeNIP=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idIllustration=-1 )
+	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1 )
 	{
-		$this->codeNIP        = $codeNIP;
+		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
 		$this->parcours       = $parcours;
 		$this->promotion      = $promotion;
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idillustration;
 	}
 
 	public function getId(): int
@@ -29,9 +29,9 @@ class Etudiant
 		return $this->id;
 	}
 
-	public function getCodeNIP(): int
+	public function getNIP(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNom(): string
@@ -54,19 +54,19 @@ class Etudiant
 		return $this->promotion;
 	}
 
-	public function getIdIllustration(): int
+	public function getidillustration(): int
 	{
-		return $this->idIllustration;
+		return $this->idillustration;
 	}
 
-	private function setId( int $id ): void
+	public function setId( int $id ): void
 	{
 		$this->id = $id;
 	}
 
-	public function setCodeNIP( int $codeNIP ): void
+	public function setcodenip( int $codenip ): void
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codenip;
 	}
 
 	public function setNom( string $nom ): void
@@ -89,9 +89,9 @@ class Etudiant
 		$this->promotion = $promotion;
 	}
 
-	public function setIdIllustration( int $idIllustration ): void
+	public function setidillustration( int $idillustration ): void
 	{
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idillustration;
 	}
 }
 ?>

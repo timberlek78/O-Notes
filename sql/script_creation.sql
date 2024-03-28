@@ -1,5 +1,5 @@
 CREATE TABLE Etudiant (
-    etudID INT PRIMARY KEY,
+    etudID SERIAL PRIMARY KEY,
     codeNIP INT,
     Nom VARCHAR(20),
     Prenom VARCHAR(10),
@@ -8,7 +8,7 @@ CREATE TABLE Etudiant (
 );
 
 CREATE TABLE Etude (
-    idEtude INT PRIMARY KEY,
+    idEtude SERIAL PRIMARY KEY,
     specialite VARCHAR(20),
     typeBac VARCHAR(20),
     etudID INT,
@@ -16,15 +16,15 @@ CREATE TABLE Etude (
 );
 
 CREATE TABLE Semestre (
-    numSemestre INT PRIMARY KEY
+    numSemestre SERIAL PRIMARY KEY
 );
 
 CREATE TABLE Competence (
-    numCompt INT PRIMARY KEY
+    numCompt SERIAL PRIMARY KEY
 );
 
 CREATE TABLE Matiere (
-    numMatiere INT PRIMARY KEY,
+    numMatiere SERIAL PRIMARY KEY,
     moyenne DECIMAL(2,2),
     coeff INT
 );

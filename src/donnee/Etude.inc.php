@@ -2,25 +2,25 @@
 class Etude
 {
 	//clé primaire
-	private int $id;
+	private int $idetude;
 
 	//attributs
 	private ?string $specialite;
-	private ?string $typeBac;
+	private ?string $typebac;
 
 	//clé étrangère
-	private ?int $idEtudiant;
+	private ?int $idetudiant;
 
-	public function __construct( string $specialite="", string $typeBac="", int $idEtudiant=-1 )
+	public function __construct( string $specialite="", string $typebac="", int $idetudiant=-1 )
 	{
 		$this->specialite = $specialite;
-		$this->typeBac    = $typeBac;
-		$this->idEtudiant = $idEtudiant;
+		$this->typebac    = $typebac;
+		$this->idetudiant = $idetudiant;
 	}
 
-	public function getId(): int
+	public function getEdEtude(): int
 	{
-		return $this->id;
+		return $this->idetude;
 	}
 
 	public function getSpecialite(): string
@@ -30,17 +30,17 @@ class Etude
 
 	public function getTypeBac(): string
 	{
-		return $this->typeBac;
+		return $this->typebac;
 	}
 
 	public function getIdEtudiant(): int
 	{
-		return $this->idEtudiant;
+		return $this->idetudiant;
 	}
 
-	private function setId( int $id ): void
+	private function setIdEtude( int $idetude ): void
 	{
-		$this->id = $id;
+		$this->idetude = $idetude;
 	}
 
 	public function setSpecialite( string $specialite ): void
@@ -48,14 +48,14 @@ class Etude
 		$this->specialite = $specialite;
 	}
 
-	public function setTypeBac( string $typeBac ): void
+	public function setTypeBsac( string $typebac ): void
 	{
-		$this->typeBac = $typeBac;
+		$this->typebac = $typebac;
 	}
 
-	public function setIdEtudiant( int $idEtudiant ): void
+	public function setIdEtudiant( int $idetudiant ): void
 	{
-		$this->idEtudiant = $idEtudiant;
+		$this->idetudiant = $idetudiant;
 	}
 }
 ?>

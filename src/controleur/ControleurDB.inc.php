@@ -1,7 +1,13 @@
 <?php
 
 	include ("Identifiant.inc.php");
-	include ("../donnee/Etudiant.inc.php");
+	include ("../donnee/Competence.inc.php");
+	include ("../donnee/Etudiant.inc.php"  );
+	include ("../donnee/CompetenceMatiere.inc.php");
+	include ("../donnee/Cursus.inc.php");
+	include ("../donnee/Etude.inc.php");
+	
+
 
 	class DB
 	{
@@ -16,14 +22,14 @@
 
 		private function __construct()
 		{
-			$identifiants = new Identifiant();
+			//$identifiants = new Identifiant();
 
 			//Connexion à la base de données
-			$connStr = 'pgsql:host=localhost port=5432 dbname='. $identifiants->user;
+			$connStr = 'pgsql:host=woody port=5432 dbname=bt220243';
 			try
 			{
 				//Connexion à la base
-				$this->connect = new PDO($connStr,$identifiants->user,$identifiants->mdp);
+				$this->connect = new PDO($connStr,'bt220243','Tho2004mas');
 
 				//Configutation facultative à la connexion
 				$this->connect->setAttribute(PDO::ATTR_CASE   , PDO::CASE_LOWER       );

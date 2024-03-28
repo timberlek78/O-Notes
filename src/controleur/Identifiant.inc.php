@@ -10,7 +10,7 @@ class Identifiant
 		$ressource = fopen($fichier, 'rb');
 
 		self::$user = fgets($ressource);
-		self::$mdp = fgets($ressource);
+		self::$mdp  = fgets($ressource);
 
 		fclose($ressource);
 	}

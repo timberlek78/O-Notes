@@ -2,32 +2,32 @@
 class Cursus
 {
 	//clé primaire
-	private int     $idEtudiant;
-	private int     $idSemestre;
-	private int     $idCompetence;
+	private int     $idetudiant;
+	private int     $numsemestre;
+	private int     $numcompt;
 	private ?string $admission;
 
-	public function __construct( int $idEtudiant=-1, int $idSemestre=-1, int $idCompetence=-1, string $admission="" )
+	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
 	{
-		$this->idEtudiant  = $idEtudiant;
-		$this->idSemestre  = $idSemestre;
-		$this->idCompetence= $idCompetence;
+		$this->idetudiant  = $idetudiant;
+		$this->numsemestre  = $numsemestre;
+		$this->numcompt= $numcompt;
 		$this->admission   = $admission;
 	}
 
 	public function getIdEtudiant(): int
 	{
-		return $this->idEtudiant;
+		return $this->idetudiant;
 	}
 
-	public function getIdSemestre(): int
+	public function getNumSemestre(): int
 	{
-		return $this->idSemestre;
+		return $this->numsemestre;
 	}
 
-	public function getIdCompetence(): int
+	public function getNumCompt(): int
 	{
-		return $this->idCompetence;
+		return $this->numcompt;
 	}
 
 	public function getAdmission(): string
@@ -35,19 +35,19 @@ class Cursus
 		return $this->admission;
 	}
 
-	public function setIdEtudiant( int $idEtudiant ): void
+	public function setIdEtudiant( int $idetudiant ): void
 	{
-		$this->idEtudiant = $idEtudiant;
+		$this->idetudiant = $idetudiant;
 	}
 
-	public function setIdSemestre( int $idSemestre ): void
+	public function setNumSemestre( int $numsemestre ): void
 	{
-		$this->idSemestre = $idSemestre;
+		$this->numsemestre = $numsemestre;
 	}
 
-	public function setIdCompetence( int $idCompetence ): void
+	public function setNumCompt( int $numcompt ): void
 	{
-		$this->idCompetence = $idCompetence;
+		$this->numcompt = $numcompt;
 	}
 
 	public function setAdmission( string $admission ): void

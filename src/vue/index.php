@@ -14,7 +14,13 @@
 
 			$db = DB::getInstance();
 
-			echo $db->selectAll('Etudiant');
+			$tabEtud = $db->selectAll('Etude');
+
+			foreach($tabEtud as $etudiant)
+			{
+				echo $etudiant->getTypeBac() ."'\n";
+			}
+			
 		?>
 	</body>
 </html>
