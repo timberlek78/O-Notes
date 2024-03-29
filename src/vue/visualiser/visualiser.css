@@ -46,7 +46,7 @@
 	padding-left: 0.77vw;
 }
 
-.tableau-nom-etd tr:not(:first-child){
+.tableau-nom-etd tr{
 	background-color: var(--classic-impair);
 }
 

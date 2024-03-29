@@ -35,7 +35,12 @@
 	text-align: center;
 }
 
-.tableau-note-etd tr:not(:first-child){
+.tableau-note-etd th:not(:last-child),
+.tableau-note-etd td:not(:last-child) {
+	border-right: 0.38vw solid white;
+}
+
+.tableau-note-etd tr{
 	background-color: var(--classic-impair);
 }
 
