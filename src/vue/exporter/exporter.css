@@ -1,0 +1,42 @@
+@import url(../style.css);
+
+.conteneur-export {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto;
+	grid-column-gap: 2vw;
+	overflow: auto; 
+	max-height: 70vh; /* Par exemple, une hauteur maximale de 300 pixels */
+	padding: 1.5vh;
+}
+
+.conteneur-information {
+	color: var(--violet-action);
+	text-align: center;
+	border-radius: var(--arrondi);
+	box-shadow: var(--ombre-value);
+	padding: 6vh 0 2vh 0vh;
+}
+
+.conteneur-information p {
+	padding: 0%;
+	margin: 1vh;
+	font-size: 1.4em;
+}
+
+.photo-etudiant {
+	border: 3px solid var(--violet-action);
+	width: 6vw;
+	height: 6vw;
+	border-radius: 50%;
+}
+
+.conteneur-image-etudiant {
+	transform: translate(0%, 50%);
+	display: flex;
+	justify-content: center;
+}
+
+.photo-etudiant {
+	box-shadow: var(--ombre-value);
+
+}
