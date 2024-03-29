@@ -9,6 +9,10 @@
 	padding: 1.5vh;
 }
 
+.cadre-export {
+	width: 17.5vw;
+}
+
 .conteneur-information {
 	color: var(--violet-action);
 	text-align: center;
@@ -18,9 +22,8 @@
 }
 
 .conteneur-information p {
-	padding: 0%;
 	margin: 1vh;
-	font-size: 1.4em;
+	font-size: 1.4rem;
 }
 
 .photo-etudiant {
@@ -38,5 +41,12 @@
 
 .photo-etudiant {
 	box-shadow: var(--ombre-value);
+}
 
+.btn-gauche button {
+	background-color: var(--violet-action);
+}
+
+.btn-droit button {
+	background-color: var(--orange-peps);
 }
