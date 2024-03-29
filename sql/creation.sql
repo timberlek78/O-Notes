@@ -3,14 +3,14 @@ CREATE SCHEMA IF NOT EXISTS onote;
 DROP TABLE IF EXISTS onote.Semestre CASCADE;
 CREATE TABLE onote.Semestre 
 (
-    numSemestre INT,
+    numSemestre SERIAL,
     PRIMARY KEY (numSemestre)
 );
 
 DROP TABLE IF EXISTS onote.Competence CASCADE;
 CREATE TABLE onote.Competence 
 (
-    numCompt INT,
+    numCompt SERIAL,
     libelle VARCHAR(20),
     PRIMARY KEY (numCompt)
 );
@@ -18,7 +18,7 @@ CREATE TABLE onote.Competence
 DROP TABLE IF EXISTS onote.Matiere CASCADE;
 CREATE TABLE onote.Matiere 
 (
-    numMatiere INT,
+    numMatiere SERIAL,
     moyenne DECIMAL(4, 2),
     coeff INT,
     alternant BOOLEAN,
@@ -29,7 +29,7 @@ CREATE TABLE onote.Matiere
 DROP TABLE IF EXISTS onote.Utilisateur CASCADE;
 CREATE TABLE onote.Utilisateur
 (
-    idUser VARCHAR(15),
+    idUser SERIAL,
     nom VARCHAR(20),
     mdp VARCHAR(20),
     PRIMARY KEY (idUser)
@@ -38,7 +38,7 @@ CREATE TABLE onote.Utilisateur
 DROP TABLE IF EXISTS onote.Illustration CASCADE;
 CREATE TABLE onote.Illustration
 (
-    idIllustration INT,
+    idIllustration SERIAL,
     img BYTEA,
     alternative VARCHAR(50),
     PRIMARY KEY (idIllustration)
@@ -47,7 +47,7 @@ CREATE TABLE onote.Illustration
 DROP TABLE IF EXISTS onote.FPE CASCADE;
 CREATE TABLE onote.FPE 
 (
-    idFPE INT,
+    idFPE SERIAL,
     nomDirecteur VARCHAR(15),
     anneePromoFin INT,
     anneePromoDebut INT,
@@ -57,7 +57,7 @@ CREATE TABLE onote.FPE
 DROP TABLE IF EXISTS onote.Etudiant CASCADE;
 CREATE TABLE onote.Etudiant 
 (
-    idEtudiant INT,
+    idEtudiant SERIAL,
     codeNIP INT,
     nom VARCHAR(20),
     prenom VARCHAR(10),
@@ -71,7 +71,7 @@ CREATE TABLE onote.Etudiant
 DROP TABLE IF EXISTS onote.Etude CASCADE;
 CREATE TABLE onote.Etude 
 (
-    idEtude INT,
+    idEtude SERIAL,
     specialite VARCHAR(20),
     typeBac VARCHAR(20),
     idEtudiant INT,
@@ -82,7 +82,7 @@ CREATE TABLE onote.Etude
 DROP TABLE IF EXISTS onote.EtudiantSemestre CASCADE;
 CREATE TABLE onote.EtudiantSemestre
 (
-    idEtudiant INT,
+    idEtudiant SERIAL,
     numSemestre INT,
     passage VARCHAR(5) CHECK (passage  IN ('ADM','CMP','AJ','ADSUP')),
     rang INT,
@@ -95,7 +95,7 @@ CREATE TABLE onote.EtudiantSemestre
 DROP TABLE IF EXISTS onote.CompetenceMatiere CASCADE;
 CREATE TABLE onote.CompetenceMatiere
 (
-    numCompt INT,
+    numCompt SERIAL,
     numMatiere INT,
     PRIMARY KEY (numCompt, numMatiere),
     FOREIGN KEY (numCompt) REFERENCES onote.Competence (numCompt) ON DELETE CASCADE,
@@ -105,7 +105,7 @@ CREATE TABLE onote.CompetenceMatiere
 DROP TABLE IF EXISTS onote.Cursus CASCADE;
 CREATE TABLE onote.Cursus 
 (
-    idEtudiant INT,
+    idEtudiant SERIAL,
     numSemestre INT,
     numCompt INT,
     admission VARCHAR(10) CHECK (admission IN ('ADM','PASD','RED','NAR','ABL')),
@@ -118,7 +118,7 @@ CREATE TABLE onote.Cursus
 DROP TABLE IF EXISTS onote.Possede CASCADE;
 CREATE TABLE onote.Possede
 (
-    idIllustration INT,
+    idIllustration SERIAL,
     idFPE INT,
     PRIMARY KEY (idIllustration, idFPE),
     FOREIGN KEY (idIllustration) REFERENCES onote.Illustration (idIllustration) ON DELETE CASCADE,

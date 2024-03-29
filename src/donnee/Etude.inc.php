@@ -18,7 +18,7 @@ class Etude
 		$this->idetudiant = $idetudiant;
 	}
 
-	public function getEdEtude(): int
+	public function getId(): int
 	{
 		return $this->idetude;
 	}

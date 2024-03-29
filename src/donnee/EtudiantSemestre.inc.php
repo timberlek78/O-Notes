@@ -1,5 +1,5 @@
 <?php
-class EtudiantSemestre
+class EtudiantSemestre 
 {
 	//clé primaire
 	private int $idetudiant;
@@ -19,7 +19,7 @@ class EtudiantSemestre
 		$this->nbabsences = $nbabsences;
 	}
 
-	public function getIdEtudiant(): int
+	public function getId(): int
 	{
 		return $this->idetudiant;
 	}

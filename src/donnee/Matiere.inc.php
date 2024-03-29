@@ -18,7 +18,7 @@ class Matiere
 		$this->libelle   = $libelle;
 	}
 
-	public function getnummatiere(): int
+	public function getId(): int
 	{
 		return $this->nummatiere;
 	}

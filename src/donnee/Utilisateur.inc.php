@@ -14,7 +14,7 @@ class Utilisateur
 		$this->mdp = $mdp;
 	}
 
-	public function getIdUser(): int
+	public function getId(): int
 	{
 		return $this->iduser;
 	}

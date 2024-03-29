@@ -15,7 +15,7 @@ class Cursus
 		$this->admission   = $admission;
 	}
 
-	public function getIdEtudiant(): int
+	public function getId(): int
 	{
 		return $this->idetudiant;
 	}

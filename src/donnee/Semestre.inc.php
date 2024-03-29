@@ -8,7 +8,7 @@ class Semestre
 	{
 	}
 
-	public function getnumsemestre(): int
+	public function getId(): int
 	{
 		return $this->numsemestre;
 	}

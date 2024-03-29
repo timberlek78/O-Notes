@@ -13,9 +13,12 @@
 			include ("../controleur/ControleurDB.inc.php");
 
 			$db = DB::getInstance();
+
+			$objet = new Etudiant(456852,"Lavoine","Maxime","A","2023-2024",1);
+
+			$db->insert("Etudiant",$objet);
+
+			echo $db->selectAll("Etudiant");
 		?>
-		<form action="./metier/importation.php">
-			<input type="file" />
-		</form>
 	</body>
 </html>

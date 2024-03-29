@@ -16,7 +16,7 @@ class FPE
 		$this->anneepromofin   = $anneepromofin;
 	}
 
-	public function getIdFpe(): int
+	public function getId(): int
 	{
 		return $this->idfpe;
 	}

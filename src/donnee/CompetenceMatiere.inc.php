@@ -11,7 +11,7 @@ class CompetenceMatiere
 		$this->nummatiere    = $nummatiere;
 	}
 
-	public function getNumCompt(): int
+	public function getId(): int
 	{
 		return $this->numcompt;
 	}

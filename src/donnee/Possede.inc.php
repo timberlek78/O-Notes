@@ -11,7 +11,7 @@ class Possede
 		$this->idfpe          = $idfpe;
 	}
 
-	public function getIdIllustration(): int
+	public function getId(): int
 	{
 		return $this->idillustration;
 	}
