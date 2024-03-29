@@ -1,5 +1,10 @@
 @import url(../style.css);
 
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
 .conteneur-export {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto;
@@ -10,7 +15,7 @@
 }
 
 .cadre-export {
-	width: 17.5vw;
+	width: 17.9vw;
 }
 
 .conteneur-information {
@@ -45,8 +50,18 @@
 
 .btn-gauche button {
 	background-color: var(--violet-action);
+	margin-left: 2vh;
 }
 
 .btn-droit button {
 	background-color: var(--orange-peps);
+	margin-right: 2vh;
+}
+
+.pied-de-page {
+	position: absolute;
+	bottom: 0px;
+	height: fit-content;
+	width: 100vw;
+	margin-bottom: 2vh;
 }
