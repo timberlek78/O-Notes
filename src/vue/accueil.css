@@ -63,6 +63,11 @@ input[type="password"]
 	margin-top: 2.33vh;
 }
 
+.icone {
+	background-color: #D9D9D9;
+	border-radius: var(--arrondi);
+}
+
 .authentification {
 	top: calc(16vh + (100vh - 16vh) / 2);
 	left: 50%;
