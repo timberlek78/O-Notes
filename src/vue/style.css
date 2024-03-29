@@ -62,6 +62,19 @@
 	text-transform: uppercase;
 }
 
+.btn-popup {
+	padding: 0.6vh 3.7vw;
+	margin: 3vh 5vw;
+	font-size: 1.1em;
+}
+
+.btn-pied {
+	height: 5.46vh;
+	padding: 0.9vh 2.15vw;
+	font-weight: 550;
+	font-size: 120%;
+}
+
 body {
 	font-family: 'Urbanist', sans-serif;
 }
