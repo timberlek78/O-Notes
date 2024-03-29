@@ -1,4 +1,8 @@
 :root {
 	--largeur: 24.01vw;
 	--hauteur: 75.98vh;
+
+	--classic-impair: rgba(150, 82, 122, 0.05);
+	--classic-pair  : rgba(150, 82, 122, 0.25);
 }
+

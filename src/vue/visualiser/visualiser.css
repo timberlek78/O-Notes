@@ -1,0 +1,56 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.liste-etd {
+	width: var(--largeur);
+	height: var(--hauteur);
+	background-color: white;
+	border-radius: var(--arrondi);
+	box-shadow: var(--ombre-value);
+	overflow: auto;
+}
+
+
+.tableau-nom-etd {
+	border-collapse: collapse;
+	max-width: var(--largeur);
+	max-height: var(--hauteur);
+}
+
+
+
+.tableau-nom-etd th {
+	width: 30.06vw;
+	font-weight: normal;
+	border: none;
+	background-color: var(--violet-moyen);
+	color: white;
+	border-radius: 12px 0 0 0;
+	padding: 1.5vh 0;
+	position: sticky;
+	top: 0;
+	background-clip: padding-box;
+}
+
+.tableau-nom-etd th:last-child {
+	border-radius: 0 12px 0 0;
+}
+
+.tableau-nom-etd th:not(:last-child),
+.tableau-nom-etd td:not(:last-child) {
+	border-right: 0.38vw solid white;
+}
+
+.tableau-nom-etd td {
+	padding: 1.5vh 0;
+	max-height: 10px;
+	padding-left: 0.77vw;
+}
+
+.tableau-nom-etd tr:not(:first-child){
+	background-color: var(--classic-impair);
+}
+
+.tableau-nom-etd tr:nth-child(even) {
+	background-color: var(--classic-pair);
+}
