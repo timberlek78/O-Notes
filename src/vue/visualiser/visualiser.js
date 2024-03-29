@@ -1,6 +1,7 @@
 const table1 = document.querySelector('.liste-etd');
 const table2 = document.querySelector('.liste-note');
 
+/* Permet de faire défiler les deux tableaux en même temps */
 table1.addEventListener('scroll', function() {
 	table2.scrollTop = table1.scrollTop;
 });
@@ -9,13 +10,20 @@ table2.addEventListener('scroll', function() {
 	table1.scrollTop = table2.scrollTop;
 });
 
-// window.addEventListener('resize', function() {
 
-// 	const tableau1 = document.querySelector('tableau-nom-etd');
-// 	const tableau2 = document.querySelector('tableau-note-etd');
+/* Fonction qui permet d'adapter la hauteur de l'entête du tableau selon la hauteur maximal entre les deux tableaux */
+function adaptationHauteur () 
+{
 
-// 	const headerHeight = tableau1.querySelector('th').offsetHeight;
-// 	tableau2.querySelector('thead').style.height = headerHeight + 'px';
-// });
+const hauteurTableauNom  = document.querySelector('.tableau-nom-etd thead');
+const hauteurTableauNote = document.querySelector('.tableau-note-etd thead');
 
-// function adaptationHauteur 
+const hauteurMax = Math.max(hauteurTableauNom.clientHeight, hauteurTableauNote.clientHeight);
+
+hauteurTableauNom.style.height = hauteurMax + 'px';
+hauteurTableauNote.style.height = hauteurMax + 'px';
+}
+
+/* Déclanche la méthode lors du chargement de la page et du resize de la page */
+window.addEventListener ( 'resize', adaptationHauteur );
+window.addEventListener ( 'load'  , adaptationHauteur );
