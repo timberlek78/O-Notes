@@ -16,8 +16,8 @@
 	border-radius: var(--arrondi);
 	box-shadow: var(--ombre-value);
 	overflow: auto;
+	scrollbar-width: none;
 }
-
 .tableau-nom-etd {
 	border-collapse: collapse;
 	max-width: var(--largeur);
