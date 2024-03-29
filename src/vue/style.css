@@ -68,6 +68,11 @@
 	font-size: 1.1em;
 }
 
+.pied-de-page {
+	display: flex;
+	justify-content: space-between;
+}
+
 .btn-pied {
 	height: 5.46vh;
 	padding: 0.9vh 2.15vw;
