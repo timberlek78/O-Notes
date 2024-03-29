@@ -7,7 +7,6 @@
 	justify-content: space-between; /* Pour répartir les boutons de manière égale */
 }
 
-/* TODO: couleur */
 .btn-pied {
 	height: 4.16vh;
 	flex: 1;

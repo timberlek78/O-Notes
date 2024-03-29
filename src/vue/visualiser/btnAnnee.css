@@ -1,0 +1,10 @@
+#choix-annee {
+	background-color: var(--violet-moyen);
+	color: white;
+}
+
+.btn-annee {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

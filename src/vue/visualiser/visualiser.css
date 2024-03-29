@@ -1,6 +1,14 @@
 @import url('../style.css');
 @import url('./constantes_visualisation.css');
 
+.conteneur-visualiser {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: auto auto;
+	justify-content: center;
+	gap: 2.76vw;
+}
+
 .liste-etd {
 	width: var(--largeur);
 	height: var(--hauteur);
@@ -10,30 +18,21 @@
 	overflow: auto;
 }
 
-
 .tableau-nom-etd {
 	border-collapse: collapse;
 	max-width: var(--largeur);
 	max-height: var(--hauteur);
+	width: 100%;
 }
 
-
-
 .tableau-nom-etd th {
-	width: 30.06vw;
 	font-weight: normal;
-	border: none;
 	background-color: var(--violet-moyen);
 	color: white;
-	border-radius: 12px 0 0 0;
 	padding: 1.5vh 0;
 	position: sticky;
 	top: 0;
 	background-clip: padding-box;
-}
-
-.tableau-nom-etd th:last-child {
-	border-radius: 0 12px 0 0;
 }
 
 .tableau-nom-etd th:not(:last-child),
