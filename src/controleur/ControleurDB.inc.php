@@ -1,6 +1,6 @@
 <?php
 
-	include ("Identifiant.inc.php");
+	include ("ConfigurationDB.inc.php");
 	include ("../donnee/Competence.inc.php");
 	include ("../donnee/Etudiant.inc.php"  );
 	include ("../donnee/CompetenceMatiere.inc.php");
@@ -22,14 +22,15 @@
 
 		private function __construct()
 		{
-			//$identifiants = new Identifiant();
-			$ip = 'woody';
+			$configDB = new ConfigurationDB();
+
 			//Connexion à la base de données
-			$connStr = 'pgsql:host='.$ip.' port=5432 dbname=bt220243';
+			$connStr = $this->preparerChaineConnexion( $configDB );
+
 			try
 			{
 				//Connexion à la base
-				$this->connect = new PDO($connStr,'bt220243','Tho2004mas');
+				$this->connect = new PDO( $connStr, $configDB->user, $configDB->pass );
 
 				//Configutation facultative à la connexion
 				$this->connect->setAttribute(PDO::ATTR_CASE   , PDO::CASE_LOWER       );
@@ -37,10 +38,18 @@
 			}
 			catch(PDOException $e)
 			{
-					echo $ip;
+					echo $configDB->host;
 					echo "problème de connexion : ".$e->getMessage();
 				return null;
 			}
+		}
+
+		private function preparerChaineConnexion( $configurationDB )
+		{
+			$connexion = 'pgsql:host=' . $configDB->host . ' '.
+						 'port='       . $configDB->port . ' '.
+						 'dbname='     . $configDB->user;
+			return $connexion;
 		}
 
 		/**********************************/
