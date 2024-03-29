@@ -1,0 +1,69 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.popup {
+	width: var(--largeur);
+	max-height: var(--hauteur);
+	margin-left: 5.17vw;
+	margin-right: 5.17vw;
+	margin-top: 4.83vh;
+}
+
+.cadre-image-etudiant {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 2vh;
+}
+
+.photo-etudiant {
+	border: 3px solid var(--violet-action);
+	width: 8vw;
+	height: 8vw;
+	border-radius: 50%;
+	box-shadow: var(--ombre-value);
+}
+
+.conteneur-image-etudiant {
+	transform: translate(0%, 50%);
+	display: flex;
+	justify-content: center;
+}
+
+.conteneur-information {
+	color: var(--violet-action);
+	font-weight: bold;
+	font-size: 2em;
+	flex: 1;
+	padding-left: 0.8em; 
+	padding-top: 0.5em;
+}
+
+.conteneur-information p {
+	margin: 0;
+}
+
+.cadre-info {
+	background-color: var(--violet-action);
+	border-radius: var(--arrondi);
+	padding-left: 1vw;
+	margin-bottom: 1vh;
+}
+
+.cadre-info p:first-of-type {
+	color: black;
+	font-size: 0.8em;
+	margin: 0;
+	padding-top: 0.8vw;
+	padding-bottom: 0.5vh;
+}
+
+.cadre-info p:last-of-type {
+	color: white;
+	font-size: 1em; 
+	margin: 0;
+	padding-bottom: 0.8vh;
+}
+
+body {
+	font-family: 'Urbanist', sans-serif;
+}
