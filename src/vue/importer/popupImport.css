@@ -1,0 +1,81 @@
+#popup-ajout-semestre {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	text-align: center;
+	background-color: white;
+	z-index: 9999;
+	
+	animation-name: ouverturePopup;
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
+}
+
+@keyframes ouverturePopup {
+	from { transform: translate(-50%, -50%) scale(0); }
+	to   { transform: translate(-50%, -50%) scale(1); }
+}
+
+#popup-ajout-semestre.ouvert {
+	display: block;
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.titre-popup {
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--violet-fonce);
+	padding: 1.96vh 10.25vw;
+	border-radius: var(--arrondi-entete);
+	font-weight: 600;
+	font-size: 1.58em;
+	margin-bottom: 3.27vh;
+}
+
+.sous-titre {
+	color: var(--violet-fonce);
+	font-weight: 600;
+	font-size: 1.1em;
+	padding: 1vh 0;
+}
+
+.selection-periode {
+	display: flex;
+	justify-content: center;
+	gap: 1.70vw;
+}
+
+#choix-annee,
+#choix-semestre {
+	background-color: white;
+	border: 1px solid var(--violet-fonce);
+	border-radius: var(--arrondi);
+	padding: 0.8vh 0; /*10vw*/
+	width: 8.07vw;
+	text-align: center;
+	color: var(--violet-fonce);
+	font-size: 1em;
+	margin-bottom: 3vh;
+}
+
+/* #choix-annee {
+	width: 8.8vw;
+}
+
+#choix-semestre {
+	width: 13vw;
+} */
+
+.btn-imports {
+	display: flex;
+	justify-content: center;
+}
+
+.btns-popup {
+	display: flex;
+	justify-content: space-between;
+}
