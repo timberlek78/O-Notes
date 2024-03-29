@@ -16,6 +16,11 @@ class FPE
 		$this->anneepromofin   = $anneepromofin;
 	}
 
+	public function getAttributs() : array
+	{
+		return get_object_vars($this);
+	}
+
 	public function getId(): int
 	{
 		return $this->idfpe;
@@ -28,7 +33,7 @@ class FPE
 
 	public function getAnneePromoDebut(): int
 	{
-		return $this->anneePromo;
+		return $this->anneepromodebut;
 	}
 
 	public function getAnneePromoFin(): int
@@ -36,22 +41,22 @@ class FPE
 		return $this->anneepromofin;
 	}
 
-	private function setIdFpe( int $idfpe ): voidfpe
+	public function setIdFpe( int $idfpe ): void
 	{
 		$this->idfpe = $idfpe;
 	}
 
-	public function setNomDirecteur( string $nomdirecteur ): voidfpe
+	public function setNomDirecteur( string $nomdirecteur ): void
 	{
 		$this->nomdirecteur = $nomdirecteur;
 	}
 
-	public function setAnneePromoDebut( int $anneepromodebut ): voidfpe
+	public function setAnneePromoDebut( int $anneepromodebut ): void
 	{
 		$this->anneepromodebut = $anneepromodebut;
 	}
 
-	public function setAnneePromoFin( int $anneepromofin ): voidfpe
+	public function setAnneePromoFin( int $anneepromofin ): void
 	{
 		$this->anneepromofin = $anneepromofin;
 	}

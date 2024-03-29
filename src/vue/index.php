@@ -14,11 +14,20 @@
 
 			$db = DB::getInstance();
 
-			$objet = new Etudiant(456852,"Lavoine","Maxime","A","2023-2024",1);
+			$objet = new FPE("Duflot",2021,2023);
 
-			$db->insert("Etudiant",$objet);
+			echo $db->insert("FPE",$objet);
 
-			echo $db->selectAll("Etudiant");
+			$tab = $db->selectAll("FPE");
+
+			var_dump($tab[1]->getId());
+			echo "aaa";
+
+
+
+			$db->delete("FPE",$objet);
+
+			var_dump($db->selectAll("FPE"));
 		?>
 	</body>
 </html>

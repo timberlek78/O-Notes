@@ -14,6 +14,11 @@ class Illustration
 		$this->alternative = $alternative;
 	}
 
+	public function getAttributs() : array
+	{
+		return get_object_vars($this);
+	}
+
 	public function getIdIllustration(): int
 	{
 		return $this->idillustration;

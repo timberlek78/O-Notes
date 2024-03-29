@@ -1,71 +1,74 @@
 <?php
-class Matiere
-{
-	//clé primaire
-	private int $nummatiere;
-
-	//attributs
-	private ?float  $moyenne;
-	private ?int    $coeff;
-	private ?bool   $alternant;
-	private ?string $libelle;
-
-	public function __construct( float $moyenne=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
+	class Matiere
 	{
-		$this->moyenne      = $moyenne;
-		$this->coeff     = $coeff;
-		$this->alternant = $alternant;
-		$this->libelle   = $libelle;
-	}
+		//clé primaire
+		private int $nummatiere;
 
-	public function getId(): int
-	{
-		return $this->nummatiere;
-	}
+		//attributs
+		private ?float  $moyenne;
+		private ?int    $coeff;
+		private ?bool   $alternant;
+		private ?string $libelle;
 
-	public function getmoyenne(): floatval
-	{
-		return $this->moyenne;
-	}
+		public function __construct( float $moyenne=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
+		{
+			$this->moyenne      = $moyenne;
+			$this->coeff     = $coeff;
+			$this->alternant = $alternant;
+			$this->libelle   = $libelle;
+		}
+		public function getAttributs() : array
+		{
+			return get_object_vars($this);
+		}
 
-	public function getCoeff(): int
-	{
-		return $this->coeff;
-	}
+		public function getId(): int
+		{
+			return $this->nummatiere;
+		}
+		public function getmoyenne(): float
+		{
+			return $this->moyenne;
+		}
 
-	public function getAlternant(): boolval
-	{
-		return $this->alternant;
-	}
+		public function getCoeff(): int
+		{
+			return $this->coeff;
+		}
 
-	public function getLibelle(): string
-	{
-		return $this->libelle;
-	}
+		public function getAlternant(): bool
+		{
+			return $this->alternant;
+		}
 
-	private function setnummatiere( int $nummatiere ): vonummatiere
-	{
-		$this->nummatiere = $nummatiere;
-	}
+		public function getLibelle(): string
+		{
+			return $this->libelle;
+		}
 
-	public function setmoyenne( floatval $moyenne ): vonummatiere
-	{
-		$this->moyenne = $moyenne;
-	}
+		private function setnummatiere( int $nummatiere ): void
+		{
+			$this->nummatiere = $nummatiere;
+		}
 
-	public function setCoeff( int $coeff ): vonummatiere
-	{
-		$this->coeff = $coeff;
-	}
+		public function setmoyenne( float $moyenne ): void
+		{
+			$this->moyenne = $moyenne;
+		}
 
-	public function setAlternant( boolval $alternant ): vonummatiere
-	{
-		$this->alternant = $alternant;
-	}
+		public function setCoeff( int $coeff ): void
+		{
+			$this->coeff = $coeff;
+		}
 
-	public function setLibelle( string $libelle ): vonummatiere
-	{
-		$this->libelle = $libelle;
+		public function setAlternant( bool $alternant ): void
+		{
+			$this->alternant = $alternant;
+		}
+
+		public function setLibelle( string $libelle ): void
+		{
+			$this->libelle = $libelle;
+		}
 	}
-}
 ?>

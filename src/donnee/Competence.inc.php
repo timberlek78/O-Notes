@@ -11,6 +11,10 @@ class Competence
 	{
 		$this->libelle = $libelle;
 	}
+	public function getAttributs() : array
+	{
+		return get_object_vars($this);
+	}
 
 	public function getId(): int
 	{

@@ -18,6 +18,11 @@ class Etude
 		$this->idetudiant = $idetudiant;
 	}
 
+	public function getAttributs() : array
+	{
+		return get_object_vars($this);
+	}
+
 	public function getId(): int
 	{
 		return $this->idetude;
