@@ -21,12 +21,7 @@
 			$tab = $db->selectAll("FPE");
 
 			var_dump($tab[1]->getId());
-			echo "aaa";
-
-
-
-			$db->delete("FPE",$objet);
-
+	
 			var_dump($db->selectAll("FPE"));
 		?>
 	</body>
