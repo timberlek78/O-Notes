@@ -75,21 +75,27 @@
 	<!-- Pop-up -->
 	<div id="popup-ajout-semestre">
 		<div class="titre-popup">Ajout d'un semestre</div>
-		<div class="selection-semestre">
-			<div class="sous-titre">Sélectionner un semestre</div>
-			<select name="" id="choix-semestre">
-				<option value="" disabled selected>Choisir un semestre</option>
-
-				<option value="S1"> S1            </option>
-				<option value="S2"> S1            </option>
-				<option value="S3"> S1            </option>
-				<option value="S4"> S1            </option>
-				<option value="S4A">S4 - Alternant</option>
-				<option value="S5"> S5            </option>
-				<option value="S5A">S5 - Alternant</option>
-				<option value="S6"> S6            </option>
-				<option value="S6A">S6 - Alternant</option>
-			</select>
+		<div class="selection-periode">
+			<div class="selection-annee">
+				<div class="sous-titre">Année</div>
+				<input type="text" id="choix-annee" placeholder="YYYY-YYYY">
+			</div>
+			<div class="selection-semestre">
+				<div class="sous-titre">Semestre</div>
+				<select name="" id="choix-semestre">
+					<option value="" disabled selected>Choisir un semestre</option>
+	
+					<option value="S1"> S1            </option>
+					<option value="S2"> S1            </option>
+					<option value="S3"> S1            </option>
+					<option value="S4"> S1            </option>
+					<option value="S4A">S4 - Alternant</option>
+					<option value="S5"> S5            </option>
+					<option value="S5A">S5 - Alternant</option>
+					<option value="S6"> S6            </option>
+					<option value="S6A">S6 - Alternant</option>
+				</select>
+		</div>
 		</div>
 
 		<div class="documents-import">
