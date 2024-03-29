@@ -1,0 +1,23 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.navigation-semestre {
+	width: var(--largeurGrandTableau);
+	display: flex;
+	justify-content: space-between; /* Pour répartir les boutons de manière égale */
+}
+
+/* TODO: couleur */
+.btn-pied {
+	height: 4.16vh;
+	flex: 1;
+	margin: 0.40vw;
+	color: var(--orange-peps);
+	background-color: white;
+	box-shadow: var(--ombre-value);
+}
+
+.btn-clique {
+	color: white;
+	background-color: var(--orange-peps);
+}
