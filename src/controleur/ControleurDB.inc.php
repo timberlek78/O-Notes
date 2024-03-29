@@ -46,9 +46,9 @@
 
 		private function preparerChaineConnexion( $configurationDB )
 		{
-			$connexion = 'pgsql:host=' . $configDB->host . ' '.
-						 'port='       . $configDB->port . ' '.
-						 'dbname='     . $configDB->user;
+			$connexion = 'pgsql:host=' . $configurationDB->host . ' '.
+						 'port='       . $configurationDB->port . ' '.
+						 'dbname='     . $configurationDB->user;
 			return $connexion;
 		}
 
