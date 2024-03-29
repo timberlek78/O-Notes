@@ -1,4 +1,5 @@
 @import url(../style.css);
+@import url(./popupAvis.css);
 
 body {
 	padding: 0px;
@@ -36,16 +37,13 @@ body {
 	width: 6vw;
 	height: 6vw;
 	border-radius: 50%;
+	box-shadow: var(--ombre-value);
 }
 
 .conteneur-image-etudiant {
 	transform: translate(0%, 50%);
 	display: flex;
 	justify-content: center;
-}
-
-.photo-etudiant {
-	box-shadow: var(--ombre-value);
 }
 
 .btn-gauche button {
