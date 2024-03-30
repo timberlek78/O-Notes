@@ -1,3 +1,6 @@
+/*                        */
+/*   SCROLL SYNCHRONISE   */
+/*                        */
 const table1 = document.querySelector('.liste-etd');
 const table2 = document.querySelector('.liste-note');
 
@@ -27,3 +30,29 @@ hauteurTableauNote.style.height = hauteurMax + 'px';
 /* Déclanche la méthode lors du chargement de la page et du resize de la page */
 window.addEventListener ( 'resize', adaptationHauteur );
 window.addEventListener ( 'load'  , adaptationHauteur );
+
+/*                                          */
+/*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
+/*                                          */
+const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom' )
+const popupEtudiant            = document.querySelector    ( '.popup-etudiant'        );
+const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd' );
+
+lstCellulesCliquablesNom.forEach(function(cellule)
+{
+	cellule.addEventListener('click', ouverturePopupEtudiant);
+})
+
+console.log(lstCellulesCliquablesNom);
+function ouverturePopupEtudiant()
+{
+	popupEtudiant.classList.add('ouvert');
+	tabEtudiant  .classList.add('cache');
+	
+}
+
+function fermeturePopupEtudiant()
+{
+	popupEtudiant.classList.remove('ouvert');
+	tabEtudiant  .classList.remove('cache');
+}

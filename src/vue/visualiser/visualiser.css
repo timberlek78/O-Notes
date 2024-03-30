@@ -9,6 +9,14 @@
 	gap: 2.76vw;
 }
 
+.conteneur-tableau-etd {
+	display: block;
+}
+
+.conteneur-tableau-etd.cache {
+	display: none;
+}
+
 .liste-etd {
 	width: var(--largeur);
 	height: var(--hauteur);
@@ -18,6 +26,7 @@
 	overflow: auto;
 	scrollbar-width: none;
 }
+
 .tableau-nom-etd {
 	border-collapse: collapse;
 	max-width: var(--largeur);
@@ -52,4 +61,8 @@
 
 .tableau-nom-etd tr:nth-child(even) {
 	background-color: var(--classic-pair);
+}
+
+.cellule-cliquable-nom {
+	cursor: pointer;
 }

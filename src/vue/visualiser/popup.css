@@ -1,24 +1,38 @@
 @import url('../style.css');
 @import url('./constantes_visualisation.css');
 
-.popup {
+.popup-etudiant {
+	position: relative;
+	display: none;
 	width: var(--largeur);
-	max-height: var(--hauteur);
-	margin-left: 5.17vw;
-	margin-right: 5.17vw;
-	margin-top: 4.83vh;
+	height: var(--hauteur);
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	padding-top: 3.85vh;
+	box-sizing: border-box;
+}
+
+.popup-etudiant.ouvert {
+	display: block;
+}
+
+.edition {
+	position: absolute;
+	top: 2.15vh;
+	right: 1.06vw;
+	cursor: pointer;
 }
 
 .cadre-image-etudiant {
 	display: flex;
 	flex-direction: row;
-	margin-bottom: 2vh;
+	margin: 0 4.10vw 2vh 4.10vw;
 }
 
 .photo-etudiant {
 	border: 3px solid var(--violet-action);
-	width: 8vw;
-	height: 8vw;
+	width: 6vw;
+	height: 6vw;
 	border-radius: 50%;
 	box-shadow: var(--ombre-value);
 }
@@ -32,7 +46,7 @@
 .conteneur-information {
 	color: var(--violet-action);
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 2.12vw;
 	flex: 1;
 	padding-left: 0.8em; 
 	padding-top: 0.5em;
@@ -42,11 +56,19 @@
 	margin: 0;
 }
 
+.conteneur-cadre-infos {
+	display: grid;
+	grid-template-columns: auto;
+	height: 50vh;
+	margin: 0 3.10vw 0 3.10vw;
+}
+
 .cadre-info {
 	background-color: var(--violet-action);
 	border-radius: var(--arrondi);
 	padding-left: 1vw;
-	margin-bottom: 1vh;
+	margin: 0 1vw 1vh 1vw;
+	height: 6vh;
 }
 
 .cadre-info p:first-of-type {
