@@ -1,52 +1,46 @@
 <?php
+// Inclure l'autoloader de Composer
+require_once '../../../lib/vendor/autoload.php';
+require_once '../../donnee/Etudiant.inc.php';
+require_once '../../controleur/ControleurDB.inc.php';
 
-	
-	// Inclure l'autoloader de Composer
-	require_once '../../../lib/vendor/autoload.php';
+// Importer les classes nécessaires de PhpSpreadsheet
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-	include_once '../../controleur/ControleurDB.inc.php';
+class CreationExcel
+{
+    private $DB;
 
-	// Importer les classes nécessaires de PhpSpreadsheet
-	use PhpOffice\PhpSpreadsheet\Spreadsheet;
-	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    public function __construct()
+    {
+        $this->DB = DB::getInstance();
+    }
 
+    public function fichierJury()
+    {
+        $classeur = new Spreadsheet();
+        $feuilleActive = $classeur->getActiveSheet();
+        $feuilleActive->setTitle('PV Jury');
 
-	class CreationExcel
-	{
-		private $DB;
+        $etudiantTEST = new Etudiant(1, 'test', 'test', 'test', 'test', -1);
+        $tabAttributEtudiant = array_keys($etudiantTEST->getAttributs());
 
-		private function __construct()
-		{
-			$this->DB = DB::getInstance();
-		}
+        // Placer les noms des attributs des étudiants en tant qu'en-têtes de colonne
+        foreach ($tabAttributEtudiant as $index => $attribut) {
+            $feuilleActive->setCellValue('A1', $attribut);
+        }
 
-		public function fichierJury()
-		{
-			$classeur = new Spreadsheet();
+        // Enregistrer le fichier Excel dans le répertoire data
+        $writer = new Xlsx($classeur);
+        $cheminFichier = '../../data/jury.xlsx';
+        $writer->save($cheminFichier);
 
-			$feuilleActive = $classeur->getActiveSheet();
+        echo 'Le fichier excel Jury a bien été créé';
+    }
+}
 
-			$feuilleActive-> setTitle('PV Jury'); //TODO Mettre la date dans le jury
-
-			$etudiantTEST = new Etudiant(1,'test','test','test','test',-1);
-
-			$tabAttributEtudiant = $etudiantTEST->getAttributs();
-
-			$colonne = 'A';
-			foreach($tabAttributEtudiant as $cle=>$valeur)
-			{
-				$feuilleActive->setCellValue(($colonne + $i++).'8', $cle );
-			}
-
-			$ecrivain      = new Xlsx($classeur);
-			$cheminFichier = 'C:\xampp\htdocs\O-Notes\data';
-
-			$ecrivain ->save($cheminFichier);
-
-			echo 'Le fichier excel Jury a bien été crée';
-		}
-	}
-
-
-
+// Créer une instance de la classe CreationExcel et appeler la méthode fichierJury()
+$creationExcel = new CreationExcel();
+$creationExcel->fichierJury();
 ?>
