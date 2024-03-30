@@ -64,6 +64,8 @@ class Etudiant
 		return get_object_vars($this);
 	}
 
+	
+
 	public function setId( int $id ): void
 	{
 		$this->id = $id;
