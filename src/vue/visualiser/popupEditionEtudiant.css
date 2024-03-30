@@ -1,4 +1,6 @@
-#popup-ajout-semestre {
+@import url('../style.css');
+
+#popup-edition-etudiant {
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -20,7 +22,7 @@
 	to   { transform: translate(-50%, -50%) scale(1); }
 }
 
-#popup-ajout-semestre.ouvert {
+#popup-edition-etudiant.ouvert {
 	display: block;
 	transform: translate(-50%, -50%) scale(1);
 }
@@ -33,6 +35,13 @@
 	border-radius: var(--arrondi-entete);
 	font-weight: 600;
 	font-size: 1.58em;
+	margin-bottom: 1.27vh;
+}
+
+.identite-etd {
+	font-size: 1.4em;
+	font-weight: 600;
+	color: var(--violet-fonce);
 	margin-bottom: 3.27vh;
 }
 
@@ -43,36 +52,39 @@
 	padding: 1vh 0;
 }
 
-.selection-periode {
-	display: flex;
-	justify-content: center;
-	gap: 1.70vw;
+.avis-ecoles {
+	display: grid;
 }
 
-#choix-annee,
-#choix-semestre {
+.avis-ecole {
+	color: var(--violet-fonce);
+	font-weight: 500;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 100px;
+	gap: 1.70vw;
+	align-items: center;
+}
+
+.entree {
 	background-color: white;
 	border: 1px solid var(--violet-fonce);
 	border-radius: var(--arrondi);
-	padding: 0.8vh 0; /*10vw*/
-	width: 8.07vw;
-	text-align: center;
 	color: var(--violet-fonce);
+}
+
+#selection-avis {
+	padding: 0.8vh 0;
+	width: 18vw;
+	text-align: center;
 	font-size: 1em;
-	margin-bottom: 3vh;
+	margin: 1.5vh 0;
 }
 
-/* #choix-annee {
-	width: 8.8vw;
-}
-
-#choix-semestre {
-	width: 13vw;
-} */
-
-.btn-imports {
-	display: flex;
-	justify-content: center;
+#txt-commentaire {
+	width: 26vw;
+	padding: 1vw;
+	font-family: 'Urbanist', sans-serif;
 }
 
 .btns-popup {

@@ -79,6 +79,10 @@
 	padding: 0.6vh 3.7vw;
 	margin: 3vh 5vw;
 	font-size: 1.1rem;
+	border-radius: var(--arrondi);
+	color: white;
+	cursor: pointer;
+	border: none
 }
 
 .pied-de-page {

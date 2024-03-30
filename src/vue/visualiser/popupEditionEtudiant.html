@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Popup Edition</title>
+	<link rel="stylesheet" href="popupEditionEtudiant.css">
+</head>
+<body>
+	<div id="popup-edition-etudiant">
+		<div class="titre-popup">Ajout d'un semestre</div>
+		<div class="identite-etd">Nom Prénom</div>
+		<div class="avis-ecoles">
+			<div class="avis-ecole">
+				<p>Avis école d'ingénieurs</p>
+				<select name="" id="selection-avis" class="entree">
+					<option value="" disabled selected>Choisir un avis</option>
+	
+					<option value="TF">Très favorable </option>
+					<option value="F"> Favorable      </option>
+					<option value="AF">Assez favorable</option>
+					<option value="SA">Sans avis      </option>
+					<option value="R"> Réservé        </option>
+				</select>
+			</div>
+			<div class="avis-ecole">
+				<p>Avis master</p>
+				<select name="" id="selection-avis" class="entree">
+					<option value="" disabled selected>Choisir un avis</option>
+	
+					<option value="TF">Très favorable </option>
+					<option value="F"> Favorable      </option>
+					<option value="AF">Assez favorable</option>
+					<option value="SA">Sans avis      </option>
+					<option value="R"> Réservé        </option>
+				</select>
+			</div>
+		</div>
+
+		<div class="commentaire">
+			<div class="sous-titre">Commentaire</div>
+			<textarea name="commentaire" id="txt-commentaire" class="entree" cols="30" rows="5"></textarea>
+		</div>
+
+		<div class="btns-popup">
+			<button class="btn-annuler btn-popup">Annuler</button>
+			<button class="btn-valider btn-popup">Valider</button>
+		</div>
+	</div>
+</body>
+</html>

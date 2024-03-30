@@ -61,11 +61,3 @@ button {
 .btn-import {
 	background-color: var(--orange-peps);
 }
-
-.btn-annuler {
-	background: var(--violet-fonce);
-}
-
-.btn-valider {
-	background: var(--orange-peps);
-}

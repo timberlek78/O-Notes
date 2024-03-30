@@ -38,21 +38,42 @@ const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable
 const popupEtudiant            = document.querySelector    ( '.popup-etudiant'        );
 const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd' );
 
-lstCellulesCliquablesNom.forEach(function(cellule)
+lstCellulesCliquablesNom.forEach( function( cellule )
 {
-	cellule.addEventListener('click', ouverturePopupEtudiant);
+	cellule.addEventListener( 'click', ouverturePopupEtudiant );
 })
 
-console.log(lstCellulesCliquablesNom);
-function ouverturePopupEtudiant()
+function ouverturePopupEtudiant ( )
 {
-	popupEtudiant.classList.add('ouvert');
-	tabEtudiant  .classList.add('cache');
+	popupEtudiant.classList.add ( 'ouvert' );
+	tabEtudiant  .classList.add ( 'cache'  );
 	
 }
 
-function fermeturePopupEtudiant()
+function fermeturePopupEtudiant ( )
 {
-	popupEtudiant.classList.remove('ouvert');
-	tabEtudiant  .classList.remove('cache');
+	popupEtudiant.classList.remove ( 'ouvert' );
+	tabEtudiant  .classList.remove ( 'cache'  );
+}
+
+/*                                                  */
+/*   FONCTIONNEMENT DE LA POP-UP EDITION ETUDIANT   */
+/*                                                  */
+const popupEditionEtudiant = document.getElementById ( 'popup-edition-etudiant'  );
+const btnEdition           = document.querySelector  ( '.edition'                );
+const btnAnnuler           = document.querySelector  ( '.btn-annuler'            );
+const btnValider           = document.querySelector  ( '.btn-valider'            );  //TODO: validation
+
+btnEdition.addEventListener ( 'click', ouverturePopupEditionEtudiant );
+btnAnnuler.addEventListener ( 'click', fermeturePopupEditionEtudiant );
+
+function ouverturePopupEditionEtudiant ( )
+{
+	console.log('edition')
+	popupEditionEtudiant.classList.add ('ouvert');
+}
+
+function fermeturePopupEditionEtudiant ( )
+{
+	popupEditionEtudiant.classList.remove ( 'ouvert' );
 }
