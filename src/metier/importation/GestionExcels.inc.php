@@ -4,9 +4,10 @@
 	error_reporting(E_ALL);
 
 	require '../../../lib/vendor/autoload.php';
-
 	include_once './LectureExcel.inc.php';
-	require '../OutilsTableau.inc.php';
+	include './TableauToBado.php';
+
+	require '../OutilTableau.inc.php';
 
 	$fichierValide = isset( $_FILES['fichier'] ) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK;
 
@@ -21,10 +22,12 @@
 			$fichier = $_FILES['fichier']['tmp_name'];
 			$excel = new LectureExcel( $fichier );
 			$data = $excel->recupererDonnees();
-			$tableauHtml = genererTableauHtml( $data );
-			echo $tableauHtml;
-		}
 
+			$tabBADO = new TableauToBado($fichier,null,"2022-2023",1,false);
+			$tabBADO->creationEtudiant();
+
+
+		}
 		fclose($handle);
 	}
 	else

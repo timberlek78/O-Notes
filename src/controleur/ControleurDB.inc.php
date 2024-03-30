@@ -1,5 +1,6 @@
 <?php
 
+
 	/******************************************/
 	/*       Importation des objets PHP       */
 	/******************************************/
@@ -43,6 +44,10 @@
 				//Connexion à la base
 				$this->connect = new PDO( $connStr, $configDB->user, $configDB->pass );
 
+				/***************************************************************************************/
+				/* cmd tunnel ssh : ssh -L 5432:woody:5432 -p 4660 bt220243@corton.iut.univ-lehavre.fr */
+				/***************************************************************************************/
+
 				//Configutation facultative à la connexion
 				$this->connect->setAttribute(PDO::ATTR_CASE   , PDO::CASE_LOWER       );
 				$this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -59,7 +64,7 @@
 			{
 					echo $configDB->host;
 					echo "problème de connexion : ".$e->getMessage();
-				return null;
+					return null;
 			}
 		}
 
