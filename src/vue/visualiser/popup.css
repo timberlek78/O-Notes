@@ -66,22 +66,24 @@
 .cadre-info {
 	background-color: var(--violet-action);
 	border-radius: var(--arrondi);
-	padding-left: 1vw;
+	padding: 1vh 1vw;
 	margin: 0 1vw 1vh 1vw;
 	height: 6vh;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4vh;
+	box-sizing: border-box;
 }
 
 .cadre-info p:first-of-type {
 	color: black;
-	font-size: 0.8em;
+	font-size: 0.7vw;
 	margin: 0;
-	padding-top: 0.8vw;
-	padding-bottom: 0.5vh;
 }
 
 .cadre-info p:last-of-type {
 	color: white;
-	font-size: 1em; 
+	font-size: 0.9vw; 
 	margin: 0;
 	padding-bottom: 0.8vh;
 }
