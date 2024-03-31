@@ -6,18 +6,18 @@
 	/******************************************/
 
 	include (   "ConfigurationDB.inc.php"         );
-	include '../donnee/Utilisateur.inc.php';
-	include '../donnee/Semestre.inc.php';
-	include '../donnee/Possede.inc.php';
-	include '../donnee/Matiere.inc.php';
-	include '../donnee/Illustration.inc.php';
-	include '../donnee/FPE.inc.php';
-	include '../donnee/EtudiantSemestre.inc.php';
-	include '../donnee/Etudiant.inc.php';
-	include '../donnee/Etude.inc.php';
-	include '../donnee/Cursus.inc.php';
-	include '../donnee/CompetenceMatiere.inc.php';
-	include '../donnee/Competence.inc.php';
+	include_once '../donnee/Utilisateur.inc.php';
+	include_once '../donnee/Semestre.inc.php';
+	include_once '../donnee/Possede.inc.php';
+	include_once '../donnee/Matiere.inc.php';
+	include_once '../donnee/Illustration.inc.php';
+	include_once '../donnee/FPE.inc.php';
+	include_once '../donnee/EtudiantSemestre.inc.php';
+	include_once '../donnee/Etudiant.inc.php';
+	include_once '../donnee/Etude.inc.php';
+	include_once '../donnee/Cursus.inc.php';
+	include_once '../donnee/CompetenceMatiere.inc.php';
+	include_once '../donnee/Competence.inc.php';
 	
 
 

@@ -1,46 +1,86 @@
 <?php
-// Inclure l'autoloader de Composer
-require_once '../../../lib/vendor/autoload.php';
-require_once '../../donnee/Etudiant.inc.php';
-require_once '../../controleur/ControleurDB.inc.php';
 
-// Importer les classes nécessaires de PhpSpreadsheet
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+	echo "jejej";
+	require '../../../lib/vendor/autoload.php'; // Inclure l'autoloader de PhpSpreadsheet
+	include '../../donnee/Etudiant.inc.php';
+	include '../../controleur/ControleurDB.inc.php';
 
-class CreationExcel
-{
-    private $DB;
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL & ~E_WARNING);
 
-    public function __construct()
-    {
-        $this->DB = DB::getInstance();
-    }
 
-    public function fichierJury()
-    {
-        $classeur = new Spreadsheet();
-        $feuilleActive = $classeur->getActiveSheet();
-        $feuilleActive->setTitle('PV Jury');
 
-        $etudiantTEST = new Etudiant(1, 'test', 'test', 'test', 'test', -1);
-        $tabAttributEtudiant = array_keys($etudiantTEST->getAttributs());
+	use PhpOffice\PhpSpreadsheet\Reader\Xls\Style\Border;
+	use PhpOffice\PhpSpreadsheet\Spreadsheet;
+	use PhpOffice\PhpSpreadsheet\Style\Borders;
+	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-        // Placer les noms des attributs des étudiants en tant qu'en-têtes de colonne
-        foreach ($tabAttributEtudiant as $index => $attribut) {
-            $feuilleActive->setCellValue('A1', $attribut);
-        }
+	class ExcelExporter
+	{
+		private $spreadsheet;
+		private $fileName;
+		private $folderPath;
 
-        // Enregistrer le fichier Excel dans le répertoire data
-        $writer = new Xlsx($classeur);
-        $cheminFichier = '../../data/jury.xlsx';
-        $writer->save($cheminFichier);
+		private $borders;
 
-        echo 'Le fichier excel Jury a bien été créé';
-    }
-}
+		public function __construct($fileName, $folderPath)
+		{
+			$this->spreadsheet = new Spreadsheet();
+			$this->fileName = $fileName;
+			$this->folderPath = $folderPath;
+		}
 
-// Créer une instance de la classe CreationExcel et appeler la méthode fichierJury()
-$creationExcel = new CreationExcel();
-$creationExcel->fichierJury();
+		public function creerColonne($data)
+		{
+			//var_dump($data);
+
+			$sheet = $this->spreadsheet->getActiveSheet(); 
+			$colonne = "A";
+			for ($i = 0; $i<count($data) - 2; $i++) 
+			{
+				$sheet->setCellValue(chr(ord($colonne) + $i)."1", $data[$i]);
+			}
+		}
+
+		public function remplirColonne($data)
+		{
+			$sheet = $this->spreadsheet->getActiveSheet(); 
+			for($i = 2; $i<count($data); $i++)
+			{
+				$sheet->setCellValue("A".$i, $data[$i]->getNIP     ());
+				$sheet->setCellValue("B".$i, $data[$i]->getNom     ());
+				$sheet->setCellValue("C".$i, $data[$i]->getPrenom  ());
+				$sheet->setCellValue("D".$i, $data[$i]->getParcours());
+			}
+		}
+
+		public function save()
+		{
+			$writer = new Xlsx($this->spreadsheet);
+			// Créer le chemin complet du fichier Excel
+			$filePath = $this->folderPath . '/' . $this->fileName;
+			// Sauvegarder le fichier Excel
+			$writer->save($filePath);
+			return $filePath;
+		}
+	}
+
+	// Exemple d'utilisation :
+	$etu  = new Etudiant(13,"ba","aa","A","a",-1);
+	$data = array_keys($etu->getAttributs());
+
+	$folderPath = 'C:\xampp\htdocs\O-Notes\data'; // Modifier avec le chemin de votre dossier
+	$fileName = 'example.xlsx';
+
+	$exporter = new ExcelExporter($fileName, $folderPath);
+	$exporter->creerColonne($data);
+	$db     = DB::getInstance();
+
+
+	$exporter->remplirColonne($db->selectAll('Etudiant'));	
+	$filePath = $exporter->save();
+
+	echo "Le fichier Excel a été créé avec succès : $filePath";
+
 ?>

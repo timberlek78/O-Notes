@@ -1,6 +1,6 @@
 <?php
 
-include '../../lib/vendor/autoload.php';
+include 'C:\xampp\htdocs\O-Notes\lib\vendor\autoload.php';
 use Dotenv\Dotenv;
 
 class ConfigurationDB
