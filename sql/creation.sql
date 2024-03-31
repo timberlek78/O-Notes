@@ -3,7 +3,7 @@ CREATE SCHEMA IF NOT EXISTS onote;
 DROP TABLE IF EXISTS onote.Semestre CASCADE;
 CREATE TABLE onote.Semestre 
 (
-    numSemestre INT,
+    numSemestre SERIAL,
     PRIMARY KEY (numSemestre)
 );
 

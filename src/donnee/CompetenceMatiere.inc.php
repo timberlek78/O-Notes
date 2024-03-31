@@ -5,9 +5,11 @@ class CompetenceMatiere
 	private int $numcompt;
 	private int $nummatiere;
 
+	private $tabMatiere;
+
 	public function __construct( int $numcompt=-1, int $nummatiere=-1 )
 	{
-		$this->numcompt = $numcompt;
+		$this->numcompt      = $numcompt;
 		$this->nummatiere    = $nummatiere;
 	}
 
@@ -26,7 +28,7 @@ class CompetenceMatiere
 		return $this->nummatiere;
 	}
 
-	private function setNumCompt( int $numcompt ): void
+	private function setId( int $numcompt ): void
 	{
 		$this->numcompt = $numcompt;
 	}

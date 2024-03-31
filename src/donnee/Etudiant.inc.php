@@ -2,7 +2,7 @@
 class Etudiant
 {
 	//clé primaire
-	private int $id;
+	private int $idetudiant;
 
 	//attributs
 	private ?int    $codenip;
@@ -14,8 +14,9 @@ class Etudiant
 	//clé étrangère
 	private int $idillustration;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1 )
+	public function __construct(?int $id = -1, int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1 )
 	{
+		$this->idetudiant      = $id;
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
@@ -26,7 +27,7 @@ class Etudiant
 
 	public function getId(): int
 	{
-		return $this->id;
+		return $this->idetudiant;
 	}
 
 	public function getNIP(): int

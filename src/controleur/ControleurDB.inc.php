@@ -174,7 +174,6 @@
 			// Remplacer les marqueurs de position par les valeurs des attributs
 			$valeursAttributs = array_values($objet->getAttributs());
 			$requeteAvecValeurs = preg_replace_callback('/\?/', function($matches) use (&$valeursAttributs) {
-				// Vérifier si la valeur est un booléen et la remplacer par TRUE ou FALSE
 				$valeur = array_shift($valeursAttributs);
 				if (is_bool($valeur)) {
 					return $valeur ? 'TRUE' : 'FALSE';
@@ -186,7 +185,11 @@
 			// Exécuter la requête d'insertion avec les valeurs des attributs
 			$this->execMaj($requeteAvecValeurs);
 
+			// Récupérer l'ID généré par la base de données
+			$id = $this->connect->lastInsertId();
 
+			// Mettre à jour l'objet avec l'ID généré
+			$objet->setId($id);
 		}
 
 		//Méthode d'update

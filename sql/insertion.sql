@@ -1,9 +1,9 @@
 -- Insertion dans la table Semestre
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
+INSERT INTO onote.Semestre;
+INSERT INTO onote.Semestre;
+INSERT INTO onote.Semestre;
+INSERT INTO onote.Semestre;
+INSERT INTO onote.Semestre;
 
 -- Insertion dans la table Competence
 INSERT INTO onote.Competence (libelle) VALUES

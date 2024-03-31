@@ -41,7 +41,7 @@ class FPE
 		return $this->anneepromofin;
 	}
 
-	public function setIdFpe( int $idfpe ): void
+	public function setId( int $idfpe ): void
 	{
 		$this->idfpe = $idfpe;
 	}

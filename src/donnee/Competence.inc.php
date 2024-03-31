@@ -2,14 +2,18 @@
 	class Competence
 	{
 		//clé primaire
-		private int $id;
+		private int $numcompt;
 
 		//attributs
 		private ?string $libelle;
+		private $tabMatiere;
+		private $db;
 
-		public function __construct( string $libelle="" )
+		public function __construct(?int $id = -1,  string $libelle="" )
 		{
-			$this->libelle = $libelle;
+			$this->numcompt   = $id;
+			$this->libelle    = $libelle;
+			$this->db = DB::getInstance();
 		}
 		public function getAttributs() : array
 		{
@@ -18,7 +22,7 @@
 
 		public function getId(): int
 		{
-			return $this->id;
+			return $this->numcompt;
 		}
 
 		public function getLibelle(): string
