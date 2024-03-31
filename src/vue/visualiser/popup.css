@@ -7,7 +7,7 @@
 	width: var(--largeur);
 	height: var(--hauteur);
 	box-shadow: var(--ombre-value);
-	border-radius: var(--arrondi);
+	border-radius: 0 var(--arrondi) var(--arrondi) var(--arrondi);
 	padding-top: 3.85vh;
 	box-sizing: border-box;
 }
@@ -89,3 +89,18 @@
 body {
 	font-family: 'Urbanist', sans-serif;
 }
+
+.fermeture {
+	color: var(--violet-action);
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	position: absolute;
+	top: 0vh;
+	cursor: pointer;
+	transform: translate(0%,-99%);
+	border-radius: 6px 6px 0 0;
+	width: 2vw;
+	height: 3.4vh;
+	box-shadow: var(--ombre-value);
+}	

@@ -35,14 +35,17 @@ window.addEventListener ( 'load'  , adaptationHauteur );
 /*                                          */
 /*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
 /*                                          */
-const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom' )
+const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom' );
 const popupEtudiant            = document.querySelector    ( '.popup-etudiant'        );
 const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd' );
+const boutonFermer             = document.querySelector    ( '.fermeture'             );
 
 lstCellulesCliquablesNom.forEach( function( cellule )
 {
-	cellule.addEventListener( 'click', ouverturePopupEtudiant );
+	cellule.addEventListener ( 'click', ouverturePopupEtudiant );
 })
+
+boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 
 function ouverturePopupEtudiant ( )
 {
