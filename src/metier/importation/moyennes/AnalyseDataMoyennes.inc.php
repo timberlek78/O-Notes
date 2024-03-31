@@ -1,5 +1,8 @@
 <?php
-//string $promotion, int $semestre, bool $enAlternance
+
+require_once 'AnalyseStructureMoyennes.inc.php';
+require_once __DIR__.'/../../../donnee/IncludeAll.php';
+
 class AnalyseDataMoyennes
 {
 	private array $tableau;
@@ -9,10 +12,9 @@ class AnalyseDataMoyennes
 	private int    $semestre;
 	private bool   $enAlternance;
 
-	__construct( string $nomFichier, string $promotion, int $semestre, bool $enAlternance )
+	public function __construct( array $tableau, string $promotion, int $semestre, bool $enAlternance )
 	{
-		$excel = new LectureExcel( $nomFichier );
-		$this->tableau = $excel->recupererDonnees( );
+		$this->tableau = $tableau;
 		$this->structure = new AnalyseStructureMoyennes( $this->tableau[ 0 ], $semestre );
 		
 		$this->promotion    = $promotion;
@@ -20,29 +22,69 @@ class AnalyseDataMoyennes
 		$this->enAlternance = $enAlternance;
 	}
 
-	public function analyser( )
+	//METODE DE TEST
+	public function analyserCompetences( )
 	{
-		/*$donnees = $this->tableau;
-		$nbLignes = count( $donnees );
-
-		$indDebut = $structure->getIndiceDebutCompetences( );
-		$indFin   = $structure->getIndiceFinCompetences( );
-
-		for( $i = 1; $i < $nbLignes; $i++ )
+		$ensNomCompetence = $this->structure->getCompetences( $this->semestre );
+		echo "Competences : <br>";
+		foreach( $ensNomCompetence as $nomCompetence )
 		{
-			$ligne = $donnees[ $i ];
-			$etudiant = $this->creerEtudiant( $ligne, $structure, $indDebut, $indFin );
-			$etudiant->calculerMoyennes( $ligne, $structure );
-		}*/
+			$competence = $this->creerCompetence( $nomCompetence );
+			echo $competence;
+			echo "<br>";
+
+			$ensNomMatiere = $this->structure->getRessourcesCompetence( $nomCompetence );
+			echo "<ul>Matieres : <br>";
+			foreach( $ensNomMatiere as $nomMatiere )
+			{
+				$matiere = $this->creerMatiere( $nomMatiere );
+				$competenceMatiere = $this->creerCompetenceMatiere( );
+
+				echo "<li style=\"color:blue\">".$matiere."</li>";
+				echo "<li style=\"color:red\">".$competenceMatiere."</li>";
+			}
+			echo "</ul>";
+		}
+		echo "<br>";
+	}
+
+	//METHODE DE TEST
+	public function analyserEtudiants( )
+	{
+		for( $cptEtudiant = 1; $cptEtudiant < count( $this->tableau ); $cptEtudiant++ )
+		{
+			$ligne = $this->tableau[ $cptEtudiant ];
+			$etudiant = $this->creerEtudiant( $ligne );
+			echo $etudiant;
+			echo "<br>";
+
+			$etude = $this->creerEtude( $ligne );
+			echo $etude;
+			echo "<br>";
+
+			$semestre = $this->creerSemestre( $ligne );
+			echo $semestre;
+			echo "<br>";
+
+			$etudiantSemestre = $this->creerEtudiantSemestre( $ligne );
+			echo $etudiantSemestre;
+			echo "<br>";
+
+			$cursus = $this->creerCursus( $ligne );
+			echo $cursus;
+			echo "<br>";
+
+			echo "---<br>";
+		}
 	}
 
 	private function creerEtudiant( array $ligne ) : Etudiant
 	{
 		$etudiant = new Etudiant( );
-		$etudiant->setNIP( $ligne[ $this->structure->getIndiceColonne( "codeNIP" ) ] );
+		$etudiant->setcodenip( $ligne[ $this->structure->getIndiceColonne( "codeNIP" ) ] );
 		$etudiant->setNom( $ligne[ $this->structure->getIndiceColonne( "nom" ) ] );
 		$etudiant->setPrenom( $ligne[ $this->structure->getIndiceColonne( "prenom" ) ] );
-		$etudiant->setParcours( $ligne[ $this->structure->getIndiceColonne( "parcours" ) ] );
+		$etudiant->setParcours( $ligne[ $this->structure->getIndiceColonne( "cursus" ) ] );
 		$etudiant->setPromotion( $this->promotion );
 		return $etudiant;
 	}
@@ -50,8 +92,8 @@ class AnalyseDataMoyennes
 	private function creerEtude( array $ligne ) : Etude
 	{
 		$etude = new Etude( );
-		$etude->setSpecialite( $ligne[ $this->structure->getIndiceColonne( "specialite" ) ] );
-		$etude->setTypeBac( $ligne[ $this->structure->getIndiceColonne( "typeBAC" ) ] );
+		$etude->setSpecialite( $ligne[ $this->structure->getIndiceColonne( "specialite" ) ] ?? "" );
+		$etude->setTypeBac( $ligne[ $this->structure->getIndiceColonne( "typeBAC" ) ] ?? "" );
 		$etude->setIdEtudiant( -1 ); //FIXME: à modifier
 		return $etude;
 	}
@@ -59,7 +101,7 @@ class AnalyseDataMoyennes
 	private function creerSemestre( array $ligne ) : Semestre
 	{
 		$semestre = new Semestre( );
-		$semestre->setNumSemestre( $this->semestre );
+		$semestre->setnumsemestre( $this->semestre );
 		return $semestre;
 	}
 
@@ -98,6 +140,7 @@ class AnalyseDataMoyennes
 		$matiere = new Matiere( );
 		$matiere->setAlternant( $this->enAlternance );
 		$matiere->setLibelle( $nomMatiere );
+		return $matiere;
 	}
 
 	private function creerCompetenceMatiere( ) : CompetenceMatiere
@@ -105,6 +148,7 @@ class AnalyseDataMoyennes
 		$competenceMatiere = new CompetenceMatiere( );
 		$competenceMatiere->setNumCompt( -1 ); //FIXME: à modifier
 		$competenceMatiere->setNumMatiere( -1 ); //FIXME: à modifier
+		return $competenceMatiere;
 	}
 }
 ?>

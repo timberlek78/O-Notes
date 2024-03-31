@@ -6,10 +6,12 @@
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 
-	require '../../lib/vendor/autoload.php';
+	require __DIR__.'/../../lib/vendor/autoload.php';
 
 	include_once '../metier/importation/LectureExcel.inc.php';
-	require '../metier/OutilsTableau.inc.php';
+	include_once '../metier/importation/moyennes/AnalyseDataMoyennes.inc.php';
+
+	/*require '../metier/OutilsTableau.inc.php';*/
 
 	$fichierValide = isset( $_FILES[ 'fichier' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
 
@@ -24,8 +26,13 @@
 			$fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
 			$excel = new LectureExcel( $fichier );
 			$data = $excel->recupererDonnees( );
-			$tableauHtml = genererTableauHtml( $data );
-			echo $tableauHtml;
+
+			$analyse = new AnalyseDataMoyennes( $data, "2024-test", 1, true );
+			$analyse->analyserCompetences( );
+			$analyse->analyserEtudiants( );
+
+			/*$tableauHtml = genererTableauHtml( $data );
+			echo $tableauHtml;*/
 		}
 
 		fclose( $handle );

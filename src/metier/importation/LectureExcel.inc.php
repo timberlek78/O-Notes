@@ -1,6 +1,6 @@
 <?php
 
-require '../../../lib/vendor/autoload.php'; // Inclure l'autoloader de Composer
+require __DIR__.'/../../../lib/vendor/autoload.php'; // Inclure l'autoloader de Composer
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
