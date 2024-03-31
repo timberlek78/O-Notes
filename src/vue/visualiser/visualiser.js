@@ -51,6 +51,19 @@ function ouverturePopupEtudiant ( )
 {
 	popupEtudiant.classList.add ( 'ouvert' );
 	tabEtudiant  .classList.add ( 'cache'  );
+
+	// Récupération du nom pour le placer dans le popup
+	const popupPrenom = document.getElementById ( 'popup-prenom' );
+	const popupNom    = document.getElementById ( 'popup-nom'    );
+
+	const parties = this.textContent.split('\n\t\t\t\t\t\t\t');
+
+	const nomsPrenoms = parties.map(partie => partie.trim());
+
+	popupPrenom.innerText = nomsPrenoms[2];
+	popupNom   .innerText = nomsPrenoms[1];
+
+	console.log('Prenom : ' + prenom + ' Nom : ' + nom)
 	
 }
 
