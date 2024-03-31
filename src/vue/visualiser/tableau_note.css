@@ -56,29 +56,28 @@
 #bin2 {
 	background-color: #F79152;
 	color: white;
-
 }
 
 #bin3 {
 	background-color: #FEC000;
 	color: white;
-
 }
 
 #bin4 {
 	background-color: #91CF50;
 	color: white;
-
 }
 
 #bin5 {
 	background-color: #08348F;
 	color: white;
-
 }
 
 #bin6 {
 	background-color: #7B02BE;
 	color: white;
+}
 
+.bin:hover {
+	opacity: 50%;
 }
