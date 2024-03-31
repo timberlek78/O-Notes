@@ -83,7 +83,7 @@ function fermeturePopupEditionEtudiant ( )
 /*   BAR DE NAVIGATION DES SEMSETRES   */
 /*                                     */
 
-const ensBoutonsSemestre = document.querySelectorAll ( '.btn-pied' );
+const ensBoutonsSemestre = document.querySelectorAll ( '.semestre' );
 
 console.log (ensBoutonsSemestre)
 
