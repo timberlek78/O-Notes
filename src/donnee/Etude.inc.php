@@ -18,7 +18,7 @@ class Etude
 		$this->idetudiant = $idetudiant;
 	}
 
-	public function getEdEtude(): int
+	public function getIdEtude(): int
 	{
 		return $this->idetude;
 	}
@@ -48,7 +48,7 @@ class Etude
 		$this->specialite = $specialite;
 	}
 
-	public function setTypeBsac( string $typebac ): void
+	public function setTypeBac( string $typebac ): void
 	{
 		$this->typebac = $typebac;
 	}
@@ -56,6 +56,11 @@ class Etude
 	public function setIdEtudiant( int $idetudiant ): void
 	{
 		$this->idetudiant = $idetudiant;
+	}
+
+	public function __toString(): string
+	{
+		return "Etude : specialite=".$this->specialite.", typebac=".$this->typebac.", idetudiant=".$this->idetudiant;
 	}
 }
 ?>

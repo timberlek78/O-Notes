@@ -13,9 +13,14 @@ class Semestre
 		return $this->numsemestre;
 	}
 
-	private function setnumsemestre( int $numsemestre ): vonumsemestre
+	public function setnumsemestre( int $numsemestre )
 	{
 		$this->numsemestre = $numsemestre;
+	}
+
+	public function __toString( ): string
+	{
+		return "Semestre : numsemestre=$this->numsemestre";
 	}
 }
 ?>

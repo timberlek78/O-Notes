@@ -12,7 +12,7 @@ class Matiere
 
 	public function __construct( float $moyenne=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
 	{
-		$this->moyenne      = $moyenne;
+		$this->moyenne   = $moyenne;
 		$this->coeff     = $coeff;
 		$this->alternant = $alternant;
 		$this->libelle   = $libelle;
@@ -43,29 +43,34 @@ class Matiere
 		return $this->libelle;
 	}
 
-	private function setnummatiere( int $nummatiere ): vonummatiere
+	private function setnummatiere( int $nummatiere )
 	{
 		$this->nummatiere = $nummatiere;
 	}
 
-	public function setmoyenne( floatval $moyenne ): vonummatiere
+	public function setmoyenne( floatval $moyenne )
 	{
 		$this->moyenne = $moyenne;
 	}
 
-	public function setCoeff( int $coeff ): vonummatiere
+	public function setCoeff( int $coeff )
 	{
 		$this->coeff = $coeff;
 	}
 
-	public function setAlternant( boolval $alternant ): vonummatiere
+	public function setAlternant( bool $alternant )
 	{
 		$this->alternant = $alternant;
 	}
 
-	public function setLibelle( string $libelle ): vonummatiere
+	public function setLibelle( string $libelle )
 	{
 		$this->libelle = $libelle;
+	}
+
+	public function __toString(): string
+	{
+		return "Matiere : moyenne = ".$this->moyenne.", coeff = ".$this->coeff.", alternant = ".$this->alternant.", libelle = ".$this->libelle;
 	}
 }
 ?>

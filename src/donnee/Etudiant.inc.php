@@ -93,5 +93,10 @@ class Etudiant
 	{
 		$this->idillustration = $idillustration;
 	}
+
+	public function __toString(): string
+	{
+		return "Etudiant : codenip=".$this->codenip.", nom=".$this->nom.", prenom=".$this->prenom.", parcours=".$this->parcours.", promotion=".$this->promotion.", idillustration=".$this->idillustration;
+	}
 }
 ?>

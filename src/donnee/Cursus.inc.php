@@ -54,5 +54,10 @@ class Cursus
 	{
 		$this->admission = $admission;
 	}
+
+	public function __toString( ): string
+	{
+		return "Cursus : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, numcompt=$this->numcompt, admission=$this->admission";
+	}
 }
 ?>

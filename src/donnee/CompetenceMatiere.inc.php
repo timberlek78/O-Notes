@@ -21,14 +21,19 @@ class CompetenceMatiere
 		return $this->nummatiere;
 	}
 
-	private function setNumCompt( int $numcompt ): void
+	public function setNumCompt( int $numcompt ): void
 	{
 		$this->numcompt = $numcompt;
 	}
 
-	private function setNumMatiere( int $nummatiere ): void
+	public function setNumMatiere( int $nummatiere ): void
 	{
 		$this->nummatiere = $nummatiere;
+	}
+
+	public function __toString(): string
+	{
+		return "CompetenceMatiere : numcompt = ".$this->numcompt.", nummatiere = ".$this->nummatiere;
 	}
 }
 ?>

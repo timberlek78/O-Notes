@@ -31,5 +31,10 @@ class Competence
 	{
 		$this->libelle = $libelle;
 	}
+
+	public function __toString(): string
+	{
+		return "Competence : libelle = ".$this->libelle;
+	}
 }
 ?>

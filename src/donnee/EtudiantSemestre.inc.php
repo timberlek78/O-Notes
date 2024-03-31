@@ -68,5 +68,10 @@ class EtudiantSemestre
 	{
 		$this->nbabsences = $nbabsences;
 	}
+
+	public function __toString(): string
+	{
+		return "EtudiantSemestre : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
+	}
 }
 ?>
