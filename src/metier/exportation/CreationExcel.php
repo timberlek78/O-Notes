@@ -1,131 +1,109 @@
 <?php
-	require '../../../lib/vendor/autoload.php'; // Inclure l'autoloader de PhpSpreadsheet
+require '../../../lib/vendor/autoload.php';
 
-	include '../../controleur/ControleurDB.inc.php';
-	include '../../donnee/Competence.inc.php';
-	include '../../donnee/CompetenceMatiere.inc.php';
-	include '../../donnee/Cursus.inc.php';
-	include '../../donnee/Etude.inc.php';
-	include '../../donnee/Etudiant.inc.php';
-	include '../../donnee/EtudiantSemestre.inc.php';
-	include '../../donnee/FPE.inc.php';
-	include '../../donnee/Illustration.inc.php';
-	include '../../donnee/Matiere.inc.php';
-	include '../../donnee/Possede.inc.php';
-	include '../../donnee/Semestre.inc.php';
-	include '../../donnee/Utilisateur.inc.php';
-	
-	include '../ONotes.php';
+include '../../controleur/ControleurDB.inc.php';
+include '../../donnee/Competence.inc.php';
+include '../../donnee/CompetenceMatiere.inc.php';
+include '../../donnee/Cursus.inc.php';
+include '../../donnee/Etude.inc.php';
+include '../../donnee/Etudiant.inc.php';
+include '../../donnee/EtudiantSemestre.inc.php';
+include '../../donnee/FPE.inc.php';
+include '../../donnee/Illustration.inc.php';
+include '../../donnee/Matiere.inc.php';
+include '../../donnee/Possede.inc.php';
+include '../../donnee/Semestre.inc.php';
+include '../../donnee/Utilisateur.inc.php';
 
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL & ~E_WARNING);
+include '../ONotes.php';
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-	use PhpOffice\PhpSpreadsheet\Spreadsheet;
-	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+class ExcelExporter
+{
+	private $spreadsheet;
+	private $nomFichier;
+	private $cheminDossier;
+	private $oNote;
 
-	class ExcelExporter
+	public function __construct($nomFichier, $cheminDossier)
 	{
-		private $spreadsheet;
-		private $fileName;
-		private $folderPath;
-		private $oNote;
-		private $borders;
+		$this->spreadsheet = new Spreadsheet();
+		$this->nomFichier = $nomFichier;
+		$this->cheminDossier = $cheminDossier;
+		$this->oNote = new ONote();
+	}
 
-		public function __construct($fileName, $folderPath)
-		{
-			$this->spreadsheet = new Spreadsheet();
-			$this->fileName    = $fileName;
-			$this->folderPath  = $folderPath;
-			$this->oNote       = new ONote();
-		}
+	public function creerFeuilleEtudiant($donneesEtudiants)
+	{
+		$feuille = $this->spreadsheet->getActiveSheet();
+		$ligne = 2;
 
-		public function getONotes()
-		{
-			return $this->oNote;
-		}
-
-		public function creerColonneEtudiant($data,$colonne ="A")
-		{
-			$sheet = $this->spreadsheet->getActiveSheet(); 			
-			for ($i = 1; $i<count($data) - 2; $i++) $sheet->setCellValue(chr(ord($colonne) + $i)."1", $data[$i]);
-		}
-
-		public function remplirColonneEtudiant($data)
-		{
-			$sheet = $this->spreadsheet->getActiveSheet();
-			$ligne = 2; 
-			for($i = 0; $i<count($data); $i++)
-			{
-				$sheet->setCellValue("A".$ligne, $data[$i]->getNIP     ());
-				$sheet->setCellValue("B".$ligne, $data[$i]->getNom     ());
-				$sheet->setCellValue("C".$ligne, $data[$i]->getPrenom  ());
-				$sheet->setCellValue("D".$ligne, $data[$i]->getParcours());
-
-				$ligne++;
+		$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributs()));
+		foreach ($donneesEtudiants as $index => $etudiant) {
+			$colonne = 'A';
+			foreach ($etudiant->getAttributs() as $attribut) {
+				$feuille->setCellValue($colonne . $ligne, $attribut);
+				$colonne++;
 			}
-		}
-
-		public function creerColonneCompetence($data)
-		{
-			$colonne = "G";
-			$sheet = $this->spreadsheet->getActiveSheet();
-			for ($i = 0; $i<count($data); $i++) $sheet->setCellValue(chr(ord($colonne) + $i)."1", $data[$i]->getLibelle());
-		}
-
-		public function remplirColonneCompetence ($tabCompetence, $tabEtudiant)
-		{
-			$sheet = $this->spreadsheet->getActiveSheet();
-			$ligne = 2;	
-			$colonne = "G";
-			for($i = 0; $i<count($tabCompetence); $i++)
-			{
-				$colonne = chr(ord($colonne) + $i);
-				$ligne = 2;
-				for($j = 0; $j<count($tabEtudiant); $j++)
-				{
-					echo $colonne.$ligne;
-					$sheet->setCellValue($colonne.$ligne,$this->oNote->selectAdmis($tabCompetence[$i], $tabEtudiant[$j], $this->oNote->selectSemestreById(1)));
-					$ligne++;
-				}
-			}
-		}
-
-		public function save()
-		{
-			$writer = new Xlsx($this->spreadsheet);
-			// Créer le chemin complet du fichier Excel
-			$filePath = $this->folderPath . '/' . $this->fileName;
-			// Sauvegarder le fichier Excel
-			$writer->save($filePath);
-			return $filePath;
+			$ligne++;
 		}
 	}
 
-	$db = DB::getInstance();
-
-	// Exemple d'utilisation :
-	$etu  = new Etudiant(-1,13,"ba","aa","A","a",-1);
-	$data = array_keys($etu->getAttributs());
-
-	$folderPath = 'C:\xampp\htdocs\O-Notes\data'; // Modifier avec le chemin de votre dossier
-	$fileName = 'example.xlsx';
-
-	$exporter = new ExcelExporter    ($fileName, $folderPath);
-	$exporter->creerColonneEtudiant  ($data);
-
-	$exporter->remplirColonneEtudiant($exporter->getONotes()->getEnsEtudiant());
-
-	$exporter->creerColonneCompetence  ($exporter->getONotes()->getEnsCompetence());
-
-	//var_dump($exporter->getONotes()->getEnsEtudiant());
-
-	$exporter->remplirColonneCompetence($exporter->getONotes()->getEnsCompetence(), $exporter->getONotes()->getEnsEtudiant());
+	public function creerColonneEtudiant($data,$colonne ="A")
+	{
+		$sheet = $this->spreadsheet->getActiveSheet(); 			
+		for ($i = 1; $i<count($data) - 2; $i++) $sheet->setCellValue(chr(ord($colonne) + $i)."1", $data[$i]);
+	}
 
 
-	$filePath = $exporter->save();
+	public function creerFeuilleCompetence($donneesCompetences, $donneesEtudiants)
+	{
+		$feuille = $this->spreadsheet->getActiveSheet();
+		$colonne = 'G';
+		foreach ($donneesCompetences as $index => $competence) {
+			$feuille->setCellValue($colonne . '1', $competence->getLibelle());
+			$ligne = 2;
+			foreach ($donneesEtudiants as $etudiant) {
+				$feuille->setCellValue($colonne . $ligne, $this->oNote->selectAdmis($competence, $etudiant, $this->oNote->selectById(1, $this->oNote->getEnsSemestre())));
+				$ligne++;
+			}
+			$colonne++;
+		}
+	}
 
-	echo "Le fichier Excel a été créé avec succès : $filePath";
+	public function enregistrer()
+	{
+		$writer        = new Xlsx($this->spreadsheet);
+		$cheminFichier = $this->cheminDossier . '/' . $this->nomFichier;
+		$writer->save($cheminFichier);
+		return $cheminFichier;
+	}
+}
 
+class GenerateurDonnees
+{
+	private $oNote;
+
+	public function __construct()
+	{
+		$this->oNote = new ONote();
+	}
+
+	public function genererDonneesEtudiant  (){ return $this->oNote->getEnsEtudiant  (); }
+	public function genererDonneesCompetence(){ return $this->oNote->getEnsCompetence(); }
+}
+
+// Utilisation
+$generateurDonnees  = new GenerateurDonnees();
+$donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant();
+$donneesCompetences = $generateurDonnees->genererDonneesCompetence();
+
+$exportateur = new ExcelExporter('exemple.xlsx', 'C:\xampp\htdocs\O-Notes\data');
+$exportateur->creerFeuilleEtudiant($donneesEtudiants);
+$exportateur->creerFeuilleCompetence($donneesCompetences, $donneesEtudiants);
+$cheminFichier = $exportateur->enregistrer();
+
+echo "Le fichier Excel a été créé avec succès : $cheminFichier";
 ?>

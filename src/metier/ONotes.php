@@ -20,6 +20,7 @@ class ONote
 		$this->ensCursus            = $db->selectAll("Cursus"           );
 		$this->ensEtude             = $db->selectAll("Etude"            );
 		$this->ensEtudiant          = $db->selectAll("Etudiant"         );
+		attribuerMoyenneEtudiant($this->ensEtudiant);
 		$this->ensEtudiantSemestre  = $db->selectAll("EtudiantSemestre" );
 		$this->ensFPE               = $db->selectAll("FPE"              );
 		$this->ensIllustration      = $db->selectAll("Illustration"     );
@@ -30,18 +31,45 @@ class ONote
 	} 
 
 	// Getters
-	public function getEnsCompetence       () { return $this->ensCompetence;        }
-	public function getEnsCompetenceMatiere() { return $this->ensCompetenceMatiere; }
-	public function getEnsCursus           () { return $this->ensCursus;            }
-	public function getEnsEtude            () { return $this->ensEtude;             }
-	public function getEnsEtudiant         () { return $this->ensEtudiant;          }
-	public function getEnsEtudiantSemestre () { return $this->ensEtudiantSemestre;  }
-	public function getEnsFPE              () { return $this->ensFPE;               }
-	public function getEnsIllustration     () { return $this->ensIllustration;      }
-	public function getEnsMatiere          () { return $this->ensMatiere;           }
-	public function getEnsPossede          () { return $this->ensPossede;           }
-	public function getEnsSemestre         () { return $this->ensSemestre;          }
-	public function getEnsUtilisateur      () { return $this->ensUtilisateur;       }
+	public function getEnsCompetence       () : array { return $this->ensCompetence;        }
+	public function getEnsCompetenceMatiere() : array { return $this->ensCompetenceMatiere; }
+	public function getEnsCursus           () : array { return $this->ensCursus;            }
+	public function getEnsEtude            () : array { return $this->ensEtude;             }
+	public function getEnsEtudiant         () : array { return $this->ensEtudiant;          }
+	public function getEnsEtudiantSemestre () : array { return $this->ensEtudiantSemestre;  }
+	public function getEnsFPE              () : array { return $this->ensFPE;               }
+	public function getEnsIllustration     () : array { return $this->ensIllustration;      }
+	public function getEnsMatiere          () : array { return $this->ensMatiere;           }
+	public function getEnsPossede          () : array { return $this->ensPossede;           }
+	public function getEnsSemestre         () : array { return $this->ensSemestre;          }
+	public function getEnsUtilisateur      () : array { return $this->ensUtilisateur;       }
+
+	private function attribuerMoyenneEtudiant($tab)
+	{
+		foreach ($tab as $index => $etudiant) 
+		{
+			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
+		}
+	}
+
+	public function determinerMoyenneCompetenceEtudiant($id) //determine le tab des moyennes de l'étudiant paser en parametre
+	{
+		$tab = $this->getEnsCursus();
+		$tabMoyenne = array();
+		for($i = 0; $i<count($tab); $i++) // Parcours de la table Cursus
+			if($tab[$i]->getIdEtudiant() == $id)
+			{
+				$somme      = 0;
+				$competence = $this->selectById($tab[$i]->getNumCompt(), $this->getEnsCompetence());
+				$tabMatiere = $competence->getMatieres();
+				
+				for($j = 0; $j<count($tabMatiere); $j++) $somme += $tabMatiere[$j]->getmoyenne();
+
+				$tabMoyenne[$competence->getLibelle()] = $somme / count($tabMatiere);
+			}
+		return $tabMoyenne;
+	}
+
 
 
 
@@ -49,15 +77,15 @@ class ONote
 	/*  Méthode de recherche   */
 	/***************************/
 
-	public function setTabMatiere($id) : array
+	public function getTabMatiere($id) : array
 	{
 		$taille     = count($this->getEnsCompetenceMatiere());
 		$tab        = $this->getEnsCompetenceMatiere();
 		$tabMatiere = array();
 		
 		for($i = 0;$i<$taille;$i++)
-			if($tab[$i]->getNumMatiere() == $id) $tabMatiere[] = $tab[$i];
-		
+			if($tab[$i]->getNumMatiere() == $id)
+				$tabMatiere[] = $this->selectById($tab[$i]->getNumMatiere(), $this->getEnsMatiere());
 		return $tabMatiere;
 	}
 
@@ -75,15 +103,12 @@ class ONote
 		return "";
 	}
 
-	public function selectSemestreById(int $id)
+	public function selectById(int $id, $tab)
 	{
-		$taille = count( $this->getEnsSemestre() );
-		$tab    = $this->getEnsSemestre();
-		for($i = 0; $i<$taille;$i++)
-		{
-			if($tab[$i]->getId() == $id) return $tab[$i];
-		}
+		$taille = count( $tab );
+		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
 	}
+
 
 }
 ?>

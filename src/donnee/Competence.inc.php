@@ -1,12 +1,16 @@
 <?php
+
 	class Competence
 	{
 		//clé primaire
 		private int $numcompt;
 
-		//attributs
+		//attributs BADO
 		private ?string $libelle;
+
+		//attribut PHP
 		private $tabMatiere;
+		private $oNote;
 		private $db;
 
 		public function __construct(?int $id = -1,  string $libelle="" )
@@ -23,6 +27,16 @@
 		public function getId(): int
 		{
 			return $this->numcompt;
+		}
+
+		public function getMatieres() : array
+		{
+			return $this->tabMatiere;
+		}
+
+		public function setMatieres($tab)
+		{
+			$this->tabMatiere = $tab;
 		}
 
 		public function getLibelle(): string
