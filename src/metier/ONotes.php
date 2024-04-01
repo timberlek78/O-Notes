@@ -14,7 +14,6 @@ class ONote
 	public function __construct()
 	{
 		$db = DB::getInstance();
-
 		$this->ensCompetence        = $db->selectAll('Competence');
 		$this->ensCompetenceMatiere = $db->selectAll('CompetenceMatiere');
 		$this->ensCursus            = $db->selectAll("Cursus"           );
