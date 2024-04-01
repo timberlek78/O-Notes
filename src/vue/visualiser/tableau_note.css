@@ -18,6 +18,10 @@
 	table-layout: fixed;
 }
 
+.tableau-note-etd.fermer {
+	display: none;
+}
+
 .tableau-note-etd th {
 	font-weight: normal;
 	border: none;

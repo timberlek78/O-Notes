@@ -1,0 +1,75 @@
+.popup-competence-etd {
+	display: none;
+	box-shadow: var(--ombre-value);
+	border-radius: 0 var(--arrondi) var(--arrondi) var(--arrondi);
+	box-sizing: border-box;
+}
+
+.popup-competence-etd.ouvert {
+	display: block;
+}
+
+.liste-competence {
+	width: var(--largeurGrandTableau);
+	height: var(--hauteurGrandTableau);
+	background-color: white;
+	border-radius: 0 var(--arrondi) var(--arrondi) var(--arrondi);
+	box-shadow: var(--ombre-value);
+	overflow: auto;
+}
+
+.tableau-competence-etd {
+	max-width: var(--largeurGrandTableau);
+	max-height: var(--hauteurGrandTableau);
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.tableau-competence-etd th {
+	font-weight: normal;
+	border: none;
+	background-color: var(--selectionne-couleur);
+	color: white;
+	padding: 1.5vh 0;
+	position: sticky;
+	top: 0;
+	background-clip: padding-box;
+}
+
+.tableau-competence-etd td {
+	padding: 1.5vh 0;
+	max-height: 0px;
+	text-align: center;
+}
+
+.tableau-competence-etd th:not(:last-child),
+.tableau-competence-etd td:not(:last-child) {
+	border-right: 0.38vw solid white;
+}
+
+.tableau-competence-etd tr{
+	background-color: var(--selectionne-impair);
+}
+
+.tableau-competence-etd tr:nth-child(even) {
+	background-color: var(--selectionne-pair);
+}
+
+.fermetureCompt {
+	color: white;
+	border: none;
+	background-color: var(--selectionne-couleur);
+	cursor: pointer;
+	position: absolute;
+	cursor: pointer;
+	transform: translate(-75%,0%);
+	border-radius: 6px 0 0 6px;
+	width: 2vw;
+	height: 5vh;
+	box-shadow: var(--ombre-value);
+}
+
+.conteneur-image-action {
+	height: 19px;
+}
