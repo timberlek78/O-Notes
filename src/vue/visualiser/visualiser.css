@@ -36,7 +36,7 @@
 
 .tableau-nom-etd th {
 	font-weight: normal;
-	background-color: var(--violet-moyen);
+	background-color: var(--selectionne-couleur);
 	color: white;
 	padding: 1.5vh 0;
 	position: sticky;
@@ -56,11 +56,11 @@
 }
 
 .tableau-nom-etd tr{
-	background-color: var(--classic-impair);
+	background-color: var(--selectionne-impair);
 }
 
 .tableau-nom-etd tr:nth-child(even) {
-	background-color: var(--classic-pair);
+	background-color: var(--selectionne-pair);
 }
 
 .cellule-cliquable-nom {
