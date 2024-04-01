@@ -15,17 +15,26 @@ table2.addEventListener ( 'scroll', function ( )
 	table1.scrollTop = table2.scrollTop;
 } );
 
-
 /* Fonction qui permet d'adapter la hauteur de l'entête du tableau selon la hauteur maximal entre les deux tableaux */
 function adaptationHauteur ( )
 {
-	const hauteurTableauNom  = document.querySelector ( '.tableau-nom-etd thead'  );
-	const hauteurTableauNote = document.querySelector ( '.tableau-note-etd thead' );
+	const hauteurTableaux    = document.querySelectorAll ( ' thead'          );
+	const hauteurCroixCompet = document.querySelectorAll ( '.fermetureCompt' );
 
-	const hauteurMax = Math.max ( hauteurTableauNom.clientHeight, hauteurTableauNote.clientHeight );
+	// Permet de définir la hateur max parmi tous les tableaux de la page
+	const hauteurMax = Math.max ( ...Array.from ( hauteurTableaux ).map ( table => table.clientHeight ) );
 
-	hauteurTableauNom .style.height = hauteurMax + 'px';
-	hauteurTableauNote.style.height = hauteurMax + 'px';
+	// Défini la taille aux en-tete du tableau
+	hauteurTableaux.forEach ( table =>
+	{
+		table.style.height = hauteurMax + 'px';
+	} );
+
+	// Defini la taille aux croix pour fermer les popup du détail des compétences
+	hauteurCroixCompet.forEach ( croix =>
+	{
+		croix.style.height = hauteurMax + 'px';
+	} );
 }
 
 /* Déclanche la méthode lors du chargement de la page et du resize de la page */
@@ -43,7 +52,7 @@ const boutonFermer             = document.querySelector    ( '.fermeture'       
 lstCellulesCliquablesNom.forEach( function( cellule )
 {
 	cellule.addEventListener ( 'click', ouverturePopupEtudiant );
-})
+} );
 
 boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 
@@ -73,7 +82,6 @@ btnAnnuler.addEventListener ( 'click', fermeturePopupEditionEtudiant );
 
 function ouverturePopupEditionEtudiant ( )
 {
-	console.log('edition')
 	popupEditionEtudiant.classList.add ('ouvert');
 }
 
@@ -87,8 +95,6 @@ function fermeturePopupEditionEtudiant ( )
 /*                                     */
 
 const ensBoutonsSemestre = document.querySelectorAll ( '.semestre' );
-
-console.log (ensBoutonsSemestre)
 
 ensBoutonsSemestre.forEach ( function ( bouton )
 {
