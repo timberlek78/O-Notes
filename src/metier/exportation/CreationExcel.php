@@ -42,9 +42,12 @@ class ExcelExporter
 
 		$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributs()));
 		foreach ($donneesEtudiants as $index => $etudiant) {
-			$colonne = 'A';
-			foreach ($etudiant->getAttributs() as $attribut) {
-				$feuille->setCellValue($colonne . $ligne, $attribut);
+			$colonne     = 'A';
+			$tabAttribut = array_values($etudiant ->getAttributs());
+			for ($i = 0; $i < count($tabAttribut) - 3; $i++) 
+			{
+				if(is_array( $tabAttribut[$i] )) break;
+				$feuille->setCellValue($colonne . $ligne, $tabAttribut[$i]);
 				$colonne++;
 			}
 			$ligne++;
@@ -70,6 +73,24 @@ class ExcelExporter
 				$ligne++;
 			}
 			$colonne++;
+		}
+	}
+
+	public function creerColonneMoyenne($tab)
+	{
+		$feuille = $this->spreadsheet->getActiveSheet();
+		$ligne   = 2;
+		foreach($tab as $etudiant) 
+		{
+			$feuille->setCellValue("M".$ligne, $etudiant->getUe      ());
+			$feuille->setCellValue("N".$ligne, $etudiant->getMoyenneG());
+			$colonne       = "O";
+			$indiceColonne =  0 ;
+			foreach($etudiant->getTabMoyenne() as $key => $value)
+			{
+				$feuille->setCellValue( chr( ord($colonne) + $indiceColonne).$ligne, $value);
+				$indiceColonne++;
+			}
 		}
 	}
 
@@ -101,8 +122,9 @@ $donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
 $exportateur = new ExcelExporter('exemple.xlsx', 'C:\xampp\htdocs\O-Notes\data');
-$exportateur->creerFeuilleEtudiant($donneesEtudiants);
+$exportateur->creerFeuilleEtudiant  (                     $donneesEtudiants);
 $exportateur->creerFeuilleCompetence($donneesCompetences, $donneesEtudiants);
+$exportateur->creerColonneMoyenne   (                     $donneesEtudiants);
 $cheminFichier = $exportateur->enregistrer();
 
 echo "Le fichier Excel a été créé avec succès : $cheminFichier";

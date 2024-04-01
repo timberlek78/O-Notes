@@ -20,7 +20,6 @@ class ONote
 		$this->ensCursus            = $db->selectAll("Cursus"           );
 		$this->ensEtude             = $db->selectAll("Etude"            );
 		$this->ensEtudiant          = $db->selectAll("Etudiant"         );
-		attribuerMoyenneEtudiant($this->ensEtudiant);
 		$this->ensEtudiantSemestre  = $db->selectAll("EtudiantSemestre" );
 		$this->ensFPE               = $db->selectAll("FPE"              );
 		$this->ensIllustration      = $db->selectAll("Illustration"     );
@@ -28,6 +27,9 @@ class ONote
 		$this->ensPossede           = $db->selectAll("Possede"          );
 		$this->ensSemestre          = $db->selectAll("Semestre"         );
 		$this->ensUtilisateur       = $db->selectAll("Utilisateur"      );
+
+		$this->attribuerMatiereCompetence($this->ensCompetence);
+		$this->attribuerMoyenneEtudiant  ($this->ensEtudiant  );
 	} 
 
 	// Getters
@@ -49,6 +51,16 @@ class ONote
 		foreach ($tab as $index => $etudiant) 
 		{
 			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
+			$etudiant->calculeMoyenneG();
+			$etudiant->determinerUe   ();
+		}
+	}
+
+	private function attribuerMatiereCompetence($tab)
+	{
+		foreach($tab as $competence)
+		{
+			$competence->setTabMatieres($this->getTabMatiere($competence->getId()));
 		}
 	}
 
@@ -80,7 +92,7 @@ class ONote
 	public function getTabMatiere($id) : array
 	{
 		$taille     = count($this->getEnsCompetenceMatiere());
-		$tab        = $this->getEnsCompetenceMatiere();
+		$tab        =       $this->getEnsCompetenceMatiere();
 		$tabMatiere = array();
 		
 		for($i = 0;$i<$taille;$i++)

@@ -34,7 +34,7 @@
 			return $this->tabMatiere;
 		}
 
-		public function setMatieres($tab)
+		public function setTabMatieres($tab)
 		{
 			$this->tabMatiere = $tab;
 		}
