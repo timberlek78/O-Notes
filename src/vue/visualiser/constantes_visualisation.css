@@ -6,5 +6,9 @@
 
 	--classic-impair: rgba(150, 82, 122, 0.05);
 	--classic-pair  : rgba(150, 82, 122, 0.25);
-}
+	--clasic-couleur: rgba(150, 82, 122, 1);
 
+	--selectionne-couleur: rgba(150, 82, 122, 1);
+	--selectionne-impair : rgba(150, 82, 122, 0.05);
+	--selectionne-pair   : rgba(150, 82, 122, 0.25);
+}
