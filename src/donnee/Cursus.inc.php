@@ -3,7 +3,7 @@ class Cursus
 {
 	//clé primaire
 	private int     $codenip;
-	private int     $numSemestre;
+	private int     $numsemestre;
 	private string  $idcompetence;
 	private string  $annee;
 	private ?string $admission;
@@ -28,7 +28,7 @@ class Cursus
 
 	public function getNumSemestre(): int
 	{
-		return $this->numSemestre;
+		return $this->numsemestre;
 	}
 
 	public function getIdCompetence(): string

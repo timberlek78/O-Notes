@@ -1,11 +1,12 @@
 <?php
 
-class EstNote {
+class EstNote 
+{
     private $codenip;
     private $idmatiere;
     private $moyenne;
 
-    public function __construct($codenip = -1, $idmatiere = "", $moyenne = -1.0) {
+    public function __construct($codenip = -1, $idmatiere = "", $moyenne = -1) {
         $this->codenip = $codenip;
         $this->idmatiere = $idmatiere;
         $this->moyenne = $moyenne;

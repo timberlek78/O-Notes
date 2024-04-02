@@ -29,6 +29,11 @@ class CompetenceMatiere
 		return $this->idcompetence;
 	}
 
+	public function getAnnee(): string
+	{
+		return $this->annee;
+	}
+
 	public function getIdMatiere(): string
 	{
 		return $this->idmatiere;

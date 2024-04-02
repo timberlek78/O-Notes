@@ -14,6 +14,7 @@ class Etudiant
 
 	private $tabMoyenne;
 
+	private $tabCursus;
 	private $Ue;
 	private $moyenneG;
 
@@ -58,9 +59,30 @@ class Etudiant
 		return $this->idillustration;
 	}
 
+	public function getTabCursus() : array
+	{
+		return $this->tabCursus;
+	}
+
 	public function getAttributs() : array
 	{
 		return get_object_vars($this);
+	}
+
+	public function getAttributExcel() : array
+	{
+		$tab = array();
+		$tab['Code NIP'] = $this->codenip;
+		$tab['Nom']      = $this->nom;
+		$tab['Prenom']   = $this->prenom;
+		$tab['Parcours'] = $this->parcours;
+
+		return $tab;
+	}
+
+	public function setTabCursus(array $tabCursus)
+	{
+		$this->tabCursus = $tabCursus;
 	}
 
 	public function setcodeNIP( int $codeNIP ): void

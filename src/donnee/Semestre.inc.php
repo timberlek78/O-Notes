@@ -2,7 +2,7 @@
 class Semestre
 {
 	//clé primaire
-	private int $numSemestre;
+	private int $numsemestre;
 
 	public function __construct(?int $numsemestre = -1)
 	{
@@ -10,11 +10,11 @@ class Semestre
 	}
 
 	public function getAttributs() : array { return get_object_vars($this);}
-	public function getId       () : int   { return $this->numSemestre;    }
+	public function getId       () : int   { return $this->numsemestre;    }
 
 	private function setnumSemestre( int $numSemestre )
 	{
-		$this->numSemestre = $numSemestre;
+		$this->numsemestre = $numSemestre;
 	}
 }
 ?>
