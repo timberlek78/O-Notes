@@ -1,126 +1,130 @@
 CREATE SCHEMA IF NOT EXISTS onote;
 
-DROP TABLE IF EXISTS onote.Semestre CASCADE;
-CREATE TABLE onote.Semestre 
-(
-    numSemestre SERIAL,
-    PRIMARY KEY (numSemestre)
+-- Suppression des tables si elles existent déjà
+
+DROP TABLE IF EXISTS est_noté;
+DROP TABLE IF EXISTS Possede;
+DROP TABLE IF EXISTS Cursus;
+DROP TABLE IF EXISTS CompMat;
+DROP TABLE IF EXISTS EtudSem;
+DROP TABLE IF EXISTS Avis_de_poursuite_d_étude;
+DROP TABLE IF EXISTS Etudiant;
+DROP TABLE IF EXISTS FPE;
+DROP TABLE IF EXISTS Illustration;
+DROP TABLE IF EXISTS Utilisateur_;
+DROP TABLE IF EXISTS Matiere;
+DROP TABLE IF EXISTS Competence;
+DROP TABLE IF EXISTS Semestre;
+DROP TABLE IF EXISTS Etude;
+
+-- Création des tables
+
+CREATE TABLE Etude (
+    idEtude INT PRIMARY KEY,
+    specialite VARCHAR(20),
+    typeBac VARCHAR(20)
 );
 
-DROP TABLE IF EXISTS onote.Competence CASCADE;
-CREATE TABLE onote.Competence 
-(
-    numCompt SERIAL,
-    libelle VARCHAR(20),
-    PRIMARY KEY (numCompt)
+CREATE TABLE Semestre (
+    numSemestre INT PRIMARY KEY
 );
 
-DROP TABLE IF EXISTS onote.Matiere CASCADE;
-CREATE TABLE onote.Matiere 
-(
-    numMatiere SERIAL,
-    moyenne DECIMAL(4, 2),
-    coeff INT,
+CREATE TABLE Competence (
+    libelle VARCHAR(10),
+    annee   INT,
+    PRIMARY KEY (libelle, annee)
+);
+
+CREATE TABLE Matiere (
+    libelle   VARCHAR(10),
     alternant BOOLEAN,
-    libelle VARCHAR(20),
-    PRIMARY KEY (numMatiere)
+    PRIMARY KEY (libelle)
 );
 
-DROP TABLE IF EXISTS onote.Utilisateur CASCADE;
-CREATE TABLE onote.Utilisateur
-(
-    idUser SERIAL,
-    nom VARCHAR(20),
-    mdp VARCHAR(20),
-    PRIMARY KEY (idUser)
+CREATE TABLE Utilisateur_ (
+    idUser VARCHAR(15) PRIMARY KEY,
+    mDp    VARCHAR(10)
 );
 
-DROP TABLE IF EXISTS onote.Illustration CASCADE;
-CREATE TABLE onote.Illustration
-(
-    idIllustration SERIAL,
-    img BYTEA,
-    alternative VARCHAR(50),
-    PRIMARY KEY (idIllustration)
+CREATE TABLE Illustration (
+    idIllustration INT PRIMARY KEY,
+    img TEXT,
+    alternative VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS onote.FPE CASCADE;
-CREATE TABLE onote.FPE 
-(
-    idFPE SERIAL,
+CREATE TABLE FPE (
+    idFPE VARCHAR(50) PRIMARY KEY,
     nomDirecteur VARCHAR(15),
-    anneePromoFin INT,
-    anneePromoDebut INT,
-    PRIMARY KEY (idFPE)
+    anneePromo DATE
 );
 
-DROP TABLE IF EXISTS onote.Etudiant CASCADE;
-CREATE TABLE onote.Etudiant 
-(
-    idEtudiant SERIAL,
-    codeNIP INT,
+CREATE TABLE Etudiant (
+    codeNIP INT PRIMARY KEY,
     nom VARCHAR(20),
     prenom VARCHAR(10),
     parcours VARCHAR(50),
     promotion VARCHAR(50),
     idIllustration INT,
-    PRIMARY KEY (idEtudiant),
-    FOREIGN KEY (idIllustration) REFERENCES onote.Illustration (idIllustration) ON DELETE CASCADE
+    idEtude INT,
+    FOREIGN KEY (idIllustration) REFERENCES Illustration(idIllustration),
+    FOREIGN KEY (idEtude) REFERENCES Etude(idEtude)
 );
 
-DROP TABLE IF EXISTS onote.Etude CASCADE;
-CREATE TABLE onote.Etude 
-(
-    idEtude SERIAL,
-    specialite VARCHAR(20),
-    typeBac VARCHAR(20),
-    idEtudiant INT,
-    PRIMARY KEY (idEtude),
-    FOREIGN KEY (idEtudiant) REFERENCES onote.Etudiant (idEtudiant) ON DELETE CASCADE
+CREATE TABLE Avis_de_poursuite_d_étude (
+    idAvis VARCHAR(10) PRIMARY KEY,
+    AvisMaster VARCHAR(20),
+    AvisEcoleInge VARCHAR(50),
+    commentaire TEXT,
+    codeNIP INT,
+    FOREIGN KEY (codeNIP) REFERENCES Etudiant(codeNIP)
 );
 
-DROP TABLE IF EXISTS onote.EtudiantSemestre CASCADE;
-CREATE TABLE onote.EtudiantSemestre
-(
-    idEtudiant SERIAL,
+CREATE TABLE EtudSem (
+    codeNIP INT,
     numSemestre INT,
-    passage VARCHAR(5) CHECK (passage  IN ('ADM','CMP','AJ','ADSUP')),
     rang INT,
-    nbAbsences INT,
-    PRIMARY KEY (idEtudiant, numSemestre),
-    FOREIGN KEY (idEtudiant) REFERENCES onote.Etudiant (idEtudiant) ON DELETE CASCADE,
-    FOREIGN KEY (numSemestre) REFERENCES onote.Semestre (numSemestre) ON DELETE CASCADE
+    nbAbs INT,
+    passage VARCHAR(2),
+    PRIMARY KEY (codeNIP, numSemestre),
+    FOREIGN KEY (codeNIP) REFERENCES Etudiant(codeNIP),
+    FOREIGN KEY (numSemestre) REFERENCES Semestre(numSemestre)
 );
 
-DROP TABLE IF EXISTS onote.CompetenceMatiere CASCADE;
-CREATE TABLE onote.CompetenceMatiere
-(
-    numCompt SERIAL,
-    numMatiere INT,
-    PRIMARY KEY (numCompt, numMatiere),
-    FOREIGN KEY (numCompt) REFERENCES onote.Competence (numCompt) ON DELETE CASCADE,
-    FOREIGN KEY (numMatiere) REFERENCES onote.Matiere (numMatiere) ON DELETE CASCADE
+CREATE TABLE CompMat (
+    libelle VARCHAR(10),
+    annee INT,
+    libelle_1 VARCHAR(10),
+    coeff INT,
+    PRIMARY KEY ((libelle, annee), libelle_1),
+    FOREIGN KEY (libelle, annee) REFERENCES Competence(libelle, annee),
+    FOREIGN KEY (libelle_1) REFERENCES Matiere(libelle)
 );
 
-DROP TABLE IF EXISTS onote.Cursus CASCADE;
-CREATE TABLE onote.Cursus 
-(
-    idEtudiant SERIAL,
+CREATE TABLE Cursus (
+    codeNIP INT,
     numSemestre INT,
-    numCompt INT,
-    admission VARCHAR(10) CHECK (admission IN ('ADM','PASD','RED','NAR','ABL')),
-    PRIMARY KEY (idEtudiant, numSemestre, numCompt),
-    FOREIGN KEY (idEtudiant) REFERENCES onote.Etudiant (idEtudiant) ON DELETE CASCADE,
-    FOREIGN KEY (numSemestre) REFERENCES onote.Semestre (numSemestre) ON DELETE CASCADE,
-    FOREIGN KEY (numCompt) REFERENCES onote.Competence (numCompt) ON DELETE CASCADE
+    libelle VARCHAR(10),
+    annee INT,
+    admission VARCHAR(5),
+    PRIMARY KEY (codeNIP, numSemestre, libelle, annee),
+    FOREIGN KEY (codeNIP) REFERENCES Etudiant(codeNIP),
+    FOREIGN KEY (numSemestre) REFERENCES Semestre(numSemestre),
+    FOREIGN KEY (libelle, annee) REFERENCES Competence(libelle, annee)
 );
 
-DROP TABLE IF EXISTS onote.Possede CASCADE;
-CREATE TABLE onote.Possede
-(
-    idIllustration SERIAL,
-    idFPE INT,
+CREATE TABLE Possede (
+    idIllustration INT,
+    idFPE VARCHAR(50),
     PRIMARY KEY (idIllustration, idFPE),
-    FOREIGN KEY (idIllustration) REFERENCES onote.Illustration (idIllustration) ON DELETE CASCADE,
-    FOREIGN KEY (idFPE) REFERENCES onote.FPE (idFPE) ON DELETE CASCADE
+    FOREIGN KEY (idIllustration) REFERENCES Illustration(idIllustration),
+    FOREIGN KEY (idFPE) REFERENCES FPE(idFPE)
+);
+
+CREATE TABLE est_noté (
+    codeNIP INT,
+    libelle VARCHAR(10),
+    moyenne DECIMAL(15,2),
+    PRIMARY KEY (codeNIP, libelle),
+    FOREIGN KEY (codeNIP) REFERENCES Etudiant(codeNIP),
+    FOREIGN KEY (libelle) REFERENCES Matiere(libelle)
 );

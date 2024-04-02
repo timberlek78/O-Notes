@@ -185,18 +185,20 @@
 			// Exécuter la requête d'insertion avec les valeurs des attributs
 			$this->execMaj($requeteAvecValeurs);
 
-			// Récupérer l'ID généré par la base de données
-			$id = $this->connect->lastInsertId();
-
 			// Mettre à jour l'objet avec l'ID généré
-			$objet->setId($id);
+			//$objet->setId($id);
+
+			// Récupérer l'ID généré par la base de données
+			return $id = $this->connect->lastInsertId();
+
+			
 		}
 
 		//Méthode d'update
 		public function update($nomTable, $objet)
 		{
 			$requete = $this->constructionRequeteUpdate($nomTable, $objet);
-			$tparam = array();
+			$tparam  = array();
 
 			return $this->execMaj($requete,$tparam);
 		}
