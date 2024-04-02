@@ -8,15 +8,15 @@ class EtudiantSemestre
 	//attributs
 	private ?string $passage;
 	private ?int $rang;
-	private ?int $nbabsences;
+	private ?int $nbabs;
 
-	public function __construct( int $codeNIP=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
+	public function __construct( int $codeNIP=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabs=-1 )
 	{
 		$this->codeNIP     = $codeNIP;
 		$this->numsemestre = $numsemestre;
 		$this->passage     = $passage;
 		$this->rang        = $rang;
-		$this->nbabsences  = $nbabsences;
+		$this->nbabs       = $nbabs;
 	}
 
 	public function getAttributs() : array
@@ -46,7 +46,7 @@ class EtudiantSemestre
 
 	public function getNbAbsences(): int
 	{
-		return $this->nbabsences;
+		return $this->nbabs;
 	}
 
 	public function setCodeNIP( int $codeNIP )
@@ -71,7 +71,7 @@ class EtudiantSemestre
 
 	public function setnbabsences( int $nbabsences )
 	{
-		$this->nbabsences = $nbabsences;
+		$this->nbabs = $nbabsences;
 	}
 }
 ?>

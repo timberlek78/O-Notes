@@ -143,6 +143,12 @@
 			return $this->execQuery($requete,null,$nomClasse);
 		}
 
+		public function selectAllWhere($nomClasse, $condition, $valeur)
+		{
+			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomClasse . ' WHERE ' . $condition . ' = ' . $valeur;
+			return $this->execQuery($requete,null,$nomClasse);
+		}
+
 		// Méthode delete
 		public function delete($nomClasse, $objet)
 		{

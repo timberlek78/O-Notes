@@ -12,17 +12,16 @@ class Etudiant
 
 	//clé étrangère
 	private int $idillustration;
-	private int $idEtude;
+	private int $idetude;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude=-1)
+	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idetude=-1)
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
 		$this->parcours       = $parcours;
 		$this->promotion      = $promotion;
-		$this->idillustration = $idillustration;
-		$this->idEtude        = $idEtude;
+		$this->idetude        = $idetude;
 	}
 
 	public function getNIP(): int
@@ -92,12 +91,12 @@ class Etudiant
 
 	public function getIdEtude()
 	{
-		return $this->idEtude;
+		return $this->idetude;
 	}
 
 	public function setIdEtude($idEtude)
 	{
-		$this->idEtude = $idEtude;
+		$this->idEtude = $idetude;
 	}
 }
 ?>

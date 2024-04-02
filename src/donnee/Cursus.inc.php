@@ -2,18 +2,19 @@
 class Cursus
 {
 	//clé primaire
-	private int     $codeNIP;
-	private int     $numSemestre;
-	private string  $idCompetence;
+	private int     $codenip;
+	private int     $numsemestre;
+	private string  $idcompetence;
 	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
+	public function __construct( int $codenip=-1, int $numsemestre=-1, string $idcompetence="", string $annee, string $admission="" )
 	{
-		$this->idetudiant  = $idetudiant;
+		$this->codenip      = $codenip;
 		$this->numsemestre  = $numsemestre;
-		$this->numcompt= $numcompt;
-		$this->admission   = $admission;
+		$this->idcompetence = $idcompetence;
+		$this->annee        = $annee;
+		$this->admission    = $admission;
 	}
 
 	public function getAttributs() : array
@@ -33,7 +34,7 @@ class Cursus
 
 	public function getidCompetence(): string
 	{
-		return $this->idCompetence;
+		return $this->idcompetence;
 	}
 
 	public function getAdmission(): string
@@ -41,7 +42,7 @@ class Cursus
 		return $this->admission;
 	}
 
-	public function getAnnee() : string 
+	public function getAnnee() : string
 	{
 		return $this->annee;
 	}
@@ -56,7 +57,7 @@ class Cursus
 		$this->numSemestre = $numSemestre;
 	}
 
-	public function setidCompetence( int $idCompetence )
+	public function setidCompetence( string $idCompetence )
 	{
 		$this->idCompetence = $idCompetence;
 	}
@@ -66,7 +67,7 @@ class Cursus
 		$this->admission = $admission;
 	}
 
-	public function setAnnne(string $annee)
+	public function setAnnee(string $annee)
 	{
 		$this->annee = $annee;
 	}

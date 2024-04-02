@@ -1,94 +1,98 @@
+-- Insertion dans la table Etude
+INSERT INTO onote.Etude (idEtude, specialite, typeBac)
+VALUES 
+	(1, 'Informatique', 'Scientifique'),
+	(2, 'Génie Civil', 'Technologique'),
+	(3, 'Biologie', 'Scientifique');
+
 -- Insertion dans la table Semestre
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
-INSERT INTO onote.Semestre DEFAULT VALUES;
+INSERT INTO onote.Semestre (numSemestre)
+VALUES 
+	(1), (2), (3), (4), (5), (6), (7), (8);
 
 -- Insertion dans la table Competence
-INSERT INTO onote.Competence (libelle) VALUES
-('Compétence 1'),
-('Compétence 2'),
-('Compétence 3'),
-('Compétence 4'),
-('Compétence 5');
+INSERT INTO onote.Competence (idCompetence, annee)
+VALUES 
+	('COMP001', 2024),
+	('COMP002', 2024),
+	('COMP003', 2025),
+	('COMP004', 2025);
 
 -- Insertion dans la table Matiere
-INSERT INTO onote.Matiere (moyenne, coeff, alternant, libelle) VALUES
-(15.5, 2, TRUE, 'Mathématiques'),
-(14.2, 3, FALSE, 'Physique'),
-(16.8, 1, TRUE, 'Français'),
-(12.0, 2, FALSE, 'Histoire'),
-(17.5, 3, TRUE, 'Chimie');
+INSERT INTO onote.Matiere (idMatiere, alternant)
+VALUES 
+	('MAT001', FALSE),
+	('MAT002', TRUE),
+	('MAT003', FALSE),
+	('MAT004', TRUE);
 
 -- Insertion dans la table Utilisateur
-INSERT INTO onote.Utilisateur (nom, mdp) VALUES
-('Utilisateur 1', 'mdp1'),
-('Utilisateur 2', 'mdp2'),
-('Utilisateur 3', 'mdp3'),
-('Utilisateur 4', 'mdp4'),
-('Utilisateur 5', 'mdp5');
+INSERT INTO onote.Utilisateur (idUtilisateur, mdp)
+VALUES 
+	('user1', 'mdp123'),
+	('user2', 'pass456'),
+	('admin', 'adminpass');
 
 -- Insertion dans la table Illustration
-INSERT INTO onote.Illustration (alternative) VALUES
-('Illustration 1'),
-('Illustration 2'),
-('Illustration 3'),
-('Illustration 4'),
-('Illustration 5');
+INSERT INTO onote.Illustration (idIllustration, img, alternative)
+VALUES 
+	(1, 'chemin/vers/image1.png', 'Description de l''image 1'),
+	(2, 'chemin/vers/image2.png', 'Description de l''image 2'),
+	(3, 'chemin/vers/image3.png', 'Description de l''image 3');
 
--- Insertion dans la table FPE
-INSERT INTO onote.FPE (nomDirecteur, anneePromoFin, anneePromoDebut) VALUES
-('Directeur 1', 2024, 2023),
-('Directeur 2', 2023, 2022),
-('Directeur 3', 2022, 2021),
-('Directeur 4', 2021, 2020),
-('Directeur 5', 2020, 2019);
+-- Insertion dans la table ConfigFPE
+INSERT INTO onote.ConfigFPE (idConfigFPE, nomDirecteur, anneePromo)
+VALUES 
+	('CONF001', 'Directeur1', '2024-01-01'),
+	('CONF002', 'Directeur2', '2024-01-01'),
+	('CONF003', 'Directeur3', '2025-01-01');
 
 -- Insertion dans la table Etudiant
-INSERT INTO onote.Etudiant (codeNIP, nom, prenom, parcours, promotion, idIllustration) VALUES
-(12345, 'Etudiant 1', 'Prenom1', 'Parcours 1', 'Promo 1', 1),
-(67890, 'Etudiant 2', 'Prenom2', 'Parcours 2', 'Promo 2', 2),
-(54321, 'Etudiant 3', 'Prenom3', 'Parcours 3', 'Promo 3', 3),
-(98765, 'Etudiant 4', 'Prenom4', 'Parcours 4', 'Promo 4', 4),
-(13579, 'Etudiant 5', 'Prenom5', 'Parcours 5', 'Promo 5', 5);
+INSERT INTO onote.Etudiant (codeNIP, nom, prenom, parcours, promotion, idEtude)
+VALUES 
+	(1001, 'Dupont', 'Jean', 'Informatique', '2023', 1),
+	(1002, 'Durand', 'Marie', 'Mathématiques', '2024', 1),
+	(1003, 'Lefevre', 'Pierre', 'Génie Civil', '2025', 2);
 
--- Insertion dans la table Etude
-INSERT INTO onote.Etude (specialite, typeBac, idEtudiant) VALUES
-('Informatique', 'S', 1),
-('Biologie', 'ES', 2),
-('Chimie', 'L', 3),
-('Physique', 'S', 4),
-('Mathématiques', 'ES', 5);
+-- Insertion dans la table FPE
+INSERT INTO onote.FPE (idFPE, AvisMaster, AvisEcoleInge, commentaire, codeNIP)
+VALUES 
+	('FPE001', 'Bon', 'Satisfaisant', 'Commentaire sur FPE 1', 1001),
+	('FPE002', 'Très bien', 'Excellent', 'Commentaire sur FPE 2', 1002),
+	('FPE003', 'Moyen', 'Acceptable', 'Commentaire sur FPE 3', 1003);
 
 -- Insertion dans la table EtudiantSemestre
-INSERT INTO onote.EtudiantSemestre (numSemestre, idEtudiant, passage, rang, nbAbsences) VALUES
-(1, 1, 'ADM', 1, 0),
-(2, 2, 'ADSUP', 2, 1),
-(3, 3, 'AJ', 3, 2),
-(4, 4, 'CMP', 4, 3),
-(5, 5, 'ADM', 5, 4);
+INSERT INTO onote.EtudiantSemestre (codeNIP, numSemestre, rang, nbAbs, passage)
+VALUES 
+	(1001, 1, 1, 2, 'O'),
+	(1002, 1, 1, 1, 'O'),
+	(1003, 1, 1, 3, 'O');
 
 -- Insertion dans la table CompetenceMatiere
-INSERT INTO onote.CompetenceMatiere (numCompt, numMatiere) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+INSERT INTO onote.CompetenceMatiere (idCompetence, annee, idMatiere, coeff)
+VALUES 
+	('COMP001', 2024, 'MAT001', 3),
+	('COMP002', 2024, 'MAT002', 4),
+	('COMP003', 2025, 'MAT003', 3),
+	('COMP004', 2025, 'MAT004', 4);
 
 -- Insertion dans la table Cursus
-INSERT INTO onote.Cursus (idEtudiant, numSemestre, numCompt, admission) VALUES
-(1, 1, 1, 'ADM'),
-(2, 2, 2, 'NAR'),
-(3, 3, 3, 'NAR'),
-(4, 4, 4, 'NAR'),
-(5, 5, 5, 'ADM');
+INSERT INTO onote.Cursus (codeNIP, numSemestre, idCompetence, annee, admission)
+VALUES 
+	(1001, 1, 'COMP001', 2024, 'ADM'),
+	(1002, 1, 'COMP002', 2024, 'AJ'),
+	(1003, 1, 'COMP003', 2025, 'CMP');
 
 -- Insertion dans la table Possede
-INSERT INTO onote.Possede (idIllustration, idFPE) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+INSERT INTO onote.Possede (idIllustration, idConfigFPE)
+VALUES 
+	(1, 'CONF001'),
+	(2, 'CONF002'),
+	(3, 'CONF003');
+
+-- Insertion dans la table EstNote
+INSERT INTO onote.EstNote (codeNIP, idMatiere, moyenne)
+VALUES 
+	(1001, 'MAT001', 15.5),
+	(1002, 'MAT002', 17.8),
+	(1003, 'MAT003', 14.2);

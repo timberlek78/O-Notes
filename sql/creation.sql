@@ -93,7 +93,7 @@ CREATE TABLE onote.CompetenceMatiere (
 	annee VARCHAR ( 9 ),
 	idMatiere VARCHAR( 10 ),
 	coeff INT,
-	PRIMARY KEY ( ( idCompetence, annee ), idMatiere ),
+	PRIMARY KEY ( idCompetence, annee , idMatiere ),
 	FOREIGN KEY ( idCompetence, annee ) REFERENCES onote.Competence( idCompetence, annee ),
 	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )
 );
@@ -120,9 +120,9 @@ CREATE TABLE onote.Possede (
 
 CREATE TABLE onote.EstNote (
 	codeNIP INT,
-	libelle VARCHAR( 10 ),
+	idMatiere VARCHAR( 10 ),
 	moyenne DECIMAL( 15, 2 ),
-	PRIMARY KEY ( codeNIP, libelle ),
+	PRIMARY KEY ( codeNIP, idMatiere ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )
 );
