@@ -30,7 +30,7 @@
 }
 
 .photo-etudiant {
-	border: 3px solid var(--violet-action);
+	border: 3px solid var(--selectionne-couleur);
 	width: 6vw;
 	height: 6vw;
 	border-radius: 50%;
@@ -44,7 +44,7 @@
 }
 
 .conteneur-information {
-	color: var(--violet-action);
+	color: var(--selectionne-couleur);
 	font-weight: bold;
 	font-size: 2.12vw;
 	flex: 1;
@@ -64,7 +64,7 @@
 }
 
 .cadre-info {
-	background-color: var(--violet-action);
+	background-color: var(--selectionne-couleur);
 	border-radius: var(--arrondi);
 	padding: 1vh 1vw;
 	margin: 0 1vw 1vh 1vw;
@@ -93,7 +93,7 @@ body {
 }
 
 .fermeture {
-	color: var(--violet-action);
+	color: var(--selectionne-couleur);
 	border: none;
 	background-color: white;
 	cursor: pointer;
