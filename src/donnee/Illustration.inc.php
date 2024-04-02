@@ -1,12 +1,12 @@
 <?php
 
 class Illustration {
-	private $idIllustration;
+	private $idillustration;
 	private $img;
 	private $alternative;
 
 	public function __construct($idIllustration, $img, $alternative) {
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idIllustration;
 		$this->img = $img;
 		$this->alternative = $alternative;
 	}
@@ -17,11 +17,11 @@ class Illustration {
 	}
 
 	public function getIdIllustration() {
-		return $this->idIllustration;
+		return $this->idillustration;
 	}
 
 	public function setIdIllustration($idIllustration) {
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idIllustration;
 	}
 
 	public function getImg() {

@@ -31,7 +31,7 @@ CREATE TABLE onote.Semestre (
 
 CREATE TABLE onote.Competence (
 	idCompetence VARCHAR( 10 ),
-	annee INT,
+	annee VARCHAR ( 9 ),
 	PRIMARY KEY( idCompetence, annee )
 );
 
@@ -102,7 +102,7 @@ CREATE TABLE onote.Cursus (
 	codeNIP INT,
 	numSemestre INT,
 	idCompetence VARCHAR( 10 ),
-	annee INT,
+	annee VARCHAR ( 9 ),
 	admission VARCHAR( 5 ),
 	PRIMARY KEY ( codeNIP, numSemestre, idCompetence, annee ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),

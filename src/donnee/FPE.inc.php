@@ -1,18 +1,18 @@
 <?php
 
 class FPE {
-	private $idFPE;
-	private $AvisMaster;
-	private $AvisEcoleInge;
+	private $idfpe;
+	private $avismaster;
+	private $avisecoleinge;
 	private $commentaire;
-	private $codeNIP;
+	private $codenip;
 
 	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
-		$this->idFPE = $idFPE;
-		$this->AvisMaster = $AvisMaster;
-		$this->AvisEcoleInge = $AvisEcoleInge;
+		$this->idfpe = $idFPE;
+		$this->avismaster = $AvisMaster;
+		$this->avisecoleinge = $AvisEcoleInge;
 		$this->commentaire = $commentaire;
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 
 
@@ -22,27 +22,27 @@ class FPE {
 	}
 
 	public function getIdFPE() {
-		return $this->idFPE;
+		return $this->idfpe;
 	}
 
 	public function setIdFPE($idFPE) {
-		$this->idFPE = $idFPE;
+		$this->idfpe = $idFPE;
 	}
 
 	public function getAvisMaster() {
-		return $this->AvisMaster;
+		return $this->avismaster;
 	}
 
 	public function setAvisMaster($AvisMaster) {
-		$this->AvisMaster = $AvisMaster;
+		$this->avismaster = $AvisMaster;
 	}
 
 	public function getAvisEcoleInge() {
-		return $this->AvisEcoleInge;
+		return $this->avisecoleinge;
 	}
 
 	public function setAvisEcoleInge($AvisEcoleInge) {
-		$this->AvisEcoleInge = $AvisEcoleInge;
+		$this->avisecoleinge = $AvisEcoleInge;
 	}
 
 	public function getCommentaire() {
@@ -54,11 +54,11 @@ class FPE {
 	}
 
 	public function getCodeNIP() {
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function setCodeNIP($codeNIP) {
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 }
 

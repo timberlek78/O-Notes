@@ -2,21 +2,21 @@
 class EtudiantSemestre 
 {
 	//clé primaire
-	private int $codeNIP;
-	private int $numSemestre;
+	private int $codenip;
+	private int $numsemestre;
 
 	//attributs
 	private ?string $passage;
 	private ?int $rang;
 	private ?int $nbabsences;
 
-	public function __construct( int $codeNIP=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
+	public function __construct( int $codeNIP=-1, int $numSemestre=-1, string $passage="", int $rang=-1, int $nbAbsences=-1 )
 	{
-		$this->codeNIP     = $codeNIP;
-		$this->numsemestre = $numsemestre;
+		$this->codenip     = $codeNIP;
+		$this->numsemestre = $numSemestre;
 		$this->passage     = $passage;
 		$this->rang        = $rang;
-		$this->nbabsences  = $nbabsences;
+		$this->nbabsences  = $nbAbsences;
 	}
 
 	public function getAttributs() : array
@@ -26,12 +26,12 @@ class EtudiantSemestre
 
 	public function getCodeNIP(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNumSemestre(): int
 	{
-		return $this->numSemestre;
+		return $this->numsemestre;
 	}
 
 	public function getPassage(): string
@@ -51,12 +51,12 @@ class EtudiantSemestre
 
 	public function setCodeNIP( int $codeNIP )
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setnumsemestre( int $numSemestre )
 	{
-		$this->numSemestre = $numSemestre;
+		$this->numsemestre = $numSemestre;
 	}
 
 	public function setPassage( string $passage )
@@ -76,7 +76,7 @@ class EtudiantSemestre
 
 	public function __toString(): string
 	{
-		return "EtudiantSemestre : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
+		return "EtudiantSemestre : codenip=$this->codenip, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
 	}
 }
 ?>

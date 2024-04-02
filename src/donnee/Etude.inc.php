@@ -20,11 +20,6 @@ class Etude
 		return get_object_vars($this);
 	}
 
-	public function getIdEtude(): int
-	{
-		return $this->idetude;
-	}
-
 	public function getSpecialite(): string
 	{
 		return $this->specialite;
@@ -33,12 +28,6 @@ class Etude
 	public function getTypeBac(): string
 	{
 		return $this->typebac;
-	}
-
-
-	private function setIdEtude( int $idetude ): void
-	{
-		$this->idetude = $idetude;
 	}
 
 	public function setSpecialite( string $specialite ): void
@@ -53,7 +42,7 @@ class Etude
 
 	public function __toString(): string
 	{
-		return "Etude : specialite=".$this->specialite.", typebac=".$this->typebac.", idetudiant=".$this->idetudiant;
+		return "Etude : specialite = ".$this->specialite.", typebac = ".$this->typebac;
 	}
 }
 ?>

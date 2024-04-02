@@ -10,36 +10,25 @@
 
 	include_once '../metier/importation/LectureExcel.inc.php';
 	include_once '../metier/importation/moyennes/AnalyseDataMoyennes.inc.php';
+	include_once '../metier/DonneesONote.inc.php';
 
 	ouvrirFichierMoyennes( );
-	ouvrirFichierJury( );
 
+	function fichierValide( string $nomFichier ) : bool
+	{
+		return isset( $_FILES[ $nomFichier ] ) && $_FILES[ $nomFichier ][ 'error' ] === UPLOAD_ERR_OK;
+	}
 
 	function ouvrirFichierMoyennes( )
 	{
-		$fichierValide = isset( $_FILES[ 'moyennes' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
-
-		if( $fichierValide )
+		if( fichierValide( 'moyennes' ) )
 		{
-			$chemin_fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
+			$chemin_fichier = $_FILES[ 'moyennes' ][ 'tmp_name' ];
 
-			$handle = fopen( $chemin_fichier, "r" );
+			$excel = new LectureExcel( $chemin_fichier );
+			$data = $excel->recupererDonnees( );
 
-			if( $handle )
-			{
-				$fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
-				$excel = new LectureExcel( $fichier );
-				$data = $excel->recupererDonnees( );
-
-				$analyse = new AnalyseDataMoyennes( $data, $_POST[ 'promotion' ], $_POST[ 'semestre' ], true );
-				$analyse->analyserCompetences( );
-				$analyse->analyserEtudiants( );
-
-				/*$tableauHtml = genererTableauHtml( $data );
-				echo $tableauHtml;*/
-			}
-
-			fclose( $handle );
+			gererFichierMoyennes( $data );
 		}
 		else
 		{
@@ -47,7 +36,20 @@
 		}
 	}
 
-	function ouvrirFichierJury( )
+	//TODO: sortir le constructeur DonneesONote de la fonction
+	function gererFichierMoyennes( $data )
+	{
+		$donnes = new DonneesONote( );
+
+		$analyse = new AnalyseDataMoyennes( $data, $_POST[ 'promotion' ], $_POST[ 'semestre' ], true );
+		$analyse->ajouterCompetencesDansDonnees( $donnes );
+		$analyse->ajouterEtudiantsDansDonnees( $donnes );
+
+		echo $donnes;
+	}
+
+	//TODO: refactoriser comme pour moyennes
+	/*function ouvrirFichierJury( )
 	{
 		$fichierValide = isset( $_FILES[ 'jury' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
 
@@ -74,5 +76,5 @@
 		{
 			echo "Impossible d'ouvrir le fichier";
 		}
-	}
+	}*/
 ?>

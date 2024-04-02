@@ -22,70 +22,67 @@ class AnalyseDataMoyennes
 		$this->enAlternance = $enAlternance;
 	}
 
-	//METODE DE TEST
-	public function analyserCompetences( )
+	public function ajouterCompetencesDansDonnees( DonneesONote $donnes )
 	{
+		$semestre = $this->creerSemestre( );
+		$donnes->semestre = $semestre;
+
 		$ensNomCompetence = $this->structure->getCompetences( $this->semestre );
-		echo "Competences : <br>";
 		foreach( $ensNomCompetence as $nomCompetence )
 		{
 			$competence = $this->creerCompetence( $nomCompetence );
-			echo $competence;
-			echo "<br>";
+			$donnes->ensCompetence[] = $competence;
 
 			$ensNomMatiere = $this->structure->getRessourcesCompetence( $nomCompetence );
-			echo "<ul>Matieres : <br>";
 			foreach( $ensNomMatiere as $nomMatiere )
 			{
 				$matiere = $this->creerMatiere( $nomMatiere );
-				$competenceMatiere = $this->creerCompetenceMatiere( );
+				$donnes->ensMatiere[] = $matiere;
 
-				echo "<li style=\"color:blue\">".$matiere."</li>";
-				echo "<li style=\"color:red\">".$competenceMatiere."</li>";
+				$competenceMatiere = $this->creerCompetenceMatiere( $nomCompetence, $nomMatiere );
+				$donnes->ensCompetenceMatiere[] = $competenceMatiere;
 			}
-			echo "</ul>";
 		}
-		echo "<br>";
 	}
 
-	//METHODE DE TEST
-	public function analyserEtudiants( )
+	public function ajouterEtudiantsDansDonnees( DonneesONote $donnees )
 	{
 		for( $cptEtudiant = 1; $cptEtudiant < count( $this->tableau ); $cptEtudiant++ )
 		{
 			$ligne = $this->tableau[ $cptEtudiant ];
+
 			$etudiant = $this->creerEtudiant( $ligne );
-			echo $etudiant;
-			echo "<br>";
+			$donnees->ensEtudiant[] = $etudiant;
 
 			$etude = $this->creerEtude( $ligne );
-			echo $etude;
-			echo "<br>";
-
-			$semestre = $this->creerSemestre( $ligne );
-			echo $semestre;
-			echo "<br>";
+			$donnees->ensEtude[] = $etude;
 
 			$etudiantSemestre = $this->creerEtudiantSemestre( $ligne );
-			echo $etudiantSemestre;
-			echo "<br>";
+			$donnees->ensEtudiantSemestre[] = $etudiantSemestre;
 
-			$cursus = $this->creerCursus( $ligne );
-			echo $cursus;
-			echo "<br>";
+			$this->ajouterCursusDansDonnees( $donnees, $etudiant->getCodeNIP( ) );
+		}
+	}
 
-			echo "---<br>";
+	private function ajouterCursusDansDonnees( DonneesONote $donnees, string $codeNIP )
+	{
+		$ensNomCompetence = $this->structure->getCompetences( $this->semestre );
+		foreach( $ensNomCompetence as $nomCompetence )
+		{
+			$cursus = $this->creerCursus( $codeNIP, $nomCompetence );
+			$donnees->ensCursus[] = $cursus;
 		}
 	}
 
 	private function creerEtudiant( array $ligne ) : Etudiant
 	{
 		$etudiant = new Etudiant( );
-		$etudiant->setcodenip( $ligne[ $this->structure->getIndiceColonne( "codeNIP" ) ] );
+		$etudiant->setCodeNIP( $ligne[ $this->structure->getIndiceColonne( "codeNIP" ) ] );
 		$etudiant->setNom( $ligne[ $this->structure->getIndiceColonne( "nom" ) ] );
 		$etudiant->setPrenom( $ligne[ $this->structure->getIndiceColonne( "prenom" ) ] );
 		$etudiant->setParcours( $ligne[ $this->structure->getIndiceColonne( "cursus" ) ] );
 		$etudiant->setPromotion( $this->promotion );
+		$etudiant->setIdEtude( -1 ); //FIXME: à modifier
 		return $etudiant;
 	}
 
@@ -94,22 +91,23 @@ class AnalyseDataMoyennes
 		$etude = new Etude( );
 		$etude->setSpecialite( $ligne[ $this->structure->getIndiceColonne( "specialite" ) ] ?? "" );
 		$etude->setTypeBac( $ligne[ $this->structure->getIndiceColonne( "typeBAC" ) ] ?? "" );
-		$etude->setIdEtudiant( -1 ); //FIXME: à modifier
 		return $etude;
 	}
 
-	private function creerSemestre( array $ligne ) : Semestre
+	private function creerSemestre( ) : Semestre
 	{
 		$semestre = new Semestre( );
-		$semestre->setnumsemestre( $this->semestre );
+		$semestre->setNumSemestre( $this->semestre );
 		return $semestre;
 	}
 
 	private function creerEtudiantSemestre( array $ligne ) : EtudiantSemestre
 	{
 		$etudiantSemestre = new EtudiantSemestre( );
-		$etudiantSemestre->setNumSemestre( -1 ); //FIXME: à modifier
-		$etudiantSemestre->setPassage( -1 ); //FIXME: à modifier
+		$etudiantSemestre->setCodeNIP( $ligne[ $this->structure->getIndiceColonne( "codeNIP" ) ] );
+		$etudiantSemestre->setNumSemestre( $this->semestre );
+
+		$etudiantSemestre->setPassage( "todo" ); //FIXME: à modifier
 		$etudiantSemestre->setRang( $ligne[ $this->structure->getIndiceColonne( "rang" ) ] );
 
 		$nbAbsencesTotal = $ligne[ $this->structure->getIndiceColonne( "absTotal" ) ];
@@ -119,35 +117,39 @@ class AnalyseDataMoyennes
 		return $etudiantSemestre;
 	}
 
-	//TODO: remarque : pour les fixme, il faudrait passer en paramètre l'objet nécessaire (étudiant, semestre etc)
-	private function creerCursus( array $ligne ) : Cursus
+	private function creerCursus( string $codeNIP, string $idCompetence ) : Cursus
 	{
 		$cursus = new Cursus( );
-		$cursus->setIdEtudiant( -1 ); //FIXME: à modifier
-		$cursus->setNumSemestre( -1 ); //FIXME: à modifier
-		$cursus->setNumCompt( -1 ); //FIXME: à modifier
-		$cursus->setAdmission( "admission" ); //FIXME: à modifier
+		$cursus->setCodeNIP( $codeNIP );
+		$cursus->setNumSemestre( $this->semestre );
+		$cursus->setIdCompetence( $idCompetence );
+		$cursus->setAnnee( $this->promotion );
+		$cursus->setAdmission( "todo" ); //FIXME: à modifier
 		return $cursus;
 	}
 
 	private function creerCompetence( string $nomCompetence ) : Competence
 	{
-		return new Competence( $nomCompetence );
+		$competence = new Competence( );
+		$competence->setIdCompetence( $nomCompetence );
+		$competence->setAnnee( $this->promotion );
+		return $competence;
 	}
 
 	private function creerMatiere( string $nomMatiere ) : Matiere
 	{
 		$matiere = new Matiere( );
+		$matiere->setIdMatiere( $nomMatiere );
 		$matiere->setAlternant( $this->enAlternance );
-		$matiere->setLibelle( $nomMatiere );
 		return $matiere;
 	}
 
-	private function creerCompetenceMatiere( ) : CompetenceMatiere
+	private function creerCompetenceMatiere( string $idCompetence, string $idMatiere ) : CompetenceMatiere
 	{
 		$competenceMatiere = new CompetenceMatiere( );
-		$competenceMatiere->setNumCompt( -1 ); //FIXME: à modifier
-		$competenceMatiere->setNumMatiere( -1 ); //FIXME: à modifier
+		$competenceMatiere->setIdCompetence( $idCompetence ); //TODO: à verifier
+		$competenceMatiere->setAnnee( $this->promotion );
+		$competenceMatiere->setIdMatiere( $idMatiere ); //TODO: à verifier
 		return $competenceMatiere;
 	}
 }
