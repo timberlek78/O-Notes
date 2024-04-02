@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS onote;
 
--- Suppression des tables si elles existent déjà
+-- Suppression des tables si elles existent deja
 
 DROP TABLE IF EXISTS onote.EstNote;
 DROP TABLE IF EXISTS onote.Possede;
@@ -60,21 +60,21 @@ CREATE TABLE onote.ConfigFPE (
 
 CREATE TABLE onote.Etudiant (
 	codeNIP INT PRIMARY KEY,
-	nom VARCHAR(20),
-	prenom VARCHAR(10),
-	parcours VARCHAR(50),
-	promotion VARCHAR(50),
+	nom VARCHAR( 20 ),
+	prenom VARCHAR( 10 ),
+	parcours VARCHAR( 50 ),
+	promotion VARCHAR( 50 ),
 	idEtude INT,
-	FOREIGN KEY (idEtude) REFERENCES onote.Etude(idEtude)
+	FOREIGN KEY ( idEtude ) REFERENCES onote.Etude( idEtude )
 );
 
 CREATE TABLE onote.FPE (
-	idFPE VARCHAR(10) PRIMARY KEY,
-	AvisMaster VARCHAR(20),
-	AvisEcoleInge VARCHAR(50),
+	idFPE VARCHAR( 10 ) PRIMARY KEY,
+	AvisMaster VARCHAR( 20 ),
+	AvisEcoleInge VARCHAR( 50 ),
 	commentaire TEXT,
 	codeNIP INT,
-	FOREIGN KEY (codeNIP) REFERENCES onote.Etudiant(codeNIP)
+	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP )
 );
 
 CREATE TABLE onote.EtudiantSemestre (
@@ -83,46 +83,46 @@ CREATE TABLE onote.EtudiantSemestre (
 	rang INT,
 	nbAbs INT,
 	passage VARCHAR(2),
-	PRIMARY KEY (codeNIP, numSemestre),
-	FOREIGN KEY (codeNIP) REFERENCES onote.Etudiant(codeNIP),
-	FOREIGN KEY (numSemestre) REFERENCES onote.Semestre(numSemestre)
+	PRIMARY KEY ( codeNIP, numSemestre ),
+	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
+	FOREIGN KEY ( numSemestre ) REFERENCES onote.Semestre( numSemestre )
 );
 
 CREATE TABLE onote.CompetenceMatiere (
-	idCompetence VARCHAR(10),
+	idCompetence VARCHAR( 10 ),
 	annee INT,
-	idMatiere VARCHAR(10),
+	idMatiere VARCHAR( 10 ),
 	coeff INT,
-	PRIMARY KEY ((idCompetence, annee), idMatiere),
-	FOREIGN KEY (idCompetence, annee) REFERENCES onote.Competence(idCompetence, annee),
-	FOREIGN KEY (idMatiere) REFERENCES onote.Matiere(idMatiere)
+	PRIMARY KEY ( ( idCompetence, annee ), idMatiere ),
+	FOREIGN KEY ( idCompetence, annee ) REFERENCES onote.Competence( idCompetence, annee ),
+	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )
 );
 
 CREATE TABLE onote.Cursus (
 	codeNIP INT,
 	numSemestre INT,
-	idCompetence VARCHAR(10),
+	idCompetence VARCHAR( 10 ),
 	annee INT,
-	admission VARCHAR(5),
-	PRIMARY KEY (codeNIP, numSemestre, idCompetence, annee),
-	FOREIGN KEY (codeNIP) REFERENCES onote.Etudiant(codeNIP),
-	FOREIGN KEY (numSemestre) REFERENCES onote.Semestre(numSemestre),
-	FOREIGN KEY (idCompetence, annee) REFERENCES onote.Competence(idCompetence, annee)
+	admission VARCHAR( 5 ),
+	PRIMARY KEY ( codeNIP, numSemestre, idCompetence, annee ),
+	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
+	FOREIGN KEY ( numSemestre ) REFERENCES onote.Semestre( numSemestre ),
+	FOREIGN KEY ( idCompetence, annee ) REFERENCES onote.Competence( idCompetence, annee )
 );
 
 CREATE TABLE onote.Possede (
 	idIllustration INT,
-	idConfigFPE VARCHAR(50),
-	PRIMARY KEY (idIllustration, idConfigFPE),
-	FOREIGN KEY (idIllustration) REFERENCES onote.Illustration(idIllustration),
-	FOREIGN KEY (idConfigFPE) REFERENCES onote.ConfigFPE(idConfigFPE)
+	idConfigFPE VARCHAR( 50 ),
+	PRIMARY KEY ( idIllustration, idConfigFPE ),
+	FOREIGN KEY ( idIllustration ) REFERENCES onote.Illustration( idIllustration ),
+	FOREIGN KEY ( idConfigFPE ) REFERENCES onote.ConfigFPE( idConfigFPE )
 );
 
 CREATE TABLE onote.EstNote (
 	codeNIP INT,
-	libelle VARCHAR(10),
-	moyenne DECIMAL(15,2),
-	PRIMARY KEY (codeNIP, libelle),
-	FOREIGN KEY (codeNIP) REFERENCES onote.Etudiant(codeNIP),
-	FOREIGN KEY (idMatiere) REFERENCES onote.Matiere(idMatiere)
+	libelle VARCHAR( 10 ),
+	moyenne DECIMAL( 15, 2 ),
+	PRIMARY KEY ( codeNIP, libelle ),
+	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
+	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )
 );
