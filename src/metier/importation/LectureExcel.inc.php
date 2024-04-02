@@ -26,6 +26,7 @@ class LectureExcel
 	{
 		$reader = IOFactory::createReaderForFile( $this->fichier );
 		$spreadsheet = $reader->load( $this->fichier );
+
 		return $spreadsheet;
 	}
 

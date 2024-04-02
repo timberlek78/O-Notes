@@ -4,6 +4,7 @@ class DonneesONote
 	public array $ensCompetence;
 	public array $ensCompetenceMatiere;
 	public array $ensCursus;
+	public array $ensEstNote;
 	public array $ensEtude;
 	public array $ensEtudiant;
 	public array $ensEtudiantSemestre;
@@ -15,6 +16,7 @@ class DonneesONote
 		$this->ensCompetence        = array();
 		$this->ensCompetenceMatiere = array();
 		$this->ensCursus            = array();
+		$this->ensEstNote           = array();
 		$this->ensEtude             = array();
 		$this->ensEtudiant          = array();
 		$this->ensEtudiantSemestre  = array();
@@ -45,8 +47,12 @@ class DonneesONote
 			$cptMatiere = 0;
 			foreach( $this->ensMatiere as $matiere )
 			{
-				$str .= "<li style=\"color:blue\">".$matiere."</li>";
-				$str .= "<li style=\"color:red\">".$this->ensCompetenceMatiere[ $cptMatiere ]."</li>";
+				$competenceMatiere = $this->ensCompetenceMatiere[ $cptMatiere ];
+				if( $competenceMatiere->getIdCompetence( ) == $competence->getIdCompetence( ) )
+				{
+					$str .= "<li style=\"color:blue\">".$matiere."</li>";
+					$str .= "<li style=\"color:red\">" . $competenceMatiere . "</li>";
+				}
 				$cptMatiere++;
 			}
 			$str .= "</ul>";
@@ -63,14 +69,30 @@ class DonneesONote
 			$str .= $this->ensEtudiant[ $cptEtudiant ];
 			$str .= "<br>";
 
-			$str .= $this->ensEtude[ $cptEtudiant ];
-			$str .= "<br>";
+			$str .= "<ul>";
+			$str .= "<li style='color:gray'>" . $this->ensEtude[ $cptEtudiant ] . "</li>";
+			$str .= "<li style='color:gray'>" . $this->ensEtudiantSemestre[ $cptEtudiant ] . "</li>";
 
-			$str .= $this->ensEtudiantSemestre[ $cptEtudiant ];
-			$str .= "<br>";
+			for( $cptCursus = 0; $cptCursus < count( $this->ensCursus ); $cptCursus++ )
+			{
+				$cursus = $this->ensCursus[ $cptCursus ];
+				if( $cursus->getCodeNIP( ) == $this->ensEtudiant[ $cptEtudiant ]->getCodeNIP( ) )
+				{
+					$str .= "<li>" . $cursus . "</li>";
+				}
+			}
+			$str .= "</ul>";
 
-			$str .= $this->ensCursus[ $cptEtudiant ];
-			$str .= "<br>";
+			$str .= "<ul>";
+			for( $cptNote = 0; $cptNote < count( $this->ensEstNote ); $cptNote++ )
+			{
+				$note = $this->ensEstNote[ $cptNote ];
+				if( $note->getCodeNIP( ) == $this->ensEtudiant[ $cptEtudiant ]->getCodeNIP( ) )
+				{
+					$str .= "<li>" . $note . "</li>";
+				}
+			}
+			$str .= "</ul>";
 		}
 		return $str;
 	}

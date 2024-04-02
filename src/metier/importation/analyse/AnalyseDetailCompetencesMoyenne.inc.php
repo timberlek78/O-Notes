@@ -21,7 +21,7 @@ class AnalyseDetailCompetencesMoyenne
 		{
 			$nomColonne = $this->colonnesDetailCompetences[ $i ];
 
-			if( $this->estCompetence( $nomColonne, $semestre ) )
+			if( AnalyseDetailCompetencesMoyenne::estCompetence( $nomColonne, $semestre ) )
 			{
 				$nomCompetence = $this->colonnesDetailCompetences[ $i ];
 				$this->eqCompetencesIndices[ $nomCompetence ] = $i;
@@ -30,7 +30,7 @@ class AnalyseDetailCompetencesMoyenne
 		}
 	}
 
-	private function estCompetence( string $nomColonne, int $semestre ) : bool
+	public static function estCompetence( string $nomColonne, int $semestre ) : bool
 	{
 		$regexCompetence = "/^BIN" . $semestre . "\d$/"; //REMARQUE : dans php il faut préfixer par "/^" et suffixer par "$/"
 		return preg_match( $regexCompetence, $nomColonne );
@@ -41,12 +41,12 @@ class AnalyseDetailCompetencesMoyenne
 		for( $i = $indiceDebut; $i < $this->nbColonnes; $i++ )
 		{
 			//Des qu'on atteint une nouvelle competence, on sort
-			if( $this->estCompetence( $this->colonnesDetailCompetences[ $i ], $semestre ) )
+			if( AnalyseDetailCompetencesMoyenne::estCompetence( $this->colonnesDetailCompetences[ $i ], $semestre ) )
 			{
 				return;
 			}
 
-			if( $this->estRessource( $this->colonnesDetailCompetences[ $i ], $nomCompetence, $semestre ) )
+			if( AnalyseDetailCompetencesMoyenne::estRessource( $this->colonnesDetailCompetences[ $i ], $nomCompetence, $semestre ) )
 			{
 				$nomRessource = $this->colonnesDetailCompetences[ $i ];
 				$this->eqRessourcesCompetencesIndices[ $nomCompetence ][ $nomRessource ] = $i;
@@ -54,7 +54,7 @@ class AnalyseDetailCompetencesMoyenne
 		}
 	}
 
-	private function estRessource( string $nomColonne, string $nomCompetence, int $semestre ) : bool
+	public static function estRessource( string $nomColonne, string $nomCompetence, int $semestre ) : bool
 	{
 		//exemple : "Bonus BIN11" ou "BINR101" ou "BINS101"
 		$regexBonus = "/^Bonus " . $nomCompetence . "$/";

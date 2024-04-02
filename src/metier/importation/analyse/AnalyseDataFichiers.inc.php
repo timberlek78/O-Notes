@@ -56,7 +56,7 @@ class AnalyseDataFichiers
 		for( $cptEtudiant = 1; $cptEtudiant < count( $this->tableauMoyenne ); $cptEtudiant++ )
 		{
 			$ligneMoyenne = $this->tableauMoyenne[ $cptEtudiant ];
-			$ligneJury    = $this->tableauJury[ $cptEtudiant ]; //TODO: à vérifier
+			$ligneJury    = $this->tableauJury[ $cptEtudiant ];
 
 			$etudiant = $this->creerEtudiant( $ligneMoyenne );
 			$donnees->ensEtudiant[] = $etudiant;
@@ -71,19 +71,17 @@ class AnalyseDataFichiers
 			$donnees->ensEtudiantSemestre[] = $etudiantSemestre;
 
 			$this->ajouterCursusDansDonnees( $donnees, $ligneJury, $etudiant->getCodeNIP( ) );
+			$this->ajouterEstNoteDansDonnees( $donnees, $ligneMoyenne, $etudiant->getCodeNIP( ) );
 		}
 	}
 
-	//FIXME: problème de valeurs nulles
 	private function majPassageEtudiantSemestre( DonneesONote $donnees, array $ligneJury, EtudiantSemestre $etudiantSemestre )
 	{
 		$indice = $this->structureJury->getIndiceColonne( "admission" );
-
-		$etudiantSemestre->setPassage( $ligneJury[ $indice ] ); //TODO: à vérifier
-		//$etudiantSemestre->setPassage( "ADM" ); //FIXME: code mis en dur
+		$admission = $ligneJury[ $indice ] . ""; //REMARQUE : je n'ai pas trouvé pourquoi il fallait ajouter une chaine vide
+		$etudiantSemestre->setPassage( $admission );
 	}
 
-	//FIXME: problème de valeurs nulles
 	private function ajouterCursusDansDonnees( DonneesONote $donnees, array $ligneJury, string $codeNIP )
 	{
 		$ensNomCompetence = $this->structureMoyenne->getCompetences( $this->semestre );
@@ -91,10 +89,22 @@ class AnalyseDataFichiers
 		{
 			$cursus = $this->creerCursus( $codeNIP, $nomCompetence );
 			
-			$cursus->setAdmission( $ligneJury[ $this->structureJury->getIndiceColonne( "admission" ) ] );
-			//$cursus->setAdmission( "ADM" ); //FIXME: code mis en dur
+			$colonneApresMoyenne = $this->structureJury->getIndiceColonne( $nomCompetence ) + 1;
+			$cursus->setAdmission( $ligneJury[ $colonneApresMoyenne ] );
 
 			$donnees->ensCursus[] = $cursus;
+		}
+	}
+
+	private function ajouterEstNoteDansDonnees( DonneesONote $donnees, array $ligneMoyenne, string $codeNIP )
+	{
+		$ensNomMatiere = $this->structureMoyenne->getMatieresDistinctes( );
+		foreach( $ensNomMatiere as $nomMatiere )
+		{
+			$moyenne = floatval( $ligneMoyenne[ $this->structureMoyenne->getIndiceColonneMatiere( $nomMatiere ) ] );
+
+			$estNote = $this->creerEstNote( $ligneMoyenne, $codeNIP, $nomMatiere, $moyenne );
+			$donnees->ensEstNote[] = $estNote;
 		}
 	}
 
@@ -148,8 +158,17 @@ class AnalyseDataFichiers
 		$cursus->setNumSemestre( $this->semestre );
 		$cursus->setIdCompetence( $idCompetence );
 		$cursus->setAnnee( $this->promotion );
-		$cursus->setAdmission( "erreur" ); //Cet attribut est modifié avec le fichier Jury
+		$cursus->setAdmission( "nonaffectee" ); //REMARQUE : Cet attribut est modifié par la suite avec le fichier Jury
 		return $cursus;
+	}
+
+	private function creerEstNote( array $ligneMoyenne, string $codeNIP, string $nomMatiere, float $moyenne ) : EstNote
+	{
+		$estNote = new EstNote( );
+		$estNote->setCodeNIP( $codeNIP );
+		$estNote->setIdMatiere( $nomMatiere );
+		$estNote->setMoyenne( $moyenne );
+		return $estNote;
 	}
 
 	private function creerCompetence( string $nomCompetence ) : Competence

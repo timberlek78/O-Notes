@@ -15,18 +15,28 @@ class AnalyseStructureJury
 		$this->colonnesTitres = $colonnesTitres;
 		$this->nbColonnes = count( $colonnesTitres );
 
+		$this->definirIndicesColonnesEtudiants( );
 		$this->definirIndicesColonnesCompetences( $semestre );
+	}
+
+	private function definirIndicesColonnesEtudiants( )
+	{
+		$this->indiceCodeNIP = 1;
+		$this->indiceAdmission = $this->nbColonnes - 1 - 1;
 	}
 
 	private function definirIndicesColonnesCompetences( int $semestre )
 	{
-		$this->indiceCodeNIP = 1;
-		$this->indiceAdmission = $this->nbColonnes - 1 - 2;
-
 		$regexCompetence = "/^BIN" . $semestre . "\d$/";
 		for( $cptCol=0; $cptCol<$this->nbColonnes; $cptCol++ )
 		{
 			$colonne = $this->colonnesTitres[ $cptCol ];
+			$estVide = $colonne == "";
+			if( $estVide )
+			{ 
+				continue;
+			}
+
 			$estCompetence = preg_match( $regexCompetence, $colonne );
 			if( $estCompetence )
 			{
