@@ -31,6 +31,7 @@
 	position: sticky;
 	top: 0;
 	background-clip: padding-box;
+	z-index: 1;
 }
 
 .tableau-note-etd td {
