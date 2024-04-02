@@ -71,8 +71,6 @@ function ouverturePopupEtudiant ( )
 
 	popupPrenom.innerText = nomsPrenoms[2];
 	popupNom   .innerText = nomsPrenoms[1];
-
-	console.log('Prenom : ' + prenom + ' Nom : ' + nom)
 	
 }
 
@@ -104,7 +102,7 @@ function fermeturePopupEditionEtudiant ( )
 }
 
 /*                                     */
-/*   BAR DE NAVIGATION DES SEMSETRES   */
+/*   BAR DE NAVIGATION DES SEMESTRES   */
 /*                                     */
 
 const ensBoutonsSemestre = document.querySelectorAll ( '.semestre' );
