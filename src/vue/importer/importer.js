@@ -1,42 +1,50 @@
 const popupImportation = document.getElementById("popup-ajout-semestre");
 const btnAjouterSem    = document.querySelector(".btn-ajout-semestre");
 const btnAnnuler       = document.querySelector(".btn-annuler");
+const btnValider       = document.querySelector(".btn-valider");
 
-btnAjouterSem.onclick = function()
+btnAjouterSem.addEventListener('click', function()
 {
 	popupImportation.classList.add('ouvert');
-}
+});
 
-btnAnnuler.onclick = function()
+btnAnnuler.addEventListener('click', function()
 {
 	popupImportation.classList.remove('ouvert');
+});
+
+
+btnValider.onclick = function()
+{
+	popupImportation.classList.remove('ouvert');
+
+	const choixAnnee    = document.getElementById( 'choix-annee'    );
+	const choixSemestre = document.getElementById( 'choix-semestre' );
+
+	anneeChoisie   = choixAnnee   .value;
+	semestreChoisi = choixSemestre.value;
+
+	//TODO: Faire un json pour stocker les fichiers et les envoyer en php (voir avec chat gpt "Stocker fichiers en js...")
+	console.log('Annee : ' + anneeChoisie + " Semestre : " + semestreChoisi);
 }
 
-window.onclick = function(event)
-{
-	if (event.target === popupImportation)
-	{
-		popupImportation.classList.remove('ouvert');
-	}
-}
+/* SELECTION DES DOCUMENTS */
 
 selectionJury = document.querySelector ('.ajout-jury');
 inputFileJury = document.getElementById('entree-jury');
 
-selectionSemestre = document.querySelector ('.ajout-semestre');
-inputFileSemestre = document.getElementById('entree-semestre');
+selectionMoyenne = document.querySelector ('.ajout-moyenne');
+inputFileMoyenne = document.getElementById('entree-moyenne');
 
 selectionJury.    addEventListener('click', function() 
 {
 	inputFileJury.click();
 });
 
-selectionSemestre.addEventListener('click', function()
+selectionMoyenne.addEventListener('click', function()
 {
-	inputFileSemestre.click();
+	inputFileMoyenne.click();
 });
-
-console.log('coucou wanou')
 
 inputFileJury    .addEventListener('change', function()
 {
@@ -66,13 +74,13 @@ inputFileJury    .addEventListener('change', function()
 	}
 });
 
-inputFileSemestre    .addEventListener('change', function()
+inputFileMoyenne    .addEventListener('change', function()
 {
-	fichierSemestre = inputFileSemestre.files[0];
+	fichierMoyenne = inputFileMoyenne.files[0];
 
-	if (fichierSemestre)
+	if (fichierMoyenne)
 	{
-		svgSemestre = document.getElementById('svg-semestre');
+		svgMoyenne = document.getElementById('svg-moyenne');
 
 		var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 		text.setAttribute('x', '50%'); // Définir la position horizontale du texte
@@ -81,16 +89,16 @@ inputFileSemestre    .addEventListener('change', function()
 		text.setAttribute('dominant-baseline', 'middle'); // Aligner le texte verticalement au centre
 		text.setAttribute('fill', 'white'); // Couleur du texte
 		text.setAttribute('font-size', '12'); // Taille de la police
-		text.textContent = fichierSemestre.name; // Contenu du texte
+		text.textContent = fichierMoyenne.name; // Contenu du texte
 
-		// svgSemestre.querySelector('path').style.display = 'none';
+		// svgMoyenne.querySelector('path').style.display = 'none';
 
-		svgSemestre.replaceChild(text, svgSemestre.querySelector('path'))
+		svgMoyenne.replaceChild(text, svgMoyenne.querySelector('path'))
 		console.log('Fichier bon')
 	}
 	else
 	{
-		console.log("SEMESTRE : Le fichier est introuvable")
+		console.log("MOYENNE : Le fichier est introuvable")
 	}
 });
 
