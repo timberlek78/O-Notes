@@ -11,34 +11,68 @@
 	include_once '../metier/importation/LectureExcel.inc.php';
 	include_once '../metier/importation/moyennes/AnalyseDataMoyennes.inc.php';
 
-	/*require '../metier/OutilsTableau.inc.php';*/
+	ouvrirFichierMoyennes( );
+	ouvrirFichierJury( );
 
-	$fichierValide = isset( $_FILES[ 'fichier' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
 
-	if( $fichierValide )
+	function ouvrirFichierMoyennes( )
 	{
-		$chemin_fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
+		$fichierValide = isset( $_FILES[ 'moyennes' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
 
-		$handle = fopen( $chemin_fichier, "r" );
-
-		if( $handle )
+		if( $fichierValide )
 		{
-			$fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
-			$excel = new LectureExcel( $fichier );
-			$data = $excel->recupererDonnees( );
+			$chemin_fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
 
-			$analyse = new AnalyseDataMoyennes( $data, "2024-test", 1, true );
-			$analyse->analyserCompetences( );
-			$analyse->analyserEtudiants( );
+			$handle = fopen( $chemin_fichier, "r" );
 
-			/*$tableauHtml = genererTableauHtml( $data );
-			echo $tableauHtml;*/
+			if( $handle )
+			{
+				$fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
+				$excel = new LectureExcel( $fichier );
+				$data = $excel->recupererDonnees( );
+
+				$analyse = new AnalyseDataMoyennes( $data, $_POST[ 'promotion' ], $_POST[ 'semestre' ], true );
+				$analyse->analyserCompetences( );
+				$analyse->analyserEtudiants( );
+
+				/*$tableauHtml = genererTableauHtml( $data );
+				echo $tableauHtml;*/
+			}
+
+			fclose( $handle );
 		}
-
-		fclose( $handle );
+		else
+		{
+			echo "Impossible d'ouvrir le fichier";
+		}
 	}
-	else
+
+	function ouvrirFichierJury( )
 	{
-		echo "Impossible d'ouvrir le fichier";
+		$fichierValide = isset( $_FILES[ 'jury' ] ) && $_FILES[ 'fichier' ][ 'error' ] === UPLOAD_ERR_OK;
+
+		if( $fichierValide )
+		{
+			$chemin_fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
+
+			$handle = fopen( $chemin_fichier, "r" );
+
+			if( $handle )
+			{
+				$fichier = $_FILES[ 'fichier' ][ 'tmp_name' ];
+				$excel = new LectureExcel( $fichier );
+				$data = $excel->recupererDonnees( );
+
+				$analyse = new AnalyseDataJury( $data, $_POST[ 'semestre' ] );
+				$analyse->majPassageEtudiantSemestre( );
+				$analyse->majAdmissionCursus( );
+			}
+
+			fclose( $handle );
+		}
+		else
+		{
+			echo "Impossible d'ouvrir le fichier";
+		}
 	}
 ?>
