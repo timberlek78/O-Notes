@@ -15,10 +15,10 @@ class AnalyseStructureJury
 		$this->colonnesTitres = $colonnesTitres;
 		$this->nbColonnes = count( $colonnesTitres );
 
-		$this->definirIndicesColonnesCompetences( );
+		$this->definirIndicesColonnesCompetences( $semestre );
 	}
 
-	private function definirIndicesColonnesCompetences( )
+	private function definirIndicesColonnesCompetences( int $semestre )
 	{
 		$this->indiceCodeNIP = 1;
 		$this->indiceAdmission = $this->nbColonnes - 1 - 2;

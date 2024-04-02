@@ -22,6 +22,8 @@ class DonneesONote
 		$this->semestre             = new Semestre();
 	}
 
+	
+
 	public function __toString( ) : string
 	{
 		$str = "DonneesONote du semestre : ".$this->semestre."<br>";
