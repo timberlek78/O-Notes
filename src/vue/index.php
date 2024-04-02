@@ -13,9 +13,16 @@
 			include ("../controleur/ControleurDB.inc.php");
 
 			$db = DB::getInstance();
+
+			$objet = new FPE("Duflot",2021,2023);
+
+			echo $db->insert("FPE",$objet);
+
+			$tab = $db->selectAll("FPE");
+
+			var_dump($tab[1]->getId());
+	
+			var_dump($db->selectAll("FPE"));
 		?>
-		<form action="./metier/importation.php">
-			<input type="file" />
-		</form>
 	</body>
 </html>

@@ -1,76 +1,39 @@
 <?php
-class Matiere
-{
-	//clé primaire
-	private int $nummatiere;
 
-	//attributs
-	private ?float  $moyenne;
-	private ?int    $coeff;
-	private ?bool   $alternant;
-	private ?string $libelle;
+class Matiere {
+	private $idMatiere;
+	private $alternant;
 
-	public function __construct( float $moyenne=-1.0, int $coeff=-1, bool $alternant=false, string $libelle="" )
+	public function __construct( $idMatiere, $alternant )
 	{
-		$this->moyenne   = $moyenne;
-		$this->coeff     = $coeff;
+		$this->idMatiere = $idMatiere;
 		$this->alternant = $alternant;
-		$this->libelle   = $libelle;
 	}
 
-	public function getnummatiere(): int
+	public function getAttributs() : array
 	{
-		return $this->nummatiere;
+		return get_object_vars($this);
 	}
 
-	public function getmoyenne(): floatval
+	public function getIdMatiere( )
 	{
-		return $this->moyenne;
+		return $this->idMatiere;
 	}
 
-	public function getCoeff(): int
+	public function setIdMatiere( $idMatiere )
 	{
-		return $this->coeff;
+		$this->idMatiere = $idMatiere;
 	}
 
-	public function getAlternant(): boolval
+	public function getAlternant()
 	{
 		return $this->alternant;
 	}
 
-	public function getLibelle(): string
-	{
-		return $this->libelle;
-	}
-
-	private function setnummatiere( int $nummatiere )
-	{
-		$this->nummatiere = $nummatiere;
-	}
-
-	public function setmoyenne( floatval $moyenne )
-	{
-		$this->moyenne = $moyenne;
-	}
-
-	public function setCoeff( int $coeff )
-	{
-		$this->coeff = $coeff;
-	}
-
-	public function setAlternant( bool $alternant )
+	public function setAlternant( $alternant )
 	{
 		$this->alternant = $alternant;
 	}
-
-	public function setLibelle( string $libelle )
-	{
-		$this->libelle = $libelle;
-	}
-
-	public function __toString(): string
-	{
-		return "Matiere : moyenne = ".$this->moyenne.", coeff = ".$this->coeff.", alternant = ".$this->alternant.", libelle = ".$this->libelle;
-	}
 }
+
 ?>

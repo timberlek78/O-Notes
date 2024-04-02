@@ -1,59 +1,65 @@
 <?php
-class FPE
-{
-	//clé primaire
-	private int $idfpe;
 
-	//attributs
-	private ?string $nomdirecteur;
-	private ?int    $anneepromodebut;
-	private ?int    $anneepromofin;
+class FPE {
+	private $idFPE;
+	private $AvisMaster;
+	private $AvisEcoleInge;
+	private $commentaire;
+	private $codeNIP;
 
-	public function __construct( string $nomdirecteur="", int $anneepromodebut=-1, int $anneepromofin=-1 )
-	{
-		$this->nomdirecteur    = $nomdirecteur;
-		$this->anneepromodebut = $anneepromodebut;
-		$this->anneepromofin   = $anneepromofin;
+	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
+		$this->idFPE = $idFPE;
+		$this->AvisMaster = $AvisMaster;
+		$this->AvisEcoleInge = $AvisEcoleInge;
+		$this->commentaire = $commentaire;
+		$this->codeNIP = $codeNIP;
 	}
 
-	public function getIdFpe(): int
+
+	public function getAttributs() : array
 	{
-		return $this->idfpe;
+		return get_object_vars($this);
 	}
 
-	public function getNomDirecteur(): string
-	{
-		return $this->nomdirecteur;
+	public function getIdFPE() {
+		return $this->idFPE;
 	}
 
-	public function getAnneePromoDebut(): int
-	{
-		return $this->anneePromo;
+	public function setIdFPE($idFPE) {
+		$this->idFPE = $idFPE;
 	}
 
-	public function getAnneePromoFin(): int
-	{
-		return $this->anneepromofin;
+	public function getAvisMaster() {
+		return $this->AvisMaster;
 	}
 
-	private function setIdFpe( int $idfpe ): voidfpe
-	{
-		$this->idfpe = $idfpe;
+	public function setAvisMaster($AvisMaster) {
+		$this->AvisMaster = $AvisMaster;
 	}
 
-	public function setNomDirecteur( string $nomdirecteur ): voidfpe
-	{
-		$this->nomdirecteur = $nomdirecteur;
+	public function getAvisEcoleInge() {
+		return $this->AvisEcoleInge;
 	}
 
-	public function setAnneePromoDebut( int $anneepromodebut ): voidfpe
-	{
-		$this->anneepromodebut = $anneepromodebut;
+	public function setAvisEcoleInge($AvisEcoleInge) {
+		$this->AvisEcoleInge = $AvisEcoleInge;
 	}
 
-	public function setAnneePromoFin( int $anneepromofin ): voidfpe
-	{
-		$this->anneepromofin = $anneepromofin;
+	public function getCommentaire() {
+		return $this->commentaire;
+	}
+
+	public function setCommentaire($commentaire) {
+		$this->commentaire = $commentaire;
+	}
+
+	public function getCodeNIP() {
+		return $this->codeNIP;
+	}
+
+	public function setCodeNIP($codeNIP) {
+		$this->codeNIP = $codeNIP;
 	}
 }
+
 ?>

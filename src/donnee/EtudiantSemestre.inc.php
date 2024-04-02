@@ -1,32 +1,37 @@
 <?php
-class EtudiantSemestre
+class EtudiantSemestre 
 {
 	//clé primaire
-	private int $idetudiant;
-	private int $numsemestre;
+	private int $codeNIP;
+	private int $numSemestre;
 
 	//attributs
 	private ?string $passage;
 	private ?int $rang;
 	private ?int $nbabsences;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
+	public function __construct( int $codeNIP=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
 	{
-		$this->idetudiant = $idetudiant;
+		$this->codeNIP     = $codeNIP;
 		$this->numsemestre = $numsemestre;
-		$this->passage    = $passage;
-		$this->rang       = $rang;
-		$this->nbabsences = $nbabsences;
+		$this->passage     = $passage;
+		$this->rang        = $rang;
+		$this->nbabsences  = $nbabsences;
 	}
 
-	public function getIdEtudiant(): int
+	public function getAttributs() : array
 	{
-		return $this->idetudiant;
+		return get_object_vars($this);
+	}
+
+	public function getCodeNIP(): int
+	{
+		return $this->codeNIP;
 	}
 
 	public function getNumSemestre(): int
 	{
-		return $this->numsemestre;
+		return $this->numSemestre;
 	}
 
 	public function getPassage(): string
@@ -44,27 +49,27 @@ class EtudiantSemestre
 		return $this->nbabsences;
 	}
 
-	public function setidetudiant( int $idetudiant ): void
+	public function setCodeNIP( int $codeNIP )
 	{
-		$this->idetudiant = $idetudiant;
+		$this->codeNIP = $codeNIP;
 	}
 
-	public function setnumsemestre( int $numsemestre ): void
+	public function setnumsemestre( int $numSemestre )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->numSemestre = $numSemestre;
 	}
 
-	public function setPassage( string $passage ): void
+	public function setPassage( string $passage )
 	{
 		$this->passage = $passage;
 	}
 
-	public function setRang( int $rang ): void
+	public function setRang( int $rang )
 	{
 		$this->rang = $rang;
 	}
 
-	public function setnbabsences( int $nbabsences ): void
+	public function setnbabsences( int $nbabsences )
 	{
 		$this->nbabsences = $nbabsences;
 	}

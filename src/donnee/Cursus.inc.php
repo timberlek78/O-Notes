@@ -2,9 +2,10 @@
 class Cursus
 {
 	//clé primaire
-	private int     $idetudiant;
-	private int     $numsemestre;
-	private int     $numcompt;
+	private int     $codeNIP;
+	private int     $numSemestre;
+	private string  $idCompetence;
+	private string  $annee;
 	private ?string $admission;
 
 	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
@@ -15,19 +16,24 @@ class Cursus
 		$this->admission   = $admission;
 	}
 
-	public function getIdEtudiant(): int
+	public function getAttributs() : array
 	{
-		return $this->idetudiant;
+		return get_object_vars($this);
+	}
+
+	public function getCodeNIP(): int
+	{
+		return $this->codeNIP;
 	}
 
 	public function getNumSemestre(): int
 	{
-		return $this->numsemestre;
+		return $this->numSemestre;
 	}
 
-	public function getNumCompt(): int
+	public function getidCompetence(): string
 	{
-		return $this->numcompt;
+		return $this->idCompetence;
 	}
 
 	public function getAdmission(): string
@@ -35,19 +41,24 @@ class Cursus
 		return $this->admission;
 	}
 
-	public function setIdEtudiant( int $idetudiant ): void
+	public function getAnnee() : string 
 	{
-		$this->idetudiant = $idetudiant;
+		return $this->annee;
 	}
 
-	public function setNumSemestre( int $numsemestre ): void
+	public function setCodeNIP( int $codeNIP )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->codeNIP = $codeNIP;
 	}
 
-	public function setNumCompt( int $numcompt ): void
+	public function setNumSemestre( int $numSemestre )
 	{
-		$this->numcompt = $numcompt;
+		$this->numSemestre = $numSemestre;
+	}
+
+	public function setidCompetence( int $idCompetence )
+	{
+		$this->idCompetence = $idCompetence;
 	}
 
 	public function setAdmission( string $admission ): void
@@ -58,6 +69,11 @@ class Cursus
 	public function __toString( ): string
 	{
 		return "Cursus : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, numcompt=$this->numcompt, admission=$this->admission";
+	}
+	
+	public function setAnnne(string $annee)
+	{
+		$this->annee = $annee;
 	}
 }
 ?>

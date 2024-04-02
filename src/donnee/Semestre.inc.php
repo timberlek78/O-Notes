@@ -2,20 +2,16 @@
 class Semestre
 {
 	//clé primaire
-	private int $numsemestre;
+	private int $numSemestre;
 
-	public function __construct( )
-	{
-	}
+	public function __construct( ){}
 
-	public function getnumsemestre(): int
-	{
-		return $this->numsemestre;
-	}
+	public function getAttributs() : array { return get_object_vars($this);}
+	public function getId       () : int   { return $this->numSemestre;    }
 
-	public function setnumsemestre( int $numsemestre )
+	private function setnumSemestre( int $numSemestre )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->numSemestre = $numSemestre;
 	}
 
 	public function __toString( ): string
