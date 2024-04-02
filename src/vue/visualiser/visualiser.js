@@ -91,7 +91,6 @@ function ouverturePopupEtudiant ( )
 	const nomsPrenoms = parties.map(partie => partie.trim());
 
 	popupPrenom.innerText = nomsPrenoms[2];
-	popupNom   .innerText = nomsPrenoms[1];	
 	popupNom   .innerText = nomsPrenoms[1];
 	
 }
