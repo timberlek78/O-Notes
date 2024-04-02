@@ -1,20 +1,20 @@
 <?php
 
 class Utilisateur {
-	private $idUtilisateur;
+	private $idutilisateur;
 	private $mdp;
 
-	public function __construct($idUtilisateur, $mdp) {
-		$this->idUtilisateur = $idUtilisateur;
+	public function __construct($idutilisateur = -1, $mdp ="") {
+		$this->idutilisateur = $idutilisateur;
 		$this->mdp = $mdp;
 	}
 
 	public function getIdUtilisateur() {
-		return $this->idUtilisateur;
+		return $this->idutilisateur;
 	}
 
-	public function setIdUtilisateur($idUtilisateur) {
-		$this->idUtilisateur = $idUtilisateur;
+	public function setIdUtilisateur($idutilisateur) {
+		$this->idutilisateur = $idutilisateur;
 	}
 
 	public function getMdp() {

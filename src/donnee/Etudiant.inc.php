@@ -2,7 +2,7 @@
 class Etudiant
 {
 	//clé primaire
-	private int     $codeNIP;
+	private int     $codenip;
 
 	//attributs
 	private ?string $nom;
@@ -12,7 +12,12 @@ class Etudiant
 	private int $idillustration;
 	private int $idEtude;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude )
+	private $tabMoyenne;
+
+	private $Ue;
+	private $moyenneG;
+
+	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude =-1 )
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
@@ -23,9 +28,9 @@ class Etudiant
 		$this->idEtude        = $idEtude;
 	}
 
-	public function getNIP(): int
+	public function getId(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNom(): string
@@ -60,7 +65,7 @@ class Etudiant
 
 	public function setcodeNIP( int $codeNIP ): void
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setNom( string $nom ): void
@@ -96,6 +101,35 @@ class Etudiant
 	public function setIdEtude($idEtude)
 	{
 		$this->idEtude = $idEtude;
+
+	}
+
+	public function getUe            (): string { return $this->Ue;              }
+	public function getMoyenneG      (): int    { return $this->moyenneG;}
+	public function getTabMoyenne    (): array  { return $this->tabMoyenne;      }
+
+	public function setUe            (string $ue            ) { $this->Ue             = $ue;             }
+	public function setMoyenneG      (int    $moyenne       ) { $this->moyenneG       = $moyenne;        }
+	public function setTabMoyenne    (array  $tab           ) { $this->tabMoyenne     = $tab;   }
+
+	public function calculeMoyenneG()
+	{
+		$somme = 0;
+		foreach(array_values($this->tabMoyenne) as  $moyenne ) $somme += $moyenne;
+
+		$this->setMoyenneG($somme / count(array_keys($this->tabMoyenne)));
+	}
+
+	public function determinerUe()
+	{
+		$nbUe = 0;
+		foreach(array_values($this->tabMoyenne) as $moyenne )
+		{
+			if($moyenne > 10) $nbUe += 1;
+		}
+		$this->setUe( "".$nbUe."/".count(array_keys($this->tabMoyenne)));
+
 	}
 }
+
 ?>

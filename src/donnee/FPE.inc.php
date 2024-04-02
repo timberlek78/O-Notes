@@ -1,14 +1,14 @@
 <?php
 
 class FPE {
-	private $idFPE;
+	private $idfpe;
 	private $AvisMaster;
 	private $AvisEcoleInge;
 	private $commentaire;
 	private $codeNIP;
 
-	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
-		$this->idFPE = $idFPE;
+	public function __construct($idfpe = -1, $AvisMaster = "", $AvisEcoleInge = "", $commentaire ="", $codeNIP = -1) {
+		$this->idfpe = $idfpe;
 		$this->AvisMaster = $AvisMaster;
 		$this->AvisEcoleInge = $AvisEcoleInge;
 		$this->commentaire = $commentaire;
@@ -21,12 +21,12 @@ class FPE {
 		return get_object_vars($this);
 	}
 
-	public function getIdFPE() {
-		return $this->idFPE;
+	public function getId() {
+		return $this->idfpe;
 	}
 
-	public function setIdFPE($idFPE) {
-		$this->idFPE = $idFPE;
+	public function setidfpe($idfpe) {
+		$this->idfpe = $idfpe;
 	}
 
 	public function getAvisMaster() {

@@ -4,7 +4,7 @@ class Matiere {
 	private $idMatiere;
 	private $alternant;
 
-	public function __construct($idMatiere, $alternant) {
+	public function __construct($idMatiere = "", $alternant = "") {
 		$this->idMatiere = $idMatiere;
 		$this->alternant = $alternant;
 	}
@@ -14,7 +14,7 @@ class Matiere {
 		return get_object_vars($this);
 	}
 
-	public function getIdMatiere() {
+	public function getId() {
 		return $this->idMatiere;
 	}
 

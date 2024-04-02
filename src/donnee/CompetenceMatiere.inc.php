@@ -2,15 +2,15 @@
 class CompetenceMatiere
 {
 	//clé primaire
-	private string $idCompetence;
+	private string $idcompetence;
 	private string $annee;
-	private string $idMatiere;
+	private string $idmatiere;
 
 	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="" )
 	{
-		$this->idCompetence = $idCompetence;
+		$this->idcompetence = $idCompetence;
 		$this->annee        = $annee;
-		$this->idMatiere   = $idMatiere;
+		$this->idmatiere   = $idMatiere;
 	}
 
 	public function getAttributs() : array
@@ -18,24 +18,30 @@ class CompetenceMatiere
 		return get_object_vars($this);
 	}
 
-	public function getidCompetence(): string
+	public function getIds() : array
 	{
-		return $this->idCompetence;
+		return [$this->idcompetence, $this->annee, $this->idmatiere];
 	}
 
-	public function getidMatiere(): string
+
+	public function getIdCompetence(): string
 	{
-		return $this->idMatiere;
+		return $this->idcompetence;
 	}
 
-	private function setidCompetence( string $idCompetence )
+	public function getIdMatiere(): string
 	{
-		$this->idCompetence = $idCompetence;
+		return $this->idmatiere;
 	}
 
-	private function setNumMatiere( string $idMatiere )
+	private function setIdCompetence( string $idCompetence )
 	{
-		$this->idMatiere = $idMatiere;
+		$this->idcompetence = $idCompetence;
+	}
+
+	private function setIdMatiere( string $idMatiere )
+	{
+		$this->idmatiere = $idMatiere;
 	}
 }
 ?>

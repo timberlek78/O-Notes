@@ -8,9 +8,9 @@ class Cursus
 	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
+	public function __construct( int $codeNIP=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
 	{
-		$this->idetudiant  = $idetudiant;
+		$this->codeNIP  = $codeNIP;
 		$this->numsemestre  = $numsemestre;
 		$this->numcompt= $numcompt;
 		$this->admission   = $admission;
@@ -31,7 +31,7 @@ class Cursus
 		return $this->numSemestre;
 	}
 
-	public function getidCompetence(): string
+	public function getIdCompetence(): string
 	{
 		return $this->idCompetence;
 	}
@@ -56,7 +56,7 @@ class Cursus
 		$this->numSemestre = $numSemestre;
 	}
 
-	public function setidCompetence( int $idCompetence )
+	public function setIdCompetence( int $idCompetence )
 	{
 		$this->idCompetence = $idCompetence;
 	}

@@ -191,7 +191,7 @@ $generateurDonnees  = new GenerateurDonnees();
 $donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
-$exportateur = new ExcelExporter('exemple.xlsx', '/home/etudiant/bt220243/public_html/bebou/O-Notes/data');
+$exportateur = new ExcelExporter('exemple.xlsx', 'data');
 $exportateur->creerFeuilleEtudiant  (                     $donneesEtudiants);
 $exportateur->creerFeuilleCompetence($donneesCompetences, $donneesEtudiants);
 $exportateur->creerColonneMoyenne   (                     $donneesEtudiants);

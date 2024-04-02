@@ -49,7 +49,7 @@ class ONote
 	{
 		foreach ($tab as $index => $etudiant) 
 		{
-			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
+			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getNIP()));
 			$etudiant->calculeMoyenneG();
 			$etudiant->determinerUe   ();
 		}
@@ -59,7 +59,7 @@ class ONote
 	{
 		foreach($tab as $competence)
 		{
-			$competence->setTabMatieres($this->getTabMatiere($competence->getId()));
+			$competence->setTabMatieres($this->getTabMatiere($competence->getIdCompetence()));
 		}
 	}
 
@@ -67,16 +67,17 @@ class ONote
 	{
 		$tab = $this->getEnsCursus();
 		$tabMoyenne = array();
+
 		for($i = 0; $i<count($tab); $i++) // Parcours de la table Cursus
-			if($tab[$i]->getIdEtudiant() == $id)
+			if($tab[$i]->getCodeNIP() == $id)
 			{
 				$somme      = 0;
-				$competence = $this->selectById($tab[$i]->getNumCompt(), $this->getEnsCompetence());
+				$competence = $this->selectById($tab[$i]->getIdCompetence(), $this->getEnsCompetence());
 				$tabMatiere = $competence->getMatieres();
 				
 				for($j = 0; $j<count($tabMatiere); $j++) $somme += $tabMatiere[$j]->getmoyenne();
 
-				$tabMoyenne[$competence->getLibelle()] = $somme / count($tabMatiere);
+				$tabMoyenne[$competence->getIdCompetence()] = $somme / count($tabMatiere);
 			}
 		return $tabMoyenne;
 	}
@@ -95,8 +96,18 @@ class ONote
 		$tabMatiere = array();
 		
 		for($i = 0;$i<$taille;$i++)
-			if($tab[$i]->getNumMatiere() == $id)
-				$tabMatiere[] = $this->selectById($tab[$i]->getNumMatiere(), $this->getEnsMatiere());
+		{
+			echo "<br>";
+			echo "\$tab[\$i]->getIdMatiere()" . $tab[$i]->getIdCompetence();
+			echo "<br>\$id".$id;
+			echo "<br>";
+			if($tab[$i]->getIdCompetence() == $id)
+			{
+				echo "jesuis la";
+				$tabMatiere[] = $this->selectById($tab[$i]->getIdMatiere(), $this->getEnsMatiere());
+			}
+		}
+
 		return $tabMatiere;
 	}
 
@@ -105,7 +116,7 @@ class ONote
 		$tab = $this->getEnsCursus();
 		for( $i = 0; $i < count($tab); $i++)
 		{
-			if($tab[$i]->getNumCompt() == $Competence->getId() && $tab[$i]->getIdEtudiant() == $Etudiant->getId() && $tab[$i]->getNumSemestre() == $Semestre->getId())
+			if($tab[$i]->getIdCompetence() == $Competence->getIdCompetence() && $tab[$i]->getIdEtudiant() == $Etudiant->getId() && $tab[$i]->getNumSemestre() == $Semestre->getId())
 			{
 				return $tab[$i]->getAdmission();
 			}
@@ -114,7 +125,7 @@ class ONote
 		return "";
 	}
 
-	public function selectById(int $id, $tab)
+	public function selectById($id, $tab)
 	{
 		$taille = count( $tab );
 		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
