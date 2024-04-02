@@ -14,7 +14,6 @@ class Etudiant
 
 	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude )
 	{
-		$this->idetudiant     = $id;
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
