@@ -2,38 +2,25 @@
 	class Competence
 	{
 		//clé primaire
-		private int $id;
+		private string $idCompetence;
 
 		//attributs
-		private ?string $libelle;
+		private ?string $annee;
 
-		public function __construct( string $libelle="" )
+		public function __construct( string $idCompetence="", $annee)
 		{
-			$this->libelle = $libelle;
+			$this->idCompetence = $idCompetence;
+			$this->annee   = $annee;
 		}
 		public function getAttributs() : array
 		{
 			return get_object_vars($this);
 		}
 
-		public function getId(): int
-		{
-			return $this->id;
-		}
+		public function getIdCompetence() : string { return $this->idCompetence;}
+		public function getAnnee  () : string { return $this->annee;  }
 
-		public function getLibelle(): string
-		{
-			return $this->libelle;
-		}
-
-		private function setId( int $id ): void
-		{
-			$this->id = $id;
-		}
-
-		public function setLibelle( string $libelle ): void
-		{
-			$this->libelle = $libelle;
-		}
+		public function setIdCompetence( string $idCompetence ) { $this->idCompetence = $idCompetence;}
+		public function setAnnee  ( string $annee   ) { $this->annee   = $annee;  }
 	}
 ?>

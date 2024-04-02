@@ -1,16 +1,13 @@
 <?php
-class Illustration
-{
-	//clé primaire
-	private int $idillustration;
 
-	//attributs
-	private ?string $img;
-	private ?string $alternative;
+class Illustration {
+	private $idIllustration;
+	private $img;
+	private $alternative;
 
-	public function __construct( string $img="", string $alternative="" )
-	{
-		$this->img         = $img;
+	public function __construct($idIllustration, $img, $alternative) {
+		$this->idIllustration = $idIllustration;
+		$this->img = $img;
 		$this->alternative = $alternative;
 	}
 
@@ -19,34 +16,29 @@ class Illustration
 		return get_object_vars($this);
 	}
 
-	public function getIdIllustration(): int
-	{
-		return $this->idillustration;
+	public function getIdIllustration() {
+		return $this->idIllustration;
 	}
 
-	public function getImg(): string
-	{
+	public function setIdIllustration($idIllustration) {
+		$this->idIllustration = $idIllustration;
+	}
+
+	public function getImg() {
 		return $this->img;
 	}
 
-	public function getAlternative(): string
-	{
-		return $this->alternative;
-	}
-
-	private function setIdIllustration( int $idillustration ): voidillustration
-	{
-		$this->idillustration = $idillustration;
-	}
-
-	public function setImg( string $img ): voidillustration
-	{
+	public function setImg($img) {
 		$this->img = $img;
 	}
 
-	public function setAlternative( string $alternative ): voidillustration
-	{
+	public function getAlternative() {
+		return $this->alternative;
+	}
+
+	public function setAlternative($alternative) {
 		$this->alternative = $alternative;
 	}
 }
+
 ?>

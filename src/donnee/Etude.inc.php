@@ -8,14 +8,11 @@ class Etude
 	private ?string $specialite;
 	private ?string $typebac;
 
-	//clé étrangère
-	private ?int $idetudiant;
 
-	public function __construct( string $specialite="", string $typebac="", int $idetudiant=-1 )
+	public function __construct( string $specialite="", string $typebac="" )
 	{
 		$this->specialite = $specialite;
 		$this->typebac    = $typebac;
-		$this->idetudiant = $idetudiant;
 	}
 
 	public function getAttributs() : array
@@ -38,10 +35,6 @@ class Etude
 		return $this->typebac;
 	}
 
-	public function getIdEtudiant(): int
-	{
-		return $this->idetudiant;
-	}
 
 	private function setIdEtude( int $idetude ): void
 	{
@@ -58,9 +51,5 @@ class Etude
 		$this->typebac = $typebac;
 	}
 
-	public function setIdEtudiant( int $idetudiant ): void
-	{
-		$this->idetudiant = $idetudiant;
-	}
 }
 ?>
