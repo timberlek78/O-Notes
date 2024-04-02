@@ -2,7 +2,7 @@
 class Etudiant
 {
 	//clé primaire
-	private int     $codeNIP;
+	private int     $codenip;
 
 	//attributs
 	private ?string $nom;
@@ -14,7 +14,7 @@ class Etudiant
 	private int $idillustration;
 	private int $idEtude;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude )
+	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1, int $idEtude=-1)
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
@@ -27,7 +27,7 @@ class Etudiant
 
 	public function getNIP(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNom(): string
@@ -60,9 +60,9 @@ class Etudiant
 		return get_object_vars($this);
 	}
 
-	public function setcodeNIP( int $codeNIP ): void
+	public function setcodenip( int $codenip ): void
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codenip;
 	}
 
 	public function setNom( string $nom ): void
