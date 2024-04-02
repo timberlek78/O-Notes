@@ -27,7 +27,7 @@
 
 	function ouvrirFichier( string $nomFichier ) : array
 	{
-		$chemin_fichier = $_FILES[ 'moyennes' ][ 'tmp_name' ];
+		$chemin_fichier = $_FILES[ $nomFichier ][ 'tmp_name' ];
 
 		$excel = new LectureExcel( $chemin_fichier );
 		$data = $excel->recupererDonnees( );
