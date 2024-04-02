@@ -4,6 +4,7 @@ $classesDonnee = [
 	'Competence.inc.php',
 	'CompetenceMatiere.inc.php',
 	'Cursus.inc.php',
+	'EstNote.inc.php',
 	'Etude.inc.php',
 	'Etudiant.inc.php',
 	'EtudiantSemestre.inc.php',
