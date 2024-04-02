@@ -91,7 +91,7 @@ VALUES
 	(3, 'CONF003');
 
 -- Insertion dans la table EstNote
-INSERT INTO onote.EstNote (codeNIP, libelle, moyenne)
+INSERT INTO onote.EstNote (codeNIP, idMatiere, moyenne)
 VALUES 
 	(1001, 'MAT001', 15.5),
 	(1002, 'MAT002', 17.8),

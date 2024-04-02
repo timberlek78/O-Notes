@@ -2,18 +2,18 @@
 class Cursus
 {
 	//clé primaire
-	private int     $codeNIP;
+	private int     $codenip;
 	private int     $numSemestre;
-	private string  $idCompetence;
+	private string  $idcompetence;
 	private string  $annee;
 	private ?string $admission;
 
 	public function __construct( int $codeNIP=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
 	{
-		$this->codeNIP  = $codeNIP;
+		$this->codenip      = $codeNIP;
 		$this->numsemestre  = $numsemestre;
-		$this->numcompt= $numcompt;
-		$this->admission   = $admission;
+		$this->numcompt     = $numcompt;
+		$this->admission    = $admission;
 	}
 
 	public function getAttributs() : array
@@ -23,7 +23,7 @@ class Cursus
 
 	public function getCodeNIP(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNumSemestre(): int
@@ -33,7 +33,7 @@ class Cursus
 
 	public function getIdCompetence(): string
 	{
-		return $this->idCompetence;
+		return $this->idcompetence;
 	}
 
 	public function getAdmission(): string
@@ -48,7 +48,7 @@ class Cursus
 
 	public function setCodeNIP( int $codeNIP )
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setNumSemestre( int $numSemestre )
@@ -56,9 +56,9 @@ class Cursus
 		$this->numSemestre = $numSemestre;
 	}
 
-	public function setIdCompetence( int $idCompetence )
+	public function setIdCompetence( int $idcompetence )
 	{
-		$this->idCompetence = $idCompetence;
+		$this->idcompetence = $idcompetence;
 	}
 
 	public function setAdmission( string $admission ): void

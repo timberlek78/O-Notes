@@ -18,7 +18,7 @@
 	include_once '../donnee/Cursus.inc.php';
 	include_once '../donnee/CompetenceMatiere.inc.php';
 	include_once '../donnee/Competence.inc.php';
-	
+	include_once '../donnee/EstNote.inc.php';
 
 
 	class DB
@@ -107,6 +107,7 @@
 
 		private function execQuery($requete, $tparam, $nomClasse)
 		{
+			echo $requete."<br>";
 			// Préparation de la requête
 			$prepareStatement = $this->connect->prepare($requete);
 

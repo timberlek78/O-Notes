@@ -120,10 +120,9 @@ CREATE TABLE onote.Possede (
 
 CREATE TABLE onote.EstNote (
 	codeNIP INT,
-	libelle VARCHAR( 10 ),
+	idMatiere VARCHAR( 10 ),
 	moyenne DECIMAL( 15, 2 ),
-    idMatiere VARCHAR(10),
-	PRIMARY KEY ( codeNIP, libelle ),
+	PRIMARY KEY ( codeNIP, idMatiere ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )
 );

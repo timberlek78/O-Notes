@@ -9,7 +9,7 @@
 
 class ONote
 {
-	private $ensCompetence, $ensCompetenceMatiere, $ensCursus, $ensEtude, $ensEtudiant, $ensEtudiantSemestre, $ensFPE, $ensIllustration, $ensMatiere, $ensPossede, $ensSemestre, $ensUtilisateur;
+	private $ensCompetence, $ensCompetenceMatiere, $ensCursus, $ensEtude, $ensEtudiant, $ensEtudiantSemestre, $ensFPE, $ensIllustration, $ensMatiere, $ensPossede, $ensSemestre, $ensUtilisateur,$ensEstNote;
 
 	public function __construct()
 	{
@@ -26,6 +26,7 @@ class ONote
 		$this->ensPossede           = $db->selectAll("Possede"          );
 		$this->ensSemestre          = $db->selectAll("Semestre"         );
 		$this->ensUtilisateur       = $db->selectAll("Utilisateur"      );
+		$this->ensEstNote           = $db->selectAll("EstNote"          );
 
 		$this->attribuerMatiereCompetence($this->ensCompetence);
 		$this->attribuerMoyenneEtudiant  ($this->ensEtudiant  );
@@ -44,12 +45,13 @@ class ONote
 	public function getEnsPossede          () : array { return $this->ensPossede;           }
 	public function getEnsSemestre         () : array { return $this->ensSemestre;          }
 	public function getEnsUtilisateur      () : array { return $this->ensUtilisateur;       }
+	public function getEnsEstNote          () : array { return $this->ensEstNote;           }
 
 	private function attribuerMoyenneEtudiant($tab)
 	{
 		foreach ($tab as $index => $etudiant) 
 		{
-			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getNIP()));
+			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
 			$etudiant->calculeMoyenneG();
 			$etudiant->determinerUe   ();
 		}
@@ -59,7 +61,7 @@ class ONote
 	{
 		foreach($tab as $competence)
 		{
-			$competence->setTabMatieres($this->getTabMatiere($competence->getIdCompetence()));
+			$competence->setTabMatieres($this->getTabMatiere($competence->getId()));
 		}
 	}
 
@@ -67,24 +69,71 @@ class ONote
 	{
 		$tab = $this->getEnsCursus();
 		$tabMoyenne = array();
-
 		for($i = 0; $i<count($tab); $i++) // Parcours de la table Cursus
 			if($tab[$i]->getCodeNIP() == $id)
 			{
 				$somme      = 0;
 				$competence = $this->selectById($tab[$i]->getIdCompetence(), $this->getEnsCompetence());
-				$tabMatiere = $competence->getMatieres();
-				
-				for($j = 0; $j<count($tabMatiere); $j++) $somme += $tabMatiere[$j]->getmoyenne();
+				$tabMatiere = $competence->getTabMatieres();
 
-				$tabMoyenne[$competence->getIdCompetence()] = $somme / count($tabMatiere);
+				var_dump($tabMatiere);
+				
+				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tab[$i]->getId(), $id);
+
+				$tabMoyenne[$competence->getId()] = $somme / count($tabMatiere);
 			}
+
+		var_dump($tabMoyenne);
 		return $tabMoyenne;
 	}
 
-
-
-
+	public function determinerTabCompetence($idEtudiant) {
+		$tabResultat = array(); 
+		$tabSemestre = $this->determinerSemestre($idEtudiant);
+		$anneeBUT = 1;
+		
+		foreach($tabSemestre as $semestre) {
+			$tabCompetence = $this->determinerCompetence($semestre->getNumSemestre(), $idEtudiant);
+			
+			foreach($tabCompetence as $competence) {
+				$tabTemp[$competence->getId()] = $competence->getAdmission();
+			}
+			
+			if($semestre->getNumSemestre() % 2 == 0) {
+				$tabResultat['BUT'.$anneeBUT] = $tabTemp;
+				$anneeBUT++;
+			}
+		}
+		
+		return $tabResultat;
+	}
+	
+	public function determinerSemestre($idEtudiant) {
+		$tabSemestre = array(); 
+		$tabCursus = $this->getEnsCursus();
+		
+		foreach($tabCursus as $cursus) {
+			if($cursus->getIdEtudiant() == $idEtudiant) {
+				$tabSemestre[$cursus->getNumSemestre()] = $cursus->getNumSemestre();
+			}
+		}
+		
+		return $tabSemestre;
+	}
+	
+	public function determinerCompetence($numSemestre, $idEtudiant) {
+		$tabCompetence = array();
+		$tabCursus = $this->getEnsCursus();
+		
+		foreach($tabCursus as $cursus) {
+			if($cursus->getNumSemestre() == $numSemestre && $cursus->getIdEtudiant() == $idEtudiant) {
+				$tabCompetence[$cursus->getIdCompetence()] = $cursus->getIdCompetence();
+			}
+		}
+		
+		return $tabCompetence;
+	}
+	
 	/***************************/
 	/*  Méthode de recherche   */
 	/***************************/
@@ -98,12 +147,16 @@ class ONote
 		for($i = 0;$i<$taille;$i++)
 		{
 			echo "<br>";
-			echo "\$tab[\$i]->getIdMatiere()" . $tab[$i]->getIdCompetence();
+			echo "\$tab[\$i]->getIdCompetence()" . $tab[$i]->getIdCompetence();
 			echo "<br>\$id".$id;
 			echo "<br>";
 			if($tab[$i]->getIdCompetence() == $id)
 			{
-				echo "jesuis la";
+				
+
+				echo "--------------";
+				echo "\$tab[\$i]->getIdMatiere() : ".$tab[$i]->getIdMatiere();
+				//var_dump($this->selectById($tab[$i]->getIdMatiere(), $this->getEnsMatiere()));
 				$tabMatiere[] = $this->selectById($tab[$i]->getIdMatiere(), $this->getEnsMatiere());
 			}
 		}
@@ -111,12 +164,12 @@ class ONote
 		return $tabMatiere;
 	}
 
-	public function selectAdmis($Competence, $Etudiant, $Semestre) : string
+	public function selectAdmis($Competence, $idEtudiant, $idSemestre) : string
 	{
 		$tab = $this->getEnsCursus();
 		for( $i = 0; $i < count($tab); $i++)
 		{
-			if($tab[$i]->getIdCompetence() == $Competence->getIdCompetence() && $tab[$i]->getIdEtudiant() == $Etudiant->getId() && $tab[$i]->getNumSemestre() == $Semestre->getId())
+			if($tab[$i]->getIdCompetence() == $Competence->getIdCompetence() && $tab[$i]->getIdEtudiant() == $idEtudiant && $tab[$i]->getNumSemestre() == $idSemestre)
 			{
 				return $tab[$i]->getAdmission();
 			}
@@ -125,9 +178,23 @@ class ONote
 		return "";
 	}
 
+	public function selectMoyenneParEtudiant($idMatiere, $idEtudiant)
+	{
+		foreach($this->getEnsEstNote() as $estNote)
+		{
+			if($estNote->getCodeNip() == $idEtudiant && $estNote->getIdMatiere() == $idMatiere)
+			{
+				return $estNote->getMoyenne();
+			}
+		}
+	}
+
 	public function selectById($id, $tab)
 	{
 		$taille = count( $tab );
+
+		var_dump($tab);
+
 		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
 	}
 

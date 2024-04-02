@@ -1,11 +1,11 @@
 <?php
 
 class Matiere {
-	private $idMatiere;
+	private $idmatiere;
 	private $alternant;
 
-	public function __construct($idMatiere = "", $alternant = "") {
-		$this->idMatiere = $idMatiere;
+	public function __construct($idmatiere = "", $alternant = "") {
+		$this->idmatiere = $idmatiere;
 		$this->alternant = $alternant;
 	}
 
@@ -15,11 +15,11 @@ class Matiere {
 	}
 
 	public function getId() {
-		return $this->idMatiere;
+		return $this->idmatiere;
 	}
 
-	public function setIdMatiere($idMatiere) {
-		$this->idMatiere = $idMatiere;
+	public function setidmatiere($idmatiere) {
+		$this->idmatiere = $idmatiere;
 	}
 
 	public function getAlternant() {

@@ -33,6 +33,9 @@
 
 		public function setTabMatieres($tab)
 		{
+			echo "<br>bah je suis dans setTabMatiere <br>";
+
+			var_dump($tab);
 			$this->tabMatiere = $tab;
 		}
 	}
