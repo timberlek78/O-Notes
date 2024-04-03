@@ -164,10 +164,10 @@
 		$annee = $_GET['annee'];
 		echo $controleurVue->getJsonExporter($annee);
 	}
-	else if (isset($_GET['anneesRenseignees']) && !empty ( $_GET [ 'anneesRenseignees']))
-	{
-		if ( $ )
-	}
+	// else if (isset($_GET['anneesRenseignees']) && !empty ( $_GET [ 'anneesRenseignees']))
+	// {
+	// 	if ( $ )
+	// }
 	else
 	{
 		echo json_encode(['erreur' => 'ID de semestre ou annee manquant']);
