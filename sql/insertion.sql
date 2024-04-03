@@ -1,22 +1,24 @@
 -- Insertion dans la table Etude
-INSERT INTO onote.Etude (idEtude, specialite, typeBac)
+INSERT INTO onote.Etude (specialite, typeBac)
 VALUES 
-	(1, 'Informatique', 'Scientifique'),
-	(2, 'Génie Civil', 'Technologique'),
-	(3, 'Biologie', 'Scientifique');
+	('Informatique', 'Scientifique'),
+	('Génie Civil', 'Technologique'),
+	('Biologie', 'Scientifique');
 
 -- Insertion dans la table Semestre
 INSERT INTO onote.Semestre (numSemestre)
 VALUES 
-	(1), (2), (3), (4), (5), (6), (7), (8);
+	(1), (2), (3), (4), (5), (6);
 
 -- Insertion dans la table Competence
 INSERT INTO onote.Competence (idCompetence, annee)
 VALUES 
-	('COMP001', 2024),
-	('COMP002', 2024),
-	('COMP003', 2025),
-	('COMP004', 2025);
+	('COMP001', '2025-2026'),
+	('COMP002', '2025-2026'),
+	('COMP003', '2025-2026'),
+	('COMP004', '2025-2026'),
+	('COMP005', '2025-2026'),
+	('COMP006', '2025-2026');
 
 -- Insertion dans la table Matiere
 INSERT INTO onote.Matiere (idMatiere, alternant)
@@ -24,7 +26,9 @@ VALUES
 	('MAT001', FALSE),
 	('MAT002', TRUE),
 	('MAT003', FALSE),
-	('MAT004', TRUE);
+	('MAT004', TRUE),
+	('MAT005', TRUE),
+	('MAT006', TRUE);
 
 -- Insertion dans la table Utilisateur
 INSERT INTO onote.Utilisateur (idUtilisateur, mdp)
@@ -43,16 +47,22 @@ VALUES
 -- Insertion dans la table ConfigFPE
 INSERT INTO onote.ConfigFPE (idConfigFPE, nomDirecteur, anneePromo)
 VALUES 
-	('CONF001', 'Directeur1', '2024-01-01'),
-	('CONF002', 'Directeur2', '2024-01-01'),
-	('CONF003', 'Directeur3', '2025-01-01');
+	('CONF001', 'Directeur1', '2024-2027'),
+	('CONF002', 'Directeur2', '2024-2027'),
+	('CONF003', 'Directeur3', '2024-2027');
 
 -- Insertion dans la table Etudiant
-INSERT INTO onote.Etudiant (codeNIP, nom, prenom, parcours, promotion, idEtude)
+INSERT INTO onote.Etudiant (codeNIP, nom, prenom, parcours, promotion, specialite, typeBac)
 VALUES 
-	(1001, 'Dupont', 'Jean', 'Informatique', '2023', 1),
-	(1002, 'Durand', 'Marie', 'Mathématiques', '2024', 1),
-	(1003, 'Lefevre', 'Pierre', 'Génie Civil', '2025', 2);
+	(1001, 'Dupont', 'Jean', 'Informatique', '2023', 'Informatique', 'Scientifique'),
+	(1002, 'Durand', 'Marie', 'Mathématiques', '2025-2026', 'Informatique', 'Scientifique'),
+	(1003, 'Lefevre', 'Pierre', 'Génie Civil', '2025', 'Informatique', 'Scientifique'),
+	(1004, 'Bigard', 'Jean-Marie', 'Alcoolisme', '2025-2026', 'Informatique', 'Scientifique'),
+	(1005, 'Grantunel', 'Celioche', 'A', '2023-2026', 'Informatique', 'Scientifique'),
+	(1006, 'Verdict', 'Yanice', 'B', '2023-2026', 'Informatique', 'Scientifique'),
+	(1007, 'Letremplin', 'Minimilien', 'A', '2023-2026', 'Informatique', 'Scientifique'),
+	(1008, 'Pieceofgarlic', 'Tardmas', 'A', '2024-2027', 'Informatique', 'Scientifique'),
+	(1009, 'Lavoine', 'Minime', 'A', '2024-2027', 'Informatique', 'Scientifique');
 
 -- Insertion dans la table FPE
 INSERT INTO onote.FPE (idFPE, AvisMaster, AvisEcoleInge, commentaire, codeNIP)
@@ -71,17 +81,120 @@ VALUES
 -- Insertion dans la table CompetenceMatiere
 INSERT INTO onote.CompetenceMatiere (idCompetence, annee, idMatiere, coeff)
 VALUES 
-	('COMP001', 2024, 'MAT001', 3),
-	('COMP002', 2024, 'MAT002', 4),
-	('COMP003', 2025, 'MAT003', 3),
-	('COMP004', 2025, 'MAT004', 4);
+	('COMP001', '2025-2026', 'MAT001', 3),
+	('COMP001', '2025-2026', 'MAT002', 2),
+	('COMP001', '2025-2026', 'MAT003', 2),
+
+	('COMP002', '2025-2026', 'MAT004', 1),
+	('COMP002', '2025-2026', 'MAT005', 5),
+	('COMP002', '2025-2026', 'MAT006', 2),
+	
+	('COMP003', '2025-2026', 'MAT001', 8),
+	('COMP003', '2025-2026', 'MAT002', 6),
+	('COMP003', '2025-2026', 'MAT004', 2),
+
+	('COMP004', '2025-2026', 'MAT001', 1),
+	('COMP004', '2025-2026', 'MAT003', 2),
+	('COMP004', '2025-2026', 'MAT005', 3),
+
+	('COMP005', '2025-2026', 'MAT001', 1),
+	('COMP005', '2025-2026', 'MAT002', 2),
+	('COMP005', '2025-2026', 'MAT003', 3),
+
+	('COMP006', '2025-2026', 'MAT004', 1),
+	('COMP006', '2025-2026', 'MAT003', 2),
+	('COMP006', '2025-2026', 'MAT002', 3);
 
 -- Insertion dans la table Cursus
 INSERT INTO onote.Cursus (codeNIP, numSemestre, idCompetence, annee, admission)
 VALUES 
-	(1001, 1, 'COMP001', 2024, 'ADM'),
-	(1002, 1, 'COMP002', 2024, 'AJ'),
-	(1003, 1, 'COMP003', 2025, 'CMP');
+	(1001, 1, 'COMP001', '2025-2026', 'ADM'),
+	(1001, 1, 'COMP002', '2025-2026', 'AJ'),
+	(1001, 1, 'COMP003', '2025-2026', 'CMP'),
+	(1001, 1, 'COMP004', '2025-2026', 'ADSUP'),
+	(1001, 1, 'COMP005', '2025-2026', 'ADM'),
+	(1001, 1, 'COMP006', '2025-2026', 'ADM'),
+
+	(1002, 1, 'COMP001', '2025-2026', 'ADM'),
+	(1002, 1, 'COMP002', '2025-2026', 'ADSUP'),
+	(1002, 1, 'COMP003', '2025-2026', 'AJ'),
+	(1002, 1, 'COMP004', '2025-2026', 'CMP'),
+	(1002, 1, 'COMP005', '2025-2026', 'AJ'),
+	(1002, 1, 'COMP006', '2025-2026', 'ADM'),
+
+	(1003, 1, 'COMP001', '2025-2026', 'ADM'),
+	(1003, 1, 'COMP002', '2025-2026', 'ADM'),
+	(1003, 1, 'COMP003', '2025-2026', 'AJ'),
+	(1003, 1, 'COMP004', '2025-2026', 'ADSUP'),
+	(1003, 1, 'COMP005', '2025-2026', 'ADM'),
+	(1003, 1, 'COMP006', '2025-2026', 'CMP'),
+
+
+	--Semestre 2
+	(1001, 2, 'COMP001', '2025-2026', 'ADM'),
+	(1001, 2, 'COMP002', '2025-2026', 'AJ'),
+	(1001, 2, 'COMP003', '2025-2026', 'CMP'),
+	(1001, 2, 'COMP004', '2025-2026', 'ADSUP'),
+	(1001, 2, 'COMP005', '2025-2026', 'ADM'),
+	(1001, 2, 'COMP006', '2025-2026', 'ADM'),
+
+	(1002, 2, 'COMP001', '2025-2026', 'ADM'),
+	(1002, 2, 'COMP002', '2025-2026', 'ADSUP'),
+	(1002, 2, 'COMP003', '2025-2026', 'AJ'),
+	(1002, 2, 'COMP004', '2025-2026', 'CMP'),
+	(1002, 2, 'COMP005', '2025-2026', 'AJ'),
+	(1002, 2, 'COMP006', '2025-2026', 'ADM'),
+
+	(1003, 2, 'COMP001', '2025-2026', 'ADM'),
+	(1003, 2, 'COMP002', '2025-2026', 'ADM'),
+	(1003, 2, 'COMP003', '2025-2026', 'AJ'),
+	(1003, 2, 'COMP004', '2025-2026', 'ADSUP'),
+	(1003, 2, 'COMP005', '2025-2026', 'ADM'),
+	(1003, 2, 'COMP006', '2025-2026', 'CMP'),
+
+	--Semestre 3
+	(1001, 3, 'COMP001', '2025-2026', 'ADM'),
+	(1001, 3, 'COMP002', '2025-2026', 'AJ'),
+	(1001, 3, 'COMP003', '2025-2026', 'CMP'),
+	(1001, 3, 'COMP004', '2025-2026', 'ADSUP'),
+	(1001, 3, 'COMP005', '2025-2026', 'ADM'),
+	(1001, 3, 'COMP006', '2025-2026', 'ADM'),
+
+	(1002, 3, 'COMP001', '2025-2026', 'ADM'),
+	(1002, 3, 'COMP002', '2025-2026', 'ADSUP'),
+	(1002, 3, 'COMP003', '2025-2026', 'AJ'),
+	(1002, 3, 'COMP004', '2025-2026', 'CMP'),
+	(1002, 3, 'COMP005', '2025-2026', 'AJ'),
+	(1002, 3, 'COMP006', '2025-2026', 'ADM'),
+
+	(1003, 3, 'COMP001', '2025-2026', 'ADM'),
+	(1003, 3, 'COMP002', '2025-2026', 'ADM'),
+	(1003, 3, 'COMP003', '2025-2026', 'AJ'),
+	(1003, 3, 'COMP004', '2025-2026', 'ADSUP'),
+	(1003, 3, 'COMP005', '2025-2026', 'ADM'),
+	(1003, 3, 'COMP006', '2025-2026', 'CMP'),
+
+	--Semestre 4
+	(1001, 4, 'COMP001', '2025-2026', 'ADM'),
+	(1001, 4, 'COMP002', '2025-2026', 'AJ'),
+	(1001, 4, 'COMP003', '2025-2026', 'CMP'),
+	(1001, 4, 'COMP004', '2025-2026', 'ADSUP'),
+	(1001, 4, 'COMP005', '2025-2026', 'ADM'),
+	(1001, 4, 'COMP006', '2025-2026', 'ADM'),
+
+	(1002, 4, 'COMP001', '2025-2026', 'ADM'),
+	(1002, 4, 'COMP002', '2025-2026', 'ADSUP'),
+	(1002, 4, 'COMP003', '2025-2026', 'AJ'),
+	(1002, 4, 'COMP004', '2025-2026', 'CMP'),
+	(1002, 4, 'COMP005', '2025-2026', 'AJ'),
+	(1002, 4, 'COMP006', '2025-2026', 'ADM'),
+
+	(1003, 4, 'COMP001', '2025-2026', 'ADM'),
+	(1003, 4, 'COMP002', '2025-2026', 'ADM'),
+	(1003, 4, 'COMP003', '2025-2026', 'ADM'),
+	(1003, 4, 'COMP004', '2025-2026', 'ADM'),
+	(1003, 4, 'COMP005', '2025-2026', 'ADM'),
+	(1003, 4, 'COMP006', '2025-2026', 'ADM');
 
 -- Insertion dans la table Possede
 INSERT INTO onote.Possede (idIllustration, idConfigFPE)
@@ -94,5 +207,22 @@ VALUES
 INSERT INTO onote.EstNote (codeNIP, idMatiere, moyenne)
 VALUES 
 	(1001, 'MAT001', 15.5),
-	(1002, 'MAT002', 17.8),
-	(1003, 'MAT003', 14.2);
+	(1001, 'MAT002', 9.5),
+	(1001, 'MAT003', 16.5),
+	(1001, 'MAT004', 0.5),
+	(1001, 'MAT005', 13.5),
+	(1001, 'MAT006', 20),
+
+	(1002, 'MAT001', 5.8),
+	(1002, 'MAT002', 6.8),
+	(1002, 'MAT003', 11.8),
+	(1002, 'MAT004', 3.8),
+	(1002, 'MAT005', 8.8),
+	(1002, 'MAT006', 7.2),
+
+	(1003, 'MAT001', 16.2),
+	(1003, 'MAT002', 17.2),
+	(1003, 'MAT003', 19.2),
+	(1003, 'MAT004', 18.2),
+	(1003, 'MAT005', 15.2),
+	(1003, 'MAT006', 14.2);

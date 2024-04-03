@@ -158,6 +158,13 @@
 			return $this->execQuery($requete, $parametres, $nomClasse);
 		}
 
+		public function getAnneesRenseignees()
+		{
+			$requete = 'SELECT DISTINCT annee FROM ' . DB::$schema . '.Competence';
+			
+			return $this->execQuery($requete, null, 'Competence');
+		}
+
 		// Méthode delete
 		public function delete($nomClasse, $objet)
 		{

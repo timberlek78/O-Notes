@@ -17,10 +17,10 @@ body {
 
 .cadre-export {
 	width: 17.9vw;
+	color: var(--violet-action);
 }
 
 .conteneur-information {
-	color: var(--violet-action);
 	background-color: white;
 	text-align: center;
 	border-radius: var(--arrondi);
@@ -28,8 +28,9 @@ body {
 	padding: 6vh 0 2vh 0vh;
 }
 
-.conteneur-information selectionne {
+.conteneur-information.selectionne {
 	background-color: var(--violet-action);
+	color: white;
 }
 
 .conteneur-information p {
@@ -51,20 +52,42 @@ body {
 	justify-content: center;
 }
 
-.btn-gauche button {
-	background-color: var(--violet-action);
-	margin-left: 2vh;
-}
-
-.btn-droit button {
+.pied-de-page button {
 	background-color: var(--orange-peps);
 	margin-right: 2vh;
 }
 
 .pied-de-page {
 	position: absolute;
+	display: flex;
+	justify-content: center;
 	bottom: 0px;
 	height: fit-content;
 	width: 100vw;
 	margin-bottom: 2vh;
+}
+
+.selection-annee {
+	display: flex;
+	justify-content: center;
+}
+
+#choix-annee {
+	margin-top: 5vh;
+	background-color: var(--violet-moyen);
+	color: white;
+	text-align: center;
+	height: 4vh;
+}
+
+#choix-annee option {
+	background-color: white;
+	border-radius: 0;
+	color: black;
+}
+
+.btn-annee {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
