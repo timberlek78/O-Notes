@@ -8,18 +8,9 @@
 	include_once __DIR__.'/../metier/importation/OuvrirLectureExcel.inc.php';
 	include_once __DIR__.'/../metier/importation/analyse/AnalyseDataFichiers.inc.php';
 	include_once __DIR__.'/../metier/DonneesONote.inc.php';
+	include_once __DIR__.'/../metier/conversion/TableauToBado.inc.php';
 
-	$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'moyennes' );
-	$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'jury' );
-	if( empty( $dataMoyenne ) || empty( $dataJury ) )
-	{
-		echo "Impossible d'ouvrir le fichier";
-		exit( );
-	}
-
-	gererDonnees( $dataMoyenne, $dataJury );
-
-	function gererDonnees( $dataMoyenne, $dataJury )
+	function genererDonnees( $dataMoyenne, $dataJury ) : DonneesONote
 	{
 		$donnes = new DonneesONote( );
 
@@ -27,6 +18,26 @@
 		$analyse->ajouterCompetencesDansDonnees( $donnes );
 		$analyse->ajouterEtudiantsDansDonnees( $donnes );
 
-		echo $donnes;
+		return $donnes;
 	}
+
+	function main ( )
+	{
+		$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'moyennes' );
+		$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'jury' );
+		if( empty( $dataMoyenne ) || empty( $dataJury ) )
+		{
+			echo "Impossible d'ouvrir le fichier";
+			exit( );
+		}
+
+		$donnees = genererDonnees( $dataMoyenne, $dataJury );
+
+		//echo $donnees;
+
+		$conversion = new TableauToBado( $donnees );
+		$conversion->insertAll( );
+	}
+
+	main( );
 ?>

@@ -9,7 +9,7 @@ class DonneesONote
 	public array $ensEtudiant;
 	public array $ensEtudiantSemestre;
 	public array $ensMatiere;
-	public Semestre $semestre;
+	public array $ensSemestre;
 
 	public function __construct()
 	{
@@ -21,14 +21,14 @@ class DonneesONote
 		$this->ensEtudiant          = array();
 		$this->ensEtudiantSemestre  = array();
 		$this->ensMatiere           = array();
-		$this->semestre             = new Semestre();
+		$this->ensSemestre          = array();
 	}
 
 	
 
 	public function __toString( ) : string
 	{
-		$str = "DonneesONote du semestre : ".$this->semestre."<br>";
+		$str = "DonneesONote du semestre : ".$this->ensSemestre[0]."<br>";
 		$str .= $this->competencesToString( );
 		$str .= "<br>";
 		$str .= $this->etudiantsToString( );

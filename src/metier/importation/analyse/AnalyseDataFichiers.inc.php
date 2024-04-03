@@ -31,7 +31,7 @@ class AnalyseDataFichiers
 	public function ajouterCompetencesDansDonnees( DonneesONote $donnes )
 	{
 		$semestre = $this->creerSemestre( );
-		$donnes->semestre = $semestre;
+		$donnes->ensSemestre[0] = $semestre;
 
 		$ensNomCompetence = $this->structureMoyenne->getCompetences( $this->semestre );
 		foreach( $ensNomCompetence as $nomCompetence )
@@ -61,7 +61,7 @@ class AnalyseDataFichiers
 			$etude = $this->creerEtude( $ligneMoyenne );
 			$donnees->ensEtude[] = $etude;
 
-			$etudiant = $this->creerEtudiant( $ligneMoyenne, $etude->getIdEtude( ) );
+			$etudiant = $this->creerEtudiant( $ligneMoyenne );
 			$donnees->ensEtudiant[] = $etudiant;
 
 			$etudiantSemestre = $this->creerEtudiantSemestre( $ligneMoyenne );
@@ -102,13 +102,12 @@ class AnalyseDataFichiers
 		foreach( $ensNomMatiere as $nomMatiere )
 		{
 			$moyenne = floatval( $ligneMoyenne[ $this->structureMoyenne->getIndiceColonneMatiere( $nomMatiere ) ] );
-
 			$estNote = $this->creerEstNote( $ligneMoyenne, $codeNIP, $nomMatiere, $moyenne );
 			$donnees->ensEstNote[] = $estNote;
 		}
 	}
 
-	private function creerEtudiant( array $ligne, int $idEtude ) : Etudiant
+	private function creerEtudiant( array $ligne ) : Etudiant
 	{
 		$etudiant = new Etudiant( );
 		$etudiant->setCodeNIP( $ligne[ $this->structureMoyenne->getIndiceColonne( "codeNIP" ) ] );
@@ -116,7 +115,8 @@ class AnalyseDataFichiers
 		$etudiant->setPrenom( $ligne[ $this->structureMoyenne->getIndiceColonne( "prenom" ) ] );
 		$etudiant->setParcours( $ligne[ $this->structureMoyenne->getIndiceColonne( "parcours" ) ]?? "");
 		$etudiant->setPromotion( $this->promotion );
-		$etudiant->setIdEtude( $idEtude );
+		$etudiant->setSpecialite( $ligne[ $this->structureMoyenne->getIndiceColonne( "specialite" ) ] ?? "" );
+		$etudiant->setTypeBac( $ligne[ $this->structureMoyenne->getIndiceColonne( "typeBAC" ) ] ?? "" );
 		return $etudiant;
 	}
 
@@ -125,9 +125,6 @@ class AnalyseDataFichiers
 		$etude = new Etude( );
 		$etude->setSpecialite( $ligne[ $this->structureMoyenne->getIndiceColonne( "specialite" ) ] ?? "" );
 		$etude->setTypeBac( $ligne[ $this->structureMoyenne->getIndiceColonne( "typeBAC" ) ] ?? "" );
-
-		$idUniqueInt = intval( hexdec( md5( uniqid( ) ) ) );
-		$etude->setIdEtude( $idUniqueInt ); //TODO: remarque, il faudrait mieux gérer l'objet sans avoir besoin de créer un id en php + éviter les doublons
 		return $etude;
 	}
 
