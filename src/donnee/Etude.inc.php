@@ -8,14 +8,16 @@ class Etude
 	private ?string $specialite;
 	private ?string $typebac;
 
-	//clé étrangère
-	private ?int $idetudiant;
 
-	public function __construct( string $specialite="", string $typebac="", int $idetudiant=-1 )
+	public function __construct( string $specialite="", string $typebac="" )
 	{
 		$this->specialite = $specialite;
 		$this->typebac    = $typebac;
-		$this->idetudiant = $idetudiant;
+	}
+	
+	public function getAttributs() : array
+	{
+		return get_object_vars($this);
 	}
 
 	public function getIdEtude(): int
@@ -33,12 +35,7 @@ class Etude
 		return $this->typebac;
 	}
 
-	public function getIdEtudiant(): int
-	{
-		return $this->idetudiant;
-	}
-
-	private function setIdEtude( int $idetude ): void
+	public function setIdEtude( int $idetude ): void
 	{
 		$this->idetude = $idetude;
 	}
@@ -53,14 +50,9 @@ class Etude
 		$this->typebac = $typebac;
 	}
 
-	public function setIdEtudiant( int $idetudiant ): void
-	{
-		$this->idetudiant = $idetudiant;
-	}
-
 	public function __toString(): string
 	{
-		return "Etude : specialite=".$this->specialite.", typebac=".$this->typebac.", idetudiant=".$this->idetudiant;
+		return "Etude : specialite = ".$this->specialite.", typebac = ".$this->typebac;
 	}
 }
 ?>

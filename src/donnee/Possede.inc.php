@@ -1,34 +1,34 @@
 <?php
-class Possede
-{
-	//clé primaire
-	private int $idillustration;
-	private int $idfpe;
 
-	public function __construct( int $idillustration=-1, int $idfpe=-1 )
-	{
-		$this->idillustration = $idillustration;
-		$this->idfpe          = $idfpe;
+class Possede {
+	private $idillustration;
+	private $idconfigfpe;
+
+	public function __construct($idIllustration, $idConfigFPE) {
+		$this->idillustration = $idIllustration;
+		$this->idconfigfpe = $idConfigFPE;
 	}
 
-	public function getIdIllustration(): int
+	public function getAttributs() : array
 	{
+		return get_object_vars($this);
+	}
+
+	public function getIdIllustration() {
 		return $this->idillustration;
 	}
 
-	public function getIdFpe(): int
-	{
-		return $this->idfpe;
+	public function setIdIllustration($idIllustration) {
+		$this->idillustration = $idIllustration;
 	}
 
-	private function setIdIllustration( int $idillustration ): void
-	{
-		$this->idillustration = $idillustration;
+	public function getIdConfigFPE() {
+		return $this->idconfigfpe;
 	}
 
-	private function setidfpe( int $idfpe ): void
-	{
-		$this->idfpe = $idfpe;
+	public function setIdConfigFPE($idConfigFPE) {
+		$this->idconfigfpe = $idConfigFPE;
 	}
 }
+
 ?>

@@ -2,22 +2,29 @@
 class Cursus
 {
 	//clé primaire
-	private int     $idetudiant;
+	private string  $codenip;
 	private int     $numsemestre;
-	private int     $numcompt;
+	private string  $idcompetence;
+	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
+	public function __construct( string $codenip="", int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
 	{
-		$this->idetudiant  = $idetudiant;
+		$this->codenip      = $codenip;
 		$this->numsemestre  = $numsemestre;
-		$this->numcompt= $numcompt;
-		$this->admission   = $admission;
+		$this->idcompetence = $idcompetence;
+		$this->annee        = $annee;
+		$this->admission    = $admission;
 	}
 
-	public function getIdEtudiant(): int
+	public function getAttributs() : array
 	{
-		return $this->idetudiant;
+		return get_object_vars($this);
+	}
+
+	public function getCodeNIP(): int
+	{
+		return $this->codenip;
 	}
 
 	public function getNumSemestre(): int
@@ -25,9 +32,9 @@ class Cursus
 		return $this->numsemestre;
 	}
 
-	public function getNumCompt(): int
+	public function getidCompetence(): string
 	{
-		return $this->numcompt;
+		return $this->idcompetence;
 	}
 
 	public function getAdmission(): string
@@ -35,19 +42,24 @@ class Cursus
 		return $this->admission;
 	}
 
-	public function setIdEtudiant( int $idetudiant ): void
+	public function getAnnee() : string 
 	{
-		$this->idetudiant = $idetudiant;
+		return $this->annee;
 	}
 
-	public function setNumSemestre( int $numsemestre ): void
+	public function setCodeNIP( string $codeNIP )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->codenip = $codeNIP;
 	}
 
-	public function setNumCompt( int $numcompt ): void
+	public function setNumSemestre( int $numSemestre )
 	{
-		$this->numcompt = $numcompt;
+		$this->numsemestre = $numSemestre;
+	}
+
+	public function setIdCompetence( string $idCompetence )
+	{
+		$this->idcompetence = $idCompetence;
 	}
 
 	public function setAdmission( string $admission ): void
@@ -55,9 +67,14 @@ class Cursus
 		$this->admission = $admission;
 	}
 
+	public function setAnnee(string $annee)
+	{
+		$this->annee = $annee;
+	}
+
 	public function __toString( ): string
 	{
-		return "Cursus : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, numcompt=$this->numcompt, admission=$this->admission";
+		return "Cursus : codenip=$this->codenip, numsemestre=$this->numsemestre, idcompetence=$this->idcompetence, annee=$this->annee, admission=$this->admission";
 	}
 }
 ?>

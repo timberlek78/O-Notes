@@ -1,8 +1,8 @@
 <?php
-class EtudiantSemestre
+class EtudiantSemestre 
 {
 	//clé primaire
-	private int $idetudiant;
+	private int $codenip;
 	private int $numsemestre;
 
 	//attributs
@@ -10,18 +10,23 @@ class EtudiantSemestre
 	private ?int $rang;
 	private ?int $nbabsences;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, string $passage="", int $rang=-1, int $nbabsences=-1 )
+	public function __construct( int $codeNIP=-1, int $numSemestre=-1, string $passage="", int $rang=-1, int $nbAbsences=-1 )
 	{
-		$this->idetudiant = $idetudiant;
-		$this->numsemestre = $numsemestre;
-		$this->passage    = $passage;
-		$this->rang       = $rang;
-		$this->nbabsences = $nbabsences;
+		$this->codenip     = $codeNIP;
+		$this->numsemestre = $numSemestre;
+		$this->passage     = $passage;
+		$this->rang        = $rang;
+		$this->nbabsences  = $nbAbsences;
 	}
 
-	public function getIdEtudiant(): int
+	public function getAttributs() : array
 	{
-		return $this->idetudiant;
+		return get_object_vars($this);
+	}
+
+	public function getCodeNIP(): int
+	{
+		return $this->codenip;
 	}
 
 	public function getNumSemestre(): int
@@ -44,34 +49,34 @@ class EtudiantSemestre
 		return $this->nbabsences;
 	}
 
-	public function setidetudiant( int $idetudiant ): void
+	public function setCodeNIP( int $codeNIP )
 	{
-		$this->idetudiant = $idetudiant;
+		$this->codenip = $codeNIP;
 	}
 
-	public function setnumsemestre( int $numsemestre ): void
+	public function setnumsemestre( int $numSemestre )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->numsemestre = $numSemestre;
 	}
 
-	public function setPassage( string $passage ): void
+	public function setPassage( string $passage )
 	{
 		$this->passage = $passage;
 	}
 
-	public function setRang( int $rang ): void
+	public function setRang( int $rang )
 	{
 		$this->rang = $rang;
 	}
 
-	public function setnbabsences( int $nbabsences ): void
+	public function setnbabsences( int $nbabsences )
 	{
 		$this->nbabsences = $nbabsences;
 	}
 
 	public function __toString(): string
 	{
-		return "EtudiantSemestre : idetudiant=$this->idetudiant, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
+		return "EtudiantSemestre : codenip=$this->codenip, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
 	}
 }
 ?>

@@ -1,59 +1,65 @@
 <?php
-class FPE
-{
-	//clé primaire
-	private int $idfpe;
 
-	//attributs
-	private ?string $nomdirecteur;
-	private ?int    $anneepromodebut;
-	private ?int    $anneepromofin;
+class FPE {
+	private $idfpe;
+	private $avismaster;
+	private $avisecoleinge;
+	private $commentaire;
+	private $codenip;
 
-	public function __construct( string $nomdirecteur="", int $anneepromodebut=-1, int $anneepromofin=-1 )
-	{
-		$this->nomdirecteur    = $nomdirecteur;
-		$this->anneepromodebut = $anneepromodebut;
-		$this->anneepromofin   = $anneepromofin;
+	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
+		$this->idfpe = $idFPE;
+		$this->avismaster = $AvisMaster;
+		$this->avisecoleinge = $AvisEcoleInge;
+		$this->commentaire = $commentaire;
+		$this->codenip = $codeNIP;
 	}
 
-	public function getIdFpe(): int
+
+	public function getAttributs() : array
 	{
+		return get_object_vars($this);
+	}
+
+	public function getIdFPE() {
 		return $this->idfpe;
 	}
 
-	public function getNomDirecteur(): string
-	{
-		return $this->nomdirecteur;
+	public function setIdFPE($idFPE) {
+		$this->idfpe = $idFPE;
 	}
 
-	public function getAnneePromoDebut(): int
-	{
-		return $this->anneePromo;
+	public function getAvisMaster() {
+		return $this->avismaster;
 	}
 
-	public function getAnneePromoFin(): int
-	{
-		return $this->anneepromofin;
+	public function setAvisMaster($AvisMaster) {
+		$this->avismaster = $AvisMaster;
 	}
 
-	private function setIdFpe( int $idfpe ): voidfpe
-	{
-		$this->idfpe = $idfpe;
+	public function getAvisEcoleInge() {
+		return $this->avisecoleinge;
 	}
 
-	public function setNomDirecteur( string $nomdirecteur ): voidfpe
-	{
-		$this->nomdirecteur = $nomdirecteur;
+	public function setAvisEcoleInge($AvisEcoleInge) {
+		$this->avisecoleinge = $AvisEcoleInge;
 	}
 
-	public function setAnneePromoDebut( int $anneepromodebut ): voidfpe
-	{
-		$this->anneepromodebut = $anneepromodebut;
+	public function getCommentaire() {
+		return $this->commentaire;
 	}
 
-	public function setAnneePromoFin( int $anneepromofin ): voidfpe
-	{
-		$this->anneepromofin = $anneepromofin;
+	public function setCommentaire($commentaire) {
+		$this->commentaire = $commentaire;
+	}
+
+	public function getCodeNIP() {
+		return $this->codenip;
+	}
+
+	public function setCodeNIP($codeNIP) {
+		$this->codenip = $codeNIP;
 	}
 }
+
 ?>

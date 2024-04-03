@@ -2,34 +2,28 @@
 class Etudiant
 {
 	//clé primaire
-	private int $id;
+	private string  $codenip;
 
 	//attributs
-	private ?int    $codenip;
 	private ?string $nom;
 	private ?string $prenom;
 	private ?string $parcours;
 	private ?string $promotion;
 
 	//clé étrangère
-	private int $idillustration;
+	private int $idEtude;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idillustration=-1 )
+	public function __construct( string $codenip="", string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idEtude=-1 )
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
 		$this->parcours       = $parcours;
 		$this->promotion      = $promotion;
-		$this->idillustration = $idillustration;
+		$this->idEtude        = $idEtude;
 	}
 
-	public function getId(): int
-	{
-		return $this->id;
-	}
-
-	public function getNIP(): int
+	public function getCodeNIP(): int
 	{
 		return $this->codenip;
 	}
@@ -54,19 +48,19 @@ class Etudiant
 		return $this->promotion;
 	}
 
-	public function getidillustration(): int
+	public function getIdEtude(): int
 	{
-		return $this->idillustration;
+		return $this->idEtude;
 	}
 
-	public function setId( int $id ): void
+	public function getAttributs() : array
 	{
-		$this->id = $id;
+		return get_object_vars($this);
 	}
 
-	public function setcodenip( int $codenip ): void
+	public function setCodeNIP( int $codeNIP ): void
 	{
-		$this->codenip = $codenip;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setNom( string $nom ): void
@@ -89,14 +83,14 @@ class Etudiant
 		$this->promotion = $promotion;
 	}
 
-	public function setidillustration( int $idillustration ): void
+	public function setIdEtude( int $idEtude ): void
 	{
-		$this->idillustration = $idillustration;
+		$this->idEtude = $idEtude;
 	}
 
 	public function __toString(): string
 	{
-		return "Etudiant : codenip=".$this->codenip.", nom=".$this->nom.", prenom=".$this->prenom.", parcours=".$this->parcours.", promotion=".$this->promotion.", idillustration=".$this->idillustration;
+		return "Etudiant : codenip=".$this->codenip.", nom=".$this->nom.", prenom=".$this->prenom.", parcours=".$this->parcours.", promotion=".$this->promotion;
 	}
 }
 ?>

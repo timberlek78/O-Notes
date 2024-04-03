@@ -1,47 +1,29 @@
 <?php
-class Utilisateur
-{
-	//clé primaire
-	private int $iduser;
 
-	//attributs
-	private ?string $nom;
-	private ?string $mdp;
+class Utilisateur {
+	private $idutilisateur;
+	private $mdp;
 
-	public function __construct( string $nom="", string $mdp="" )
-	{
-		$this->nom = $nom;
+	public function __construct($idUtilisateur, $mdp) {
+		$this->idutilisateur = $idUtilisateur;
 		$this->mdp = $mdp;
 	}
 
-	public function getIdUser(): int
-	{
-		return $this->iduser;
+	public function getIdUtilisateur() {
+		return $this->idutilisateur;
 	}
 
-	public function getNom(): string
-	{
-		return $this->nom;
+	public function setIdUtilisateur($idUtilisateur) {
+		$this->idutilisateur = $idUtilisateur;
 	}
 
-	public function getMdp(): string
-	{
+	public function getMdp() {
 		return $this->mdp;
 	}
 
-	private function setIdUser( int $iduser ): void
-	{
-		$this->iduser = $iduser;
-	}
-
-	public function setNom( string $nom ): voiduser
-	{
-		$this->nom = $nom;
-	}
-
-	public function setMdp( string $mdp ): voiduser
-	{
+	public function setMdp($mdp) {
 		$this->mdp = $mdp;
 	}
 }
+
 ?>

@@ -2,38 +2,55 @@
 class CompetenceMatiere
 {
 	//clé primaire
-	private int $numcompt;
-	private int $nummatiere;
+	private string $idcompetence;
+	private string $annee;
+	private string $idmatiere;
 
-	public function __construct( int $numcompt=-1, int $nummatiere=-1 )
+	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="" )
 	{
-		$this->numcompt = $numcompt;
-		$this->nummatiere    = $nummatiere;
+		$this->idcompetence = $idCompetence;
+		$this->annee        = $annee;
+		$this->idmatiere   = $idMatiere;
 	}
 
-	public function getNumCompt(): int
+	public function getAttributs() : array
 	{
-		return $this->numcompt;
+		return get_object_vars($this);
 	}
 
-	public function getNumMatiere(): int
+	public function getIdCompetence(): string
 	{
-		return $this->nummatiere;
+		return $this->idcompetence;
 	}
 
-	public function setNumCompt( int $numcompt ): void
+	public function getIdMatiere(): string
 	{
-		$this->numcompt = $numcompt;
+		return $this->idmatiere;
 	}
 
-	public function setNumMatiere( int $nummatiere ): void
+	public function getAnnee(): string
 	{
-		$this->nummatiere = $nummatiere;
+		return $this->annee;
+	}
+
+	public function setIdCompetence( string $idCompetence )
+	{
+		$this->idcompetence = $idCompetence;
+	}
+
+	public function setAnnee( string $annee )
+	{
+		$this->annee = $annee;
+	}
+
+	public function setIdMatiere( string $idMatiere )
+	{
+		$this->idmatiere = $idMatiere;
 	}
 
 	public function __toString(): string
 	{
-		return "CompetenceMatiere : numcompt = ".$this->numcompt.", nummatiere = ".$this->nummatiere;
+		return "CompetenceMatiere : idcompetence = ".$this->idcompetence.", annee = ".$this->annee.", idmatiere = ".$this->idmatiere;
 	}
 }
 ?>
