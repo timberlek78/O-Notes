@@ -20,6 +20,11 @@ class Etude
 		return get_object_vars($this);
 	}
 
+	public function getIdEtude(): int
+	{
+		return $this->idetude;
+	}
+
 	public function getSpecialite(): string
 	{
 		return $this->specialite;
@@ -28,6 +33,11 @@ class Etude
 	public function getTypeBac(): string
 	{
 		return $this->typebac;
+	}
+
+	public function setIdEtude( int $idetude ): void
+	{
+		$this->idetude = $idetude;
 	}
 
 	public function setSpecialite( string $specialite ): void

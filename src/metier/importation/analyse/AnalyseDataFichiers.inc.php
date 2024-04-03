@@ -58,11 +58,11 @@ class AnalyseDataFichiers
 			$ligneMoyenne = $this->tableauMoyenne[ $cptEtudiant ];
 			$ligneJury    = $this->tableauJury[ $cptEtudiant ];
 
-			$etudiant = $this->creerEtudiant( $ligneMoyenne );
-			$donnees->ensEtudiant[] = $etudiant;
-
 			$etude = $this->creerEtude( $ligneMoyenne );
 			$donnees->ensEtude[] = $etude;
+
+			$etudiant = $this->creerEtudiant( $ligneMoyenne, $etude->getIdEtude( ) );
+			$donnees->ensEtudiant[] = $etudiant;
 
 			$etudiantSemestre = $this->creerEtudiantSemestre( $ligneMoyenne );
 
@@ -108,15 +108,15 @@ class AnalyseDataFichiers
 		}
 	}
 
-	private function creerEtudiant( array $ligne ) : Etudiant
+	private function creerEtudiant( array $ligne, int $idEtude ) : Etudiant
 	{
 		$etudiant = new Etudiant( );
 		$etudiant->setCodeNIP( $ligne[ $this->structureMoyenne->getIndiceColonne( "codeNIP" ) ] );
 		$etudiant->setNom( $ligne[ $this->structureMoyenne->getIndiceColonne( "nom" ) ] );
 		$etudiant->setPrenom( $ligne[ $this->structureMoyenne->getIndiceColonne( "prenom" ) ] );
-		$etudiant->setParcours( $ligne[ $this->structureMoyenne->getIndiceColonne( "cursus" ) ] );
+		$etudiant->setParcours( $ligne[ $this->structureMoyenne->getIndiceColonne( "parcours" ) ]?? "");
 		$etudiant->setPromotion( $this->promotion );
-		$etudiant->setIdEtude( -1 ); //FIXME: à modifier
+		$etudiant->setIdEtude( $idEtude );
 		return $etudiant;
 	}
 
@@ -125,6 +125,9 @@ class AnalyseDataFichiers
 		$etude = new Etude( );
 		$etude->setSpecialite( $ligne[ $this->structureMoyenne->getIndiceColonne( "specialite" ) ] ?? "" );
 		$etude->setTypeBac( $ligne[ $this->structureMoyenne->getIndiceColonne( "typeBAC" ) ] ?? "" );
+
+		$idUniqueInt = intval( hexdec( md5( uniqid( ) ) ) );
+		$etude->setIdEtude( $idUniqueInt ); //TODO: remarque, il faudrait mieux gérer l'objet sans avoir besoin de créer un id en php + éviter les doublons
 		return $etude;
 	}
 

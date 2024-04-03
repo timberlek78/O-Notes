@@ -16,58 +16,75 @@ class AnalyseStructureMoyennes
 		$this->colonnesTitres = $colonnesTitres;
 		$this->nbColonnes = count( $colonnesTitres );
 
-		$this->definirIndicesColonnesFixes( );
-
-		$colonnesDetailCompetences = $this->getArrayDetailCompetences( );
-		$this->analyseDetailCompetencesMoyenne = new AnalyseDetailCompetencesMoyenne( $colonnesDetailCompetences, $semestre );
+		$this->definirIndicesColonnesEtudiants( );
+		$this->analyseDetailCompetencesMoyenne = new AnalyseDetailCompetencesMoyenne( $colonnesTitres, $semestre );
 
 		$this->definirEquivalentIndiceMatieresDistinctes( $semestre );
 	}
 
-	private function definirIndicesColonnesFixes( )
+	private function definirIndicesColonnesEtudiants( )
 	{
-		$dernierIndice = $this->nbColonnes - 1;
+		for( $cptCol = 0; $cptCol < $this->nbColonnes; $cptCol++ )
+		{
+			$nomColonne = $this->colonnesTitres[ $cptCol ];
+			if( self::estVide( $nomColonne ) )
+			{
+				continue;
+			}
 
-		$this->eqColonnesIndices[ "codeNIP"    ] = 1;
-		$this->eqColonnesIndices[ "rang"       ] = 2;
-		$this->eqColonnesIndices[ "nom"        ] = 5;
-		$this->eqColonnesIndices[ "prenom"     ] = 6;
-		$this->eqColonnesIndices[ "cursus"     ] = 9;
-		$this->eqColonnesIndices[ "absTotal"   ] = 12;
-		$this->eqColonnesIndices[ "absJust"    ] = 13;
-		$this->eqColonnesIndices[ "typeBAC"    ] = $dernierIndice - 3;
-		$this->eqColonnesIndices[ "specialite" ] = $dernierIndice - 2;
-
-		$this->eqColonnesIndices[ "debCompetences" ] = 14;
-		$this->eqColonnesIndices[ "finCompetences" ] = $dernierIndice - 4;
-	}
-
-	private function getArrayDetailCompetences( ) : array
-	{
-		$indDebutCompetences = $this->getIndiceColonne( "debCompetences" );
-		$indFinCompetences   = $this->getIndiceColonne( "finCompetences" );
-
-		$nbColonnes = $indFinCompetences - $indDebutCompetences + 1;
-
-		return array_slice( $this->colonnesTitres, $indDebutCompetences, $nbColonnes);
+			switch( $nomColonne )
+			{
+				case "code_nip":
+					$this->eqColonnesIndices[ "codeNIP" ] = $cptCol;
+					break;
+				case "Rg":
+					$this->eqColonnesIndices[ "rang" ] = $cptCol;
+					break;
+				case "Nom":
+					$this->eqColonnesIndices[ "nom" ] = $cptCol;
+					break;
+				case "Prénom":
+					$this->eqColonnesIndices[ "prenom" ] = $cptCol;
+					break;
+				case "Cursus":
+					$this->eqColonnesIndices[ "cursus" ] = $cptCol;
+					break;
+				case "Abs":
+					$this->eqColonnesIndices[ "absTotal" ] = $cptCol;
+					break;
+				case "Just.":
+					$this->eqColonnesIndices[ "absJust" ] = $cptCol;
+					break;
+				case "Bac":
+					$this->eqColonnesIndices[ "typeBAC" ] = $cptCol;
+					break;
+				case "Spécialité":
+					$this->eqColonnesIndices[ "specialite" ] = $cptCol;
+					break;
+				case "Parcours":
+					$this->eqColonnesIndices[ "parcours" ] = $cptCol;
+					break;
+			}
+		}
 	}
 
 	private function definirEquivalentIndiceMatieresDistinctes( int $semestre )
 	{
 		$this->eqColonnesMatieresIndices = array( );
-		$indDebutCompetences = $this->getIndiceColonne( "debCompetences" );
-		$indFinCompetences   = $this->getIndiceColonne( "finCompetences" );
+		$indDebutCompetences = 0;
+		$indFinCompetences   = $this->nbColonnes - 1;
 
 		for( $cptCol = $indDebutCompetences; $cptCol <= $indFinCompetences; $cptCol++ )
 		{
 			$nomColonne = $this->colonnesTitres[ $cptCol ];
-			$estVide = $nomColonne == "";
-			if( $estVide )
+			if( self::estVide( $nomColonne ) )
 			{
 				continue;
 			}
 
-			$estMatiere = ! AnalyseDetailCompetencesMoyenne::estCompetence( $nomColonne, $semestre );
+			$estPasCompetence = ! AnalyseDetailCompetencesMoyenne::estCompetence( $nomColonne, $semestre );
+			$regexMatiere = "/BIN/";
+			$estMatiere = preg_match( $regexMatiere, $nomColonne );
 			$innexistante = ! array_key_exists( $nomColonne, $this->eqColonnesMatieresIndices );
 			if( $estMatiere && $innexistante )
 			{
@@ -76,9 +93,23 @@ class AnalyseStructureMoyennes
 		}
 	}
 
-	public function getIndiceColonne( string $cle ) : int
+	private static function estVide( string $nomColonne ) : bool
 	{
-		return $this->eqColonnesIndices[ $cle ];
+		return $nomColonne == "";
+	}
+
+	public function getIndiceColonne( string $cle ) : ?int
+	{
+		$cleExiste = array_key_exists( $cle, $this->eqColonnesIndices );
+		if( $cleExiste )
+		{
+			return $this->eqColonnesIndices[ $cle ];
+		}
+		else
+		{
+			return null;
+		}
+		
 	}
 
 	public function getCompetences( $semestre )

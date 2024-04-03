@@ -5,37 +5,20 @@
 
 	require __DIR__.'/../../lib/vendor/autoload.php';
 
-	include_once '../metier/importation/LectureExcel.inc.php';
-	include_once '../metier/importation/analyse/AnalyseDataFichiers.inc.php';
-	include_once '../metier/DonneesONote.inc.php';
+	include_once __DIR__.'/../metier/importation/OuvrirLectureExcel.inc.php';
+	include_once __DIR__.'/../metier/importation/analyse/AnalyseDataFichiers.inc.php';
+	include_once __DIR__.'/../metier/DonneesONote.inc.php';
 
-	if( fichierValide( 'moyennes' ) && fichierValide( 'jury' ) )
-	{
-		$dataMoyenne = ouvrirFichier( 'moyennes' );
-		$dataJury    = ouvrirFichier( 'jury' );
-		gererDonnees( $dataMoyenne, $dataJury );
-	}
-	else
+	$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'moyennes' );
+	$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'jury' );
+	if( empty( $dataMoyenne ) || empty( $dataJury ) )
 	{
 		echo "Impossible d'ouvrir le fichier";
+		exit( );
 	}
 
-	function fichierValide( string $nomFichier ) : bool
-	{
-		return isset( $_FILES[ $nomFichier ] ) && $_FILES[ $nomFichier ][ 'error' ] === UPLOAD_ERR_OK;
-	}
+	gererDonnees( $dataMoyenne, $dataJury );
 
-	function ouvrirFichier( string $nomFichier ) : array
-	{
-		$chemin_fichier = $_FILES[ $nomFichier ][ 'tmp_name' ];
-
-		$excel = new LectureExcel( $chemin_fichier );
-		$data = $excel->recupererDonnees( );
-
-		return $data;
-	}
-
-	//TODO: sortir le constructeur DonneesONote de la fonction ?
 	function gererDonnees( $dataMoyenne, $dataJury )
 	{
 		$donnes = new DonneesONote( );
