@@ -44,15 +44,8 @@ window.addEventListener ( 'load'  , adaptationHauteur );
 /*                                          */
 /*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
 /*                                          */
-const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom'     );
 const popupEtudiant            = document.querySelector    ( '.popup-etudiant'            );
 const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd'     );
-
-lstCellulesCliquablesNom.forEach( function( cellule )
-{
-	cellule.addEventListener ( 'click', ouverturePopupEtudiant );
-} );
-
 
 function ouverturePopupEtudiant ( )
 {
@@ -93,8 +86,10 @@ function majPopupEtudiant ( etudiant )
 	const nomPrenom           = document           .querySelector    ( '.conteneur-information' );
 	const cadreInfos          = conteneurCadreInfos.querySelectorAll ( '.cadre-info'            );
 
-	nomPrenom.children[0] = etudiant.prenom;
-	nomPrenom.children[1] = etudiant.nom;	
+	console.log ( nomPrenom.children[0] )
+
+	nomPrenom.children[0].innerText = etudiant.prenom;
+	nomPrenom.children[1].innerText = etudiant.nom;
 	
 	cadreInfos[0].children[1].innerText = etudiant.codeNIP;
 	cadreInfos[1].children[1].innerText = etudiant.parcours;
