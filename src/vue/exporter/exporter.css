@@ -21,10 +21,15 @@ body {
 
 .conteneur-information {
 	color: var(--violet-action);
+	background-color: white;
 	text-align: center;
 	border-radius: var(--arrondi);
 	box-shadow: var(--ombre-value);
 	padding: 6vh 0 2vh 0vh;
+}
+
+.conteneur-information selectionne {
+	background-color: var(--violet-action);
 }
 
 .conteneur-information p {
