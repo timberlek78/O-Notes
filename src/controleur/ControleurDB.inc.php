@@ -53,13 +53,13 @@
 				$this->connect->setAttribute(PDO::ATTR_CASE   , PDO::CASE_LOWER       );
 				$this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				echo DB::$schema;
+				// echo DB::$schema;
 				// Requête pour définir le search_path
 				$stmt = $this->connect->prepare('SET search_path TO '.DB::$schema);
 				$stmt->execute();
 			
-				echo 'search_path défini avec succès sur : '.DB::$schema;
-				echo "<br>";
+				// echo 'search_path défini avec succès sur : '.DB::$schema;
+				// echo "<br>";
 			}
 			catch(PDOException $e)
 			{
@@ -114,8 +114,8 @@
 			// Execution de la requête avec les paramètres fournis
 			$prepareStatement->execute($tparam);
 
-			echo $nomClasse;
-			echo '--';
+			// echo $nomClasse;
+			// echo '--';
 			// Récupération des résultats sous forme d'objet de la classe $nomClasse
 			$prepareStatement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse);
 			
