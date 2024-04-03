@@ -4,6 +4,8 @@
 	error_reporting(E_ALL);
 
 	require "ControleurDB.inc.php";
+	
+	header('Content-Type: application/json');
 
 	class ControleurVue
 	{
