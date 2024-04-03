@@ -207,7 +207,7 @@ class ExcelExporter
 	public function creerColonneMoyenne($tab)
 	{
 		$feuille = $this->spreadsheet->getActiveSheet();
-		$ligne   = 8;
+		$ligne   = 9;
 		foreach($tab as $etudiant) 
 		{
 			$feuille->setCellValue("M".$ligne, $etudiant->getUe      ());
