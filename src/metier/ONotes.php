@@ -74,7 +74,7 @@ class ONote
 			if($tab[$i]->getCodeNIP() == $id)
 			{
 				$somme      = 0;
-				$competence = $this->selectById($tab[$i]->getIdCompetence(), $this->getEnsCompetence());
+				$competence = $this->selectByIdEtAnnee( $tab[$i]->getIdCompetence(), $tab[$i]->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
 				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getId(), $id);
@@ -213,6 +213,13 @@ class ONote
 		$taille = count( $tab );
 
 		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
+	}
+
+	public function selectByIdEtAnnee( $id, $annee, $tab )
+	{
+		$taille = count( $tab );
+
+		for ( $i = 0; $i < $taille; $i++ ) if ( $tab[$i]->getId() == $id && $tab[$i]->getAnnee() ) return $tab[$i];
 	}
 }
 ?>
