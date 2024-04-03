@@ -99,12 +99,10 @@ function majPopupEtudiant ( etudiant )
 	cadreInfos[0].children[1].innerText = etudiant.codeNIP;
 	cadreInfos[1].children[1].innerText = etudiant.parcours;
 	cadreInfos[2].children[1].innerText = etudiant.promotion;
-	cadreInfos[3].children[1].innerText = etudiant.etude.typeBac;
-	cadreInfos[4].children[1].innerText = etudiant.etude.specialite;
+	cadreInfos[3].children[1].innerText = etudiant.typeBac;
+	cadreInfos[4].children[1].innerText = etudiant.specialite;
 	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang;
 	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbs;
-
-
 }
 
 function fermeturePopupEtudiant ( )
