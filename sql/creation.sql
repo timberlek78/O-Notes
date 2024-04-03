@@ -31,7 +31,7 @@ CREATE TABLE onote.Semestre (
 
 CREATE TABLE onote.Competence (
 	idCompetence VARCHAR( 10 ),
-	annee INT,
+	annee        VARCHAR( 9  ),
 	PRIMARY KEY( idCompetence, annee )
 );
 

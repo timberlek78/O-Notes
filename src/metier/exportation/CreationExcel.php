@@ -33,6 +33,7 @@ class ExcelExporter
 	private $oNote;
 
 	private $colonneFINI;
+	private $limiteSemestre;
 	private const TAB_STATUT = ['ADM','CMP','ADSUP'];
 
 	private const STYLE_TITRE = [
@@ -48,51 +49,33 @@ class ExcelExporter
 		],
 	];
 
-	// private const STYLE_ORANGE = [
-	//     'bold' => false,
-	//     'size' => 11,
-	//     'fontColor' => '000000',
-	//     'fond' => Fill::FILL_SOLID,
-	//     'fondColor' => 'FFFF00',
-	//     'alignement' => Alignment::HORIZONTAL_CENTER,
-	//     'typeBordure' => Border::BORDER_THIN
-	// ];
-
 	private const STYLE_ROUGE = [
 		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
-			'startColor' => ['argb' => 'FF0000'], // Vert
+			'startColor' => ['argb' => 'FF0000'], // Rouge
 		],
 	];
 
-	public function __construct($nomFichier, $cheminDossier)
+	private const STYLE_ORANGE = [
+		'fill' => [
+			'fillType' => Fill::FILL_SOLID,
+			'startColor' => ['argb' => 'ff8000'], // Orange
+		],
+	];
+
+	public function __construct($nomFichier, $cheminDossier, $semestre)
 	{
-		$this->spreadsheet   = new Spreadsheet();
-		$this->nomFichier    = $nomFichier;
-		$this->cheminDossier = $cheminDossier;
-		//$this->semestre      = $semestre;
+		$this->spreadsheet    = new Spreadsheet();
+		$this->nomFichier     = $nomFichier;
+		$this->cheminDossier  = $cheminDossier;
+		$this->limiteSemestre = $semestre;
 		$this->oNote = new ONote();	
 	}
 
-	public function getSemestre() { return $this->semestre;}
-	public function getColonneFINI() {return $this->colonneFINI;}
+	public function getSemestre()             { return $this->semestre;}
+	public function getColonneFINI() : string { return $this->colonneFINI;}
+	public function getLimiteSemestre() : int { return $this->limiteSemestre;}
 
-
-	// public function creerStyle($bold, $size, $fontColor, $fond, $fondColor,$alignement, $typeBordure) 
-	// {
-	// 	$style = new PhpOffice\PhpSpreadsheet\Style\Style();
-
-	// 	//Appliquer les caracteristiques 
-	// 	$style->getFont()->setBold($bold);
-	// 	$style->getFont()->setSize($size);
-	// 	$style->getFont()->getColor()->setARGB($fontColor); // Couleur de la police rouge
-	// 	$style->getFill()->setFillType($fond);
-	// 	$style->getFill()->getStartColor()->setARGB($fondColor); // Couleur de fond grise
-	// 	$style->getAlignment()->setHorizontal($alignement); // Alignement horizontal au centre
-	// 	$style->getBorders  ()->getTop()->setBorderStyle($typeBordure); // Bordure supérieure mince
-
-	// 	return $style;
-	// }
 
 	public function creerFeuilleEtudiant($donneesEtudiants)
 	{
@@ -104,7 +87,7 @@ class ExcelExporter
 			$tabAttribut = array_values($etudiant ->getAttributExcel());
 			for ($i = 0; $i < count($tabAttribut) ; $i++) 
 			{
-				echo "<br> colonne : ".$colonne."<br>";
+				//echo "<br> colonne : ".$colonne."<br>";
 				if(is_array( $tabAttribut[$i] )) break;
 				$feuille->setCellValue($colonne . $ligne, $tabAttribut[$i]);
 				$colonne++;
@@ -125,56 +108,92 @@ class ExcelExporter
 			$sheet->getStyle    (chr(ord($colonne) + $i)."8"           )->applyFromArray(ExcelExporter::STYLE_TITRE);
 		}
 	}
+//Passer en argument un semestre limite et regarder a chaque itération 
 
-
-	public function creerFeuilleCompetence($donneesCompetences, $donneesEtudiants)
+	public function creerColonneBUT($donneeEtudiant)
 	{
-		$feuille    = $this->spreadsheet->getActiveSheet();
-		$colonne    = 'G';
-		$ligne      =  9;
+	$feuille = $this->spreadsheet->getActiveSheet();
+	$ligne   = 9;
+	$colonne = "G";
+	$etudiant = $donneeEtudiant[0];
 
-		echo "<br>";
-		var_dump( $donneesEtudiants[0]->getTabCursus() );
-		echo "<br>";
-
-		foreach ($donneesEtudiants[0]->getTabCursus() as $but=>$tabCompetence)
+	foreach($etudiant->getTabBUT() as $but)
+	{
+		if($this->estSemestreLimite($this->limiteSemestre, $but))
 		{
-			var_dump($colonne);
-			$this->creerEncadreCompetence($but, $colonne, $tabCompetence);
-			$colonne = chr(ord($colonne) + count(array_keys($tabCompetence)));;
+			if($this->limiteSemestre % 2 == 0)
+			{
+				$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->getSemestrePair());
+			}
+			else
+			{
+				$this->afficherValeur($but, $colonne, "Semestre ".$but->getNumSemestreImpair(), $but->getSemestreImpair());
+			}
+		}
+		else
+		{
+			$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->estComplet() ? $but->getSemestrePair() : $but->getSemestreImpair());
 		}
 	}
+	}
 
-	public function remplirFeuilleCompetence($donneesCompetences, $donneesEtudiants)
+	public function afficherValeur($but, &$colonne, $titre, $competences)
+	{
+		$this->creerEncadreCompetence($titre, $colonne, $competences,false);
+		$colonne = chr(ord($colonne) + count(array_values($competences)));
+	}
+
+	public function estSemestreLimite($limite, $but)
+	{
+		$keysSemestrePair   = $but->getNumSemestrePair();
+		$keysSemestreImpair = $but->getNumSemestreImpair();
+
+		return $limite == $keysSemestrePair || $limite == $keysSemestreImpair;
+	}
+
+	public function remplierColonneBUT($donneeEtudiant)	
 	{
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$ligne   = 9;
-	
-		foreach ($donneesEtudiants as $etudiant)
-		{
-			$colonneCompetence = 'G';
-			foreach($etudiant->getTabCursus() as $but=>$tabCompetence)
-			{
-				
-				foreach($tabCompetence as $cursus)
-				{
-					$admis = $cursus->getAdmission();
-		
-					$feuille->setCellValue($colonneCompetence.$ligne, $admis);
-					if($this->estCool($admis)) $feuille->getCell($colonneCompetence.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
-					else                       $feuille->getCell($colonneCompetence.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
+		$colonne = "G";
 
-					$colonneCompetence++;
+		foreach($donneeEtudiant as $etudiant)
+		{
+			$colonne = "G";
+			foreach($etudiant->getTabBUT() as $but)
+			{
+				if($but->estComplet())
+				{
+					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getsemestrePair());
 				}
-				$this->colonneFINI = $colonneCompetence;
+				else
+				{
+					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getsemestreImpair());
+				}
+				$this->colonneFINI = $colonne;
 			}
 			$ligne++;
 		}
-
-		
 	}
 
-	public function creerEncadreCompetence(string $but, string $colonne,$tabCompetence)
+	public function mettreValeurBut($colonne,$ligne, $tab)
+	{
+		$feuille = $this->spreadsheet->getActiveSheet();
+		foreach( $tab as $competence)
+		{
+			$admis = $competence->getAdmission();
+		
+			$feuille->setCellValue($colonne.$ligne, $admis);
+			if($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
+			else                       $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
+
+			$colonne++;
+		}
+
+		return $colonne;
+	}
+
+	public function creerEncadreCompetence(string $but, string $colonne,$tabCompetence,$ue)
 	{
 		$ligne           = 7;
 		$ligneCompetence = 8;
@@ -185,16 +204,27 @@ class ExcelExporter
 		$feuille->setCellValue($colonne.$ligne, strtoupper($but));
 		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 
-		foreach( $tabCompetence as $libelle => $admission)
+		$index = 1;
+
+		foreach( $tabCompetence as $libelle => $valeur)
 		{
-			$feuille->setCellValue($colonne.$ligneCompetence, $libelle);
-			$feuille->getColumnDimension(chr(ord($colonne)))->setWidth(strlen($libelle) + 5);
+			if($ue)
+			{
+				$feuille->setCellValue($colonne.$ligneCompetence, $valeur); 
+				$feuille->getColumnDimension($colonne)->setWidth(strlen($valeur) + 5);
+			}
+			else  
+			{
+				$feuille->getColumnDimension(chr(ord($colonne)))->setWidth(strlen($libelle) + 5);
+				$feuille->setCellValue($colonne.$ligneCompetence, "C".$index);
+			}
+
 			$feuille->getCell     ($colonne.$ligneCompetence)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 			$colonne++;
+			$index++;
 		}
 
 		$feuille->mergeCells($espace);
-
 	}
 
 	public function estCool($admis)
@@ -204,22 +234,51 @@ class ExcelExporter
 		return false;
 	}
 
-	public function creerColonneMoyenne($tab)
+	public function creerColonneMoyenne($donneeEtudiant)
+	{
+		$tabCompetence[] = "UE";
+		$tabCompetence[] = "Moyenne";
+		$tabCompetence = array_merge($tabCompetence,array_keys($donneeEtudiant[0]->getTabMoyenne()));
+
+		var_dump($tabCompetence);
+
+		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true);
+	}
+
+	public function remplirColonneMoyenne($donneeEtudiant)
 	{
 		$feuille = $this->spreadsheet->getActiveSheet();
-		$ligne   = 8;
-		foreach($tab as $etudiant) 
+		$colonne = chr(ord($this->getColonneFINI()) + 2) ;
+		$ligne   = 9;
+		foreach($donneeEtudiant as $etudiant)
 		{
-			$feuille->setCellValue("M".$ligne, $etudiant->getUe      ());
-			$feuille->setCellValue("N".$ligne, $etudiant->getMoyenneG());
-			$colonne       = "O";
-			$indiceColonne =  0 ;
-			foreach($etudiant->getTabMoyenne() as $key => $value)
+			echo "<br>";
+			$feuille->setCellValue($this->getColonneFINI().$ligne, $etudiant->getUe());
+			$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
+
+
+			$feuille->setCellValue(chr((ord($this->getColonneFINI()) + 1  )).$ligne, $etudiant->getMoyenneG());
+
+			$colonne = chr(ord($this->getColonneFINI()) + 2) ;
+			foreach($etudiant->getTabMoyenne() as $moyenne)
 			{
-				$feuille->setCellValue( chr( ord($colonne) + $indiceColonne).$ligne, $value);
-				$indiceColonne++;
+				$feuille->setCellValue($colonne.$ligne, $moyenne);
+				
+				if($moyenne > 10) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
+				else                                        $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
+
+				$colonne++;
 			}
+			$ligne++;
 		}
+	}
+
+	public function appliquerStyleUe($Ue)
+	{
+		var_dump(intval($Ue[0]));
+		if      ( intval($Ue[0]) == 6 ) return ExcelExporter::STYLE_VERT;
+		else if ( intval($Ue[0]) == 0 ) return ExcelExporter::STYLE_ROUGE;
+		else if ( intval($Ue[0]) <=  4 ) return ExcelExporter::STYLE_ORANGE;
 	}
 
 	public function enregistrer()
@@ -246,20 +305,21 @@ class GenerateurDonnees
 
 // Utilisation
 $generateurDonnees  = new GenerateurDonnees();
-$donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant();
+$donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant  ();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
-$exportateur = new ExcelExporter('exemple.xlsx', '../../../data');
-$exportateur->creerFeuilleEtudiant    (                      $donneesEtudiants);
-$exportateur->creerFeuilleCompetence  ($donneesCompetences , $donneesEtudiants);
-$exportateur->remplirFeuilleCompetence( $donneesCompetences, $donneesEtudiants);
+$exportateur = new ExcelExporter('exemple.xlsx', '../../../data', 3);
+$exportateur->creerFeuilleEtudiant    ( $donneesEtudiants );
+$exportateur->creerColonneBUT         ( $donneesEtudiants );
+$exportateur->remplierColonneBUT      ( $donneesEtudiants );
+$exportateur->creerColonneMoyenne     ( $donneesEtudiants );
+$exportateur->remplirColonneMoyenne   ( $donneesEtudiants );
 
-echo "<br> LAAAAAAAAAAAA :".$exportateur->getColonneFini()."<br>";
-//$exportateur->creerColonneMoyenne     (                      $donneesEtudiants);
+var_dump($exportateur->getColonneFINI() );
+
 $cheminFichier = $exportateur->enregistrer();
 
 echo "<br>Le fichier Excel a été créé avec succès : $cheminFichier";
 ?>
 
 
-//TODO: Voir si rajouter le semstre que l'on veut dans le excel peut faciliter les choses, il faut une méthode qui parcours tout les semestres jusqu'a semstre voulu.

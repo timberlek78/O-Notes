@@ -14,7 +14,7 @@ class Etudiant
 
 	private $tabMoyenne;
 
-	private $tabCursus;
+	private $tabBUT;
 	private $Ue;
 	private $moyenneG;
 
@@ -59,9 +59,9 @@ class Etudiant
 		return $this->idillustration;
 	}
 
-	public function getTabCursus() : array
+	public function getTabBUT() : array
 	{
-		return $this->tabCursus;
+		return $this->tabBUT;
 	}
 
 	public function getAttributs() : array
@@ -76,13 +76,14 @@ class Etudiant
 		$tab['Nom']      = $this->nom;
 		$tab['Prenom']   = $this->prenom;
 		$tab['Parcours'] = $this->parcours;
+		$tab['Cursus']   = $this->cursus;
 
 		return $tab;
 	}
 
-	public function setTabCursus(array $tabCursus)
+	public function setTabBUT(array $tabBUT)
 	{
-		$this->tabCursus = $tabCursus;
+		$this->tabBUT = $tabBUT;
 	}
 
 	public function setcodeNIP( int $codeNIP ): void
@@ -142,6 +143,10 @@ class Etudiant
 			foreach(array_values($this->tabMoyenne) as  $moyenne ) $somme += $moyenne;
 	
 			$this->setMoyenneG($somme / count(array_keys($this->tabMoyenne)));
+		}
+		else
+		{
+			$this->setMoyenneG(0);
 		}
 	
 	}

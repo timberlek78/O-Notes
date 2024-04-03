@@ -4,6 +4,7 @@
 	include '../donnee/Competence.inc.php';
 	include '../donnee/CompetenceMatiere.inc.php';
 	include '../donnee/Cursus.inc.php';
+	include 'C:\xampp\htdocs\O-Notes\src\donnee\BUT.inc.php';
 
 
 
@@ -52,7 +53,7 @@ class ONote
 		foreach ($tab as $index => $etudiant) 
 		{
 			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
-			$etudiant->setTabCursus ($this->determinerTabCompetence            ($etudiant->getId()));
+			$etudiant->setTabBUT    ($this->determinerTabCompetence            ($etudiant->getId()));
 			$etudiant->calculeMoyenneG();
 			$etudiant->determinerUe   ();
 		}
@@ -70,71 +71,62 @@ class ONote
 	{
 		$tab        = $this->getEnsCursus();
 		$tabMoyenne = array();
-		for($i = 0; $i<count($tab); $i++) // Parcours de la table Cursus
-			if($tab[$i]->getCodeNIP() == $id)
+		foreach($tab as $cursus) // Parcours de la table Cursus
+			if($cursus->getCodeNIP() == $id)
 			{
 				$somme      = 0;
-				$competence = $this->selectById($tab[$i]->getIdCompetence(), $this->getEnsCompetence());
+				$competence = $this->selectByIdAndAnnee($cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence());
 				$tabMatiere = $competence->getTabMatieres();
 
 				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getId(), $id);
 
-				$tabMoyenne[$competence->getId()] = $somme / count($tabMatiere);
+				$tabMoyenne[$competence->getId()] =round($somme / count($tabMatiere),2);
 			}
-
 		return $tabMoyenne;
 	}
 
-	// public function determinerTabCompetence($idEtudiant) //retourne un double tableau associatif <String(nom de l'annee) , TableauAsso<String(nom de compétence), ADM ?)>>
-	// {
-	// 	$tabResultat = array(); 
-	// 	$tabSemestre = $this->determinerSemestre($idEtudiant);
-	// 	$anneeBUT    = 1;
-		
-	// 	foreach($tabSemestre as $semestre) 
-	// 	{
-	// 		$tabCompetence = $this->determinerCompetence($semestre, $idEtudiant);
-	// 		foreach($tabCompetence as $key=>$competence) 
-	// 		{
-	// 			$tabTemp[$key] = $competence;
-	// 		}
-	// 		if($semestre % 2 == 0) 
-	// 		{
-	// 			$tabResultat['BUT'.$anneeBUT] = $tabTemp;
-	// 			$tabTemp                      = array();
-	// 			$anneeBUT++;
-	// 		}
-	// 	}
-	// 	return $tabResultat;
-	// }
-
 	public function determinerTabCompetence($idEtudiant)
-	{
-		$tabResultat = array(); 
-		$tabTemp     = array();
-		$tabSemestre = $this->determinerSemestre($idEtudiant); //Semestre auquel l'etudiant a participé
-		$anneeBUT    = 1;
+{
+    $tabBUT      = array(); 
+    $tabSemestre = $this->determinerSemestre($idEtudiant); // Semestres auxquels l'étudiant a participé
+    $anneeBUT    = 1;
 
-		foreach($tabSemestre as $semestre)
-		{
-			$tabCompetence = $this->determinerCompetence( $semestre, $idEtudiant); //Determine les compétences du semestre 
-			foreach( $tabCompetence as $competence)
-			{
-				$tabTemp[$competence->getIdCompetence()] = $competence;
-			}
+    $nvBUT = new BUT($anneeBUT); // Création du premier objet BUT
 
-			if($semestre % 2 == 0)
-			{
-				unset($tabResultat["Semestre ".$semestre - 1]);
-				$tabResultat['BUT'.$anneeBUT++] = $tabCompetence;
-			}
-			else
-			{
-				$tabResultat["Semestre ".$semestre] = $tabCompetence;
-			}
-		}
-		return $tabResultat;
-	}
+    foreach($tabSemestre as $semestre)
+    {
+        $tabTemp = array(); // Réinitialiser le tableau temporaire à chaque itération
+
+        $tabCompetence = $this->determinerCompetence($semestre, $idEtudiant); // Déterminer les compétences du semestre 
+
+        foreach($tabCompetence as $competence)
+        {
+            $tabTemp[$competence->getIdCompetence()] = $competence;
+        }
+
+        if($semestre % 2 == 0)
+        {
+			$nvBUT->setNumSemestrePair($semestre);
+            $nvBUT->setSemestrePair   ($tabTemp );
+        }
+        else
+        {
+			$nvBUT->setNumSemestreImpair($semestre);
+            $nvBUT->setSemestreImpair   ($tabTemp );
+        }
+
+        // Si le semestre est pair ou si c'est le dernier semestre, ajoutez l'objet BUT au tableau
+        if($semestre % 2 == 0 || $semestre == end($tabSemestre))
+        {
+            $tabBUT[] = $nvBUT; // Ajout de l'objet BUT au tableau
+            $anneeBUT++;
+            $nvBUT = new BUT($anneeBUT); // Création d'un nouvel objet BUT pour la prochaine année BUT
+        }
+    }
+
+    return $tabBUT;
+}
+
 
 	public function determinerSemestre($idEtudiant) {
 		$tabSemestre = array(); 
@@ -213,6 +205,14 @@ class ONote
 		$taille = count( $tab );
 
 		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
+	}
+
+	public function selectByIdAndAnnee($id,$annee ,$tab)
+	{
+		$taille = count( $tab );
+
+		for($i = 0; $i<$taille;$i++) 
+			if($tab[$i]->getId() == $id && $tab[$i]->getAnnee() == $annee) return $tab[$i];
 	}
 }
 ?>
