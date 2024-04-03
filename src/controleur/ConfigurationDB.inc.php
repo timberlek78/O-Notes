@@ -1,6 +1,6 @@
 <?php
 
-require '../../../lib/vendor/autoload.php';
+require '../../lib/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 class ConfigurationDB

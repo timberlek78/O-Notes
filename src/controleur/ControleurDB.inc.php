@@ -18,6 +18,7 @@
 	include ("../donnee/Possede.inc.php"          );
 	include ("../donnee/Semestre.inc.php"         );
 	include ("../donnee/Utilisateur.inc.php"      );
+	include ("../donnee/EstNote.inc.php"          );
 	
 
 
@@ -132,7 +133,7 @@
 			return $prepareStatement->rowCount();
 		}
 
-		/***********************************/	
+		/***********************************/
 		/* Fonction utilisable dans le PHP */
 		/***********************************/
 
@@ -141,6 +142,20 @@
 		{
 			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomClasse;
 			return $this->execQuery($requete,null,$nomClasse);
+		}
+
+		public function selectAllWhere($nomClasse, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null)
+		{
+			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomClasse . ' WHERE ' . $condition . ' = ?';
+
+			$parametres = array($valeur);
+			
+			if ($connecteur != null && $condition2 != null && $valeur2 != null)
+			{
+				$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
+				$parametres[] = $valeur2;
+			}
+			return $this->execQuery($requete, $parametres, $nomClasse);
 		}
 
 		// Méthode delete

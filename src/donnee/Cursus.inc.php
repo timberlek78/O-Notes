@@ -2,17 +2,19 @@
 class Cursus
 {
 	//clé primaire
-	private int     $idetudiant;
+	private int     $codenip;
 	private int     $numsemestre;
-	private int     $numcompt;
+	private string  $idcompetence;
+	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $idetudiant=-1, int $numsemestre=-1, int $numcompt=-1, string $admission="" )
+	public function __construct( int $codenip=-1, int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
 	{
-		$this->idetudiant  = $idetudiant;
+		$this->codenip      = $codenip;
 		$this->numsemestre  = $numsemestre;
-		$this->numcompt= $numcompt;
-		$this->admission   = $admission;
+		$this->idcompetence = $idcompetence;
+		$this->annee        = $annee;
+		$this->admission    = $admission;
 	}
 
 	public function getAttributs() : array
@@ -20,19 +22,19 @@ class Cursus
 		return get_object_vars($this);
 	}
 
-	public function getId(): int
+	public function getCodeNIP(): int
 	{
-		return $this->idetudiant;
+		return $this->codeNIP;
 	}
 
 	public function getNumSemestre(): int
 	{
-		return $this->numsemestre;
+		return $this->numSemestre;
 	}
 
-	public function getNumCompt(): int
+	public function getidCompetence(): string
 	{
-		return $this->numcompt;
+		return $this->idcompetence;
 	}
 
 	public function getAdmission(): string
@@ -40,24 +42,34 @@ class Cursus
 		return $this->admission;
 	}
 
-	public function setIdEtudiant( int $idetudiant ): void
+	public function getAnnee() : string
 	{
-		$this->idetudiant = $idetudiant;
+		return $this->annee;
 	}
 
-	public function setNumSemestre( int $numsemestre ): void
+	public function setCodeNIP( int $codeNIP )
 	{
-		$this->numsemestre = $numsemestre;
+		$this->codeNIP = $codeNIP;
 	}
 
-	public function setNumCompt( int $numcompt ): void
+	public function setNumSemestre( int $numSemestre )
 	{
-		$this->numcompt = $numcompt;
+		$this->numSemestre = $numSemestre;
+	}
+
+	public function setidCompetence( string $idCompetence )
+	{
+		$this->idCompetence = $idCompetence;
 	}
 
 	public function setAdmission( string $admission ): void
 	{
 		$this->admission = $admission;
+	}
+
+	public function setAnnee(string $annee)
+	{
+		$this->annee = $annee;
 	}
 }
 ?>
