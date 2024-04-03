@@ -115,14 +115,14 @@ function genererEntete ( tabEntete )
 	const tabResumeComptence2 = document.querySelector ( '.tableau-note-etd thead' );
 	var enteteTab             = document.createElement ( 'tr' );
 
-	enteteTab.innerHTML = `<td>Moyenne Semestre</td>`;
+	enteteTab.innerHTML = `<th>Moyenne Semestre</th>`;
 
 	tabEntete.forEach ( function ( entete )
 	{
-		enteteTab.innerHTML += `<td>${entete}</td>`;
+		enteteTab.innerHTML += `<th>${entete}</th>`;
 	} );
 
-	enteteTab.innerHTML += `<td>UEs</td>`;
+	enteteTab.innerHTML += `<th>UEs</th>`;
 
 	tabResumeComptence2.appendChild ( enteteTab );
 }
