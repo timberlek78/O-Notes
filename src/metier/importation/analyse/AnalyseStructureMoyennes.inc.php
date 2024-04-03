@@ -86,7 +86,7 @@ class AnalyseStructureMoyennes
 			$regexMatiere = "/BIN/";
 			$estMatiere = preg_match( $regexMatiere, $nomColonne );
 			$innexistante = ! array_key_exists( $nomColonne, $this->eqColonnesMatieresIndices );
-			if( $estMatiere && $innexistante )
+			if( $estPasCompetence && $estMatiere && $innexistante )
 			{
 				$this->eqColonnesMatieresIndices[ $nomColonne ] = $cptCol;
 			}

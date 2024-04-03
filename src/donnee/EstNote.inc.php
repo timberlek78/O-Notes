@@ -13,6 +13,11 @@ class EstNote
 		$this->moyenne   = $moyenne;
 	}
 
+	public function getAttributs( ) : array
+	{
+		return get_object_vars( $this );
+	}
+
 	public function getCodeNip( )
 	{
 		return $this->codenip;
@@ -46,6 +51,11 @@ class EstNote
 	public function __toString( )
 	{
 		return "EstNote : codenip = ".$this->codenip.", idmatiere = ".$this->idmatiere.", moyenne = ".$this->moyenne;
+	}
+
+	public function equals( EstNote $estNote ) : bool
+	{
+		return $this->codenip == $estNote->getCodeNip( ) && $this->idmatiere == $estNote->getIdMatiere( );
 	}
 }
 ?>

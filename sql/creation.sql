@@ -20,9 +20,9 @@ DROP TABLE IF EXISTS onote.Etude;
 -- Création des tables
 
 CREATE TABLE onote.Etude (
-	idEtude INT PRIMARY KEY,
 	specialite VARCHAR( 20 ),
-	typeBac VARCHAR( 20 )
+	typeBac VARCHAR( 20 ),
+	PRIMARY KEY ( specialite, typeBac )
 );
 
 CREATE TABLE onote.Semestre (
@@ -36,7 +36,7 @@ CREATE TABLE onote.Competence (
 );
 
 CREATE TABLE onote.Matiere (
-	idMatiere VARCHAR( 10 ),
+	idMatiere VARCHAR( 20 ),
 	alternant BOOLEAN,
 	PRIMARY KEY ( idMatiere )
 );
@@ -64,8 +64,9 @@ CREATE TABLE onote.Etudiant (
 	prenom VARCHAR( 10 ),
 	parcours VARCHAR( 50 ),
 	promotion VARCHAR( 50 ),
-	idEtude INT,
-	FOREIGN KEY ( idEtude ) REFERENCES onote.Etude( idEtude )
+	specialite VARCHAR( 20 ),
+	typeBac VARCHAR( 20 ),
+	FOREIGN KEY ( specialite, typeBac ) REFERENCES onote.Etude( specialite, typeBac )
 );
 
 CREATE TABLE onote.FPE (
@@ -82,7 +83,7 @@ CREATE TABLE onote.EtudiantSemestre (
 	numSemestre INT,
 	rang INT,
 	nbAbs INT,
-	passage VARCHAR(2),
+	passage VARCHAR( 5 ),
 	PRIMARY KEY ( codeNIP, numSemestre ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( numSemestre ) REFERENCES onote.Semestre( numSemestre )
@@ -91,7 +92,7 @@ CREATE TABLE onote.EtudiantSemestre (
 CREATE TABLE onote.CompetenceMatiere (
 	idCompetence VARCHAR( 10 ),
 	annee VARCHAR ( 9 ),
-	idMatiere VARCHAR( 10 ),
+	idMatiere VARCHAR( 20 ),
 	coeff INT,
 	PRIMARY KEY ( idCompetence, annee , idMatiere ),
 	FOREIGN KEY ( idCompetence, annee ) REFERENCES onote.Competence( idCompetence, annee ),
@@ -120,7 +121,7 @@ CREATE TABLE onote.Possede (
 
 CREATE TABLE onote.EstNote (
 	codeNIP INT,
-	idMatiere VARCHAR( 10 ),
+	idMatiere VARCHAR( 20 ),
 	moyenne DECIMAL( 15, 2 ),
 	PRIMARY KEY ( codeNIP, idMatiere ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),

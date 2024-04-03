@@ -8,7 +8,7 @@ class EtudiantSemestre
 	//attributs
 	private ?string $passage;
 	private ?int $rang;
-	private ?int $nbabsences;
+	private ?int $nbabs;
 
 	public function __construct( int $codeNIP=-1, int $numSemestre=-1, string $passage="", int $rang=-1, int $nbAbsences=-1 )
 	{
@@ -16,7 +16,7 @@ class EtudiantSemestre
 		$this->numsemestre = $numSemestre;
 		$this->passage     = $passage;
 		$this->rang        = $rang;
-		$this->nbabsences  = $nbAbsences;
+		$this->nbabs       = $nbAbsences;
 	}
 
 	public function getAttributs() : array
@@ -71,12 +71,17 @@ class EtudiantSemestre
 
 	public function setnbabsences( int $nbabsences )
 	{
-		$this->nbabsences = $nbabsences;
+		$this->nbabs = $nbabsences;
 	}
 
 	public function __toString(): string
 	{
-		return "EtudiantSemestre : codenip=$this->codenip, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabsences";
+		return "EtudiantSemestre : codenip=$this->codenip, numsemestre=$this->numsemestre, passage=$this->passage, rang=$this->rang, nbabsences=$this->nbabs";
+	}
+
+	public function equals( EtudiantSemestre $etudiantSemestre ): bool
+	{
+		return ( $this->codenip == $etudiantSemestre->codenip && $this->numsemestre == $etudiantSemestre->numsemestre );
 	}
 }
 ?>

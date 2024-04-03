@@ -76,5 +76,10 @@ class Cursus
 	{
 		return "Cursus : codenip=$this->codenip, numsemestre=$this->numsemestre, idcompetence=$this->idcompetence, annee=$this->annee, admission=$this->admission";
 	}
+
+	public function equals( Cursus $cursus ) : bool
+	{
+		return $this->codenip == $cursus->getCodeNIP( ) && $this->numsemestre == $cursus->getNumSemestre( ) && $this->idcompetence == $cursus->getidCompetence( ) && $this->annee == $cursus->getAnnee( ) && $this->admission == $cursus->getAdmission( );
+	}
 }
 ?>

@@ -11,16 +11,18 @@ class Etudiant
 	private ?string $promotion;
 
 	//clé étrangère
-	private int $idEtude;
+	private ?string $specialite;
+	private ?string $typebac;
 
-	public function __construct( string $codenip="", string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idEtude=-1 )
+	public function __construct( string $codenip="", string $nom="", string $prenom="", string $parcours="", string $promotion="", string $specialite="", string $typebac="" )
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
 		$this->parcours       = $parcours;
 		$this->promotion      = $promotion;
-		$this->idEtude        = $idEtude;
+		$this->specialite     = $specialite;
+		$this->typebac        = $typebac;
 	}
 
 	public function getCodeNIP(): int
@@ -48,9 +50,14 @@ class Etudiant
 		return $this->promotion;
 	}
 
-	public function getIdEtude(): int
+	public function getSpecialite(): string
 	{
-		return $this->idEtude;
+		return $this->specialite;
+	}
+
+	public function getTypeBac(): string
+	{
+		return $this->typebac;
 	}
 
 	public function getAttributs() : array
@@ -83,14 +90,24 @@ class Etudiant
 		$this->promotion = $promotion;
 	}
 
-	public function setIdEtude( int $idEtude ): void
+	public function setSpecialite( string $specialite ): void
 	{
-		$this->idEtude = $idEtude;
+		$this->specialite = $specialite;
+	}
+
+	public function setTypeBac( string $typebac ): void
+	{
+		$this->typebac = $typebac;
 	}
 
 	public function __toString(): string
 	{
 		return "Etudiant : codenip=".$this->codenip.", nom=".$this->nom.", prenom=".$this->prenom.", parcours=".$this->parcours.", promotion=".$this->promotion;
+	}
+
+	public function equals( Etudiant $etudiant ): bool
+	{
+		return $this->codenip === $etudiant->codenip;
 	}
 }
 ?>

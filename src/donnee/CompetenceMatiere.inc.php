@@ -64,5 +64,10 @@ class CompetenceMatiere
 	{
 		$this->coeff = $coeff;
 	}
+
+	public function equals( CompetenceMatiere $competenceMatiere ) : bool
+	{
+		return $this->idcompetence == $competenceMatiere->getIdCompetence( ) && $this->idmatiere == $competenceMatiere->getIdMatiere( ) && $this->annee == $competenceMatiere->getAnnee( );
+	}
 }
 ?>
