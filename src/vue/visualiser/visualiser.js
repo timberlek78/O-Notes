@@ -45,21 +45,22 @@ window.addEventListener ( 'load'  , adaptationHauteur );
 /*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
 /*                                          */
 const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom'     );
-const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
-const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
 const popupEtudiant            = document.querySelector    ( '.popup-etudiant'            );
 const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd'     );
-const boutonFermer             = document.querySelector    ( '.fermeture'                 );
 
 lstCellulesCliquablesNom.forEach( function( cellule )
 {
 	cellule.addEventListener ( 'click', ouverturePopupEtudiant );
 } );
 
-boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 
 function ouverturePopupEtudiant ( )
 {
+	const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
+	const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
+	const boutonFermer             = document.querySelector    ( '.fermeture'                 );
+		
+	boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 	const ligne  = event.target.parentNode;
 
 	const indice = Array.from ( ligne.parentNode.children ).indexOf ( ligne );
@@ -82,10 +83,6 @@ function ouverturePopupEtudiant ( )
 
 	popupEtudiant.classList.add ( 'ouvert' );
 	tabEtudiant  .classList.add ( 'cache'  );
-
-	// TODO: Récupérer l'étudiant via event.target.parentNode.classList[1] dans le tab du fetch
-	
-	majPopupEtudiant ( null );
 }
 
 
@@ -97,7 +94,7 @@ function majPopupEtudiant ( etudiant )
 	const cadreInfos          = conteneurCadreInfos.querySelectorAll ( '.cadre-info'            );
 
 	nomPrenom.children[0] = etudiant.prenom;
-	nomPrenom.children[1] = etudiant.nom;
+	nomPrenom.children[1] = etudiant.nom;	
 	
 	cadreInfos[0].children[1].innerText = etudiant.codeNIP;
 	cadreInfos[1].children[1].innerText = etudiant.parcours;
@@ -106,10 +103,14 @@ function majPopupEtudiant ( etudiant )
 	cadreInfos[4].children[1].innerText = etudiant.etude.specialite;
 	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang;
 	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbs;
+
+
 }
 
 function fermeturePopupEtudiant ( )
 {
+	const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
+	const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
 	popupEtudiant.classList.remove ( 'ouvert' );
 	tabEtudiant  .classList.remove ( 'cache'  );
 
