@@ -2,16 +2,30 @@ fetchDonneeEtudiant(1);
 
 function fetchDonneeEtudiant(numSemestre)
 {
-    console.log('../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre);
-    fetch('../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre)
-        .then (reponse => reponse.json())
-        .then (donnees =>
-            {
-                console.log(donnees);
-            })
-        .catch (erreur => console.error('Erreur lors du fetch'))
+	fetch ( '../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre )
+		.then ( reponse => reponse.json ( ) )
+		.then ( donnees =>
+		{
+			try {
+				console.log ( donnees[0].cursus  )
+			}
+			catch (error) {
+				
+			}
+			
+			genererEntete ();
+			donnees.forEach(function (etudiant) {
+				ajouterEtudiantTableau(etudiant);
+			});
+
+		})
+        .catch (erreur => console.error(erreur))
 }
 
+function genererEntete ( genererEntete )
+{
+
+}
 
 function ajouterEtudiantTableau ( etudiant )
 {
@@ -39,36 +53,34 @@ function ajouterEtudiantTableau ( etudiant )
 	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' );
 	const tabResumeligneResume = document.createElement ( 'tr' );
 
-	const htmlResume = "";
+	var htmlResume = "";
 	
 	const moyCompetence  = new Map   ( );
 	const moysCompetence = new Array ( );
 
 	const competences = etudiant.cursus;
-	Object.keys ( competences ).forEach ( competence =>
+
+	for ( const competence in competences )
 	{
-		const ensMatiere = competence.matieres;
+		const ensMatiere = competences[competence].matieres;
 
 		ensMatiere.forEach ( matiere =>
 		{
-			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coeff ] );
+			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ] );
 		} );
 
-		const moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
-
-		moysCompetence.add ( moyenneEnCours );
+		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
+		
+		moysCompetence.push ( moyenneEnCours );
 
 		htmlResume += `<td>${moyenneEnCours}</td>`;
-	} );
+	}
 
-	const somme           = moysCompetence.reduce ( ( a, b ) => a + b, 0 );
-	const moyenneSemestre = somme / tableau.length;
+	const somme = moysCompetence.reduce((a, b) => a + parseFloat(b), 0);
+	const moyenneSemestre = (somme / moysCompetence.length).toFixed(2);
 
-	tabResumeligneResume.innerHTML = 
-	`<td>${moyenneSemestre}</td>
-	<td>${htmlResume}</td>
-	<td>X/X</td>`;
-
+	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>X/X</td>`;
+	
 	tabResumeComptence.appendChild ( tabResumeligneResume );
 };
 
@@ -84,5 +96,5 @@ function calculerMoyenneCompetence ( donnee )
 		totalCoeff += coeff;
 	} );
 
-	return totalNote / totalCoeff;
+	return (totalNote / totalCoeff).toFixed(2);
 }
