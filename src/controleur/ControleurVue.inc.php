@@ -16,14 +16,15 @@
 			$this->DB = DB::getInstance ( );
 		}
 
-		public function getJsonVisualiser($numSemestre) : string
+		public function getJsonVisualiser($numSemestre, $annee) : string
 		{
-			$lstEtudiantSemestre = $this->DB->selectAllWhere ( "EtudiantSemestre", 'numsemestre', $numSemestre );
+			$lstCursus = $this->DB->selectAllWherePrecis (true, 'codenip', "Cursus", 'numsemestre', $numSemestre, 'AND', 'annee', $annee );
+			// $lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
 			$tabDonnees = array();
 			
-			foreach ( $lstEtudiantSemestre as $etudsem )
+			foreach ( $lstCursus as $cursusEtu )
 			{
-				$codenip = $etudsem->getCodeNIP ( );
+				$codenip = $cursusEtu->getCodeNIP ( );
 				foreach ( $this->DB->selectAllWhere('Etudiant', 'codenip', $codenip) as $etudiant )
 				{
 		
@@ -164,10 +165,11 @@
 
 	$controleurVue = new ControleurVue();
 	
-	if (isset($_GET['numSemestre']) && !empty($_GET['numSemestre']))
+	if (isset($_GET['numSemestre']) && !empty($_GET['numSemestre']) && isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
 		$numSem = $_GET['numSemestre'];
-		echo $controleurVue->getJsonVisualiser($numSem);
+		$annee = $_GET['annee'];
+		echo $controleurVue->getJsonVisualiser($numSem, $annee);
 	}
 	else if (isset($_GET['annee']) && !empty ($_GET['annee']))
 	{

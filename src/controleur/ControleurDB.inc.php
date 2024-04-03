@@ -151,6 +151,23 @@
 			return $this->execQuery($requete, $parametres, $nomTable);
 		}
 
+		public function selectAllWherePrecis($distinct=false, $strChamps, $nomTable, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null)
+		{
+			$requete = 'SELECT ' . ($distinct ? ' DISTINCT ' : '') . $strChamps . ' FROM '.DB::$schema.'.'.$nomTable . ' WHERE ' . $condition . ' = ?';
+
+			$parametres = array($valeur);
+			
+			if ($connecteur != null && $condition2 != null && $valeur2 != null)
+			{
+				$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
+				// echo '<br><br>requete : ' . $requete;
+				$parametres[] = $valeur2;
+
+				// echo '<br><br>' . implode(' ', $parametres);
+			}
+			return $this->execQuery($requete, $parametres, $nomTable);
+		}
+
 		public function getAnneesRenseignees()
 		{
 			$requete = 'SELECT DISTINCT annee FROM ' . DB::$schema . '.Competence ORDER BY annee ASC';

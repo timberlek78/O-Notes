@@ -1,10 +1,78 @@
-fetchDonneeEtudiant(1);
+/* Variables nécessaires au fetch */
+var anneeSelectionnee;
+var semestreSelectionne;
+
+/* Lecture des années renseignées */
+// En gros dans la liste Année y aura que les années remplies dans la bado
+fetch ('../../controleur/ControleurVue.inc.php?anneesRenseignees=true')
+	.then ( reponse => reponse.json ( ) )
+	.then ( donnees => 
+		{
+			donnees.forEach ( function ( donnee )
+			{
+				creerOption ( donnee );
+			} );
+		})
+	.catch ( erreur => console.error ( erreur ) )
+
+/* Placement des années dans la sélection */
+const choixAnnee = document.getElementById('choix-annee');
+function creerOption ( annee )
+{
+	console.log(annee);
+	option = document.createElement('option');
+	option.value = annee;
+	option.innerText = annee;
+
+	choixAnnee.appendChild ( option );
+}
+
+/* Evenement en fonction de l'année sélectionnée */
+choixAnnee.addEventListener('change', function()
+{
+	anneeSelectionnee = choixAnnee.value;
+	fetchDonneeEtudiant()
+	//reinitialiserPage(); TODO: une fonction qui remet la page à vide (pour ne pas conserver les données précédentes)
+})
+
+/*                                     */
+/*   BAR DE NAVIGATION DES SEMESTRES   */
+/*                                     */
+
+const ensBoutonsSemestre = document.querySelectorAll ( '.semestre' );
+
+ensBoutonsSemestre.forEach ( function ( bouton )
+{
+	bouton.addEventListener ( 'click', function ( event )
+	{
+		ensBoutonsSemestre.forEach ( function ( bouton )
+		{
+			bouton.classList.remove ( 'btn-clique' );
+		} )
+		
+		bouton.classList.add ( 'btn-clique' );
+		semestreSelectionne = parseInt(bouton.innerText.substring(1,2));
+
+		fetchDonneeEtudiant()
+	} )
+} );
+
 
 // TODO: Fetch selon le semestre sélectionné
 
-function fetchDonneeEtudiant(numSemestre)
+function fetchDonneeEtudiant()
 {
-	fetch ( '../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre )
+	
+	console.log('semestre : ' + semestreSelectionne + ' annee : ' + anneeSelectionnee)
+	if (!semestreSelectionne || !anneeSelectionnee)
+	{
+		console.log('un argument nest pas défini')
+		return;
+	}
+
+	reinitialiserPage();
+	
+	fetch ( '../../controleur/ControleurVue.inc.php?numSemestre=' + semestreSelectionne + '&annee=' + anneeSelectionnee )
 		.then ( reponse => reponse.json ( ) )
 		.then ( donnees =>
 		{
@@ -21,6 +89,16 @@ function fetchDonneeEtudiant(numSemestre)
 
 		})
 		.catch (erreur => console.error(erreur))
+}
+
+function reinitialiserPage()
+{
+	const tabNomPrenom              = document.querySelector ( '.tableau-nom-etd tbody' );
+	tabNomPrenom.innerHTML = "";
+
+	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' ); //FIXME: vire pas les en tete
+	tabResumeComptence.innerHTML = "";
+
 }
 
 function ajouterEtudiantTableau ( etudiant )

@@ -137,22 +137,3 @@ function fermeturePopupEditionEtudiant ( )
 {
 	popupEditionEtudiant.classList.remove ( 'ouvert' );
 }
-
-/*                                     */
-/*   BAR DE NAVIGATION DES SEMESTRES   */
-/*                                     */
-
-const ensBoutonsSemestre = document.querySelectorAll ( '.semestre' );
-
-ensBoutonsSemestre.forEach ( function ( bouton )
-{
-	bouton.addEventListener ( 'click', function ( event )
-	{
-		ensBoutonsSemestre.forEach ( function ( bouton )
-		{
-			bouton.classList.remove ( 'btn-clique' );
-		} )
-		
-		bouton.classList.add ( 'btn-clique' );
-	} )
-} );
