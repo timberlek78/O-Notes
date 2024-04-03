@@ -29,8 +29,10 @@ class ExcelExporter
 	private $spreadsheet;
 	private $nomFichier;
 	private $cheminDossier;
+	private $semestre;
 	private $oNote;
 
+	private $colonneFINI;
 	private const TAB_STATUT = ['ADM','CMP','ADSUP'];
 
 	private const STYLE_TITRE = [
@@ -65,11 +67,15 @@ class ExcelExporter
 
 	public function __construct($nomFichier, $cheminDossier)
 	{
-		$this->spreadsheet = new Spreadsheet();
-		$this->nomFichier = $nomFichier;
+		$this->spreadsheet   = new Spreadsheet();
+		$this->nomFichier    = $nomFichier;
 		$this->cheminDossier = $cheminDossier;
+		//$this->semestre      = $semestre;
 		$this->oNote = new ONote();	
 	}
+
+	public function getSemestre() { return $this->semestre;}
+	public function getColonneFINI() {return $this->colonneFINI;}
 
 
 	// public function creerStyle($bold, $size, $fontColor, $fond, $fondColor,$alignement, $typeBordure) 
@@ -92,7 +98,6 @@ class ExcelExporter
 	{
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$ligne = 9;
-
 		$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
 		foreach ($donneesEtudiants as $index => $etudiant) {
 			$colonne     = 'A';
@@ -110,7 +115,6 @@ class ExcelExporter
 
 	public function creerColonneEtudiant($data,$colonne)
 	{
-		var_dump($data);
 		$sheet = $this->spreadsheet->getActiveSheet(); 			
 		for ($i = 0; $i<count($data); $i++) 
 		{
@@ -127,29 +131,47 @@ class ExcelExporter
 	{
 		$feuille    = $this->spreadsheet->getActiveSheet();
 		$colonne    = 'G';
-		$colonneBUT = 'G';
 		$ligne      =  9;
-		foreach($donneesEtudiants as $etudiant)
+
+		echo "<br>";
+		var_dump( $donneesEtudiants[0]->getTabCursus() );
+		echo "<br>";
+
+		foreach ($donneesEtudiants[0]->getTabCursus() as $but=>$tabCompetence)
 		{
-			echo "<br>";
-			var_dump($etudiant->getTabCursus());
-			echo "<br>";
-			foreach ($etudiant->getTabCursus() as $but => $tabCompetence) 
+			var_dump($colonne);
+			$this->creerEncadreCompetence($but, $colonne, $tabCompetence);
+			$colonne = chr(ord($colonne) + count(array_keys($tabCompetence)));;
+		}
+	}
+
+	public function remplirFeuilleCompetence($donneesCompetences, $donneesEtudiants)
+	{
+		$feuille = $this->spreadsheet->getActiveSheet();
+		$ligne   = 9;
+	
+		foreach ($donneesEtudiants as $etudiant)
+		{
+			$colonneCompetence = 'G';
+			foreach($etudiant->getTabCursus() as $but=>$tabCompetence)
 			{
-				$this->creerEncadreCompetence($but, $colonneBUT, $tabCompetence);
-				foreach( $tabCompetence as $cursus)
+				
+				foreach($tabCompetence as $cursus)
 				{
-					$feuille->setCellValue($colonne.$ligne, $cursus->getAdmission());
-					
-					if($this->estCool($cursus->getAdmission())) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT);
+					$admis = $cursus->getAdmission();
+		
+					$feuille->setCellValue($colonneCompetence.$ligne, $admis);
+					if($this->estCool($admis)) $feuille->getCell($colonneCompetence.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
+					else                       $feuille->getCell($colonneCompetence.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
 
-
-					$colonne++;
+					$colonneCompetence++;
 				}
-				$colonneBUT = chr(ord($colonneBUT) + count(array_keys($tabCompetence)));
+				$this->colonneFINI = $colonneCompetence;
 			}
 			$ligne++;
 		}
+
+		
 	}
 
 	public function creerEncadreCompetence(string $but, string $colonne,$tabCompetence)
@@ -166,6 +188,7 @@ class ExcelExporter
 		foreach( $tabCompetence as $libelle => $admission)
 		{
 			$feuille->setCellValue($colonne.$ligneCompetence, $libelle);
+			$feuille->getColumnDimension(chr(ord($colonne)))->setWidth(strlen($libelle) + 5);
 			$feuille->getCell     ($colonne.$ligneCompetence)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 			$colonne++;
 		}
@@ -227,10 +250,16 @@ $donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
 $exportateur = new ExcelExporter('exemple.xlsx', '../../../data');
-$exportateur->creerFeuilleEtudiant  (                     $donneesEtudiants);
-$exportateur->creerFeuilleCompetence($donneesCompetences, $donneesEtudiants);
-$exportateur->creerColonneMoyenne   (                     $donneesEtudiants);
+$exportateur->creerFeuilleEtudiant    (                      $donneesEtudiants);
+$exportateur->creerFeuilleCompetence  ($donneesCompetences , $donneesEtudiants);
+$exportateur->remplirFeuilleCompetence( $donneesCompetences, $donneesEtudiants);
+
+echo "<br> LAAAAAAAAAAAA :".$exportateur->getColonneFini()."<br>";
+//$exportateur->creerColonneMoyenne     (                      $donneesEtudiants);
 $cheminFichier = $exportateur->enregistrer();
 
 echo "<br>Le fichier Excel a été créé avec succès : $cheminFichier";
 ?>
+
+
+//TODO: Voir si rajouter le semstre que l'on veut dans le excel peut faciliter les choses, il faut une méthode qui parcours tout les semestres jusqu'a semstre voulu.

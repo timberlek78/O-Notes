@@ -85,42 +85,55 @@ class ONote
 		return $tabMoyenne;
 	}
 
-	public function determinerTabCompetence($idEtudiant) //retourne un double tableau associatif <String(nom de l'annee) , TableauAsso<String(nom de compétence), ADM ?)>>
+	// public function determinerTabCompetence($idEtudiant) //retourne un double tableau associatif <String(nom de l'annee) , TableauAsso<String(nom de compétence), ADM ?)>>
+	// {
+	// 	$tabResultat = array(); 
+	// 	$tabSemestre = $this->determinerSemestre($idEtudiant);
+	// 	$anneeBUT    = 1;
+		
+	// 	foreach($tabSemestre as $semestre) 
+	// 	{
+	// 		$tabCompetence = $this->determinerCompetence($semestre, $idEtudiant);
+	// 		foreach($tabCompetence as $key=>$competence) 
+	// 		{
+	// 			$tabTemp[$key] = $competence;
+	// 		}
+	// 		if($semestre % 2 == 0) 
+	// 		{
+	// 			$tabResultat['BUT'.$anneeBUT] = $tabTemp;
+	// 			$tabTemp                      = array();
+	// 			$anneeBUT++;
+	// 		}
+	// 	}
+	// 	return $tabResultat;
+	// }
+
+	public function determinerTabCompetence($idEtudiant)
 	{
 		$tabResultat = array(); 
-		$tabSemestre = $this->determinerSemestre($idEtudiant);
+		$tabTemp     = array();
+		$tabSemestre = $this->determinerSemestre($idEtudiant); //Semestre auquel l'etudiant a participé
 		$anneeBUT    = 1;
-		
-		foreach($tabSemestre as $semestre) 
+
+		foreach($tabSemestre as $semestre)
 		{
-			$tabCompetence = $this->determinerCompetence($semestre, $idEtudiant);
-			foreach($tabCompetence as $key=>$competence) 
+			$tabCompetence = $this->determinerCompetence( $semestre, $idEtudiant); //Determine les compétences du semestre 
+			foreach( $tabCompetence as $competence)
 			{
-				$tabTemp[$key] = $competence;
-
-
+				$tabTemp[$competence->getIdCompetence()] = $competence;
 			}
-			if($semestre % 2 == 0) 
+
+			if($semestre % 2 == 0)
 			{
-				$tabResultat['BUT'.$anneeBUT] = $tabTemp;
-				$tabTemp                      = array();
-				$anneeBUT++;
+				unset($tabResultat["Semestre ".$semestre - 1]);
+				$tabResultat['BUT'.$anneeBUT++] = $tabCompetence;
+			}
+			else
+			{
+				$tabResultat["Semestre ".$semestre] = $tabCompetence;
 			}
 		}
 		return $tabResultat;
-	}
-
-
-	function printDoubleAssocArray($array, $indent = 0)
-	{
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				echo str_repeat("\t", $indent) . "$key:\n";
-				$this->printDoubleAssocArray($value, $indent + 1);
-			} else {
-				echo str_repeat("\t", $indent) . "$key: $value\n";
-			}
-		}
 	}
 
 	public function determinerSemestre($idEtudiant) {
@@ -201,7 +214,5 @@ class ONote
 
 		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
 	}
-
-
 }
 ?>

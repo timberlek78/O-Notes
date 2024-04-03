@@ -127,7 +127,7 @@ class Etudiant
 	}
 
 	public function getUe            (): string { return $this->Ue;              }
-	public function getMoyenneG      (): int    { return $this->moyenneG;}
+	public function getMoyenneG      (): int    { return $this->moyenneG;        }
 	public function getTabMoyenne    (): array  { return $this->tabMoyenne;      }
 
 	public function setUe            (string $ue            ) { $this->Ue             = $ue;             }
@@ -136,10 +136,14 @@ class Etudiant
 
 	public function calculeMoyenneG()
 	{
-		$somme = 0;
-		foreach(array_values($this->tabMoyenne) as  $moyenne ) $somme += $moyenne;
-
-		$this->setMoyenneG($somme / count(array_keys($this->tabMoyenne)));
+		if(!empty($this->tabMoyenne))
+		{
+			$somme = 0;
+			foreach(array_values($this->tabMoyenne) as  $moyenne ) $somme += $moyenne;
+	
+			$this->setMoyenneG($somme / count(array_keys($this->tabMoyenne)));
+		}
+	
 	}
 
 	public function determinerUe()
