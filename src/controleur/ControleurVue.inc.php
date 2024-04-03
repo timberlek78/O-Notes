@@ -5,7 +5,7 @@
 
 	require "ControleurDB.inc.php";
 	
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -33,22 +33,21 @@
 					'codeNIP'      => $codenip                        ,
 					'parcours'     => $etudiant->getParcours       ( ),
 					'promotion'    => $etudiant->getPromotion      ( ),
-					// 'illustration' => $etudiant->getidillustration ( )
+					'specialite'   => $etudiant->getSpecialite     ( ),
+					'typeBac'      => $etudiant->getTypeBac        ( )
 				);
-	
-				echo "idEtude : " . $etudiant->getIdEtude ( );
-	
+		
 				// Informations de la table Etude
-				foreach ( $this->DB->selectAllWhere ( 'Etude', 'idetude', $etudiant->getIdEtude ( ) ) as $etude )
-				{
-					$etudeDetails = array
-					(
-						'specialite' => $etude->getSpecialite ( ),
-						'typeBac'    => $etude->getTypeBac    ( )
-					);
+				// foreach ( $this->DB->selectAllWhere ( 'Etude', 'idetude', $etudiant->getIdEtude ( ) ) as $etude )
+				// {
+				// 	$etudeDetails = array
+				// 	(
+				// 		'specialite' => $etude->getSpecialite ( ),
+				// 		'typeBac'    => $etude->getTypeBac    ( )
+				// 	);
 	
-					$etudiantDetails [ 'etude' ] = $etudeDetails;
-				}
+				// 	$etudiantDetails [ 'etude' ] = $etudeDetails;
+				// }
 	
 				// Information de la table EtudiantSemestre
 				foreach ( $this->DB->selectAllWhere ( 'EtudiantSemestre', 'codenip', $codenip, 'AND', 'numsemestre', $numSemestre ) as $etudesem )
@@ -121,7 +120,8 @@
 
 		public function getJsonExporter($annee) : string
 		{
-			$lstEtudiant = $this->DB->selectAll ( "Etudiant" );
+			$anneeSortie = substr($annee, 5, 4);
+			$lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
 			$tabDonnees = array ( );
 				
 			foreach ( $lstEtudiant as $etudiant )
@@ -141,7 +141,14 @@
 				$tabDonnees [ ] = $etudiantDetails;
 			}
 
-			return json_encode( $tabDonnees );
+			return json_encode ( $tabDonnees );
+		}
+
+		public function getJsonAnnee() : string
+		{
+			$lstAnnee = $this->DB->getAnneesRenseignees ( );
+			
+			return json_encode ( $lstAnnee );
 		}
 	}
 
@@ -156,6 +163,10 @@
 	{
 		$annee = $_GET['annee'];
 		echo $controleurVue->getJsonExporter($annee);
+	}
+	else if (isset($_GET['anneesRenseignees']) && !empty ( $_GET [ 'anneesRenseignees']))
+	{
+		if ( $ )
 	}
 	else
 	{
