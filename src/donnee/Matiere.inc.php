@@ -1,11 +1,12 @@
 <?php
 
 class Matiere {
-	private $idMatiere;
-	private $alternant;
+	private string $idmatiere;
+	private bool $alternant;
 
-	public function __construct($idMatiere, $alternant) {
-		$this->idMatiere = $idMatiere;
+	public function __construct( $idMatiere="", $alternant=false )
+	{
+		$this->idmatiere = $idMatiere;
 		$this->alternant = $alternant;
 	}
 
@@ -14,20 +15,29 @@ class Matiere {
 		return get_object_vars($this);
 	}
 
-	public function getIdMatiere() {
-		return $this->idMatiere;
+	public function getIdMatiere( ) : string
+	{
+		return $this->idmatiere;
 	}
 
-	public function setIdMatiere($idMatiere) {
-		$this->idMatiere = $idMatiere;
+	public function setIdMatiere( $idMatiere )
+	{
+		$this->idmatiere = $idMatiere;
 	}
 
-	public function getAlternant() {
+	public function getAlternant() : bool
+	{
 		return $this->alternant;
 	}
 
-	public function setAlternant($alternant) {
+	public function setAlternant( $alternant )
+	{
 		$this->alternant = $alternant;
+	}
+
+	public function __toString(): string
+	{
+		return "Matiere : idmatiere = ".$this->idmatiere.", alternant = ".$this->alternant;
 	}
 }
 

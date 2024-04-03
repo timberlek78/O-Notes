@@ -14,13 +14,13 @@ class Etude
 		$this->specialite = $specialite;
 		$this->typebac    = $typebac;
 	}
-
+	
 	public function getAttributs() : array
 	{
 		return get_object_vars($this);
 	}
 
-	public function getId(): int
+	public function getIdEtude(): int
 	{
 		return $this->idetude;
 	}
@@ -35,8 +35,7 @@ class Etude
 		return $this->typebac;
 	}
 
-
-	private function setIdEtude( int $idetude ): void
+	public function setIdEtude( int $idetude ): void
 	{
 		$this->idetude = $idetude;
 	}
@@ -46,10 +45,14 @@ class Etude
 		$this->specialite = $specialite;
 	}
 
-	public function setTypeBsac( string $typebac ): void
+	public function setTypeBac( string $typebac ): void
 	{
 		$this->typebac = $typebac;
 	}
 
+	public function __toString(): string
+	{
+		return "Etude : specialite = ".$this->specialite.", typebac = ".$this->typebac;
+	}
 }
 ?>

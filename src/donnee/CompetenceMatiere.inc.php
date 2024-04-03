@@ -2,17 +2,17 @@
 class CompetenceMatiere
 {
 	//clé primaire
-	private string $idCompetence;
+	private string $idcompetence;
 	private string $annee;
-	private string $idMatiere;
-	private int    $coeff;
+	private string $idmatiere;
+	private int $coeff;
 
-	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="", int $coeff)
+	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="", int $coeff=0 )
 	{
-		$this->idCompetence = $idCompetence;
+		$this->idcompetence = $idCompetence;
 		$this->annee        = $annee;
-		$this->idMatiere   = $idMatiere;
-		$this->coeff       = $coeff;
+		$this->idmatiere   = $idMatiere;
+		$this->coeff = $coeff;
 	}
 
 	public function getAttributs() : array
@@ -20,14 +20,19 @@ class CompetenceMatiere
 		return get_object_vars($this);
 	}
 
-	public function getidCompetence(): string
+	public function getIdCompetence(): string
 	{
-		return $this->idCompetence;
+		return $this->idcompetence;
 	}
 
-	public function getidMatiere(): string
+	public function getIdMatiere(): string
 	{
-		return $this->idMatiere;
+		return $this->idmatiere;
+	}
+
+	public function getAnnee(): string
+	{
+		return $this->annee;
 	}
 
 	public function getCoeff(): int
@@ -35,15 +40,24 @@ class CompetenceMatiere
 		return $this->coeff;
 	}
 
-
-	private function setidCompetence( string $idCompetence )
+	public function setIdCompetence( string $idCompetence )
 	{
-		$this->idCompetence = $idCompetence;
+		$this->idcompetence = $idCompetence;
 	}
 
-	private function setNumMatiere( string $idMatiere )
+	public function setAnnee( string $annee )
 	{
-		$this->idMatiere = $idMatiere;
+		$this->annee = $annee;
+	}
+
+	public function setIdMatiere( string $idMatiere )
+	{
+		$this->idmatiere = $idMatiere;
+	}
+
+	public function __toString(): string
+	{
+		return "CompetenceMatiere : idcompetence = ".$this->idcompetence.", annee = ".$this->annee.", idmatiere = ".$this->idmatiere;
 	}
 
 	private function setCoeff( int $coeff )
