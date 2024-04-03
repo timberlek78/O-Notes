@@ -35,8 +35,8 @@ function ajouterEtudiantTableau ( etudiant )
 	tabNomPrenomligneEtudiant.classList.add ( 'cellule-cliquable-nom')
 	tabNomPrenomligneEtudiant.addEventListener('click', function ( ) 
 	{
-		ouverturePopupEtudiant
-		majPopupEtudiant ( etudiant	 );
+		ouverturePopupEtudiant ( );
+		majPopupEtudiant ( etudiant );
 	} );
 
 	tabNomPrenomligneEtudiant.id = `${etudiant.codeNIP}`;
@@ -76,8 +76,6 @@ function ajouterEtudiantTableau ( etudiant )
 			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ] );
 		} );
 
-		console.log ( moyCompetence);
-
 		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
 		 
 		moysCompetence.push ( moyenneEnCours );
@@ -87,6 +85,7 @@ function ajouterEtudiantTableau ( etudiant )
 
 	const somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
 	const moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
+
 
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>${nbUEs}/${Object.keys ( competences ).length}</td>`;
 	
@@ -115,14 +114,14 @@ function genererEntete ( tabEntete )
 	const tabResumeComptence2 = document.querySelector ( '.tableau-note-etd thead' );
 	var enteteTab             = document.createElement ( 'tr' );
 
-	enteteTab.innerHTML = `<td>Moyenne Semestre</td>`;
+	enteteTab.innerHTML = `<th>Moyenne Semestre</th>`;
 
 	tabEntete.forEach ( function ( entete )
 	{
-		enteteTab.innerHTML += `<td>${entete}</td>`;
+		enteteTab.innerHTML += `<th>${entete}</th>`;
 	} );
 
-	enteteTab.innerHTML += `<td>UEs</td>`;
+	enteteTab.innerHTML += `<th>UEs</th>`;
 
 	tabResumeComptence2.appendChild ( enteteTab );
 }

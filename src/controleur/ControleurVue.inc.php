@@ -18,99 +18,102 @@
 
 		public function getJsonVisualiser($numSemestre) : string
 		{
-			$lstEtudiant = $this->DB->selectAll ( "Etudiant" );
+			$lstEtudiantSemestre = $this->DB->selectAllWhere ( "EtudiantSemestre", 'numsemestre', $numSemestre );
 			$tabDonnees = array();
-				
-			foreach ( $lstEtudiant as $etudiant )
+			
+			foreach ( $lstEtudiantSemestre as $etudsem )
 			{
-				$codenip = $etudiant->getCodeNIP ( );
-	
-				// Informations de la table Etudiant
-				$etudiantDetails = array
-				(
-					'nom'          => $etudiant->getNom            ( ),
-					'prenom'       => $etudiant->getPrenom         ( ),
-					'codeNIP'      => $codenip                        ,
-					'parcours'     => $etudiant->getParcours       ( ),
-					'promotion'    => $etudiant->getPromotion      ( ),
-					'specialite'   => $etudiant->getSpecialite     ( ),
-					'typeBac'      => $etudiant->getTypeBac        ( )
-				);
+				$codenip = $etudsem->getCodeNIP ( );
+				foreach ( $this->DB->selectAllWhere('Etudiant', 'codenip', $codenip) as $etudiant )
+				{
 		
-				// Informations de la table Etude
-				// foreach ( $this->DB->selectAllWhere ( 'Etude', 'idetude', $etudiant->getIdEtude ( ) ) as $etude )
-				// {
-				// 	$etudeDetails = array
-				// 	(
-				// 		'specialite' => $etude->getSpecialite ( ),
-				// 		'typeBac'    => $etude->getTypeBac    ( )
-				// 	);
-	
-				// 	$etudiantDetails [ 'etude' ] = $etudeDetails;
-				// }
-	
-				// Information de la table EtudiantSemestre
-				foreach ( $this->DB->selectAllWhere ( 'EtudiantSemestre', 'codenip', $codenip, 'AND', 'numsemestre', $numSemestre ) as $etudesem )
-				{
-					$etudsemDetails = array
+					// Informations de la table Etudiant
+					$etudiantDetails = array
 					(
-						'rang'      => $etudesem->getRang       ( ),
-						'nbAbsence' => $etudesem->getNbAbsences ( ),
-						'passage'   => $etudesem->getPassage    ( )
+						'nom'          => $etudiant->getNom            ( ),
+						'prenom'       => $etudiant->getPrenom         ( ),
+						'codeNIP'      => $codenip                        ,
+						'parcours'     => $etudiant->getParcours       ( ),
+						'promotion'    => $etudiant->getPromotion      ( ),
+						'specialite'   => $etudiant->getSpecialite     ( ),
+						'typeBac'      => $etudiant->getTypeBac        ( )
 					);
-	
-					$etudiantDetails [ 'etudsem' ] = $etudsemDetails;
-				}
-	
-				$cursusDetails = array ( );
-				// Informations de la table Cursus
-				foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
-				{
-					$compmatDetails    = array ( );
-					$matiereCompetence = array ( );
-
-					// Informations de la table CompetenceMatiere
-					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
+			
+					// Informations de la table Etude
+					// foreach ( $this->DB->selectAllWhere ( 'Etude', 'idetude', $etudiant->getIdEtude ( ) ) as $etude )
+					// {
+					// 	$etudeDetails = array
+					// 	(
+					// 		'specialite' => $etude->getSpecialite ( ),
+					// 		'typeBac'    => $etude->getTypeBac    ( )
+					// 	);
+		
+					// 	$etudiantDetails [ 'etude' ] = $etudeDetails;
+					// }
+		
+					// Information de la table EtudiantSemestre
+					foreach ( $this->DB->selectAllWhere ( 'EtudiantSemestre', 'codenip', $codenip, 'AND', 'numsemestre', $numSemestre ) as $etudesem )
 					{
-	
-						$matDetails = array
+						$etudsemDetails = array
 						(
-							'libelle' => $compmat->getidMatiere ( ),
-							'coef'    => $compmat->getCoeff     ( )
+							'rang'      => $etudesem->getRang       ( ),
+							'nbAbsence' => $etudesem->getNbAbsences ( ),
+							'passage'   => $etudesem->getPassage    ( )
 						);
-	
-						// Informations de la table EstNote
-						//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
-						foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
-						{
-							$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
-						}
-	
-						$matiereCompetence [ ] = $matDetails;
+		
+						$etudiantDetails [ 'etudsem' ] = $etudsemDetails;
 					}
-					
-					$compmatDetails [ 'matieres' ]  = $matiereCompetence;
-					$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
-					$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
-	
-					// $cursus->getidCompetence ( )
-					$etudiantDetails [ 'cursus' ] = $cursusDetails;
+		
+					$cursusDetails = array ( );
+					// Informations de la table Cursus
+					foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
+					{
+						$compmatDetails    = array ( );
+						$matiereCompetence = array ( );
+
+						// Informations de la table CompetenceMatiere
+						foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
+						{
+		
+							$matDetails = array
+							(
+								'libelle' => $compmat->getidMatiere ( ),
+								'coef'    => $compmat->getCoeff     ( )
+							);
+		
+							// Informations de la table EstNote
+							//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
+							foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
+							{
+								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
+							}
+		
+							$matiereCompetence [ ] = $matDetails;
+						}
+						
+						$compmatDetails [ 'matieres' ]  = $matiereCompetence;
+						$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
+						$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
+		
+						// $cursus->getidCompetence ( )
+						$etudiantDetails [ 'cursus' ] = $cursusDetails;
+					}
+		
+					// Informations de la table FPE
+					foreach ( $this->DB->selectAllWhere ( 'FPE', 'codenip', $codenip ) as $fpe )
+					{
+						$fpeDetails = array
+						(
+							'avisMaster'    => $fpe->getAvisMaster    ( ),
+							'avisEcoleInge' => $fpe->getAvisEcoleInge ( ),
+							'commentaire'   => $fpe->getCommentaire   ( )
+						);
+		
+						$etudiantDetails [ 'FPE' ] = $fpeDetails;
+					}
+		
+					$tabDonnees [ ] = $etudiantDetails;
 				}
-	
-				// Informations de la table FPE
-				foreach ( $this->DB->selectAllWhere ( 'FPE', 'codenip', $codenip ) as $fpe )
-				{
-					$fpeDetails = array
-					(
-						'avisMaster'    => $fpe->getAvisMaster    ( ),
-						'avisEcoleInge' => $fpe->getAvisEcoleInge ( ),
-						'commentaire'   => $fpe->getCommentaire   ( )
-					);
-	
-					$etudiantDetails [ 'FPE' ] = $fpeDetails;
-				}
-	
-				$tabDonnees [ ] = $etudiantDetails;
 			}
 	
 			$json = json_encode( $tabDonnees );
