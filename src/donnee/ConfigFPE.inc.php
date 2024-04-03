@@ -1,14 +1,14 @@
 <?php
 
 class ConfigFPE {
-	private $idConfigFPE;
-	private $nomDirecteur;
-	private $anneePromo;
+	private $idconfigfpe;
+	private $nomdirecteur;
+	private $anneepromo;
 
 	public function __construct($idConfigFPE, $nomDirecteur, $anneePromo) {
-		$this->idConfigFPE = $idConfigFPE;
-		$this->nomDirecteur = $nomDirecteur;
-		$this->anneePromo = $anneePromo;
+		$this->idconfigfpe = $idConfigFPE;
+		$this->nomdirecteur = $nomDirecteur;
+		$this->anneepromo = $anneePromo;
 	}
 
 	public function getAttributs() : array
@@ -17,27 +17,27 @@ class ConfigFPE {
 	}
 
 	public function getIdConfigFPE() {
-		return $this->idConfigFPE;
+		return $this->idconfigfpe;
 	}
 
 	public function setIdConfigFPE($idConfigFPE) {
-		$this->idConfigFPE = $idConfigFPE;
+		$this->idconfigfpe = $idConfigFPE;
 	}
 
 	public function getNomDirecteur() {
-		return $this->nomDirecteur;
+		return $this->nomdirecteur;
 	}
 
 	public function setNomDirecteur($nomDirecteur) {
-		$this->nomDirecteur = $nomDirecteur;
+		$this->nomdirecteur = $nomDirecteur;
 	}
 
 	public function getAnneePromo() {
-		return $this->anneePromo;
+		return $this->anneepromo;
 	}
 
 	public function setAnneePromo($anneePromo) {
-		$this->anneePromo = $anneePromo;
+		$this->anneepromo = $anneePromo;
 	}
 }
 

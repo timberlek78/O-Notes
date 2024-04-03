@@ -33,16 +33,16 @@ class FPE {
 		return $this->avismaster;
 	}
 
-	public function setAvisMaster($avismaster) {
-		$this->avismaster = $avismaster;
+	public function setAvisMaster($AvisMaster) {
+		$this->avismaster = $AvisMaster;
 	}
 
 	public function getAvisEcoleInge() {
 		return $this->avisecoleinge;
 	}
 
-	public function setAvisEcoleInge($avisecoleinge) {
-		$this->avisecoleinge = $avisecoleinge;
+	public function setAvisEcoleInge($AvisEcoleInge) {
+		$this->avisecoleinge = $AvisEcoleInge;
 	}
 
 	public function getCommentaire() {
@@ -57,8 +57,8 @@ class FPE {
 		return $this->codenip;
 	}
 
-	public function setCodeNIP($codenip) {
-		$this->codenip = $codenip;
+	public function setCodeNIP($codeNIP) {
+		$this->codenip = $codeNIP;
 	}
 }
 

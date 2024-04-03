@@ -1,6 +1,6 @@
 <?php
 
-require '../../../lib/vendor/autoload.php'; // Inclure l'autoloader de Composer
+require __DIR__.'/../../../lib/vendor/autoload.php'; // Inclure l'autoloader de Composer
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -22,25 +22,25 @@ class LectureExcel
 		$this->feuillePrincipale;
 	}
 
-	private function chargerFichier() : PhpOffice\PhpSpreadsheet\Spreadsheet
+	private function chargerFichier( ) : PhpOffice\PhpSpreadsheet\Spreadsheet
 	{
 		$reader = IOFactory::createReaderForFile( $this->fichier );
 		$spreadsheet = $reader->load( $this->fichier );
+
 		return $spreadsheet;
 	}
 
-	public function recupererDonnees() : array
+	public function recupererDonnees( ) : array
 	{
 		$data = $this->feuillePrincipale->toArray( );
 		return $data;
 	}
 
-	//toString
 	public function __toString( ) : string
 	{
 		$titre = "Fichier : " . $this->fichier;
 		$donnees = $this->recupererDonnees( );
-		return OutilTableau::genererTableauHtml( $donnees, $titre );
+		return OutilsTableau::genererTableauHtml( $donnees, $titre );
 	}
 }
 ?>

@@ -2,13 +2,13 @@
 class Cursus
 {
 	//clé primaire
-	private int     $codenip;
+	private string  $codenip;
 	private int     $numsemestre;
 	private string  $idcompetence;
 	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $codenip=-1, int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
+	public function __construct( string $codenip="", int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
 	{
 		$this->codenip      = $codenip;
 		$this->numsemestre  = $numsemestre;
@@ -24,12 +24,12 @@ class Cursus
 
 	public function getCodeNIP(): int
 	{
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
 	public function getNumSemestre(): int
 	{
-		return $this->numSemestre;
+		return $this->numsemestre;
 	}
 
 	public function getidCompetence(): string
@@ -47,19 +47,19 @@ class Cursus
 		return $this->annee;
 	}
 
-	public function setCodeNIP( int $codeNIP )
+	public function setCodeNIP( string $codeNIP )
 	{
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setNumSemestre( int $numSemestre )
 	{
-		$this->numSemestre = $numSemestre;
+		$this->numsemestre = $numSemestre;
 	}
 
-	public function setidCompetence( string $idCompetence )
+	public function setIdCompetence( string $idCompetence )
 	{
-		$this->idCompetence = $idCompetence;
+		$this->idcompetence = $idCompetence;
 	}
 
 	public function setAdmission( string $admission ): void
@@ -70,6 +70,16 @@ class Cursus
 	public function setAnnee(string $annee)
 	{
 		$this->annee = $annee;
+	}
+
+	public function __toString( ): string
+	{
+		return "Cursus : codenip=$this->codenip, numsemestre=$this->numsemestre, idcompetence=$this->idcompetence, annee=$this->annee, admission=$this->admission";
+	}
+
+	public function equals( Cursus $cursus ) : bool
+	{
+		return $this->codenip == $cursus->getCodeNIP( ) && $this->numsemestre == $cursus->getNumSemestre( ) && $this->idcompetence == $cursus->getidCompetence( ) && $this->annee == $cursus->getAnnee( ) && $this->admission == $cursus->getAdmission( );
 	}
 }
 ?>

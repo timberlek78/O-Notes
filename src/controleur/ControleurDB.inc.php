@@ -6,20 +6,8 @@
 	/******************************************/
 
 	include (   "ConfigurationDB.inc.php"         );
-	include ("../donnee/Competence.inc.php"       );
-	include ("../donnee/CompetenceMatiere.inc.php");
-	include ("../donnee/Cursus.inc.php"           );
-	include ("../donnee/Etude.inc.php"            );
-	include ("../donnee/Etudiant.inc.php"         );
-	include ("../donnee/EtudiantSemestre.inc.php" );
-	include ("../donnee/FPE.inc.php"              );
-	include ("../donnee/Illustration.inc.php"     );
-	include ("../donnee/Matiere.inc.php"          );
-	include ("../donnee/Possede.inc.php"          );
-	include ("../donnee/Semestre.inc.php"         );
-	include ("../donnee/Utilisateur.inc.php"      );
-	include ("../donnee/EstNote.inc.php"          );
-	
+	require_once __DIR__.'/../donnee/IncludeAll.php';
+
 
 
 	class DB
@@ -138,15 +126,15 @@
 		/***********************************/
 
 		// Méthode select
-		public function selectAll($nomClasse)
+		public function selectAll($nomTable)
 		{
-			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomClasse;
-			return $this->execQuery($requete,null,$nomClasse);
+			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomTable;
+			return $this->execQuery($requete,null,$nomTable);
 		}
 
-		public function selectAllWhere($nomClasse, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null)
+		public function selectAllWhere($nomTable, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null)
 		{
-			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomClasse . ' WHERE ' . $condition . ' = ?';
+			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomTable . ' WHERE ' . $condition . ' = ?';
 
 			$parametres = array($valeur);
 			
@@ -155,7 +143,7 @@
 				$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
 				$parametres[] = $valeur2;
 			}
-			return $this->execQuery($requete, $parametres, $nomClasse);
+			return $this->execQuery($requete, $parametres, $nomTable);
 		}
 
 		public function getAnneesRenseignees()
@@ -166,9 +154,9 @@
 		}
 
 		// Méthode delete
-		public function delete($nomClasse, $objet)
+		public function delete($nomTable, $objet)
 		{
-			$requete = 'DELETE FROM '.DB::$schema.'.'.$nomClasse.' WHERE '.$this->getColumnsNames($nomClasse)[0].' = ?';
+			$requete = 'DELETE FROM '.DB::$schema.'.'.$nomTable.' WHERE '.$this->getColumnsNames($nomTable)[0].' = ?';
 			$tparam  = array(array_values($objet->getAttributs())[0]);
 
 			$valeursAttributs = array_values($objet->getAttributs());
@@ -188,10 +176,10 @@
 		}
 
 		// Méthode d'insert
-		public function insert($nomClasse, $objet)
+		public function insert($nomTable, $objet)
 		{
 			// Construire la requête d'insertion
-			$requete = $this->constructionInsert($nomClasse, $objet);
+			$requete = $this->constructionInsert($nomTable, $objet);
 
 			// Remplacer les marqueurs de position par les valeurs des attributs
 			$valeursAttributs = array_values($objet->getAttributs());
@@ -283,5 +271,32 @@
 				return array(); // Retourner un tableau vide en cas d'erreur
 			}
 		}
+
+		public function existsWhere($nomTable, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null)
+		{
+			// Construction de la requête SELECT COUNT(*) pour compter les tuples
+			$requete = 'SELECT COUNT(*) as count FROM ' . DB::$schema . '.' . $nomTable . ' WHERE ' . $condition . ' = ?';
+			$parametres = array($valeur);
+
+			// Ajout de la deuxième condition si elle est spécifiée
+			if ($connecteur != null && $condition2 != null && $valeur2 != null) {
+				$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
+				$parametres[] = $valeur2;
+			}
+
+			// Exécution de la requête
+			$resultat = $this->execQuery($requete, $parametres, $nomTable);
+
+			// Récupération du résultat
+			foreach ($resultat as $tuple) {
+				// Retourner vrai si le compteur est supérieur à zéro, sinon faux
+				echo $tuple;
+			}
+
+			// Retourne vrai si le compteur est supérieur à zéro, sinon faux
+			return ($compteur > 0);
+		}
+
+
 	}
 ?>

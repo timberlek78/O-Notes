@@ -1,12 +1,12 @@
 <?php
 
 class Possede {
-	private $idIllustration;
-	private $idConfigFPE;
+	private $idillustration;
+	private $idconfigfpe;
 
 	public function __construct($idIllustration, $idConfigFPE) {
-		$this->idIllustration = $idIllustration;
-		$this->idConfigFPE = $idConfigFPE;
+		$this->idillustration = $idIllustration;
+		$this->idconfigfpe = $idConfigFPE;
 	}
 
 	public function getAttributs() : array
@@ -15,19 +15,19 @@ class Possede {
 	}
 
 	public function getIdIllustration() {
-		return $this->idIllustration;
+		return $this->idillustration;
 	}
 
 	public function setIdIllustration($idIllustration) {
-		$this->idIllustration = $idIllustration;
+		$this->idillustration = $idIllustration;
 	}
 
 	public function getIdConfigFPE() {
-		return $this->idConfigFPE;
+		return $this->idconfigfpe;
 	}
 
 	public function setIdConfigFPE($idConfigFPE) {
-		$this->idConfigFPE = $idConfigFPE;
+		$this->idconfigfpe = $idConfigFPE;
 	}
 }
 

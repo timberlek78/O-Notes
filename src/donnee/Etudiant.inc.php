@@ -2,7 +2,7 @@
 class Etudiant
 {
 	//clé primaire
-	private int     $codenip;
+	private string  $codenip;
 
 	//attributs
 	private ?string $nom;
@@ -11,20 +11,21 @@ class Etudiant
 	private ?string $promotion;
 
 	//clé étrangère
-	private int $idillustration;
-	private int $idetude;
+	private ?string $specialite;
+	private ?string $typebac;
 
-	public function __construct( int $codenip=-1, string $nom="", string $prenom="", string $parcours="", string $promotion="", int $idetude=-1)
+	public function __construct( string $codenip="", string $nom="", string $prenom="", string $parcours="", string $promotion="", string $specialite="", string $typebac="" )
 	{
 		$this->codenip        = $codenip;
 		$this->nom            = $nom;
 		$this->prenom         = $prenom;
 		$this->parcours       = $parcours;
 		$this->promotion      = $promotion;
-		$this->idetude        = $idetude;
+		$this->specialite     = $specialite;
+		$this->typebac        = $typebac;
 	}
 
-	public function getNIP(): int
+	public function getCodeNIP(): int
 	{
 		return $this->codenip;
 	}
@@ -49,9 +50,14 @@ class Etudiant
 		return $this->promotion;
 	}
 
-	public function getidillustration(): int
+	public function getSpecialite(): string
 	{
-		return $this->idillustration;
+		return $this->specialite;
+	}
+
+	public function getTypeBac(): string
+	{
+		return $this->typebac;
 	}
 
 	public function getAttributs() : array
@@ -59,9 +65,9 @@ class Etudiant
 		return get_object_vars($this);
 	}
 
-	public function setcodenip( int $codenip ): void
+	public function setCodeNIP( int $codeNIP ): void
 	{
-		$this->codenip = $codenip;
+		$this->codenip = $codeNIP;
 	}
 
 	public function setNom( string $nom ): void
@@ -84,19 +90,24 @@ class Etudiant
 		$this->promotion = $promotion;
 	}
 
-	public function setidillustration( int $idillustration ): void
+	public function setSpecialite( string $specialite ): void
 	{
-		$this->idillustration = $idillustration;
+		$this->specialite = $specialite;
 	}
 
-	public function getIdEtude()
+	public function setTypeBac( string $typebac ): void
 	{
-		return $this->idetude;
+		$this->typebac = $typebac;
 	}
 
-	public function setIdEtude($idEtude)
+	public function __toString(): string
 	{
-		$this->idEtude = $idetude;
+		return "Etudiant : codenip=".$this->codenip.", nom=".$this->nom.", prenom=".$this->prenom.", parcours=".$this->parcours.", promotion=".$this->promotion;
+	}
+
+	public function equals( Etudiant $etudiant ): bool
+	{
+		return $this->codenip === $etudiant->codenip;
 	}
 }
 ?>

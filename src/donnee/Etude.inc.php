@@ -2,9 +2,6 @@
 class Etude
 {
 	//clé primaire
-	private int $idetude;
-
-	//attributs
 	private ?string $specialite;
 	private ?string $typebac;
 
@@ -14,15 +11,10 @@ class Etude
 		$this->specialite = $specialite;
 		$this->typebac    = $typebac;
 	}
-
+	
 	public function getAttributs() : array
 	{
 		return get_object_vars($this);
-	}
-
-	public function getId(): int
-	{
-		return $this->idetude;
 	}
 
 	public function getSpecialite(): string
@@ -35,21 +27,24 @@ class Etude
 		return $this->typebac;
 	}
 
-
-	private function setIdEtude( int $idetude ): void
-	{
-		$this->idetude = $idetude;
-	}
-
 	public function setSpecialite( string $specialite ): void
 	{
 		$this->specialite = $specialite;
 	}
 
-	public function setTypeBsac( string $typebac ): void
+	public function setTypeBac( string $typebac ): void
 	{
 		$this->typebac = $typebac;
 	}
 
+	public function __toString(): string
+	{
+		return "Etude : specialite = ".$this->specialite.", typebac = ".$this->typebac;
+	}
+
+	public function equals( Etude $etude ): bool
+	{
+		return $this->specialite == $etude->specialite && $this->typebac == $etude->typebac;
+	}
 }
 ?>
