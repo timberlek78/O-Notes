@@ -1,3 +1,18 @@
+fetchDonneeEtudiant(1);
+
+function fetchDonneeEtudiant(numSemestre)
+{
+    console.log('../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre);
+    fetch('../../controleur/ControleurVue.inc.php?numSemestre=' + numSemestre)
+        .then (reponse => reponse.json())
+        .then (donnees =>
+            {
+                console.log(donnees);
+            })
+        .catch (erreur => console.error('Erreur lors du fetch'))
+}
+
+
 function ajouterEtudiantTableau ( etudiant )
 {
 	/*+-----------------------------------+*/
