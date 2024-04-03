@@ -61,6 +61,7 @@ boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 function ouverturePopupEtudiant ( )
 {
 	const ligne  = event.target.parentNode;
+
 	const indice = Array.from ( ligne.parentNode.children ).indexOf ( ligne );
 
 	// Ajoute la surbrillance sur la ligne
@@ -82,17 +83,29 @@ function ouverturePopupEtudiant ( )
 	popupEtudiant.classList.add ( 'ouvert' );
 	tabEtudiant  .classList.add ( 'cache'  );
 
-	// Récupération du nom pour le placer dans le popup
-	const popupPrenom = document.getElementById ( 'popup-prenom' );
-	const popupNom    = document.getElementById ( 'popup-nom'    );
-
-	const parties = this.textContent.split('\n\t\t\t\t\t\t\t');
-
-	const nomsPrenoms = parties.map(partie => partie.trim());
-
-	popupPrenom.innerText = nomsPrenoms[2];
-	popupNom   .innerText = nomsPrenoms[1];
+	// TODO: Récupérer l'étudiant via event.target.parentNode.classList[1] dans le tab du fetch
 	
+	majPopupEtudiant ( null );
+}
+
+
+function majPopupEtudiant ( etudiant )
+{
+	//FIXME: potentiellement un erreur si des informations sont vides
+	const conteneurCadreInfos = document           .querySelector    ( '.conteneur-cadre-infos' );
+	const nomPrenom           = document           .querySelector    ( '.conteneur-information' );
+	const cadreInfos          = conteneurCadreInfos.querySelectorAll ( '.cadre-info'            );
+
+	nomPrenom.children[0] = etudiant.prenom;
+	nomPrenom.children[1] = etudiant.nom;
+	
+	cadreInfos[0].children[1].innerText = etudiant.codeNIP;
+	cadreInfos[1].children[1].innerText = etudiant.parcours;
+	cadreInfos[2].children[1].innerText = etudiant.promotion;
+	cadreInfos[3].children[1].innerText = etudiant.etude.typeBac;
+	cadreInfos[4].children[1].innerText = etudiant.etude.specialite;
+	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang;
+	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbs;
 }
 
 function fermeturePopupEtudiant ( )
