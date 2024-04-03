@@ -136,12 +136,17 @@
 		{
 			$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomTable . ' WHERE ' . $condition . ' = ?';
 
+			
+
 			$parametres = array($valeur);
 			
 			if ($connecteur != null && $condition2 != null && $valeur2 != null)
 			{
 				$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
+				// echo '<br><br>requete : ' . $requete;
 				$parametres[] = $valeur2;
+
+				// echo '<br><br>' . implode(' ', $parametres);
 			}
 			return $this->execQuery($requete, $parametres, $nomTable);
 		}

@@ -49,7 +49,7 @@ function ajouterEtudiantTableau ( etudiant )
 	/*+-----------------------------------+*/
 	/*|    TABLEAU : RESUMÉ COMPETENCE    |*/
 	/*+-----------------------------------+*/
-	
+
 	// TODO: Mettre la couleur sur les en-tete
 
 	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' );
@@ -76,6 +76,8 @@ function ajouterEtudiantTableau ( etudiant )
 			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ] );
 		} );
 
+		console.log ( moyCompetence);
+
 		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
 		 
 		moysCompetence.push ( moyenneEnCours );
@@ -94,7 +96,7 @@ function ajouterEtudiantTableau ( etudiant )
 function calculerMoyenneCompetence ( donnee )
 {
 	let totalNote  = 0;
-	let totalCoeff = 0;
+	let totalCoeff = 1;
 
 	donnee.forEach ( ( matière ) =>
 	{
