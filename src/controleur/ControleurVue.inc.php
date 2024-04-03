@@ -5,7 +5,7 @@
 
 	require "ControleurDB.inc.php";
 	
-	// header('Content-Type: application/json');
+	header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -23,7 +23,7 @@
 				
 			foreach ( $lstEtudiant as $etudiant )
 			{
-				$codenip = $etudiant->getNIP ( );
+				$codenip = $etudiant->getCodeNIP ( );
 	
 				// Informations de la table Etudiant
 				$etudiantDetails = array
@@ -64,13 +64,13 @@
 	
 				$cursusDetails = array ( );
 				// Informations de la table Cursus
-				foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip ) as $cursus )
+				foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
 				{
 					$compmatDetails    = array ( );
 					$matiereCompetence = array ( );
 
 					// Informations de la table CompetenceMatiere
-					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( ) ) as $compmat )
+					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
 					{
 	
 						$matDetails = array
