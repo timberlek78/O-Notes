@@ -33,35 +33,35 @@ class ExcelExporter
 
 	private const TAB_STATUT = ['ADM','CMP','ADSUP'];
 
-    private const STYLE_TITRE = [
+	private const STYLE_TITRE = [
 		'font'=>array(
 			'bold'=>true,
 			'size'=>11)
-    ];
+	];
 
-    private const STYLE_VERT = [
-        'fill' => [
+	private const STYLE_VERT = [
+		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
 			'startColor' => ['argb' => 'FF00FF00'], // Vert
 		],
-    ];
+	];
 
-    // private const STYLE_ORANGE = [
-    //     'bold' => false,
-    //     'size' => 11,
-    //     'fontColor' => '000000',
-    //     'fond' => Fill::FILL_SOLID,
-    //     'fondColor' => 'FFFF00',
-    //     'alignement' => Alignment::HORIZONTAL_CENTER,
-    //     'typeBordure' => Border::BORDER_THIN
-    // ];
+	// private const STYLE_ORANGE = [
+	//     'bold' => false,
+	//     'size' => 11,
+	//     'fontColor' => '000000',
+	//     'fond' => Fill::FILL_SOLID,
+	//     'fondColor' => 'FFFF00',
+	//     'alignement' => Alignment::HORIZONTAL_CENTER,
+	//     'typeBordure' => Border::BORDER_THIN
+	// ];
 
 	private const STYLE_ROUGE = [
 		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
 			'startColor' => ['argb' => 'FF0000'], // Vert
 		],
-    ];
+	];
 
 	public function __construct($nomFichier, $cheminDossier)
 	{
@@ -97,7 +97,7 @@ class ExcelExporter
 		foreach ($donneesEtudiants as $index => $etudiant) {
 			$colonne     = 'A';
 			$tabAttribut = array_values($etudiant ->getAttributExcel());
-			for ($i = 0; $i < count($tabAttribut) - 3; $i++) 
+			for ($i = 0; $i < count($tabAttribut) ; $i++) 
 			{
 				echo "<br> colonne : ".$colonne."<br>";
 				if(is_array( $tabAttribut[$i] )) break;
@@ -110,13 +110,14 @@ class ExcelExporter
 
 	public function creerColonneEtudiant($data,$colonne)
 	{
+		var_dump($data);
 		$sheet = $this->spreadsheet->getActiveSheet(); 			
-		for ($i = 0; $i<count($data) - 3; $i++) 
+		for ($i = 0; $i<count($data); $i++) 
 		{
 			if(is_array( $data[$i] )) break;
 
 			$sheet->getColumnDimension(chr(ord($colonne) + $i))->setWidth(strlen($data[$i]) + 15);
-			$sheet->setCellValue(chr(ord($colonne) + $i)."8", $data[$i]); 
+			$sheet->setCellValue(chr(ord($colonne) + $i)."8",$data[$i]); 
 			$sheet->getStyle    (chr(ord($colonne) + $i)."8"           )->applyFromArray(ExcelExporter::STYLE_TITRE);
 		}
 	}
@@ -136,12 +137,18 @@ class ExcelExporter
 			foreach ($etudiant->getTabCursus() as $but => $tabCompetence) 
 			{
 				$this->creerEncadreCompetence($but, $colonneBUT, $tabCompetence);
-				// foreach( $tabCompetence as $cursus)
-				// {
+				foreach( $tabCompetence as $cursus)
+				{
+					$feuille->setCellValue($colonne.$ligne, $cursus->getAdmission());
 					
-				// }
+					if($this->estCool($cursus->getAdmission())) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT);
+
+
+					$colonne++;
+				}
 				$colonneBUT = chr(ord($colonneBUT) + count(array_keys($tabCompetence)));
 			}
+			$ligne++;
 		}
 	}
 
@@ -159,6 +166,7 @@ class ExcelExporter
 		foreach( $tabCompetence as $libelle => $admission)
 		{
 			$feuille->setCellValue($colonne.$ligneCompetence, $libelle);
+			$feuille->getCell     ($colonne.$ligneCompetence)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 			$colonne++;
 		}
 
