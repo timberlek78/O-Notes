@@ -4,15 +4,15 @@ class CompetenceMatiere
 	//clé primaire
 	private string $idCompetence;
 	private string $annee;
-	private string $idMatiere;
+	private string $idmatiere;
 	private int    $coeff;
 
-	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="", int $coeff)
+	public function __construct( string $idCompetence="", string $annee ="",string $idmatiere="", int $coeff=-1)
 	{
 		$this->idCompetence = $idCompetence;
 		$this->annee        = $annee;
-		$this->idMatiere   = $idMatiere;
-		$this->coeff       = $coeff;
+		$this->idmatiere    = $idmatiere;
+		$this->coeff        = $coeff;
 	}
 
 	public function getAttributs() : array
@@ -27,7 +27,7 @@ class CompetenceMatiere
 
 	public function getidMatiere(): string
 	{
-		return $this->idMatiere;
+		return $this->idmatiere;
 	}
 
 	public function getCoeff(): int
@@ -43,7 +43,7 @@ class CompetenceMatiere
 
 	private function setNumMatiere( string $idMatiere )
 	{
-		$this->idMatiere = $idMatiere;
+		$this->idmatiere = $idmatiere;
 	}
 
 	private function setCoeff( int $coeff )

@@ -1,18 +1,18 @@
 <?php
 
 class FPE {
-	private $idFPE;
-	private $AvisMaster;
-	private $AvisEcoleInge;
+	private $idfpe;
+	private $avismaster;
+	private $avisecoleinge;
 	private $commentaire;
-	private $codeNIP;
+	private $codenip;
 
-	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
-		$this->idFPE = $idFPE;
-		$this->AvisMaster = $AvisMaster;
-		$this->AvisEcoleInge = $AvisEcoleInge;
+	public function __construct($idfpe=-1, $avismaster="", $avisecoleinge="", $commentaire="", $codenip=-1) {
+		$this->idfpe = $idfpe;
+		$this->avismaster = $avismaster;
+		$this->avisecoleinge = $avisecoleinge;
 		$this->commentaire = $commentaire;
-		$this->codeNIP = $codeNIP;
+		$this->codenip = $codenip;
 	}
 
 
@@ -22,27 +22,27 @@ class FPE {
 	}
 
 	public function getIdFPE() {
-		return $this->idFPE;
+		return $this->idfpe;
 	}
 
-	public function setIdFPE($idFPE) {
-		$this->idFPE = $idFPE;
+	public function setIdFPE($idfpe) {
+		$this->idfpe = $idfpe;
 	}
 
 	public function getAvisMaster() {
-		return $this->AvisMaster;
+		return $this->avismaster;
 	}
 
-	public function setAvisMaster($AvisMaster) {
-		$this->AvisMaster = $AvisMaster;
+	public function setAvisMaster($avismaster) {
+		$this->avismaster = $avismaster;
 	}
 
 	public function getAvisEcoleInge() {
-		return $this->AvisEcoleInge;
+		return $this->avisecoleinge;
 	}
 
-	public function setAvisEcoleInge($AvisEcoleInge) {
-		$this->AvisEcoleInge = $AvisEcoleInge;
+	public function setAvisEcoleInge($avisecoleinge) {
+		$this->avisecoleinge = $avisecoleinge;
 	}
 
 	public function getCommentaire() {
@@ -54,11 +54,11 @@ class FPE {
 	}
 
 	public function getCodeNIP() {
-		return $this->codeNIP;
+		return $this->codenip;
 	}
 
-	public function setCodeNIP($codeNIP) {
-		$this->codeNIP = $codeNIP;
+	public function setCodeNIP($codenip) {
+		$this->codenip = $codenip;
 	}
 }
 

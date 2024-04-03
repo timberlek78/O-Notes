@@ -8,7 +8,7 @@ class Cursus
 	private string  $annee;
 	private ?string $admission;
 
-	public function __construct( int $codenip=-1, int $numsemestre=-1, string $idcompetence="", string $annee, string $admission="" )
+	public function __construct( int $codenip=-1, int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
 	{
 		$this->codenip      = $codenip;
 		$this->numsemestre  = $numsemestre;
