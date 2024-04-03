@@ -22,11 +22,6 @@ function fetchDonneeEtudiant(numSemestre)
         .catch (erreur => console.error(erreur))
 }
 
-function genererEntete ( genererEntete )
-{
-
-}
-
 function ajouterEtudiantTableau ( etudiant )
 {
 	/*+-----------------------------------+*/
@@ -70,14 +65,14 @@ function ajouterEtudiantTableau ( etudiant )
 		} );
 
 		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
-		
+		 
 		moysCompetence.push ( moyenneEnCours );
 
 		htmlResume += `<td>${moyenneEnCours}</td>`;
 	}
 
-	const somme = moysCompetence.reduce((a, b) => a + parseFloat(b), 0);
-	const moyenneSemestre = (somme / moysCompetence.length).toFixed(2);
+	const somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
+	const moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
 
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>X/X</td>`;
 	
@@ -97,4 +92,9 @@ function calculerMoyenneCompetence ( donnee )
 	} );
 
 	return (totalNote / totalCoeff).toFixed(2);
+}
+
+function genererEntete ( genererEntete )
+{
+
 }
