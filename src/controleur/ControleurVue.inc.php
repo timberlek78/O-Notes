@@ -126,7 +126,7 @@
 				
 			foreach ( $lstEtudiant as $etudiant )
 			{
-				$codenip = $etudiant->getNIP ( );
+				$codenip = $etudiant->getCodeNIP ( );
 
 				$etudiantDetails = array
 				(
@@ -147,8 +147,15 @@
 		public function getJsonAnnee() : string
 		{
 			$lstAnnee = $this->DB->getAnneesRenseignees ( );
+
+			$tabAnnee = array();
 			
-			return json_encode ( $lstAnnee );
+			foreach ($lstAnnee as $annee)
+			{
+				$tabAnnee [ ] = $annee->getAnnee();
+			}
+			
+			return json_encode ( $tabAnnee );
 		}
 	}
 
@@ -164,10 +171,10 @@
 		$annee = $_GET['annee'];
 		echo $controleurVue->getJsonExporter($annee);
 	}
-	// else if (isset($_GET['anneesRenseignees']) && !empty ( $_GET [ 'anneesRenseignees']))
-	// {
-	// 	if ( $ )
-	// }
+	else if (isset($_GET['anneesRenseignees']) && !empty ( $_GET [ 'anneesRenseignees']))
+	{
+		echo $controleurVue->getJsonAnnee ( );
+	}
 	else
 	{
 		echo json_encode(['erreur' => 'ID de semestre ou annee manquant']);

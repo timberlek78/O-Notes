@@ -1,12 +1,33 @@
-choixAnnee = document.getElementById('choix-annee');
+/* Lecture des années renseignées */
+fetch ('../../controleur/ControleurVue.inc.php?anneesRenseignees=true')
+	.then ( reponse => reponse.json ( ) )
+	.then ( donnees => 
+		{
+			donnees.forEach ( function ( donnee )
+			{
+				creerOption ( donnee );
+			} );
+		})
+	.catch ( erreur => console.error ( erreur ) )
+
+/* Placement des années dans la sélection */
+const choixAnnee = document.getElementById('choix-annee');
+function creerOption ( annee )
+{
+	console.log(annee);
+	option = document.createElement('option');
+	option.value = annee;
+	option.innerText = annee;
+
+	choixAnnee.appendChild ( option );
+}
+
 choixAnnee.addEventListener('change', function()
 {
 	fetchAnneeData(choixAnnee.value)
 	reinitialiserPage();
 })
 
-
-fetchAnneeData(1);
 
 /* FETCH DES DONNEES */
 function fetchAnneeData( annee )

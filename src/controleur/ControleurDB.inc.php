@@ -153,7 +153,7 @@
 
 		public function getAnneesRenseignees()
 		{
-			$requete = 'SELECT DISTINCT annee FROM ' . DB::$schema . '.Competence';
+			$requete = 'SELECT DISTINCT annee FROM ' . DB::$schema . '.Competence ORDER BY annee ASC';
 			
 			return $this->execQuery($requete, null, 'Competence');
 		}
