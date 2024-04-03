@@ -66,3 +66,11 @@
 .cellule-cliquable-nom {
 	cursor: pointer;
 }
+
+.ligneAutre {
+	filter: blur(2px);
+}
+
+.ligneValeur {
+	box-shadow: var(--ombre-value);
+}

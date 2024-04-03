@@ -44,10 +44,12 @@ window.addEventListener ( 'load'  , adaptationHauteur );
 /*                                          */
 /*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
 /*                                          */
-const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom' );
-const popupEtudiant            = document.querySelector    ( '.popup-etudiant'        );
-const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd' );
-const boutonFermer             = document.querySelector    ( '.fermeture'             );
+const lstCellulesCliquablesNom = document.querySelectorAll ( '.cellule-cliquable-nom'     );
+const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
+const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
+const popupEtudiant            = document.querySelector    ( '.popup-etudiant'            );
+const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd'     );
+const boutonFermer             = document.querySelector    ( '.fermeture'                 );
 
 lstCellulesCliquablesNom.forEach( function( cellule )
 {
@@ -58,6 +60,25 @@ boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
 
 function ouverturePopupEtudiant ( )
 {
+	const ligne  = event.target.parentNode;
+	const indice = Array.from ( ligne.parentNode.children ).indexOf ( ligne );
+
+	// Ajoute la surbrillance sur la ligne
+	for ( let i = 1; i < ligneCompetence.length; i++ )
+	{
+		if ( i % ligneNote.length === ( indice + 1 ) )
+		{
+			ligneNote      [i%ligneNote.length].classList.add ( 'ligneValeur' );
+			ligneCompetence[i                 ].classList.add ( 'ligneValeur' );
+			
+		}
+		else if ( i % ligneNote.length !== 0 )
+		{
+			ligneCompetence[i                 ].classList.add ( 'ligneAutre' );
+			ligneNote      [i%ligneNote.length].classList.add ( 'ligneAutre' );
+		}
+	}
+
 	popupEtudiant.classList.add ( 'ouvert' );
 	tabEtudiant  .classList.add ( 'cache'  );
 
@@ -78,6 +99,15 @@ function fermeturePopupEtudiant ( )
 {
 	popupEtudiant.classList.remove ( 'ouvert' );
 	tabEtudiant  .classList.remove ( 'cache'  );
+
+	// Retire la surbrillance sur la ligne
+	for ( let i = 1; i < ligneCompetence.length; i++ )
+	{
+		ligneCompetence[i                 ].classList.remove ( 'ligneAutre'  );
+		ligneCompetence[i                 ].classList.remove ( 'ligneValeur' );
+		ligneNote      [i%ligneNote.length].classList.remove ( 'ligneAutre'  );
+		ligneNote      [i%ligneNote.length].classList.remove ( 'ligneValeur' );
+	}
 }
 
 /*                                                  */
