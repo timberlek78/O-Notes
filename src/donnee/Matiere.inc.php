@@ -39,6 +39,11 @@ class Matiere {
 	{
 		return "Matiere : idmatiere = ".$this->idmatiere.", alternant = ".$this->alternant;
 	}
+
+	public function equals( Matiere $matiere ) : bool
+	{
+		return $this->idmatiere == $matiere->getIdMatiere( );
+	}
 }
 
 ?>

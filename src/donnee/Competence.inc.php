@@ -42,5 +42,10 @@ class Competence
 	{
 		return "Competence : idcompetence = ".$this->idcompetence.", annee = ".$this->annee;
 	}
+
+	public function equals( Competence $competence ) : bool
+	{
+		return $this->idcompetence == $competence->getIdCompetence( );
+	}
 }
 ?>
