@@ -11,8 +11,8 @@ class CompetenceMatiere
 	{
 		$this->idcompetence = $idCompetence;
 		$this->annee        = $annee;
-		$this->idmatiere   = $idMatiere;
-		$this->coeff = $coeff;
+		$this->idmatiere    = $idMatiere;
+		$this->coeff        = $coeff;
 	}
 
 	public function getAttributs() : array

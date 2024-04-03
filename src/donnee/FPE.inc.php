@@ -7,12 +7,12 @@ class FPE {
 	private $commentaire;
 	private $codenip;
 
-	public function __construct($idFPE, $AvisMaster, $AvisEcoleInge, $commentaire, $codeNIP) {
-		$this->idfpe = $idFPE;
-		$this->avismaster = $AvisMaster;
-		$this->avisecoleinge = $AvisEcoleInge;
+	public function __construct($idfpe=-1, $avismaster="", $avisecoleinge="", $commentaire="", $codenip=-1) {
+		$this->idfpe = $idfpe;
+		$this->avismaster = $avismaster;
+		$this->avisecoleinge = $avisecoleinge;
 		$this->commentaire = $commentaire;
-		$this->codenip = $codeNIP;
+		$this->codenip = $codenip;
 	}
 
 
@@ -25,8 +25,8 @@ class FPE {
 		return $this->idfpe;
 	}
 
-	public function setIdFPE($idFPE) {
-		$this->idfpe = $idFPE;
+	public function setIdFPE($idfpe) {
+		$this->idfpe = $idfpe;
 	}
 
 	public function getAvisMaster() {
