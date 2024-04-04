@@ -12,6 +12,8 @@ class Etudiant
 	private int $idillustration;
 	private int $idEtude;
 
+	private $cursus;
+
 	private $tabMoyenne;
 
 	private $tabBUT;
@@ -76,10 +78,38 @@ class Etudiant
 		$tab['Nom']      = $this->nom;
 		$tab['Prenom']   = $this->prenom;
 		$tab['Parcours'] = $this->parcours;
+
+
+		echo"Dans Etudiant";
+		var_dump($this->cursus);
 		$tab['Cursus']   = $this->cursus;
 
 		return $tab;
 	}
+
+	public function definirTableCursus()
+{
+    $tabCursus = array();
+    $tabAnnee  = array();
+
+    $tabBUT = $this->getTabBUT();
+
+    foreach ($tabBUT as $but) {
+        $semestreImpair = $but->getSemestreImpair();
+        $semestrePair   = $but->getSemestrePair  ();
+
+        if (!empty($semestreImpair) && !in_array( $but->getAnnee(), $tabAnnee)) {
+            $tabCursus[] = "S" . $but->getNumSemestreImpair();
+            $tabAnnee[] = $but->getAnnee();
+        }
+
+        if (!empty($semestrePair) && !in_array( $but->getAnnee(), $tabAnnee)) {
+            $tabCursus[] = "S" . $but->getNumSemestrePair();
+            $tabAnnee[] = $but->getAnnee();
+        }
+    }
+    return $tabCursus;
+}
 
 	public function setTabBUT(array $tabBUT)
 	{
@@ -109,6 +139,11 @@ class Etudiant
 	public function setPromotion( string $promotion ): void
 	{
 		$this->promotion = $promotion;
+	}
+
+	public function setTabCursus( array $tabCursus )
+	{
+		$this->cursus = $tabCursus;
 	}
 
 	public function setidillustration( int $idillustration ): void

@@ -1,4 +1,8 @@
 <?php
+
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 	
 	include '../controleur/ControleurDB.inc.php';
 	include '../donnee/Competence.inc.php';
@@ -54,6 +58,7 @@ class ONote
 		{
 			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
 			$etudiant->setTabBUT    ($this->determinerTabCompetence            ($etudiant->getId()));
+			$etudiant->setTabCursus( $etudiant->definirTableCursus() );
 			$etudiant->calculeMoyenneG();
 			$etudiant->determinerUe   ();
 		}
@@ -75,7 +80,7 @@ class ONote
 			if($cursus->getCodeNIP() == $id)
 			{
 				$somme      = 0;
-				$competence = $this->selectByIdEtAnnee( $tab[$i]->getIdCompetence(), $tab[$i]->getAnnee(), $this->getEnsCompetence() );
+				$competence = $this->selectByIdEtAnnee( $cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
 				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getId(), $id);

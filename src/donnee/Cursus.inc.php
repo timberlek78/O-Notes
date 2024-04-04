@@ -12,7 +12,7 @@ class Cursus
 	{
 		$this->codenip      = $codeNIP;
 		$this->numsemestre  = $numsemestre;
-		$this->numcompt     = $numcompt;
+		$this->idcompetence = $numcompt;
 		$this->admission    = $admission;
 	}
 

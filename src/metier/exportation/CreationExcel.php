@@ -78,23 +78,37 @@ class ExcelExporter
 
 
 	public function creerFeuilleEtudiant($donneesEtudiants)
-	{
-		$feuille = $this->spreadsheet->getActiveSheet();
-		$ligne = 9;
-		$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
-		foreach ($donneesEtudiants as $index => $etudiant) {
-			$colonne     = 'A';
-			$tabAttribut = array_values($etudiant ->getAttributExcel());
-			for ($i = 0; $i < count($tabAttribut) ; $i++) 
+{
+    $feuille = $this->spreadsheet->getActiveSheet();
+    $ligne = 9;
+    $this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
+
+    foreach ($donneesEtudiants as $index => $etudiant) {
+        $colonne = 'A';
+        $tabAttribut = array_values($etudiant->getAttributExcel());
+
+        foreach ($tabAttribut as $attribut) 
+		{
+			echo "<br>";
+			var_dump($attribut);
+            if (is_array($attribut)) 
 			{
-				//echo "<br> colonne : ".$colonne."<br>";
-				if(is_array( $tabAttribut[$i] )) break;
-				$feuille->setCellValue($colonne . $ligne, $tabAttribut[$i]);
-				$colonne++;
-			}
-			$ligne++;
-		}
-	}
+				var_dump($attribut);
+                // Si l'attribut est un tableau associatif, le concaténer en une seule chaîne
+                $valeur = implode(', ', $attribut); // Changer le séparateur si nécessaire
+
+				var_dump($valeur);
+            } else {
+                $valeur = $attribut;
+            }
+
+            $feuille->setCellValue($colonne . $ligne, $valeur);
+            $colonne++;
+        }
+        $ligne++;
+    }
+}
+
 
 	public function creerColonneEtudiant($data,$colonne)
 	{
@@ -119,8 +133,11 @@ class ExcelExporter
 
 	foreach($etudiant->getTabBUT() as $but)
 	{
+		echo "JESUS EST LA";
 		if($this->estSemestreLimite($this->limiteSemestre, $but))
 		{
+			echo "JESUS EST LA";
+
 			if($this->limiteSemestre % 2 == 0)
 			{
 				$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->getSemestrePair());
@@ -164,12 +181,13 @@ class ExcelExporter
 			{
 				if($but->estComplet())
 				{
-					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getsemestrePair());
+					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getSemestrePair());
 				}
 				else
 				{
-					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getsemestreImpair());
+					$colonne = $this->mettreValeurBut($colonne,$ligne, $but->getSemestreImpair());
 				}
+				
 				$this->colonneFINI = $colonne;
 			}
 			$ligne++;
@@ -179,6 +197,7 @@ class ExcelExporter
 	public function mettreValeurBut($colonne,$ligne, $tab)
 	{
 		$feuille = $this->spreadsheet->getActiveSheet();
+
 		foreach( $tab as $competence)
 		{
 			$admis = $competence->getAdmission();
@@ -187,9 +206,8 @@ class ExcelExporter
 			if($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
 			else                       $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
 
-			$colonne++;
+			$colonne = chr(ord($colonne) + 1);
 		}
-
 		return $colonne;
 	}
 
@@ -238,9 +256,7 @@ class ExcelExporter
 	{
 		$tabCompetence[] = "UE";
 		$tabCompetence[] = "Moyenne";
-		$tabCompetence = array_merge($tabCompetence,array_keys($donneeEtudiant[0]->getTabMoyenne()));
-
-		var_dump($tabCompetence);
+		$tabCompetence   = array_merge($tabCompetence,array_keys($donneeEtudiant[0]->getTabMoyenne()));
 
 		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true);
 	}
@@ -275,10 +291,9 @@ class ExcelExporter
 
 	public function appliquerStyleUe($Ue)
 	{
-		var_dump(intval($Ue[0]));
-		if      ( intval($Ue[0]) == 6 ) return ExcelExporter::STYLE_VERT;
-		else if ( intval($Ue[0]) == 0 ) return ExcelExporter::STYLE_ROUGE;
-		else if ( intval($Ue[0]) <=  4 ) return ExcelExporter::STYLE_ORANGE;
+		if      ( intval($Ue[0])  == 6 || intval($Ue[0]) == 5 ) return ExcelExporter::STYLE_VERT;
+		else if ( intval($Ue[0])  == 0 ) return ExcelExporter::STYLE_ROUGE;
+		else if ( intval($Ue[0])  <=  4 ) return ExcelExporter::STYLE_ORANGE;
 	}
 
 	public function enregistrer()
@@ -308,14 +323,14 @@ $generateurDonnees  = new GenerateurDonnees();
 $donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant  ();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
-$exportateur = new ExcelExporter('exemple.xlsx', '../../../data', 3);
+$exportateur = new ExcelExporter('exemple.xlsx', '../../../data', 1);
 $exportateur->creerFeuilleEtudiant    ( $donneesEtudiants );
 $exportateur->creerColonneBUT         ( $donneesEtudiants );
 $exportateur->remplierColonneBUT      ( $donneesEtudiants );
 $exportateur->creerColonneMoyenne     ( $donneesEtudiants );
 $exportateur->remplirColonneMoyenne   ( $donneesEtudiants );
 
-var_dump($exportateur->getColonneFINI() );
+//var_dump($exportateur->getColonneFINI() );
 
 $cheminFichier = $exportateur->enregistrer();
 
