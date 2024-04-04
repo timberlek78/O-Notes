@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require '../../../lib/vendor/autoload.php';
 
 include '../../controleur/ControleurDB.inc.php';
@@ -42,24 +45,51 @@ class ExcelExporter
 			'size'=>11)
 	];
 
+	private const STYLE_BORDURE = [
+		'borders' => [
+			'allBorders' => [
+				'borderStyle' => Border::BORDER_THIN, // Style de bordure mince
+				'color' => ['argb' => 'FF000000'], 
+			],
+		],
+	];
+
+	private const STYLE_BORDURE_GRAS = [
+		'borders' => [
+			'allBorders' => [
+				'borderStyle' => Border::BORDER_THICK, // Style de bordure ENORME ou MEDIUM
+				'color' => ['argb' => 'FF000000'], 
+			],
+		],
+	];
+
 	private const STYLE_VERT = [
 		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
-			'startColor' => ['argb' => 'FF00FF00'], // Vert
+			'startColor' => ['argb' => 'FFbbdfbc'], // Vert
+		],
+		'font' => [
+			'color' => ['argb' => 'FF062b16'], 
 		],
 	];
 
 	private const STYLE_ROUGE = [
 		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
-			'startColor' => ['argb' => 'FF0000'], // Rouge
+			'startColor' => ['argb' => 'f1bcbb'], // Rouge
+		],
+		'font' => [
+			'color' => ['argb' => '7b0000'], 
 		],
 	];
 
 	private const STYLE_ORANGE = [
 		'fill' => [
 			'fillType' => Fill::FILL_SOLID,
-			'startColor' => ['argb' => 'ff8000'], // Orange
+			'startColor' => ['argb' => 'ffd5b9'], // Orange
+		],
+		'font' => [
+			'color' => ['argb' => 'a34100'], 
 		],
 	];
 
@@ -184,8 +214,8 @@ class ExcelExporter
 			$admis = $competence->getAdmission();
 		
 			$feuille->setCellValue($colonne.$ligne, $admis);
-			if($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
-			else                       $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
+			if($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_VERT , ExcelExporter::STYLE_BORDURE ));
+			else                       $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_ROUGE, ExcelExporter::STYLE_BORDURE ));
 
 			$colonne++;
 		}
@@ -193,16 +223,18 @@ class ExcelExporter
 		return $colonne;
 	}
 
-	public function creerEncadreCompetence(string $but, string $colonne,$tabCompetence,$ue)
+	public function creerEncadreCompetence(string $but, string $colonne,$tabCompetence,$ue, ?int $nbEtudiant = 0)
 	{
 		$ligne           = 7;
 		$ligneCompetence = 8;
 		$colonneArrive   = chr(ord($colonne) + count(array_keys($tabCompetence))- 1);
+		$ligneArrive     = $ligne + $nbEtudiant;
 		$espace          = $colonne.$ligne.':'.$colonneArrive.$ligne;
+		$encadrer        = $colonne.$ligne.':'.$colonneArrive.$ligne + $nbEtudiant;
 
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$feuille->setCellValue($colonne.$ligne, strtoupper($but));
-		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
+		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_TITRE , ExcelExporter::STYLE_BORDURE_GRAS ));
 
 		$index = 1;
 
@@ -225,6 +257,7 @@ class ExcelExporter
 		}
 
 		$feuille->mergeCells($espace);
+		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
 	}
 
 	public function estCool($admis)
@@ -242,7 +275,7 @@ class ExcelExporter
 
 		var_dump($tabCompetence);
 
-		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true);
+		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true, count($donneeEtudiant)-1);
 	}
 
 	public function remplirColonneMoyenne($donneeEtudiant)
@@ -258,14 +291,15 @@ class ExcelExporter
 
 
 			$feuille->setCellValue(chr((ord($this->getColonneFINI()) + 1  )).$ligne, $etudiant->getMoyenneG());
+			$feuille->getCell($this->getColonneFINI().$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_BORDURE);
 
 			$colonne = chr(ord($this->getColonneFINI()) + 2) ;
 			foreach($etudiant->getTabMoyenne() as $moyenne)
 			{
 				$feuille->setCellValue($colonne.$ligne, $moyenne);
 				
-				if($moyenne > 10) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_VERT );
-				else                                        $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_ROUGE);
+				if($moyenne > 10) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_VERT , ExcelExporter::STYLE_BORDURE ));
+				else              $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_ROUGE, ExcelExporter::STYLE_BORDURE ));
 
 				$colonne++;
 			}
@@ -275,10 +309,10 @@ class ExcelExporter
 
 	public function appliquerStyleUe($Ue)
 	{
-		var_dump(intval($Ue[0]));
-		if      ( intval($Ue[0]) == 6 ) return ExcelExporter::STYLE_VERT;
-		else if ( intval($Ue[0]) == 0 ) return ExcelExporter::STYLE_ROUGE;
-		else if ( intval($Ue[0]) <=  4 ) return ExcelExporter::STYLE_ORANGE;
+		var_dump( intval( $Ue[0] ) );
+		if      ( intval($Ue[0]) == 6 || intval($Ue[0]) == 5 ) return array_merge( ExcelExporter::STYLE_VERT,   ExcelExporter::STYLE_BORDURE );
+		else if ( intval($Ue[0]) == 0                        ) return array_merge( ExcelExporter::STYLE_ROUGE,  ExcelExporter::STYLE_BORDURE );
+		else if ( intval($Ue[0]) <=  4                       ) return array_merge( ExcelExporter::STYLE_ORANGE, ExcelExporter::STYLE_BORDURE );
 	}
 
 	public function enregistrer()

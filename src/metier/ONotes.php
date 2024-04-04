@@ -4,7 +4,7 @@
 	include '../donnee/Competence.inc.php';
 	include '../donnee/CompetenceMatiere.inc.php';
 	include '../donnee/Cursus.inc.php';
-	include 'C:\xampp\htdocs\O-Notes\src\donnee\BUT.inc.php';
+	include '/home/etudiant/bt220243/public_html/bebou/O-Notes/src/donnee/BUT.inc.php';
 
 
 
@@ -75,7 +75,7 @@ class ONote
 			if($cursus->getCodeNIP() == $id)
 			{
 				$somme      = 0;
-				$competence = $this->selectByIdEtAnnee( $tab[$i]->getIdCompetence(), $tab[$i]->getAnnee(), $this->getEnsCompetence() );
+				$competence = $this->selectByIdEtAnnee( $cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
 				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getId(), $id);
