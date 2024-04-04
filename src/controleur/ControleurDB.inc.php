@@ -247,8 +247,6 @@ class DB
 		$colonnes .=")";
 		$parametres .= ")";
 
-		echo $requete . $colonnes . $parametres . "<br>";
-
 		return $requete . $colonnes . $parametres;
 	}
 
@@ -259,7 +257,6 @@ class DB
 	public function update( $nomTable, $objet )
 	{
 		$requete = $this->constructionRequeteUpdate ( $nomTable, $objet );
-		//echo $requete;
 		$tparam  = array ( );
 
 		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
@@ -294,8 +291,6 @@ class DB
 			if ( $cptCles < count( $eqClesPrimaires ) ) $conditions .= ' AND ';
 		}
 	
-		echo $requete . $parametres . $conditions . "<br>";
-
 		return $requete . $parametres . $conditions;
 	}
 }
