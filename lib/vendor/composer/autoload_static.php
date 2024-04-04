@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f
+class ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -175,6 +175,7 @@ class ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
@@ -814,9 +815,9 @@ class ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2d6dbf95214791dfb71b17f9c6aa8e0f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe::$classMap;
 
         }, null, ClassLoader::class);
     }
