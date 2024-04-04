@@ -3,10 +3,7 @@
 /*       Importation des objets PHP       */
 /******************************************/
 
-include ( "ConfigurationDB.inc.php" );
-include ( "../donnee/EtudiantCursusFetch.inc.php" );
-include ( "../donnee/EtudiantEtudiantSemestre.inc.php" );
-include ( "../donnee/CursusFetch.inc.php" );
+require_once __DIR__.'/ConfigurationDB.inc.php';
 require_once __DIR__.'/../donnee/IncludeAll.php';
 
 class DB

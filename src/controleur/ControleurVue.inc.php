@@ -3,9 +3,10 @@
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
 
-	require "ControleurDB.inc.php";
+	require_once "ControleurDB.inc.php";
 
-	include ('../metier/importation/Import.inc.php');
+	include_once 'ControleurImportation.php';
+	include_once '../metier/importation/Import.inc.php';
 	
 	header('Content-Type: application/json');
 
@@ -181,6 +182,8 @@
 
 		public function import()
 		{
+			echo "test";
+
 			$tabImports = array();
 			foreach ($_POST['annee'] as $cle => $valeur)
 			{
@@ -205,9 +208,10 @@
 				$tabImports[ $cpt ]->setFichierMoyenneTmpName( $_FILES [ 'fichierMoyenne' ] [ 'tmp_name'] [ $cpt ] );
 			}
 
-			print_r($tabImports);
+			//print_r($tabImports);
 
 			//TODO: faire appel à la méthode qui importe dans la bado
+			importerAvecTableau ( $tabImports );
 		}
 	}
 
@@ -240,10 +244,10 @@
 	{
 		echo $controleurVue->getJsonAnnee ( );
 	}
-	else
+	/*else
 	{
 		echo json_encode(['erreur' => 'ID de semestre ou annee manquant']);
-	}
+	}*/
 
 	// if (isset($_POST['fichiersImportes']))
 	// {

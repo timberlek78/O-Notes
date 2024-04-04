@@ -10,31 +10,43 @@
 	include_once __DIR__.'/../metier/DonneesONote.inc.php';
 	include_once __DIR__.'/../metier/conversion/TableauToBado.inc.php';
 
-	function genererDonnees( $dataMoyenne, $dataJury ) : DonneesONote
+	function importerAvecTableau ( array $tabImports )
 	{
-		$donnes = new DonneesONote( );
+		foreach ( $tabImports as $import )
+		{
+			$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierMoyenne() );
+			$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierJury() );
+			if( empty( $dataMoyenne ) || empty( $dataJury ) )
+			{
+				echo "Impossible d'ouvrir le fichier";
+				exit( );
+			}
 
-		$existe = 
-		$enAlternance = ( isset( $_POST['alternance'] ) && $_POST['alternance'] == '1' );
+			$donnees = genererDonnees( $dataMoyenne, $dataJury, $import->getAnnee(), $import->getSemestre(), $import->estAlternance() );
 
-		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
-		$analyse->ajouterCompetencesDansDonnees( $donnes );
-		$analyse->ajouterEtudiantsDansDonnees( $donnes );
+			//echo $donnees;
 
-		return $donnes;
+			echo "debut du traitement";
+			$conversion = new TableauToBado( $donnees );
+			echo "fin du traitement, début de l'insertion";
+			$conversion->insertAll( );
+			echo "fin de l'insertion";
+		}
 	}
 
-	function main ( )
+	function importerSansTableau ( )
 	{
-		$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'moyennes' );
-		$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( 'jury' );
+		$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'moyenne' ] );
+		$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'jury' ] );
 		if( empty( $dataMoyenne ) || empty( $dataJury ) )
 		{
 			echo "Impossible d'ouvrir le fichier";
 			exit( );
 		}
 
-		$donnees = genererDonnees( $dataMoyenne, $dataJury );
+		$enAlternance = ( isset( $_POST['alternance'] ) && $_POST['alternance'] == '1' );
+
+		$donnees = genererDonnees( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
 
 		//echo $donnees;
 
@@ -42,5 +54,16 @@
 		$conversion->insertAll( );
 	}
 
-	main( );
+	function genererDonnees( $dataMoyenne, $dataJury, string $promotion, int $semestre, bool $enAlternance ) : DonneesONote
+	{
+		$donnes = new DonneesONote( );
+
+		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $promotion, $semestre, $enAlternance );
+		$analyse->ajouterCompetencesDansDonnees( $donnes );
+		$analyse->ajouterEtudiantsDansDonnees( $donnes );
+
+		return $donnes;
+	}
+
+	//importerSansTableau( );
 ?>

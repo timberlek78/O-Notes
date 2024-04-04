@@ -47,7 +47,7 @@ function ouvrirPopupCompetence ( competence )
 	
 	majPopupCompetence ( ensDetailCompetence.get ( competence.textContent ) );
 
-	let lignesCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
+	let lignesCompetence = document.querySelectorAll ( '.tableau-competence-etd tr' );
 
 	surbrillance ( lignesCompetence );
 
