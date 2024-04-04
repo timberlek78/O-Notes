@@ -16,23 +16,23 @@ fetch ('../../controleur/ControleurVue.inc.php?anneesRenseignees=true')
 	.catch ( erreur => console.error ( erreur ) )
 
 /* Placement des années dans la sélection */
-const choixAnnee = document.getElementById('choix-annee');
+const choixAnnee = document.getElementById ( 'choix-annee' );
 function creerOption ( annee )
 {
-	console.log(annee);
-	option = document.createElement('option');
-	option.value = annee;
+	option = document.createElement ( 'option' );
+
+	option.value     = annee;
 	option.innerText = annee;
 
 	choixAnnee.appendChild ( option );
 }
 
 /* Evenement en fonction de l'année sélectionnée */
-choixAnnee.addEventListener('change', function()
+choixAnnee.addEventListener ( 'change', function ( )
 {
 	anneeSelectionnee = choixAnnee.value;
-	fetchDonneeEtudiant()
-})
+	fetchDonneeEtudiant ( );
+} );
 
 /*                                     */
 /*   BAR DE NAVIGATION DES SEMESTRES   */
@@ -50,9 +50,9 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 		} )
 		
 		bouton.classList.add ( 'btn-clique' );
-		semestreSelectionne = parseInt(bouton.innerText.substring(1,2));
+		semestreSelectionne = parseInt ( bouton.innerText.substring ( 1,2 ) );
 
-		fetchDonneeEtudiant()
+		fetchDonneeEtudiant ( );
 	} )
 } );
 
@@ -61,42 +61,46 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 
 function fetchDonneeEtudiant()
 {
-	
-	console.log('semestre : ' + semestreSelectionne + ' annee : ' + anneeSelectionnee)
-	if (!semestreSelectionne || !anneeSelectionnee)
+	if ( ! semestreSelectionne || ! anneeSelectionnee )
 	{
 		console.log('un argument nest pas défini')
 		return;
 	}
 
-	reinitialiserPage();
+	reinitialiserPage ( );
 	
 	fetch ( '../../controleur/ControleurVue.inc.php?numSemestre=' + semestreSelectionne + '&annee=' + anneeSelectionnee )
 		.then ( reponse => reponse.json ( ) )
 		.then ( donnees =>
 		{
-			try {
+			try
+			{
 					genererEntete(Object.keys(donnees[0].cursus))
 			}
-			catch (error) {
-				
+			catch ( error )
+			{
+				console.log ( error );
 			}
 			
-			donnees.forEach(function (etudiant) {
-				ajouterEtudiantTableau(etudiant);
-			});
+			donnees.forEach ( function ( etudiant )
+			{
+				ajouterEtudiantTableau ( etudiant );
+			} );
 
 		})
-		.catch (erreur => console.error(erreur))
+		.catch ( erreur => console.error ( erreur ) )
 }
 
-function reinitialiserPage()
+function reinitialiserPage ( )
 {
 	const tabNomPrenom              = document.querySelector ( '.tableau-nom-etd tbody' );
 	tabNomPrenom.innerHTML = "";
 
-	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' ); //FIXME: vire pas les en tete
+	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' );
 	tabResumeComptence.innerHTML = "";
+
+	const tabResumeComptenceEnTete   = document.querySelector ( '.tableau-note-etd thead' );
+	tabResumeComptenceEnTete.innerHTML = "";
 
 }
 
