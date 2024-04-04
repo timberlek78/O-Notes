@@ -65,14 +65,8 @@ function majPopupCompetence ( tabInformationPopup )
 	{
 		let ligneEtudiant = document.createElement ( 'tr' );
 
-		let notes = "";
-
 		for ( let j = 0; j < tabInformationPopup[i].length; j++ )
-		{
-			notes += tabInformationPopup[i][j];
-		}
-
-		ligneEtudiant.innerHTML = notes;
+			ligneEtudiant.innerHTML += tabInformationPopup[i][j];
 
 		popupCompetenceBody.appendChild ( ligneEtudiant );
 	}
