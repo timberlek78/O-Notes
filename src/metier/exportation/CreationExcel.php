@@ -160,11 +160,8 @@ class ExcelExporter
 
 		foreach($etudiant->getTabBUT() as $but)
 		{
-			echo "JESUS EST LA";
 			if ($this->estSemestreLimite($this->limiteSemestre, $but))
 			{
-				echo "JESUS EST LA";
-
 				if($this->limiteSemestre % 2 == 0)
 				{
 					$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->getSemestrePair());
