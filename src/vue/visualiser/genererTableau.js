@@ -75,7 +75,7 @@ function fetchDonneeEtudiant()
 		{
 			try
 			{
-					genererEntete(Object.keys(donnees[0].cursus))
+				genererEntete ( Object.keys ( donnees[0].cursus ) );
 			}
 			catch ( error )
 			{
@@ -93,15 +93,13 @@ function fetchDonneeEtudiant()
 
 function reinitialiserPage ( )
 {
-	const tabNomPrenom              = document.querySelector ( '.tableau-nom-etd tbody' );
-	tabNomPrenom.innerHTML = "";
-
-	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' );
-	tabResumeComptence.innerHTML = "";
-
-	const tabResumeComptenceEnTete   = document.querySelector ( '.tableau-note-etd thead' );
+	const tabNomPrenom             = document.querySelector ( '.tableau-nom-etd tbody'  );
+	const tabResumeComptenceEnTete = document.querySelector ( '.tableau-note-etd thead' );
+	const tabResumeComptence       = document.querySelector ( '.tableau-note-etd tbody' );
+	
+	tabNomPrenom            .innerHTML = "";
+	tabResumeComptence      .innerHTML = "";
 	tabResumeComptenceEnTete.innerHTML = "";
-
 }
 
 function ajouterEtudiantTableau ( etudiant )
@@ -185,13 +183,11 @@ function calculerMoyenneCompetence ( donnee )
 		totalCoeff += coeff;
 	} );
 
-	return (totalNote / totalCoeff).toFixed(2);
+	return ( totalNote / totalCoeff ).toFixed ( 2 );
 }
 
 function genererEntete ( tabEntete )
 {
-	//FIXME: problème quand y'a aucune donnée dans la base de donnée
-	
 	const tabResumeComptence2 = document.querySelector ( '.tableau-note-etd thead' );
 	var enteteTab             = document.createElement ( 'tr' );
 
