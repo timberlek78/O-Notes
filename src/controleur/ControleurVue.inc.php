@@ -24,9 +24,13 @@
 			// $lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
 			$tabDonnees = array();
 			
-			foreach ( $lstCursus as $cursusEtu )
+			foreach ( $lstCursus as $cursus )
 			{
-				$codenip = $cursusEtu->getCodeNIP ( );
+				$codenip = $cursus->getCodeNIP ( );
+
+				$compmatDetails    = array ( );
+				$matiereCompetence = array ( );
+
 				foreach ( $this->DB->selectAllWhere('Etudiant', 'codenip', $codenip) as $etudiant )
 				{
 		
@@ -69,38 +73,33 @@
 		
 					$cursusDetails = array ( );
 					// Informations de la table Cursus
-					foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
-					{
-						$compmatDetails    = array ( );
-						$matiereCompetence = array ( );
 
-						// Informations de la table CompetenceMatiere
-						foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
+					// Informations de la table CompetenceMatiere
+					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( ), 'AND', 'codenip', $codenip) as $compmat )
+					{
+	
+						$matDetails = array
+						(
+							'libelle' => $compmat->getidMatiere ( ),
+							'coef'    => $compmat->getCoeff     ( )
+						);
+	
+						// Informations de la table EstNote
+						//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
+						foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
 						{
-		
-							$matDetails = array
-							(
-								'libelle' => $compmat->getidMatiere ( ),
-								'coef'    => $compmat->getCoeff     ( )
-							);
-		
-							// Informations de la table EstNote
-							//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
-							foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
-							{
-								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
-							}
-		
-							$matiereCompetence [ ] = $matDetails;
+							$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
 						}
-						
-						$compmatDetails [ 'matieres' ]  = $matiereCompetence;
-						$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
-						$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
-		
-						// $cursus->getidCompetence ( )
-						$etudiantDetails [ 'cursus' ] = $cursusDetails;
+	
+						$matiereCompetence [ ] = $matDetails;
 					}
+					
+					$compmatDetails [ 'matieres' ]  = $matiereCompetence;
+					$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
+					$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
+	
+					// $cursus->getidCompetence ( )
+					$etudiantDetails [ 'cursus' ] = $cursusDetails;
 		
 					// Informations de la table FPE
 					foreach ( $this->DB->selectAllWhere ( 'FPE', 'codenip', $codenip ) as $fpe )
@@ -203,11 +202,19 @@
 
 	$controleurVue = new ControleurVue();
 	
+	echo 'test';
 	if (isset($_GET['numSemestre']) && !empty($_GET['numSemestre']) && isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
 		$numSem = $_GET['numSemestre'];
 		$annee = $_GET['annee'];
-		echo $controleurVue->getJsonVisualiser($numSem, $annee);
+
+		$tempsDebut = microtime(true);
+		$resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
+		$tempsFin = microtime(true);
+
+		$tempsExecution = $tempsFin - $tempsDebut;
+		echo "<h1>Temps : $tempsExecution s</h1>";
+		echo $resultat;
 	}
 	else if (isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
