@@ -196,6 +196,13 @@ class DB
 		return $this->execQuery ( $requete, $parametres, $nomTable);
 	}
 
+	public function getAnneesRenseignees()
+	{
+		$requete = 'SELECT DISTINCT annee FROM ' . DB::$schema . '.Competence ORDER BY annee ASC';
+
+		return $this->execQuery($requete, null, 'Competence');
+	}
+
 	/***********************************/
 	/*        Fonctions DELETE         */
 	/***********************************/
