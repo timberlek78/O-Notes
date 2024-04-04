@@ -8,7 +8,7 @@
 	include '../donnee/Competence.inc.php';
 	include '../donnee/CompetenceMatiere.inc.php';
 	include '../donnee/Cursus.inc.php';
-	include 'C:\xampp\htdocs\O-Notes\src\donnee\BUT.inc.php';
+	include '/home/etudiant/bt220243/public_html/bebou/O-Notes/src/donnee/BUT.inc.php';
 
 
 

@@ -11,12 +11,11 @@ class BUT
 
 	function __construct(int $num, ?array $semestreImpair = array(), ?array $semestrePair = array())
 	{
-		$this->num            = $num;
-		$this->semestreImpair = $semestreImpair;
-		$this->semestrePair   = $semestrePair;
-
+		$this->num          = $num;
+		$this->semestre     = $semestreImpair;
+		$this->semestrePair = $semestrePair;
 		$this->numPair      = 1;
-		$this->numImpair    = 1; 
+		$this->numImpair    = 1;
 	}
 
 	public function getNum                  (): int   { return $this->num;            }

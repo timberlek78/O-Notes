@@ -18,7 +18,7 @@
 	include_once '../donnee/Cursus.inc.php';
 	include_once '../donnee/CompetenceMatiere.inc.php';
 	include_once '../donnee/Competence.inc.php';
-	include_once 'C:\xampp\htdocs\O-Notes\src\donnee\EstNote.inc.php';
+	include_once '/home/etudiant/bt220243/public_html/bebou/O-Notes/src/donnee/EstNote.inc.php';
 
 
 	class DB
