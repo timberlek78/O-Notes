@@ -14,7 +14,9 @@
 	{
 		$donnes = new DonneesONote( );
 
-		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], true );
+		$enAlternance = ( $_POST['maCheckbox'] == '1' );
+
+		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
 		$analyse->ajouterCompetencesDansDonnees( $donnes );
 		$analyse->ajouterEtudiantsDansDonnees( $donnes );
 

@@ -32,7 +32,7 @@ class AnalyseDetailCompetencesMoyenne
 
 	public static function estCompetence( string $nomColonne, int $semestre ) : bool
 	{
-		$regexCompetence = "/^BIN" . $semestre . "\d$/"; //REMARQUE : dans php il faut préfixer par "/^" et suffixer par "$/"
+		$regexCompetence = "/^BIN" . $semestre . "\dA?$/"; //REMARQUE : dans php il faut préfixer par "/^" et suffixer par "$/"
 		return preg_match( $regexCompetence, $nomColonne );
 	}
 
@@ -56,9 +56,10 @@ class AnalyseDetailCompetencesMoyenne
 
 	public static function estRessource( string $nomColonne, string $nomCompetence, int $semestre ) : bool
 	{
-		//exemple : "Bonus BIN11" ou "BINR101" ou "BINS101"
-		$regexBonus = "/^Bonus " . $nomCompetence . "$/";
-		$regexRessource = "/^BIN" . "[RS]" . $semestre . "\d\d$/";
+		//exemple normal    : "Bonus BIN11" ou "BINR101" ou "BINS101"
+		//exemple alternant : "Bonus BIN11A" ou "BIN11A"
+		$regexBonus = "/^Bonus " . $nomCompetence . "A?$/";
+		$regexRessource = "/^BIN" . "[RS]" . $semestre . "\d\dA?$/";
 
 		$estBonus = preg_match( $regexBonus, $nomColonne );
 		$estRessource = preg_match( $regexRessource, $nomColonne );
