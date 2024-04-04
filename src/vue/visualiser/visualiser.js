@@ -97,7 +97,7 @@ function majPopupEtudiant ( etudiant )
 	cadreInfos[3].children[1].innerText = etudiant.typeBac;
 	cadreInfos[4].children[1].innerText = etudiant.specialite;
 	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang;
-	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbs;
+	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbsence;
 }
 
 function fermeturePopupEtudiant ( )

@@ -16,23 +16,23 @@ fetch ('../../controleur/ControleurVue.inc.php?anneesRenseignees=true')
 	.catch ( erreur => console.error ( erreur ) )
 
 /* Placement des années dans la sélection */
-const choixAnnee = document.getElementById('choix-annee');
+const choixAnnee = document.getElementById ( 'choix-annee' );
 function creerOption ( annee )
 {
-	console.log(annee);
-	option = document.createElement('option');
-	option.value = annee;
+	option = document.createElement ( 'option' );
+
+	option.value     = annee;
 	option.innerText = annee;
 
 	choixAnnee.appendChild ( option );
 }
 
 /* Evenement en fonction de l'année sélectionnée */
-choixAnnee.addEventListener('change', function()
+choixAnnee.addEventListener ( 'change', function ( )
 {
 	anneeSelectionnee = choixAnnee.value;
-	fetchDonneeEtudiant()
-})
+	fetchDonneeEtudiant ( );
+} );
 
 /*                                     */
 /*   BAR DE NAVIGATION DES SEMESTRES   */
@@ -50,9 +50,9 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 		} )
 		
 		bouton.classList.add ( 'btn-clique' );
-		semestreSelectionne = parseInt(bouton.innerText.substring(1,2));
+		semestreSelectionne = parseInt ( bouton.innerText.substring ( 1,2 ) );
 
-		fetchDonneeEtudiant()
+		fetchDonneeEtudiant ( );
 	} )
 } );
 
@@ -61,43 +61,45 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 
 function fetchDonneeEtudiant()
 {
-	
-	console.log('semestre : ' + semestreSelectionne + ' annee : ' + anneeSelectionnee)
-	if (!semestreSelectionne || !anneeSelectionnee)
+	if ( ! semestreSelectionne || ! anneeSelectionnee )
 	{
 		console.log('un argument nest pas défini')
 		return;
 	}
 
-	reinitialiserPage();
+	reinitialiserPage ( );
 	
 	fetch ( '../../controleur/ControleurVue.inc.php?numSemestre=' + semestreSelectionne + '&annee=' + anneeSelectionnee )
 		.then ( reponse => reponse.json ( ) )
 		.then ( donnees =>
 		{
-			try {
-					genererEntete(Object.keys(donnees[0].cursus))
+			try
+			{
+				genererEntete ( Object.keys ( donnees[0].cursus ) );
 			}
-			catch (error) {
-				
+			catch ( error )
+			{
+				console.log ( error );
 			}
 			
-			donnees.forEach(function (etudiant) {
-				ajouterEtudiantTableau(etudiant);
-			});
+			donnees.forEach ( function ( etudiant )
+			{
+				ajouterEtudiantTableau ( etudiant );
+			} );
 
 		})
-		.catch (erreur => console.error(erreur))
+		.catch ( erreur => console.error ( erreur ) )
 }
 
-function reinitialiserPage()
+function reinitialiserPage ( )
 {
-	const tabNomPrenom              = document.querySelector ( '.tableau-nom-etd tbody' );
-	tabNomPrenom.innerHTML = "";
-
-	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' ); //FIXME: vire pas les en tete
-	tabResumeComptence.innerHTML = "";
-
+	const tabNomPrenom             = document.querySelector ( '.tableau-nom-etd tbody'  );
+	const tabResumeComptenceEnTete = document.querySelector ( '.tableau-note-etd thead' );
+	const tabResumeComptence       = document.querySelector ( '.tableau-note-etd tbody' );
+	
+	tabNomPrenom            .innerHTML = "";
+	tabResumeComptence      .innerHTML = "";
+	tabResumeComptenceEnTete.innerHTML = "";
 }
 
 function ajouterEtudiantTableau ( etudiant )
@@ -135,25 +137,29 @@ function ajouterEtudiantTableau ( etudiant )
 	var htmlResume = "";
 	var nbUEs = 0;
 	
-	const moyCompetence  = new Map   ( );
 	const moysCompetence = new Array ( );
 	const competences    = etudiant.cursus;
 
 	for ( const competence in competences )
 	{
-		const ensMatiere = competences[competence].matieres;
-
-		var admission = competences[competence].admission
+		var moyCompetence  = new Map ( );
+		var ensMatiere = competences[competence].matieres;
+		var admission  = competences[competence].admission
 
 		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP')
 			nbUEs += 1;
 
+		let counter = 0;
 		ensMatiere.forEach ( matiere =>
 		{
-			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ] );
+			if ( counter !== 0 )
+			{
+				moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ]);
+			}
+			counter++;
 		} );
 
-		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
+		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + ensMatiere[0].moyenne ).toFixed ( 2 ) ;
 		 
 		moysCompetence.push ( moyenneEnCours );
 
@@ -163,31 +169,31 @@ function ajouterEtudiantTableau ( etudiant )
 	const somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
 	const moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
 
-
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>${nbUEs}/${Object.keys ( competences ).length}</td>`;
 	
 	tabResumeComptence.appendChild ( tabResumeligneResume );
+
+	ajouterDonneePopupCompetence ( );
 };
 
 function calculerMoyenneCompetence ( donnee )
 {
 	let totalNote  = 0;
-	let totalCoeff = 1;
+	let totalCoeff = 0;
 
 	donnee.forEach ( ( matière ) =>
 	{
-		const [note, coeff] = matière;
+		let [note, coeff] = matière;
+
 		totalNote  += note * coeff;
 		totalCoeff += coeff;
 	} );
 
-	return (totalNote / totalCoeff).toFixed(2);
+	return ( totalNote / totalCoeff ).toFixed ( 2 );
 }
 
 function genererEntete ( tabEntete )
 {
-	//FIXME: problème quand y'a aucune donnée dans la base de donnée
-	
 	const tabResumeComptence2 = document.querySelector ( '.tableau-note-etd thead' );
 	var enteteTab             = document.createElement ( 'tr' );
 
@@ -195,10 +201,17 @@ function genererEntete ( tabEntete )
 
 	tabEntete.forEach ( function ( entete )
 	{
-		enteteTab.innerHTML += `<th>${entete}</th>`;
+		enteteTab.innerHTML += `<th ${'class=bin id=bin' + entete.charAt ( entete.length - 1 ) } >${entete}</th>`;
 	} );
 
 	enteteTab.innerHTML += `<th>UEs</th>`;
 
 	tabResumeComptence2.appendChild ( enteteTab );
+}
+
+function ajouterDonneePopupCompetence ( )
+{
+	// Ajout du listeneur sur les colonnes
+	console.log("je suis dans ajouterDonneePopupCompetence")
+	ajoutListener ();
 }
