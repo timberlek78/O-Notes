@@ -193,6 +193,7 @@ class AnalyseDataFichiers
 		$competenceMatiere->setIdCompetence( $idCompetence );
 		$competenceMatiere->setAnnee( $this->promotion );
 		$competenceMatiere->setIdMatiere( $idMatiere );
+		$competenceMatiere->setCoeff( 1 ); //REMARQUE : Le coefficient sera modifié par la suite
 		return $competenceMatiere;
 	}
 }

@@ -14,7 +14,10 @@
 	{
 		$donnes = new DonneesONote( );
 
-		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], true );
+		$existe = 
+		$enAlternance = ( isset( $_POST['alternance'] ) && $_POST['alternance'] == '1' );
+
+		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
 		$analyse->ajouterCompetencesDansDonnees( $donnes );
 		$analyse->ajouterEtudiantsDansDonnees( $donnes );
 

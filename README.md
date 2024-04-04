@@ -42,7 +42,7 @@
 
 #### 1. Ouvir un tunnel ssh
 
-- Dans un teminal : `ssh -L 7777:woody.iut.univ-lehavre.fr:5432 -p 4660 IDENTIFIANT@c-corton.iut.univ-lehavre.fr`
+- Dans un teminal : `ssh -L 5432:woody.iut.univ-lehavre.fr:5432 -p 4660 IDENTIFIANT@c-corton.iut.univ-lehavre.fr`
 
 #### 2. Démarrer le serveur
 

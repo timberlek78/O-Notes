@@ -2,8 +2,11 @@
 
 class EstNote
 {
+	//clé primaire
 	private string $codenip;
 	private string $idmatiere;
+
+	//attributs
 	private float $moyenne;
 
 	public function __construct( $codenip = -1, $idmatiere = "", $moyenne = -1.0 )
@@ -13,9 +16,17 @@ class EstNote
 		$this->moyenne   = $moyenne;
 	}
 
-	public function getAttributs( ) : array
+	public function getEqClesPrimaires( ) : array
 	{
-		return get_object_vars( $this );
+		return array( "codenip"   => $this->codenip,
+					  "idmatiere" => $this->idmatiere );
+	}
+
+	public function getEqAttributs( ) : array
+	{
+		return array( "codenip"   => $this->codenip,
+					  "idmatiere" => $this->idmatiere,
+					  "moyenne"   => $this->moyenne);
 	}
 
 	public function getCodeNip( )

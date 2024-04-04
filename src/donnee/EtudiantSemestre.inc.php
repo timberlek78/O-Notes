@@ -19,9 +19,19 @@ class EtudiantSemestre
 		$this->nbabs       = $nbAbsences;
 	}
 
-	public function getAttributs() : array
+	public function getEqClesPrimaires( ) : array
 	{
-		return get_object_vars($this);
+		return array( "codenip"     => $this->codenip,
+					  "numsemestre" => $this->numsemestre );
+	}
+
+	public function getEqAttributs() : array
+	{
+		return array( "codenip"     => $this->codenip,
+					  "numsemestre" => $this->numsemestre,
+					  "passage"     => $this->passage,
+					  "rang"        => $this->rang,
+					  "nbbas"       => $this->nbabs);
 	}
 
 	public function getCodeNIP(): int
