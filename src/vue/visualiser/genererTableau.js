@@ -57,8 +57,6 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 } );
 
 
-// TODO: Fetch selon le semestre sélectionné
-
 // Test déclaration des valeurs à l'extérieur pour y avoir accès
 var ensDetailCompetence = new Map ( );
 
@@ -84,8 +82,6 @@ function fetchDonneeEtudiant()
 				{
 					genererEntetePopup ( key, donnees[0].cursus[key].matieres );
 				} );
-
-				ajoutListener ( );
 			}
 			catch ( error )
 			{
@@ -95,8 +91,9 @@ function fetchDonneeEtudiant()
 			donnees.forEach ( function ( etudiant )
 			{
 				ajouterEtudiantTableau ( etudiant );
-				//ajouterEtudiantPopup   ( etudiant );
 			} );
+
+			ajoutListener ( );
 		} )
 		.catch ( erreur => console.error ( erreur ) )
 }
@@ -122,7 +119,7 @@ function ajouterEtudiantTableau ( etudiant )
 	const tabNomPrenomligneEtudiant = document.createElement ( 'tr' );
 
 	tabNomPrenomligneEtudiant.classList.add ( 'cellule-cliquable-nom')
-	tabNomPrenomligneEtudiant.addEventListener ('click', function ( )
+	tabNomPrenomligneEtudiant.addEventListener ( 'click', function ( )
 	{
 		ouverturePopupEtudiant ( );
 		majPopupEtudiant ( etudiant );
@@ -196,6 +193,16 @@ function ajouterEtudiantTableau ( etudiant )
 	
 	// Ajoute la ligne de l'étudiant
 	tabResumeComptence.appendChild ( tabResumeligneResume );
+
+	/*+-----------------------------------+*/
+	/*|        AJOUT DES LISTENERS        |*/
+	/*+-----------------------------------+*/
+
+	tabNomPrenomligneEtudiant.addEventListener ('click', function ( )
+	{
+		ouverturePopupEtudiant ( );
+		majPopupEtudiant ( etudiant );
+	} );
 };
 
 function calculerMoyenneCompetence ( donnee )

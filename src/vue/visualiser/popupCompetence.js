@@ -29,21 +29,30 @@ function ajoutListener ( )
 
 	ensCompetence.forEach ( function ( competence )
 	{
-		competence.addEventListener ( 'click', function ( event )
+		competence.addEventListener ( 'click', function ()
 		{
-			// Défini la couleur de la compétence pour les deux tableaux
-			const couleurFond = getComputedStyle(competence).getPropertyValue('background-color');
-
-			changerCouleurTableau ( couleurFond );
-
-			majPopupCompetence ( ensDetailCompetence.get ( competence.textContent ) );
-
-			popupCompetence.classList.add ( 'ouvert' );
-			tabNoteEtud    .classList.add ( 'fermer' );
+			ouvrirPopupCompetence ( competence );
 		} );
 	} );
-	
+
 	boutonFermerCompetence.addEventListener ( 'click', fermerPopupCompetence );
+}
+
+function ouvrirPopupCompetence ( competence )
+{
+	// Défini la couleur de la compétence pour les deux tableaux
+	const couleurFond = getComputedStyle(competence).getPropertyValue('background-color');
+
+	changerCouleurTableau ( couleurFond );
+	
+	majPopupCompetence ( ensDetailCompetence.get ( competence.textContent ) );
+
+	let lignesCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
+
+	surbrillance ( lignesCompetence );
+
+	popupCompetence.classList.add ( 'ouvert' );
+	tabNoteEtud    .classList.add ( 'fermer' );
 }
 
 function majPopupCompetence ( tabInformationPopup )
@@ -76,5 +85,6 @@ function fermerPopupCompetence ( )
 
 	popupCompetence.classList.remove ( 'ouvert' );
 	tabNoteEtud    .classList.remove ( 'fermer' );
+	
 	changerCouleurTableau ( 'rgb(150, 82, 122)' );
 }
