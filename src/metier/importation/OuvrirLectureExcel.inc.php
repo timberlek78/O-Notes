@@ -2,19 +2,20 @@
 
 require __DIR__.'/../../../lib/vendor/autoload.php'; // Inclure l'autoloader de Composer
 include_once __DIR__.'/LectureExcel.inc.php';
+require_once __DIR__.'/Import.inc.php';
 
 class OuvrirLectureExcel
 {
-	private string $nomFichier;
+	private $fichier;
 
-	private function __construct( string $nomFichier )
+	private function __construct( $fichier ) //$_FILES
 	{
-		$this->nomFichier = $nomFichier;
+		$this->fichier = $fichier;
 	}
 
-	public static function OuvrirEtObtenirDataExcel( string $nomFichier ) : array
+	public static function OuvrirEtObtenirDataExcel( $fichier ) : array
 	{
-		$ouvrirLectureExcel = new OuvrirLectureExcel( $nomFichier );
+		$ouvrirLectureExcel = new OuvrirLectureExcel( $fichier );
 
 		if( $ouvrirLectureExcel->fichierExcelValide( ) )
 		{
@@ -33,23 +34,23 @@ class OuvrirLectureExcel
 
 	private function fichierExiste( ) : bool
 	{
-		return isset( $_FILES[ $this->nomFichier ] );
+		return isset( $this->fichier );
 	}
 
 	private function fichierSansErreur( ) : bool
 	{
-		return ( $_FILES[ $this->nomFichier ][ 'error' ] === UPLOAD_ERR_OK );
+		return ( $this->fichier[ 'error' ] === UPLOAD_ERR_OK );
 	}
 
 	private function fichierTypeExcel( ) : bool
 	{
-		$mime = $_FILES[ $this->nomFichier ][ 'type' ];
+		$mime = $this->fichier[ 'type' ];
 		return ( $mime === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
 	}
 
 	private function creerEtObtenirData( ) : array
 	{
-		$chemin_fichier = $_FILES[ $this->nomFichier ][ 'tmp_name' ];
+		$chemin_fichier = $this->fichier[ 'tmp_name' ];
 
 		$excel = new LectureExcel( $chemin_fichier );
 		$data = $excel->recupererDonnees( );

@@ -1,7 +1,7 @@
 <?php
 	require __DIR__.'/../../../lib/vendor/autoload.php';
 
-	include ( __DIR__."/../../controleur/ControleurDB.inc.php" );
+	require_once __DIR__.'/../../controleur/ControleurDB.inc.php';
 	require_once __DIR__.'/../../donnee/IncludeAll.php';
 
 
