@@ -20,13 +20,14 @@ class Illustration
 		return array("idillustration" => $this->idillustration);
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array("idillustration" => $this->idillustration,
+					 "img"            => $this->img,
+					 "alternative"    => $this->alternative);
 	}
 
 	public function getIdIllustration() {
-		return $this->idillustration;
 		return $this->idillustration;
 	}
 

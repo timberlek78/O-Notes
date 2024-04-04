@@ -16,9 +16,11 @@ class ConfigFPE {
 		return array("idconfigfpe" => $this->idconfigfpe);
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array("idconfigfpe"  => $this->idconfigfpe,
+					 "nomdirecteur" => $this->nomdirecteur,
+					 "anneepromo"   => $this->anneepromo);
 	}
 
 	public function getIdConfigFPE()

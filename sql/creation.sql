@@ -59,7 +59,7 @@ CREATE TABLE onote.ConfigFPE (
 );
 
 CREATE TABLE onote.Etudiant (
-	codeNIP INT PRIMARY KEY,
+	codeNIP VARCHAR(5) PRIMARY KEY,
 	nom VARCHAR( 20 ),
 	prenom VARCHAR( 10 ),
 	parcours VARCHAR( 50 ),
@@ -74,12 +74,12 @@ CREATE TABLE onote.FPE (
 	AvisMaster VARCHAR( 20 ),
 	AvisEcoleInge VARCHAR( 50 ),
 	commentaire TEXT,
-	codeNIP INT,
+	codeNIP VARCHAR(5),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP )
 );
 
 CREATE TABLE onote.EtudiantSemestre (
-	codeNIP INT,
+	codeNIP VARCHAR(5),
 	numSemestre INT,
 	rang INT,
 	nbAbs INT,
@@ -100,7 +100,7 @@ CREATE TABLE onote.CompetenceMatiere (
 );
 
 CREATE TABLE onote.Cursus (
-	codeNIP INT,
+	codeNIP VARCHAR(5),
 	numSemestre INT,
 	idCompetence VARCHAR( 10 ),
 	annee VARCHAR ( 9 ),
@@ -120,10 +120,9 @@ CREATE TABLE onote.Possede (
 );
 
 CREATE TABLE onote.EstNote (
-	codeNIP INT,
+	codeNIP VARCHAR(5),
 	idMatiere VARCHAR( 20 ),
 	moyenne DECIMAL( 15, 2 ),
-	PRIMARY KEY ( codeNIP, idMatiere ),
 	PRIMARY KEY ( codeNIP, idMatiere ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )

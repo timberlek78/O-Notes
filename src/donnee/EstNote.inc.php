@@ -22,9 +22,11 @@ class EstNote
 					  "idmatiere" => $this->idmatiere );
 	}
 
-	public function getAttributs( ) : array
+	public function getEqAttributs( ) : array
 	{
-		return get_object_vars( $this );
+		return array( "codenip"   => $this->codenip,
+					  "idmatiere" => $this->idmatiere,
+					  "moyenne"   => $this->moyenne);
 	}
 
 	public function getCodeNip( )

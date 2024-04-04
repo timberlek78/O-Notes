@@ -42,9 +42,8 @@ class DB
 		}
 		catch ( PDOException $e )
 		{
-				echo $configDB->host;
-				echo "problème de connexion : ".$e->getMessage ( );
-				return null;
+			echo $configDB->host;
+			echo "problème de connexion : ".$e->getMessage ( );
 		}
 	}
 
@@ -99,7 +98,7 @@ class DB
 		// Execution de la requête avec les paramètres fournis
 		$prepareStatement->execute ( $tparam );
 
-		echo $nomClasse . " - "; //TODO: à retirer ?
+		//echo $nomClasse . " - ";
 
 		// Récupération des résultats sous forme d'objet de la classe $nomClasse
 		$prepareStatement->setFetchMode ( PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse );
@@ -166,28 +165,6 @@ class DB
 		return $columns;
 	}
 
-	//TODO: fonction à vérifier et à tester
-	public function existsWhere ( $nomTable, $condition, $valeur, $connecteur = null, $condition2 = null, $valeur2 = null )
-	{
-		// Construction de la requête SELECT COUNT(*) pour compter les tuples
-		$requete = 'SELECT COUNT(*) as count FROM ' . DB::$schema . '.' . $nomTable . ' WHERE ' . $condition . ' = ?';
-		$parametres = array ( $valeur );
-
-		// Ajout de la deuxième condition si elle est spécifiée
-		$argumentsNonNull = $connecteur != null && $condition2 != null && $valeur2 != null;
-		if ( $argumentsNonNull )
-		{
-			$requete .= ' ' . $connecteur . ' ' . $condition2 . ' = ?';
-			$parametres[] = $valeur2;
-		}
-
-		// Exécution de la requête
-		$resultat = $this->execQuery ( $requete, $parametres, $nomTable );
-
-		// Retourne vrai si le compteur est supérieur à zéro, sinon faux
-		return ( $compteur > 0 );
-	}
-
 	/***********************************/
 	/*        Fonctions SELECT         */
 	/***********************************/
@@ -216,12 +193,12 @@ class DB
 	/*        Fonctions DELETE         */
 	/***********************************/
 
-	public function delete ( $nomTable, $objet )
+	public function delete ( $nomTable, $objet ) //TODO:
 	{
 		$requete = 'DELETE FROM '.DB::$schema.'.'.$nomTable.' WHERE '.$this->getColumnsNames ( $nomTable )[0].' = ?';
-		$tparam  = array ( array_values ( $objet->getAttributs ( ) )[0] );
+		$tparam  = array ( array_values ( $objet->getEqAttributs ( ) )[0] );
 
-		$valeursAttributs = array_values ( $objet->getAttributs ( ) );
+		$valeursAttributs = array_values ( $objet->getEqAttributs ( ) );
 		$requeteAvecValeurs = $this->getRequeteAvecValeurs ( $valeursAttributs, $requete );
 
 		return $this->execMaj ( $requete,$tparam );
@@ -236,8 +213,14 @@ class DB
 		// Construire la requête d'insertion
 		$requete = $this->constructionInsert ( $nomTable, $objet );
 
+		$tparam  = array ( );
+		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
+		{
+			$tparam[] = $valeur;
+		}
+
 		// Remplacer les marqueurs de position par les valeurs des attributs
-		$valeursAttributs   = array_values ( $objet->getAttributs ( ) );
+		$valeursAttributs   = $tparam;
 		$requeteAvecValeurs = $this->getRequeteAvecValeurs ( $valeursAttributs, $requete );
 
 		// Exécuter la requête d'insertion avec les valeurs des attributs
@@ -248,12 +231,19 @@ class DB
 	{
 		$requete    = 'INSERT INTO '.DB::$schema.'.'.$nomClasse;
 
-		$nbAttribut = count ( array_keys ( $objet->getAttributs ( ) ) );
+		$nbAttribut = count ( array_keys ( $objet->getEqAttributs ( ) ) );
 		$colonnes   = " (";
 		//Précision des colonnes à remplir dans la BADO
+
+		$tparam  = array ( );
+		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
+		{
+			$tparam[] = $valeur;
+		}
+
 		for ( $cptCol = 0; $cptCol < $nbAttribut; $cptCol++ )
 		{
-			$colonnes   .= ( $cptCol > 0 ? ',' : '' ) .array_keys ( $objet->getAttributs ( ) )[$cptCol];
+			$colonnes   .= ( $cptCol > 0 ? ',' : '' ) .$tparam[$cptCol];
 		}
 		$colonnes .=")";
 
@@ -278,7 +268,7 @@ class DB
 		//echo $requete;
 		$tparam  = array ( );
 
-		foreach( $objet->getAttributs ( ) as $cle => $valeur )
+		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
 		{
 			$tparam[] = $valeur;
 		}
@@ -292,7 +282,7 @@ class DB
 		$parametres = ' SET ';
 		$conditions = ' WHERE ';
 
-		$tabAttribut = $objet->getAttributs ( );
+		$tabAttribut = $objet->getEqAttributs ( );
 		$cptAttribut = 0;
 		foreach ( $tabAttribut as $cle => $valeur )
 		{

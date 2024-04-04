@@ -24,9 +24,12 @@ class CompetenceMatiere
 					  "idmatiere"    => $this->idmatiere);
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "idcompetence" => $this->idcompetence,
+					  "annee"        => $this->annee,
+					  "idmatiere"    => $this->idmatiere,
+					  "coeff"        => $this->coeff);
 	}
 
 	public function getIdCompetence(): string

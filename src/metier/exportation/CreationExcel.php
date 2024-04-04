@@ -2,21 +2,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../../../lib/vendor/autoload.php';
+
+require __DIR__.'/../../../lib/vendor/autoload.php';
 
 include '../../controleur/ControleurDB.inc.php';
-include '../../donnee/Competence.inc.php';
-include '../../donnee/CompetenceMatiere.inc.php';
-include '../../donnee/Cursus.inc.php';
-include '../../donnee/Etude.inc.php';
-include '../../donnee/Etudiant.inc.php';
-include '../../donnee/EtudiantSemestre.inc.php';
-include '../../donnee/FPE.inc.php';
-include '../../donnee/Illustration.inc.php';
-include '../../donnee/Matiere.inc.php';
-include '../../donnee/Possede.inc.php';
-include '../../donnee/Semestre.inc.php';
-include '../../donnee/Utilisateur.inc.php';
+
+require_once '../../donnee/IncludeAll.php';
 
 include '../ONotes.php';
 
@@ -109,34 +100,32 @@ class ExcelExporter
 
 	public function creerFeuilleEtudiant($donneesEtudiants)
 {
-    $feuille = $this->spreadsheet->getActiveSheet();
-    $ligne = 9;
-    $this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
+	$feuille = $this->spreadsheet->getActiveSheet();
+	$ligne = 9;
+	$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
 
-    foreach ($donneesEtudiants as $index => $etudiant) {
-        $colonne = 'A';
-        $tabAttribut = array_values($etudiant->getAttributExcel());
+	foreach ($donneesEtudiants as $index => $etudiant) {
+		$colonne = 'A';
+		$tabAttribut = array_values($etudiant->getAttributExcel());
 
-        foreach ($tabAttribut as $attribut) 
+		foreach ($tabAttribut as $attribut) 
 		{
-			echo "<br>";
-			var_dump($attribut);
-            if (is_array($attribut)) 
+
+			if (is_array($attribut)) 
 			{
-				var_dump($attribut);
-                // Si l'attribut est un tableau associatif, le concaténer en une seule chaîne
-                $valeur = implode(', ', $attribut); // Changer le séparateur si nécessaire
 
-				var_dump($valeur);
-            } else {
-                $valeur = $attribut;
-            }
+				// Si l'attribut est un tableau associatif, le concaténer en une seule chaîne
+				$valeur = implode(', ', $attribut); // Changer le séparateur si nécessaire
 
-            $feuille->setCellValue($colonne . $ligne, $valeur);
-            $colonne++;
-        }
-        $ligne++;
-    }
+			} else {
+				$valeur = $attribut;
+			}
+
+			$feuille->setCellValue($colonne . $ligne, $valeur);
+			$colonne++;
+		}
+		$ligne++;
+	}
 }
 
 

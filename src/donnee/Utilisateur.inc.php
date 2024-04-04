@@ -17,8 +17,12 @@ class Utilisateur
 		return array( "idutilisateur" => $this->idutilisateur );
 	}
 
+	public function getEqAttributs() : array
+	{
+		return $this->getEqClesPrimaires();
+	}
+
 	public function getIdUtilisateur() {
-		return $this->idutilisateur;
 		return $this->idutilisateur;
 	}
 

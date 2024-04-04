@@ -27,9 +27,13 @@ class Cursus
 					  "annee"        => $this->annee );
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "codenip"      => $this->codenip,
+					  "numsemestre"  => $this->numsemestre,
+					  "idcompetence" => $this->idcompetence,
+					  "annee"        => $this->annee,
+					  "admission"    => $this->admission);
 	}
 
 	public function getCodeNIP(): string

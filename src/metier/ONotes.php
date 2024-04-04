@@ -56,8 +56,8 @@ class ONote
 	{
 		foreach ($tab as $index => $etudiant) 
 		{
-			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getId()));
-			$etudiant->setTabBUT    ($this->determinerTabCompetence            ($etudiant->getId()));
+			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getCodeNIP()));
+			$etudiant->setTabBUT    ($this->determinerTabCompetence            ($etudiant->getCodeNIP()));
 			$etudiant->setTabCursus( $etudiant->definirTableCursus() );
 			$etudiant->calculeMoyenneG();
 			$etudiant->determinerUe   ();
@@ -68,7 +68,7 @@ class ONote
 	{
 		foreach($tab as $competence)
 		{
-			$competence->setTabMatieres($this->getTabMatiere($competence->getId(), $competence->getAnnee()));	
+			$competence->setTabMatieres($this->getTabMatiere($competence->getIdCompetence(), $competence->getAnnee()));	
 		}
 	}
 
@@ -83,9 +83,9 @@ class ONote
 				$competence = $this->selectByIdEtAnnee( $cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
-				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getId(), $id);
+				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getIdMatiere(), $id);
 
-				$tabMoyenne[$competence->getId()] =round($somme / count($tabMatiere),2);
+				$tabMoyenne[$competence->getIdCompetence()] =round($somme / count($tabMatiere),2);
 			}
 		return $tabMoyenne;
 	}
@@ -168,12 +168,23 @@ class ONote
 		$taille     = count($this->getEnsCompetenceMatiere());
 		$tab        =       $this->getEnsCompetenceMatiere();
 		$tabMatiere = array();
+
+		echo "<br> annee";
+		var_dump($annee);
+		echo "<br> id";
+		var_dump($id);
 		
-		for($i = 0;$i<$taille;$i++)
+		foreach($tab as $competenceMatiere)
 		{
-			if($tab[$i]->getIdCompetence() == $id && $tab[$i]->getAnnee() == $annee)
+			echo "<br>\$competenceMatiere->getIdCompetence()";
+			var_dump($competenceMatiere->getIdCompetence());
+			echo "<br>\$competenceMatiere->getAnnee()";
+			var_dump($competenceMatiere->getAnnee());
+
+			if($competenceMatiere->getIdCompetence() == $id && $competenceMatiere->getAnnee() == $annee)
 			{
-				$tabMatiere[] = $this->selectById($tab[$i]->getIdMatiere(), $this->getEnsMatiere());
+				var_dump($this->selectById($competenceMatiere->getIdMatiere(), $this->getEnsMatiere()));
+				$tabMatiere[] = $this->selectById($competenceMatiere->getIdMatiere(), $this->getEnsMatiere());
 			}
 		}
 
@@ -205,18 +216,20 @@ class ONote
 		}
 	}
 
+	
 	public function selectById($id, $tab)
 	{
-		$taille = count( $tab );
-
-		for($i = 0; $i<$taille;$i++) if($tab[$i]->getId() == $id) return $tab[$i];
+		foreach($tab as $objet)
+		{
+			if(array_values( $objet->getEqClesPrimaires())[0] == $id) return $objet;
+		}
 	}
 
 	public function selectByIdEtAnnee( $id, $annee, $tab )
 	{
 		$taille = count( $tab );
 
-		for ( $i = 0; $i < $taille; $i++ ) if ( $tab[$i]->getId() == $id && $tab[$i]->getAnnee() ) return $tab[$i];
+		for ( $i = 0; $i < $taille; $i++ ) if ( $tab[$i]->getIdCompetence() == $id && $tab[$i]->getAnnee() ) return $tab[$i];
 	}
 }
 ?>

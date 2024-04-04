@@ -17,9 +17,10 @@ class Possede
 					  "idconfigfpe" => $this->idconfigfpe );
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "idillustration" => $this->idillustration,
+					  "idconfigfpe" => $this->idconfigfpe );
 	}
 
 	public function getIdIllustration() {

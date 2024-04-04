@@ -3,7 +3,6 @@ class Semestre
 {
 	//clé primaire
 	private int $numsemestre;
-	private int $numsemestre;
 
 	public function __construct( $numSemestre=-1 )
 	{
@@ -15,7 +14,7 @@ class Semestre
 		return array( "numsemestre" => $this->numsemestre );
 	}
 
-	public function getAttributs() : array { return get_object_vars($this);}
+	public function getEqAttributs() : array { return array( "numsemestre" => $this->numsemestre );}
 
 	public function getNumSemestre( ) : int
 	{
@@ -34,7 +33,7 @@ class Semestre
 
 	public function equals( Semestre $semestre ) : bool
 	{
-		return $this->numsemestre == $semestre->getId( );
+		return $this->numsemestre == $semestre->getNumSemestre( );
 	}
 }
 ?>

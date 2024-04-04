@@ -38,6 +38,68 @@ class Etudiant
 		return array( "codenip" => $this->codenip );
 	}
 
+	public function getEqAttributs() : array
+	{
+		return array( "codenip"    => $this->codenip,
+					  "nom"        => $this->nom,
+					  "prenom"     => $this->prenom,
+					  "parcours"   => $this->parcours,
+					  "promotion"  => $this->promotion,
+					  "specialite" => $this->specialite,
+					  "typebac"    => $this->typebac);
+	}
+
+	public function setMoyenneG($moy)
+	{
+		$this->moyenneG = $moy;
+	}
+
+	public function calculeMoyenneG()
+	{
+		if(!empty($this->tabMoyenne))
+		{
+			$somme = 0;
+			foreach(array_values($this->tabMoyenne) as  $moyenne ) $somme += $moyenne;
+	
+			$this->setMoyenneG($somme / count(array_keys($this->tabMoyenne)));
+		}
+		else
+		{
+			$this->setMoyenneG(0);
+		}
+	}
+
+	public function getTabMoyenne()
+	{
+		return $this->tabMoyenne;
+	}
+
+	public function setUe($ue) 
+	{
+		$this->Ue = $ue;
+	}
+
+	public function getUe()
+	{
+		return $this->Ue;
+	}
+
+	public function getMoyenneG()
+	{
+		return $this->moyenneG;
+	}
+
+	public function determinerUe()
+	{
+		$nbUe = 0;
+		foreach(array_values($this->tabMoyenne) as $moyenne )
+		{
+			if($moyenne > 10) $nbUe += 1;
+		}
+		$this->setUe( "".$nbUe."/".count(array_keys($this->tabMoyenne)));
+
+	}
+
 	public function getCodeNIP(): string
 	{
 		return $this->codenip;
@@ -73,10 +135,12 @@ class Etudiant
 		return $this->typebac;
 	}
 
-	public function getAttributs() : array
+	public function getTabBut() : array
 	{
-		return get_object_vars($this);
+		return $this->tabBUT;
 	}
+
+	
 
 	public function getAttributExcel() : array
 	{
@@ -95,28 +159,34 @@ class Etudiant
 	}
 
 	public function definirTableCursus()
-{
-    $tabCursus = array();
-    $tabAnnee  = array();
+	{
+		$tabCursus = array();
+		$tabAnnee  = array();
 
-    $tabBUT = $this->getTabBUT();
+		$tabBUT = $this->getTabBUT();
 
-    foreach ($tabBUT as $but) {
-        $semestreImpair = $but->getSemestreImpair();
-        $semestrePair   = $but->getSemestrePair  ();
+		foreach ($tabBUT as $but) {
+			$semestreImpair = $but->getSemestreImpair();
+			$semestrePair   = $but->getSemestrePair  ();
 
-        if (!empty($semestreImpair) && !in_array( $but->getAnnee(), $tabAnnee)) {
-            $tabCursus[] = "S" . $but->getNumSemestreImpair();
-            $tabAnnee[] = $but->getAnnee();
-        }
+			if (!empty($semestreImpair) && !in_array( $but->getAnnee(), $tabAnnee)) {
+				$tabCursus[] = "S" . $but->getNumSemestreImpair();
+				$tabAnnee[] = $but->getAnnee();
+			}
 
-        if (!empty($semestrePair) && !in_array( $but->getAnnee(), $tabAnnee)) {
-            $tabCursus[] = "S" . $but->getNumSemestrePair();
-            $tabAnnee[] = $but->getAnnee();
-        }
-    }
-    return $tabCursus;
-}
+			if (!empty($semestrePair) && !in_array( $but->getAnnee(), $tabAnnee)) {
+				$tabCursus[] = "S" . $but->getNumSemestrePair();
+				$tabAnnee[] = $but->getAnnee();
+			}
+		}
+		return $tabCursus;
+	}
+
+	public function setTabCursus(array $tabCursus)
+	{
+		$this->cursus = $tabCursus;
+	}
+
 
 	public function setTabBUT(array $tabBUT)
 	{
@@ -146,6 +216,21 @@ class Etudiant
 	public function setPromotion( string $promotion ): void
 	{
 		$this->promotion = $promotion;
+	}
+
+	public function setTypeBac( string $typebac) : void
+	{
+		$this->typebac = $typebac;
+	}
+
+	public function setSpecialite (string $specialite)
+	{
+		$this->specialite = $specialite;
+	}
+
+	public function setTabMoyenne( $tab)
+	{
+		$this->tabMoyenne = $tab;
 	}
 
 	public function __toString(): string

@@ -24,9 +24,13 @@ class FPE
 		return array( "idfpe" => $this->idfpe );
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "idfpe"         => $this->idfpe,
+					  "avismaster"    => $this->avismaster,
+					  "avisecoleinge" => $this->avisecoleinge,
+					  "commentaire"   => $this->commentaire,
+					  "codenip"       => $this->codenip);
 	}
 
 	public function getIdFPE() {

@@ -17,9 +17,10 @@ class Etude
 					  "typebac"    => $this->typebac );
 	}
 	
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "specialite" => $this->specialite,
+					  "typebac"    => $this->typebac );
 	}
 
 	public function getSpecialite(): string

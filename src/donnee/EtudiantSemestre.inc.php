@@ -25,9 +25,13 @@ class EtudiantSemestre
 					  "numsemestre" => $this->numsemestre );
 	}
 
-	public function getAttributs() : array
+	public function getEqAttributs() : array
 	{
-		return get_object_vars($this);
+		return array( "codenip"     => $this->codenip,
+					  "numsemestre" => $this->numsemestre,
+					  "passage"     => $this->passage,
+					  "rang"        => $this->rang,
+					  "nbbas"       => $this->nbabs);
 	}
 
 	public function getCodeNIP(): int
