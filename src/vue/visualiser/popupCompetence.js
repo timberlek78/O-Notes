@@ -16,6 +16,11 @@ function changerCouleurTableau ( couleur )
 	root.style.setProperty ( '--selectionne-pair'   , `rgba(${rouge}, ${vert}, ${bleu}, 0.25)`);
 }
 
+var popupCompetence        = document.querySelector ( '.popup-competence-etd'       );
+var popupCompetenceHeader  = document.querySelector ( '.popup-competence-etd thead' );
+var popupCompetenceBody    = document.querySelector ( '.popup-competence-etd tbody' );
+var tabNoteEtud            = document.querySelector ( '.tableau-note-etd '          );
+var boutonFermerCompetence = document.querySelector ( '.fermetureCompt'             );
 
 function ajoutListener ( )
 {
@@ -27,36 +32,49 @@ function ajoutListener ( )
 		competence.addEventListener ( 'click', function ( event )
 		{
 			// Défini la couleur de la compétence pour les deux tableaux
-			const couleurFond = getComputedStyle ( event.target ).getPropertyValue ( 'background-color' );
+			const couleurFond = getComputedStyle(competence).getPropertyValue('background-color');
 
 			changerCouleurTableau ( couleurFond );
 
-			// Récupère le popup et le tableau des notes globales
-			const popupCompetence = document.querySelector ( '.bin' + competence.textContent.charAt ( competence.textContent.length - 1 ) );
-			const tabNoteEtud     = document.querySelector ( '.tableau-note-etd ' );
+			majPopupCompetence ( ensDetailCompetence.get ( competence.textContent ) );
 
 			popupCompetence.classList.add ( 'ouvert' );
 			tabNoteEtud    .classList.add ( 'fermer' );
 		} );
 	} );
+	
+	boutonFermerCompetence.addEventListener ( 'click', fermerPopupCompetence );
+}
 
-	const boutonFermerCompetence = document.querySelectorAll ( '.fermetureCompt'       );
-	const popupCompetence        = document.querySelectorAll ( '.popup-competence-etd' );
-	const tabNoteEtud            = document.querySelector    ( '.tableau-note-etd '    );
+function majPopupCompetence ( tabInformationPopup )
+{
+	// Header
+	popupCompetenceHeader.appendChild ( tabInformationPopup[0] );
 
-	/* Fonction qui permet de fermer le popup de la compétence quand on appuie sur la croix */
-	boutonFermerCompetence.forEach ( function ( bouton )
+	// Données
+	for ( let i = 1; i < tabInformationPopup.length; i++ )
 	{
-		bouton.addEventListener ( 'click', function ( event )
+		let ligneEtudiant = document.createElement ( 'tr' );
+
+		let notes = "";
+
+		for ( let j = 0; j < tabInformationPopup[i].length; j++ )
 		{
-			popupCompetence.forEach ( function ( popup )
-			{
-				popup.classList.remove ( 'ouvert' );
-			} );
-			tabNoteEtud    .classList.remove ( 'fermer' );
+			notes += tabInformationPopup[i][j];
+		}
 
-			changerCouleurTableau ( 'rgb(150, 82, 122)' );
-		} );
-	} );
+		ligneEtudiant.innerHTML = notes;
 
+		popupCompetenceBody.appendChild ( ligneEtudiant );
+	}
+}
+
+function fermerPopupCompetence ( )
+{
+	popupCompetenceHeader.innerHTML = "";
+	popupCompetenceBody  .innerHTML = "";
+
+	popupCompetence.classList.remove ( 'ouvert' );
+	tabNoteEtud    .classList.remove ( 'fermer' );
+	changerCouleurTableau ( 'rgb(150, 82, 122)' );
 }

@@ -81,12 +81,9 @@ function ouverturePopupEtudiant ( )
 
 function majPopupEtudiant ( etudiant )
 {
-	//FIXME: potentiellement un erreur si des informations sont vides
 	const conteneurCadreInfos = document           .querySelector    ( '.conteneur-cadre-infos' );
 	const nomPrenom           = document           .querySelector    ( '.conteneur-information' );
 	const cadreInfos          = conteneurCadreInfos.querySelectorAll ( '.cadre-info'            );
-
-	console.log ( nomPrenom.children[0] )
 
 	nomPrenom.children[0].innerText = etudiant.prenom;
 	nomPrenom.children[1].innerText = etudiant.nom;
