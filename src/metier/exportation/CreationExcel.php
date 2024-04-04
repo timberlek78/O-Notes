@@ -48,7 +48,7 @@ class ExcelExporter
 	private const STYLE_BORDURE_GRAS = [
 		'borders' => [
 			'allBorders' => [
-				'borderStyle' => Border::BORDER_THICK, // Style de bordure ENORME ou MEDIUM
+				'borderStyle' => Border::BORDER_MEDIUM, // Style de bordure MEDIUM
 				'color' => ['argb' => 'FF000000'], 
 			],
 		],
@@ -90,87 +90,95 @@ class ExcelExporter
 		$this->nomFichier     = $nomFichier;
 		$this->cheminDossier  = $cheminDossier;
 		$this->limiteSemestre = $semestre;
-		$this->oNote = new ONote();	
+		$this->oNote          = new ONote();	
 	}
 
-	public function getSemestre()             { return $this->semestre;}
-	public function getColonneFINI() : string { return $this->colonneFINI;}
-	public function getLimiteSemestre() : int { return $this->limiteSemestre;}
+	public function getSemestre()                { return $this->semestre;      }
+	public function getColonneFINI()    : string { return $this->colonneFINI;   }
+	public function getLimiteSemestre() : int    { return $this->limiteSemestre;}
 
 
 	public function creerFeuilleEtudiant($donneesEtudiants)
-{
-	$feuille = $this->spreadsheet->getActiveSheet();
-	$ligne = 9;
-	$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
+	{
+		$feuille       = $this->spreadsheet->getActiveSheet();
+		$ligne         = 9;
+		$colonne       = 'A';
+		$colonneArrive = 'E';
+		$ligneArrive   = $ligne + (count($donneesEtudiants)-1);
+		$encadrer      = $colonne.$ligne.':'.$colonneArrive.$ligneArrive;
 
-	foreach ($donneesEtudiants as $index => $etudiant) {
-		$colonne = 'A';
-		$tabAttribut = array_values($etudiant->getAttributExcel());
+		$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
 
-		foreach ($tabAttribut as $attribut) 
+		foreach ($donneesEtudiants as $index => $etudiant) 
 		{
+			$colonne     = 'A';
+			$tabAttribut = array_values($etudiant->getAttributExcel());
 
-			if (is_array($attribut)) 
+			foreach ($tabAttribut as $attribut) 
 			{
 
-				// Si l'attribut est un tableau associatif, le concaténer en une seule chaîne
-				$valeur = implode(', ', $attribut); // Changer le séparateur si nécessaire
+				if (is_array($attribut)) 
+				{
 
-			} else {
-				$valeur = $attribut;
+					// Si l'attribut est un tableau associatif, le concaténer en une seule chaîne
+					$valeur = implode(', ', $attribut); // Changer le séparateur si nécessaire
+
+				} else {
+					$valeur = $attribut;
+				}
+
+				$feuille->setCellValue($colonne . $ligne, $valeur);
+				$colonne++;
 			}
-
-			$feuille->setCellValue($colonne . $ligne, $valeur);
-			$colonne++;
+			$ligne++;
 		}
-		$ligne++;
+		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
+
 	}
-}
 
 
 	public function creerColonneEtudiant($data,$colonne)
 	{
-		$sheet = $this->spreadsheet->getActiveSheet(); 			
+		$sheet = $this->spreadsheet->getActiveSheet(); 
 		for ($i = 0; $i<count($data); $i++) 
 		{
 			if(is_array( $data[$i] )) break;
 
 			$sheet->getColumnDimension(chr(ord($colonne) + $i))->setWidth(strlen($data[$i]) + 15);
-			$sheet->setCellValue(chr(ord($colonne) + $i)."8",$data[$i]); 
-			$sheet->getStyle    (chr(ord($colonne) + $i)."8"           )->applyFromArray(ExcelExporter::STYLE_TITRE);
+			$sheet->setCellValue      (chr(ord($colonne) + $i)."8",$data[$i]); 
+			$sheet->getStyle          (chr(ord($colonne) + $i)."8")->applyFromArray(array_merge( ExcelExporter::STYLE_TITRE, ExcelExporter::STYLE_BORDURE ));
 		}
 	}
-//Passer en argument un semestre limite et regarder a chaque itération 
+	//Passer en argument un semestre limite et regarder a chaque itération 
 
 	public function creerColonneBUT($donneeEtudiant)
 	{
-	$feuille = $this->spreadsheet->getActiveSheet();
-	$ligne   = 9;
-	$colonne = "G";
-	$etudiant = $donneeEtudiant[0];
+		$feuille  = $this->spreadsheet->getActiveSheet();
+		$ligne    = 9;
+		$colonne  = "G";
+		$etudiant = $donneeEtudiant[0];
 
-	foreach($etudiant->getTabBUT() as $but)
-	{
-		echo "JESUS EST LA";
-		if($this->estSemestreLimite($this->limiteSemestre, $but))
+		foreach($etudiant->getTabBUT() as $but)
 		{
 			echo "JESUS EST LA";
-
-			if($this->limiteSemestre % 2 == 0)
+			if ($this->estSemestreLimite($this->limiteSemestre, $but))
 			{
-				$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->getSemestrePair());
+				echo "JESUS EST LA";
+
+				if($this->limiteSemestre % 2 == 0)
+				{
+					$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->getSemestrePair());
+				}
+				else
+				{
+					$this->afficherValeur($but, $colonne, "Semestre ".$but->getNumSemestreImpair(), $but->getSemestreImpair());
+				}
 			}
 			else
 			{
-				$this->afficherValeur($but, $colonne, "Semestre ".$but->getNumSemestreImpair(), $but->getSemestreImpair());
+				$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->estComplet() ? $but->getSemestrePair() : $but->getSemestreImpair());
 			}
 		}
-		else
-		{
-			$this->afficherValeur($but, $colonne, "BUT ".$but->getNum(), $but->estComplet() ? $but->getSemestrePair() : $but->getSemestreImpair());
-		}
-	}
 	}
 
 	public function afficherValeur($but, &$colonne, $titre, $competences)
@@ -181,7 +189,7 @@ class ExcelExporter
 
 	public function estSemestreLimite($limite, $but)
 	{
-		$keysSemestrePair   = $but->getNumSemestrePair();
+		$keysSemestrePair   = $but->getNumSemestrePair()  ;
 		$keysSemestreImpair = $but->getNumSemestreImpair();
 
 		return $limite == $keysSemestrePair || $limite == $keysSemestreImpair;
@@ -222,8 +230,8 @@ class ExcelExporter
 			$admis = $competence->getAdmission();
 		
 			$feuille->setCellValue($colonne.$ligne, $admis);
-			if($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_VERT , ExcelExporter::STYLE_BORDURE ));
-			else                       $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_ROUGE, ExcelExporter::STYLE_BORDURE ));
+			if ($this->estCool($admis)) $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_VERT , ExcelExporter::STYLE_BORDURE ));
+			else                        $feuille->getCell($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_ROUGE, ExcelExporter::STYLE_BORDURE ));
 
 			$colonne = chr(ord($colonne) + 1);
 		}
@@ -237,7 +245,7 @@ class ExcelExporter
 		$colonneArrive   = chr(ord($colonne) + count(array_keys($tabCompetence))- 1);
 		$ligneArrive     = $ligne + $nbEtudiant + 1;
 		$espace          = $colonne.$ligne.':'.$colonneArrive.$ligne;
-		$encadrer        = $colonne.($ligne+1).':'.$colonneArrive.$ligneArrive;
+		$encadrer        = $colonne.$ligne.':'.$colonneArrive.$ligneArrive;
 
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$feuille->setCellValue($colonne.$ligne, strtoupper($but));
@@ -258,19 +266,29 @@ class ExcelExporter
 				$feuille->setCellValue($colonne.$ligneCompetence, "C".$index);
 			}
 
-			$feuille->getCell     ($colonne.$ligneCompetence)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
+			$feuille->getCell($colonne.$ligneCompetence)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 			$colonne++;
 			$index++;
 		}
 
 		$feuille->mergeCells($espace);
-		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
+		$feuille->getStyle  ($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
+
+		/*// Récupérer les coordonnées de la première cellule et la dernière cellule de la zone $encadrer
+		//list($startCell, $endCell) = explode(":", $encadrer);
+		$startCell = 'G7';
+		$endCell   = 'J7';
+		// Appliquer le style de bordure aux cellules des bords gauche, droit, haut et bas de la zone
+		$feuille->getStyle($startCell)->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
+		$feuille->getStyle($endCell  )->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
+		$feuille->getStyle($startCell[0] . ($startCell[1]+8) . ":" . $startCell[0] . ($endCell[1] + 8))->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
+		$feuille->getStyle($startCell[0] . ($endCell[1] + 1) . ":" . $endCell[0] . ($endCell[1] + 1))->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);*/
 	}
 
 	public function estCool($admis)
 	{
 		foreach(ExcelExporter::TAB_STATUT as $str) 
-			if($admis == $str) return true;
+			if ($admis == $str) return true;
 		return false;
 	}
 
@@ -278,7 +296,7 @@ class ExcelExporter
 	{
 		$tabCompetence[] = "UE";
 		$tabCompetence[] = "Moyenne";
-		$tabCompetence = array_merge($tabCompetence,array_keys($donneeEtudiant[0]->getTabMoyenne()));
+		$tabCompetence   = array_merge($tabCompetence,array_keys($donneeEtudiant[0]->getTabMoyenne()));
 
 		var_dump($tabCompetence);
 
@@ -290,11 +308,11 @@ class ExcelExporter
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$colonne = chr(ord($this->getColonneFINI()) + 2) ;
 		$ligne   = 9;
-		foreach($donneeEtudiant as $etudiant)
+		foreach ($donneeEtudiant as $etudiant)
 		{
 			echo "<br>";
 			$feuille->setCellValue($this->getColonneFINI().$ligne, $etudiant->getUe());
-			//$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
+			$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
 
 
 			$feuille->setCellValue(chr((ord($this->getColonneFINI()) + 1  )).$ligne, $etudiant->getMoyenneG());
@@ -317,9 +335,9 @@ class ExcelExporter
 	public function appliquerStyleUe($Ue)
 	{
 		var_dump( intval( $Ue[0] ) );
-		if      ( intval($Ue[0]) == 6 || intval($Ue[0]) == 5 ) return array_merge( ExcelExporter::STYLE_VERT,   ExcelExporter::STYLE_BORDURE );
-		else if ( intval($Ue[0]) == 0                        ) return array_merge( ExcelExporter::STYLE_ROUGE,  ExcelExporter::STYLE_BORDURE );
-		else if ( intval($Ue[0]) <=  4                       ) return array_merge( ExcelExporter::STYLE_ORANGE, ExcelExporter::STYLE_BORDURE );
+		if      ( intval($Ue[0]) == 6 || intval($Ue[0]) == 5 ) return array_merge( ExcelExporter::STYLE_VERT,   ExcelExporter::STYLE_BORDURE_GRAS );
+		else if ( intval($Ue[0]) == 0                        ) return array_merge( ExcelExporter::STYLE_ROUGE,  ExcelExporter::STYLE_BORDURE_GRAS );
+		else if ( intval($Ue[0]) <=  4                       ) return array_merge( ExcelExporter::STYLE_ORANGE, ExcelExporter::STYLE_BORDURE_GRAS );
 	}
 
 	public function enregistrer()
