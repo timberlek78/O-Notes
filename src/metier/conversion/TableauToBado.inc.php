@@ -16,7 +16,7 @@
 			$this->DB = DB::getInstance();
 		}
 
-		public function insererSiNouveau( $classeElement, array $ensElement )
+		public function insertOuUpdate( $classeElement, array $ensElement )
 		{
 			foreach( $ensElement as $element )
 			{
@@ -33,8 +33,8 @@
 					try
 					{
 						//echo "Test mise à jour de " . $classeElement . " : " . $element . "<br>";
-						if( $classeElement == "Etudiant" or $classeElement == "Semestre" or $classeElement == "Competence" )
-							$this->DB->update( $classeElement, $element );
+						//if( $classeElement == "Etudiant" or $classeElement == "Semestre" or $classeElement == "Competence" )
+						$this->DB->update( $classeElement, $element );
 					}
 					catch( Exception $e )
 					{
@@ -46,23 +46,23 @@
 
 		public function insertAll()
 		{
-			self::insererSiNouveau( "Etude", $this->donneesONote->ensEtude );
+			self::insertOuUpdate( "Etude", $this->donneesONote->ensEtude );
 			echo "Etude insérée <br>";
-			self::insererSiNouveau( "Etudiant", $this->donneesONote->ensEtudiant );
+			self::insertOuUpdate( "Etudiant", $this->donneesONote->ensEtudiant );
 			echo "Etudiant inséré <br>";
-			self::insererSiNouveau( "Competence", $this->donneesONote->ensCompetence );
+			self::insertOuUpdate( "Competence", $this->donneesONote->ensCompetence );
 			echo "Competence insérée <br>";
-			self::insererSiNouveau( "Semestre", $this->donneesONote->ensSemestre );
+			self::insertOuUpdate( "Semestre", $this->donneesONote->ensSemestre );
 			echo "Semestre inséré <br>";
-			self::insererSiNouveau( "Matiere", $this->donneesONote->ensMatiere );
+			self::insertOuUpdate( "Matiere", $this->donneesONote->ensMatiere );
 			echo "Matiere insérée <br>";
-			self::insererSiNouveau( "CompetenceMatiere", $this->donneesONote->ensCompetenceMatiere );
+			self::insertOuUpdate( "CompetenceMatiere", $this->donneesONote->ensCompetenceMatiere );
 			echo "CompetenceMatiere insérée <br>";
-			self::insererSiNouveau( "Cursus", $this->donneesONote->ensCursus );
+			self::insertOuUpdate( "Cursus", $this->donneesONote->ensCursus );
 			echo "Cursus inséré <br>";
-			self::insererSiNouveau( "EstNote", $this->donneesONote->ensEstNote );
+			self::insertOuUpdate( "EstNote", $this->donneesONote->ensEstNote );
 			echo "EstNote inséré <br>";
-			self::insererSiNouveau( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
+			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
 			echo "EtudiantSemestre inséré <br>";
 		}
 		

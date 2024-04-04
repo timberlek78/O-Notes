@@ -31,7 +31,7 @@ class EtudiantSemestre
 					  "numsemestre" => $this->numsemestre,
 					  "passage"     => $this->passage,
 					  "rang"        => $this->rang,
-					  "nbbas"       => $this->nbabs);
+					  "nbabs"       => $this->nbabs);
 	}
 
 	public function getCodeNIP(): int

@@ -211,7 +211,7 @@ class DB
 	public function insert ( $nomTable, $objet )
 	{
 		// Construire la requête d'insertion
-		$requete = $this->constructionInsert ( $nomTable, $objet );
+		$requete = $this->constructionRequeteInsert ( $nomTable, $objet );
 
 		$tparam  = array ( );
 		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
@@ -220,18 +220,15 @@ class DB
 		}
 
 		// Remplacer les marqueurs de position par les valeurs des attributs
-		$valeursAttributs   = $tparam;
-		$requeteAvecValeurs = $this->getRequeteAvecValeurs ( $valeursAttributs, $requete );
+		$requeteAvecValeurs = $this->getRequeteAvecValeurs ( $tparam, $requete );
 
 		// Exécuter la requête d'insertion avec les valeurs des attributs
 		$this->execMaj ( $requeteAvecValeurs );
 	}
 
-	private function constructionInsert ( $nomClasse, $objet )
+	private function constructionRequeteInsert ( $nomClasse, $objet )
 	{
 		$requete    = 'INSERT INTO '.DB::$schema.'.'.$nomClasse;
-
-		$nbAttribut = count ( array_keys ( $objet->getEqAttributs ( ) ) );
 
 		$colonnes   = " (";
 		$parametres = " VALUES (";
@@ -257,14 +254,23 @@ class DB
 	public function update( $nomTable, $objet )
 	{
 		$requete = $this->constructionRequeteUpdate ( $nomTable, $objet );
-		$tparam  = array ( );
 
+		$tparam  = array ( );
+		//initialiser les paramères pour le SET
 		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
 		{
 			$tparam[] = $valeur;
 		}
 
-		return $this->execMaj( $requete,$tparam );
+		//initialiser les paramètres pour le WHERE
+		foreach( $objet->getEqClesPrimaires ( ) as $cle => $valeur )
+		{
+			$tparam[] = $valeur;
+		}
+
+		$requeteAvecValeurs = $this->getRequeteAvecValeurs ( $tparam, $requete );
+
+		return $this->execMaj( $requeteAvecValeurs );
 	}
 
 	private function constructionRequeteUpdate ( $nomClasse, $objet )
@@ -273,22 +279,18 @@ class DB
 		$parametres = ' SET ';
 		$conditions = ' WHERE ';
 
-		$eqAttributs = $objet->getEqAttributs ( );
 		$cptAttribut = 0;
-		foreach ( $eqAttributs as $cle => $valeur )
+		foreach ( $objet->getEqAttributs ( ) as $cle => $valeur )
 		{
+			$parametres .= ( $cptAttribut > 0 ? ',' : '' ) . $cle . ' = ?';
 			$cptAttribut++;
-			$parametres .= $cle . ' = ?';
-			if ( $cptAttribut < count ( $eqAttributs ) ) $parametres .= ', ';
 		}
 
-		$eqClesPrimaires = $objet->getEqClesPrimaires ( );
 		$cptCles = 0;
-		foreach ( $eqClesPrimaires as $cle => $valeur )
+		foreach ( $objet->getEqClesPrimaires ( ) as $cle => $valeur )
 		{
+			$conditions .= ( $cptCles > 0 ? ' AND ' : '' ) . $cle . ' = ?';
 			$cptCles++;
-			$conditions .= $cle . ' = ' . $valeur;
-			if ( $cptCles < count( $eqClesPrimaires ) ) $conditions .= ' AND ';
 		}
 	
 		return $requete . $parametres . $conditions;
