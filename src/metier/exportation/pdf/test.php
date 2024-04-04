@@ -72,9 +72,9 @@ class CreationPdf
 	public function creerTableauCompetences()
 	{
 		// En-tête du tableau
-		$this->fpdf->Cell(60, 10, iconv('UTF-8', 'windows-1252', 'RÉSULTATS DES COMPÉTENCES'), 1, 1, 'C');
-		$this->fpdf->Cell(30, 10, iconv('UTF-8', 'windows-1252', 'BUT 1'), 1, 0, 'C');
-		$this->fpdf->Cell(30, 10, iconv('UTF-8', 'windows-1252', 'BUT 2'), 1, 1, 'C');
+		$this->fpdf->Cell(120, 10, iconv('UTF-8', 'windows-1252', 'RÉSULTATS DES COMPÉTENCES'), 1, 0, 'C');
+		$this->fpdf->Cell(30 , 10, iconv('UTF-8', 'windows-1252', 'BUT 1'), 1, 0, 'C');
+		$this->fpdf->Cell(30 , 10, iconv('UTF-8', 'windows-1252', 'BUT 2'), 1, 1, 'C');
 
 		// Contenu du tableau
 		$competences = array(
@@ -91,11 +91,13 @@ class CreationPdf
 
 		$this->fpdf->SetFont('Arial', '', 10);
 		foreach ($competences as $competence) {
-			$this->fpdf->Cell(60, 10, iconv('UTF-8', 'windows-1252', $competence), 1, 0, 'L');
+			$this->fpdf->Cell(120, 10, iconv('UTF-8', 'windows-1252', $competence), 1, 0, 'L');
 			$this->fpdf->Cell(30, 10, '', 1, 0, 'C');
 			$this->fpdf->Cell(30, 10, '', 1, 1, 'C'); // Passer à la ligne après chaque compétence
 		}
 	}
+
+
 
 
 
