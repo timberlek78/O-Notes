@@ -100,11 +100,15 @@ class ExcelExporter
 
 	public function creerFeuilleEtudiant($donneesEtudiants)
 {
-	$feuille = $this->spreadsheet->getActiveSheet();
-	$ligne = 9;
+	$feuille  = $this->spreadsheet->getActiveSheet();
+	$ligne    = 9;
+	$colonne = 'A';
+	$colonneArrive = 'E';
+	$encadrer = $colonne.$ligne.':'.$colonneArrive.($ligne + count( $donneesEtudiants) -1);
 	$this->creerColonneEtudiant(array_keys($donneesEtudiants[0]->getAttributExcel()), 'A');
 
-	foreach ($donneesEtudiants as $index => $etudiant) {
+	foreach ($donneesEtudiants as $index => $etudiant) 
+	{
 		$colonne = 'A';
 		$tabAttribut = array_values($etudiant->getAttributExcel());
 
@@ -126,6 +130,8 @@ class ExcelExporter
 		}
 		$ligne++;
 	}
+	$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
+
 }
 
 
@@ -138,7 +144,7 @@ class ExcelExporter
 
 			$sheet->getColumnDimension(chr(ord($colonne) + $i))->setWidth(strlen($data[$i]) + 15);
 			$sheet->setCellValue(chr(ord($colonne) + $i)."8",$data[$i]); 
-			$sheet->getStyle    (chr(ord($colonne) + $i)."8"           )->applyFromArray(ExcelExporter::STYLE_TITRE);
+			$sheet->getStyle    (chr(ord($colonne) + $i)."8"           )->applyFromArray(array_merge( ExcelExporter::STYLE_BORDURE, ExcelExporter::STYLE_TITRE));
 		}
 	}
 //Passer en argument un semestre limite et regarder a chaque itération 
@@ -235,13 +241,13 @@ class ExcelExporter
 		$ligne           = 7;
 		$ligneCompetence = 8;
 		$colonneArrive   = chr(ord($colonne) + count(array_keys($tabCompetence))- 1);
-		$ligneArrive     = $ligne + $nbEtudiant;
+		$ligneArrive     = $ligne + $nbEtudiant + 1;
 		$espace          = $colonne.$ligne.':'.$colonneArrive.$ligne;
-		$encadrer        = $colonne.$ligne.':'.$colonneArrive.$ligne + $nbEtudiant;
+		$encadrer        = $colonne.$ligne.':'.$colonneArrive.$ligneArrive;
 
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$feuille->setCellValue($colonne.$ligne, strtoupper($but));
-		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_TITRE , ExcelExporter::STYLE_BORDURE_GRAS ));
+		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 
 		$index = 1;
 
@@ -264,7 +270,7 @@ class ExcelExporter
 		}
 
 		$feuille->mergeCells($espace);
-		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
+		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
 	}
 
 	public function estCool($admis)
@@ -282,7 +288,7 @@ class ExcelExporter
 
 		var_dump($tabCompetence);
 
-		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true, count($donneeEtudiant)-1);
+		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true, count($donneeEtudiant));
 	}
 
 	public function remplirColonneMoyenne($donneeEtudiant)
