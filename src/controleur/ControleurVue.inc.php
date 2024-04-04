@@ -4,8 +4,10 @@
 	// error_reporting(E_ALL);
 
 	require "ControleurDB.inc.php";
+
+	include ('../metier/importation/Import.inc.php');
 	
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -161,6 +163,40 @@
 			
 			return json_encode ( $tabAnnee );
 		}
+
+		public function traiterFichiersImportes($json)
+		{
+			$json = json_decode(file_get_contents('php://input'), true);
+		}
+
+		public function import()
+		{
+			$tabImports = array();
+			foreach ($_POST['annee'] as $cle => $valeur)
+			{
+				$tabImports[] = new Import($valeur);
+			}
+
+			for ($cpt = 0 ; $cpt < count($tabImports) ; $cpt++)
+			{
+				$tabImports[$cpt]->setSemestre($_POST['semestre'][$cpt]);
+			}
+
+			for ($cpt = 0 ; $cpt < count ( $tabImports ) ; $cpt++)
+			{
+				$tabImports[ $cpt ]->setSemestre             ( $_POST  [ 'semestre'       ] [ $cpt      ]          );
+
+				$tabImports[ $cpt ]->setFichierJuryType      ( $_FILES [ 'fichierJury'    ] [ 'type'    ] [ $cpt ] );
+				$tabImports[ $cpt ]->setFichierJuryError     ( $_FILES [ 'fichierJury'    ] [ 'error'   ] [ $cpt ] );
+				$tabImports[ $cpt ]->setFichierJuryTmpName   ( $_FILES [ 'fichierJury'    ] [ 'tmp_name'] [ $cpt ] );
+				
+				$tabImports[ $cpt ]->setFichierMoyenneType   ( $_FILES [ 'fichierMoyenne' ] [ 'type'    ] [ $cpt ] );
+				$tabImports[ $cpt ]->setFichierMoyenneError  ( $_FILES [ 'fichierMoyenne' ] [ 'error'   ] [ $cpt ] );
+				$tabImports[ $cpt ]->setFichierMoyenneTmpName( $_FILES [ 'fichierMoyenne' ] [ 'tmp_name'] [ $cpt ] );
+			}
+
+			print_r($tabImports);
+		}
 	}
 
 	$controleurVue = new ControleurVue();
@@ -185,12 +221,35 @@
 		echo json_encode(['erreur' => 'ID de semestre ou annee manquant']);
 	}
 
-	if ($_FILES && isset($_POST['fichiers']))
+	// if (isset($_POST['fichiersImportes']))
+	// {
+	// 	$jsonRecu = $_POST['fichiersImportes'];
+	// 	$controleurVue->traiterFichiersImportes($jsonRecu);
+
+	// 	$json = json_decode(file_get_contents('php://input'), true);
+	// 	var_dump($_POST);
+		
+	// 	echo json_encode(['succes' => 'Fichiers transmis']);
+	// }
+	// else
+	// {
+	// 	echo json_encode(['error' => 'Aucun fichier envoyé ou informations manquantes.']);
+	// }
+
+	// if ($_FILES && isset($_FILES['fichier'])) {
+	// 	$fichier = $_FILES['fichier'];
+	// 	$nomFichier = $fichier['name'];
+	// 	$fichierTemporaire = $fichier['tmp_name'];
+	
+	// 	// Traitez le fichier comme nécessaire
+	// 	// Par exemple, affichez le nom du fichier
+	// 	echo "Le fichier $nomFichier a été téléchargé avec succès.";
+	// } else {
+	// 	echo "Aucun fichier n'a été téléchargé.";
+	// }
+
+	if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['annee'])) //POST[annee][0] = "2002-2003" POST[annee][1]
 	{
-		echo json_encode(['success' => true]);
-	}
-	else
-	{
-		echo json_encode(['error' => 'Aucun fichier envoyé ou informations manquantes.']);
+		$controleurVue->import();
 	}
 ?>
