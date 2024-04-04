@@ -3,48 +3,45 @@
 class Utilisateur
 {
 	//clé primaire
-	private $idutilisateur;
+	private $nomutilisateur;
 
 	//attributs
 	private $mdp;
+	private $acces;
 
-	public function __construct($idUtilisateur, $mdp) {
-		$this->idutilisateur = $idUtilisateur;
-		$this->mdp = $mdp;
-	}
-
-	public function getEqClesPrimaires() : array {
-		return array( "idutilisateur" => $this->idutilisateur );
-	}
-
-	public function getEqAttributs() : array
+	public function __construct ( $nomutilisateur = "", $mdp = "", $acces = "" )
 	{
-		return $this->getEqClesPrimaires();
+		$this->nomutilisateur = $nomutilisateur;
+		$this->mdp            = $mdp;
+		$this->acces          = $acces;
 	}
 
-	public function getIdUtilisateur() {
-		return $this->idutilisateur;
+	public function getEqClesPrimaires ( ) : array
+	{
+		return array ( "nomutilisateur" => $this->nomutilisateur );
 	}
 
-	public function setIdUtilisateur($idUtilisateur) {
-		$this->idutilisateur = $idUtilisateur;
+	public function getEqAttributs ( ) : array
+	{
+		return $this->getEqClesPrimaires ( );
 	}
 
-	public function getMdp() {
-		return $this->mdp;
+	public function getNomUtilisateur ( ) { return $this->nomutilisateur; }
+	public function getMdp            ( ) { return $this->mdp;            }
+	public function getAcces          ( ) { return $this->acces;          }
+
+	public function setNomUtilisateur ( $nomutilisateur ) { $this->nomutilisateur = $nomutilisateur; }
+	public function setMdp            ( $mdp            ) { $this->mdp            = $mdp;            }
+	public function setAcces          ( $acces          ) { $this->acces          = $acces;          }
+
+	public function __toString()
+	{
+		return "Utilisateur : nomutilisateur = ".$this->nomutilisateur.", mdp = ".$this->mdp;
 	}
 
-	public function setMdp($mdp) {
-		$this->mdp = $mdp;
-	}
-
-	public function __toString() {
-		return "Utilisateur : idutilisateur = ".$this->idutilisateur.", mdp = ".$this->mdp;
-	}
-
-	public function equals(Utilisateur $utilisateur) : bool {
-		return $this->idutilisateur == $utilisateur->getIdUtilisateur();
+	public function equals ( Utilisateur $utilisateur ) : bool
+	{
+		return $this->nomutilisateur == $utilisateur->getnomutilisateur ( );
 	}
 }
-
 ?>
