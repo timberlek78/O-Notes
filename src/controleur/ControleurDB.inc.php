@@ -193,7 +193,7 @@ class DB
 	/*        Fonctions DELETE         */
 	/***********************************/
 
-	public function delete ( $nomTable, $objet ) //TODO:
+	public function delete ( $nomTable, $objet ) //TODO: vérifier que la méthode fonctionne
 	{
 		$requete = 'DELETE FROM '.DB::$schema.'.'.$nomTable.' WHERE '.$this->getColumnsNames ( $nomTable )[0].' = ?';
 		$tparam  = array ( array_values ( $objet->getEqAttributs ( ) )[0] );
@@ -232,28 +232,22 @@ class DB
 		$requete    = 'INSERT INTO '.DB::$schema.'.'.$nomClasse;
 
 		$nbAttribut = count ( array_keys ( $objet->getEqAttributs ( ) ) );
-		$colonnes   = " (";
-		//Précision des colonnes à remplir dans la BADO
 
-		$tparam  = array ( );
+		$colonnes   = " (";
+		$parametres = " VALUES (";
+
+		$cptCol = 0;
 		foreach( $objet->getEqAttributs ( ) as $cle => $valeur )
 		{
-			$tparam[] = $valeur;
-		}
-
-		for ( $cptCol = 0; $cptCol < $nbAttribut; $cptCol++ )
-		{
-			$colonnes   .= ( $cptCol > 0 ? ',' : '' ) .$tparam[$cptCol];
-		}
-		$colonnes .=")";
-
-		$parametres = " VALUES (";
-		//Mise en place du nombre de paramètres nécessaire
-		for( $cptCol = 0; $cptCol < $nbAttribut; $cptCol++ )
-		{
+			$colonnes .= ( $cptCol > 0 ? ',' : '' ) . $cle;
 			$parametres .= ( $cptCol > 0 ? ',' : '' ) . '?';
+			$cptCol++;
 		}
+
+		$colonnes .=")";
 		$parametres .= ")";
+
+		echo $requete . $colonnes . $parametres . "<br>";
 
 		return $requete . $colonnes . $parametres;
 	}
@@ -282,13 +276,13 @@ class DB
 		$parametres = ' SET ';
 		$conditions = ' WHERE ';
 
-		$tabAttribut = $objet->getEqAttributs ( );
+		$eqAttributs = $objet->getEqAttributs ( );
 		$cptAttribut = 0;
-		foreach ( $tabAttribut as $cle => $valeur )
+		foreach ( $eqAttributs as $cle => $valeur )
 		{
 			$cptAttribut++;
 			$parametres .= $cle . ' = ?';
-			if ( $cptAttribut < count ( $tabAttribut ) ) $parametres .= ', ';
+			if ( $cptAttribut < count ( $eqAttributs ) ) $parametres .= ', ';
 		}
 
 		$eqClesPrimaires = $objet->getEqClesPrimaires ( );
@@ -300,6 +294,8 @@ class DB
 			if ( $cptCles < count( $eqClesPrimaires ) ) $conditions .= ' AND ';
 		}
 	
+		echo $requete . $parametres . $conditions . "<br>";
+
 		return $requete . $parametres . $conditions;
 	}
 }
