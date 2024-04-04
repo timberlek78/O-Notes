@@ -207,7 +207,7 @@
 
 	$controleurVue = new ControleurVue();
 	
-	echo 'test';
+	//echo 'test';
 	if (isset($_GET['numSemestre']) && !empty($_GET['numSemestre']) && isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
 		$numSem = $_GET['numSemestre'];
