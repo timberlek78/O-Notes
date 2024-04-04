@@ -32,7 +32,6 @@ choixAnnee.addEventListener('change', function()
 {
 	anneeSelectionnee = choixAnnee.value;
 	fetchDonneeEtudiant()
-	//reinitialiserPage(); TODO: une fonction qui remet la page à vide (pour ne pas conserver les données précédentes)
 })
 
 /*                                     */
