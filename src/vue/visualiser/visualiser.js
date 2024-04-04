@@ -37,47 +37,52 @@ function adaptationHauteur ( )
 	} );
 }
 
-/* Déclanche la méthode lors du chargement de la page et du resize de la page */
-window.addEventListener ( 'resize', adaptationHauteur );
-window.addEventListener ( 'load'  , adaptationHauteur );
+// Modication de la taille des en-tete
+const observer = new MutationObserver ( adaptationHauteur );
+observer.observe ( document.body, { attributes: true, childList: true, subtree: true } );
 
 /*                                          */
 /*   FONCTIONNEMENT DE LA POP-UP ETUDIANT   */
 /*                                          */
-const popupEtudiant            = document.querySelector    ( '.popup-etudiant'            );
-const tabEtudiant              = document.querySelector    ( '.conteneur-tableau-etd'     );
+const popupEtudiant            = document.querySelector ( '.popup-etudiant'            );
+const tabEtudiant              = document.querySelector ( '.conteneur-tableau-etd'     );
+var indiceLigneSelectionne = -1;
 
 function ouverturePopupEtudiant ( )
 {
-	const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
-	const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
-	const boutonFermer             = document.querySelector    ( '.fermeture'                 );
-		
+	let lignesNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
+
+	let boutonFermer             = document.querySelector    ( '.fermeture'                 );
+
 	boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant )
-	const ligne  = event.target.parentNode;
+	var ligne  = event.target.parentNode;
+	indiceLigneSelectionne = Array.from ( ligne.parentNode.children ).indexOf ( ligne ) + 1;
 
-	const indice = Array.from ( ligne.parentNode.children ).indexOf ( ligne );
-
-	// Ajoute la surbrillance sur la ligne
-	for ( let i = 1; i < ligneCompetence.length; i++ )
-	{
-		if ( i % ligneNote.length === ( indice + 1 ) )
-		{
-			ligneNote      [i%ligneNote.length].classList.add ( 'ligneValeur' );
-			ligneCompetence[i                 ].classList.add ( 'ligneValeur' );
-			
-		}
-		else if ( i % ligneNote.length !== 0 )
-		{
-			ligneCompetence[i                 ].classList.add ( 'ligneAutre' );
-			ligneNote      [i%ligneNote.length].classList.add ( 'ligneAutre' );
-		}
-	}
+	surbrillance ( lignesNote )
 
 	popupEtudiant.classList.add ( 'ouvert' );
 	tabEtudiant  .classList.add ( 'cache'  );
 }
 
+function surbrillance ( tableau )
+{
+	if ( indiceLigneSelectionne === -1 )
+	{
+		for ( let i = 1; i < tableau.length; i++ )
+		{
+			tableau[i].classList.remove ( 'ligneAutre'  );
+			tableau[i].classList.remove ( 'ligneValeur' );
+		}
+		return;
+	}
+
+	for ( let i = 1; i < tableau.length; i++ )
+		if ( indiceLigneSelectionne !== 0 && indiceLigneSelectionne !== i )
+			tableau[i].classList.add ( 'ligneAutre' );
+
+
+		tableau[indiceLigneSelectionne].classList.add ( 'ligneValeur' );
+}
 
 function majPopupEtudiant ( etudiant )
 {
@@ -99,18 +104,17 @@ function majPopupEtudiant ( etudiant )
 
 function fermeturePopupEtudiant ( )
 {
-	const ligneNote                = document.querySelectorAll ( '.tableau-note-etd tr'       );
-	const ligneCompetence          = document.querySelectorAll ( '.tableau-competence-etd tr' );
+	var tabNote       = document.querySelectorAll ( '.tableau-note-etd tr'       );
+	var tabCompetence = document.querySelectorAll ( '.tableau-competence-etd tr' );
 	popupEtudiant.classList.remove ( 'ouvert' );
 	tabEtudiant  .classList.remove ( 'cache'  );
 
-	// Retire la surbrillance sur la ligne
-	for ( let i = 1; i < ligneCompetence.length; i++ )
+	indiceLigneSelectionne = -1;
+	surbrillance ( tabNote  )
+
+	if ( tabCompetence.length !== 0 )
 	{
-		ligneCompetence[i                 ].classList.remove ( 'ligneAutre'  );
-		ligneCompetence[i                 ].classList.remove ( 'ligneValeur' );
-		ligneNote      [i%ligneNote.length].classList.remove ( 'ligneAutre'  );
-		ligneNote      [i%ligneNote.length].classList.remove ( 'ligneValeur' );
+		surbrillance ( tabCompetence );
 	}
 }
 
