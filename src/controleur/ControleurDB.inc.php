@@ -4,6 +4,9 @@
 /******************************************/
 
 include ( "ConfigurationDB.inc.php" );
+include ( "../donnee/EtudiantCursusFetch.inc.php" );
+include ( "../donnee/EtudiantEtudiantSemestre.inc.php" );
+include ( "../donnee/CursusFetch.inc.php" );
 require_once __DIR__.'/../donnee/IncludeAll.php';
 
 class DB
@@ -106,6 +109,160 @@ class DB
 
 		return $tab;
 	}
+
+	/*************************************/
+	/*         REQUETE AVEC JOIN         */
+	/*************************************/
+	public function selectJoin($tabTables, $nomClasse, $condition=null, $valeur=null, $condition2=null, $valeur2=null, $condition3=null, $valeur3=null)
+	{
+		$requete = 'SELECT * FROM ';
+
+		if ($tabTables == null || count($tabTables) == 0)
+		{
+			return;
+		}
+
+		$requete .= $tabTables[0];
+
+		for ($cpt = 1 ; $cpt < count($tabTables) ; $cpt++)
+		{
+			$requete .= ' NATURAL JOIN ' . $tabTables[$cpt];
+		}
+
+		$parametres = array();
+		if ($condition != null)
+		{
+			$requete .= " WHERE $condition = ?";
+			$parametres[] = $valeur;
+
+			if ($condition2 != null)
+			{
+				$requete .= " AND $condition2 = ?";
+				$parametres[] = $valeur2;
+
+				if ($condition3 != null)
+				{
+					$requete .= " AND $condition3 = ?";
+					$parametres[] = $valeur3;
+				}
+			}
+		}
+
+		$prepareStatement = $this->connect->prepare($requete);
+
+		$prepareStatement->execute($parametres);
+
+		if ($nomClasse === 'EtudiantCursusFetch')
+		{
+			$resultats = $prepareStatement->fetchAll(PDO::FETCH_ASSOC);
+			// var_dump($resultats);
+
+			$tabRet = array();
+
+			// var_dump($resultats);
+
+			foreach ($resultats as $resultat)
+			{
+				// var_dump($resultat);
+				$codenip    = $resultat['codenip'];
+				$nom        = $resultat['nom'];
+				$prenom     = $resultat['prenom'];
+				$parcours   = $resultat['parcours'];
+				$promotion  = $resultat['promotion'];
+				$specialite = $resultat['specialite'];
+				$typebac    = $resultat['typebac'];
+
+				$rang    = $resultat['rang'];
+				$nbabs   = $resultat['nbabs'];
+				$passage = $resultat['passage'];
+
+				$idcompetence = $resultat['idcompetence'];
+				$admission = $resultat['admission'];
+				$idmatiere = $resultat['idmatiere'];
+				$coeff = $resultat['coeff'];
+
+				// Vérifiez si nous avons déjà un CursusFetch pour cet idcompetence
+				if (isset($tabRet[$codenip]))
+				{
+					// Si c'est le cas, ajoutez simplement la matiere à son tableau de matieres
+					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff);
+					$tabRet[$codenip]->addCursus($cursus);
+				}
+				else
+				{
+					$etudiantcursusfetch = new EtudiantCursusFetch($codenip, $nom, $prenom, $parcours, $promotion, $specialite, $typebac, $passage, $rang, $nbabs);
+					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff);
+					$etudiantcursusfetch->addCursus($cursus);
+					$tabRet[$codenip] = $etudiantcursusfetch;
+				}
+			}
+
+			// var_dump($tabRet);
+		}
+		else if ($nomClasse === 'CursusFetch')
+		{
+			$resultats = $prepareStatement->fetchAll(PDO::FETCH_ASSOC);
+			// var_dump($resultats);
+
+			$tabRet = array();
+
+			foreach ($resultats as $resultat)
+			{
+				$idcompetence = $resultat['idcompetence'];
+				$admission = $resultat['admission'];
+				$idmatiere = $resultat['idmatiere'];
+				$coeff = $resultat['coeff'];
+
+				// Vérifiez si nous avons déjà un CursusFetch pour cet idcompetence
+				if (isset($tabRet[$idcompetence]))
+				{
+					// Si c'est le cas, ajoutez simplement la matiere à son tableau de matieres
+					$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff);
+					$tabRet[$idcompetence]->addMatiere($matiere);
+				}
+				else
+				{
+					// echo 'nouveau';
+					// var_dump($resultat);
+					// Sinon, créez un nouvel objet CursusFetch et ajoutez-le à $tabRet
+					$cursusFetch = new CursusFetch($idcompetence, $admission);
+					$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff);
+					$cursusFetch->addMatiere($matiere);
+					$tabRet[$idcompetence] = $cursusFetch;
+				}
+			}
+
+			// $tabComp = array_unique($tabComp);
+
+			// foreach ($resultats as $resultat)
+			// {
+			// 	$competence = $resultat['idcompetence'];
+			// 	foreach ($tabComp as $comp)
+			// 	{
+			// 		if ($competence == $comp)
+			// 		{
+			// 			$tabRet[] = new CursusFetch($competence, $resultat['admission']);
+			// 		}
+			// 	}
+			// }
+
+			// $tabRet = array_map("unserialize", array_unique(array_map("serialize", $tabRet)));
+			var_dump($tabRet);
+		}
+		else if ($nomClasse === 'EtudiantEtudiantSemestre')
+		{
+			// Récupération des résultats sous forme d'objet de la classe $nomClasse
+			$prepareStatement->setFetchMode ( PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse );
+			
+			// Récupération de tous les résultats dans un tableau
+			$tabRet = $prepareStatement->fetchAll ( );
+		}
+
+		// $prepareStatement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse);
+
+		return $tabRet;
+	}
+
 
 	private function execMaj ( $ordreSQl, $tparam = null )
 	{

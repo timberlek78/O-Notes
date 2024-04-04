@@ -20,29 +20,34 @@
 
 		public function getJsonVisualiser($numSemestre, $annee) : string
 		{
+			// $test = $this->DB->selectJoin(array('Etudiant', 'EtudiantSemestre', 'Cursus', 'CompetenceMatiere'), 'EtudiantCursusFetch', 'numsemestre', $numSemestre, 'codenip', 8847, 'annee', $annee);
+			// $test = $this->DB->selectJoin(array('Cursus', 'CompetenceMatiere'), 'CursusFetch', 'numsemestre', $numSemestre, 'codenip', 1001);
+			// var_dump($test);
+			// return "";
 			$lstCursus = $this->DB->selectAllWherePrecis (true, 'codenip', "Cursus", 'numsemestre', $numSemestre, 'AND', 'annee', $annee );
 			//var_dump($lstCodeNIP);
 			// $lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
 			$tabDonnees = array();
-			
+			// echo 'testDehors';
 			foreach ( $lstCursus as $cursusEtd )
 			{
+				// echo 'testDedans';
 				$codenip = $cursusEtd->getCodeNIP ( );
 				
 
-				foreach ( $this->DB->selectAllWhere('Etudiant', 'codenip', $codenip) as $etudiant )
+				foreach ( $this->DB->selectJoin(array('Etudiant', 'EtudiantSemestre', 'Cursus', 'CompetenceMatiere'), 'EtudiantCursusFetch', 'numsemestre', $numSemestre, 'codenip', $codenip, 'annee', $annee) as $etudcursusfetch )
 				{
-		
+					// echo 'testTEST';
 					// Informations de la table Etudiant
 					$etudiantDetails = array
 					(
-						'nom'          => $etudiant->getNom            ( ),
-						'prenom'       => $etudiant->getPrenom         ( ),
-						'codeNIP'      => $codenip                        ,
-						'parcours'     => $etudiant->getParcours       ( ),
-						'promotion'    => $etudiant->getPromotion      ( ),
-						'specialite'   => $etudiant->getSpecialite     ( ),
-						'typeBac'      => $etudiant->getTypeBac        ( )
+						'nom'          => $etudcursusfetch->nom       ,
+						'prenom'       => $etudcursusfetch->prenom    ,
+						'codeNIP'      => $codenip                    ,
+						'parcours'     => $etudcursusfetch->parcours  ,
+						'promotion'    => $etudcursusfetch->promotion ,
+						'specialite'   => $etudcursusfetch->specialite,
+						'typeBac'      => $etudcursusfetch->typebac
 					);
 			
 					// Informations de la table Etude
@@ -57,49 +62,50 @@
 					// 	$etudiantDetails [ 'etude' ] = $etudeDetails;
 					// }
 		
-					// Information de la table EtudiantSemestre
-					foreach ( $this->DB->selectAllWhere ( 'EtudiantSemestre', 'codenip', $codenip, 'AND', 'numsemestre', $numSemestre ) as $etudesem )
-					{
-						$etudsemDetails = array
-						(
-							'rang'      => $etudesem->getRang       ( ),
-							'nbAbsence' => $etudesem->getNbAbsences ( ),
-							'passage'   => $etudesem->getPassage    ( )
-						);
+					$etudsemDetails = array
+					(
+						'rang'      => $etudcursusfetch->rang ,
+						'nbAbsence' => $etudcursusfetch->nbabs,
+						'passage'   => $etudcursusfetch->passage
+					);
 		
-						$etudiantDetails [ 'etudsem' ] = $etudsemDetails;
-					}
+					$etudiantDetails [ 'etudsem' ] = $etudsemDetails;
+
 		
 					$cursusDetails = array ( );
 					// Informations de la table Cursus
-					foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
+					foreach ( $etudcursusfetch->tabCursus as $cursusfetch )
 					{
 						$compmatDetails    = array ( );
 						$matiereCompetence = array ( );
 
-						// Informations de la table CompetenceMatiere
-						foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
-						{
+						//FIXME:
+
 		
+						// Informations de la table EstNote
+						//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
+						// var_dump($cursusfetch->tabMatiere);
+						foreach ( $cursusfetch->tabMatiere as $matiere )
+						{
+							// echo 'TESTTTTTTTTTTTTTTT';
+							// var_dump($matiere);
+
 							$matDetails = array
 							(
-								'libelle' => $compmat->getidMatiere ( ),
-								'coef'    => $compmat->getCoeff     ( )
+								'libelle' => $matiere['libelle'],
+								'coef'    => $matiere['coeff']
 							);
-		
-							// Informations de la table EstNote
-							//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
-							foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
+							foreach ( $this->DB->selectAllWhere (false, 'moyenne', 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $matiere['libelle'] ) as $moyMat )
 							{
 								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
 							}
-		
 							$matiereCompetence [ ] = $matDetails;
 						}
 						
+		
 						$compmatDetails [ 'matieres' ]  = $matiereCompetence;
-						$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
-						$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
+						$compmatDetails [ 'admission' ] = $cursusfetch->admission;
+						$cursusDetails [ $cursusfetch->idcompetence ] = $compmatDetails ;
 						// $cursus->getidCompetence ( )
 						$etudiantDetails [ 'cursus' ] = $cursusDetails;
 					}
@@ -107,7 +113,7 @@
 					
 		
 					// Informations de la table FPE
-					foreach ( $this->DB->selectAllWhere ( 'FPE', 'codenip', $codenip ) as $fpe )
+					foreach ( $this->DB->selectAllWhere (false, 'avismaster, avisecoleinge, commentaire', 'FPE', 'codenip', $codenip ) as $fpe )
 					{
 						$fpeDetails = array
 						(
@@ -213,6 +219,7 @@
 		$numSem = $_GET['numSemestre'];
 		$annee = $_GET['annee'];
 
+		// TEST
 		$tempsDebut = microtime(true);
 		$resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
 		$tempsFin = microtime(true);
@@ -220,6 +227,9 @@
 		$tempsExecution = $tempsFin - $tempsDebut;
 		echo "<h1>Temps : $tempsExecution s</h1>";
 		echo $resultat;
+
+		//TODO: remettre juste ça
+		// echo $controleurVue->getJsonVisualiser($numSem, $annee);
 	}
 	else if (isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
