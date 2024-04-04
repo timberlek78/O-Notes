@@ -32,7 +32,7 @@ class Cursus
 		return get_object_vars($this);
 	}
 
-	public function getCodeNIP(): int
+	public function getCodeNIP(): string
 	{
 		return $this->codenip;
 	}
@@ -42,7 +42,7 @@ class Cursus
 		return $this->numsemestre;
 	}
 
-	public function getidCompetence(): string
+	public function getIdCompetence(): string
 	{
 		return $this->idcompetence;
 	}

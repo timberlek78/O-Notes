@@ -2,20 +2,20 @@ CREATE SCHEMA IF NOT EXISTS onote;
 
 -- Suppression des tables si elles existent deja
 
-DROP TABLE IF EXISTS onote.EstNote;
-DROP TABLE IF EXISTS onote.Possede;
-DROP TABLE IF EXISTS onote.Cursus;
-DROP TABLE IF EXISTS onote.CompetenceMatiere;
-DROP TABLE IF EXISTS onote.EtudiantSemestre;
-DROP TABLE IF EXISTS onote.FPE;
-DROP TABLE IF EXISTS onote.Etudiant;
-DROP TABLE IF EXISTS onote.ConfigFPE;
-DROP TABLE IF EXISTS onote.Illustration;
-DROP TABLE IF EXISTS onote.Utilisateur;
-DROP TABLE IF EXISTS onote.Matiere;
-DROP TABLE IF EXISTS onote.Competence;
-DROP TABLE IF EXISTS onote.Semestre;
-DROP TABLE IF EXISTS onote.Etude;
+DROP TABLE IF EXISTS onote.EstNote CASCADE;
+DROP TABLE IF EXISTS onote.Possede CASCADE;
+DROP TABLE IF EXISTS onote.Cursus CASCADE;
+DROP TABLE IF EXISTS onote.CompetenceMatiere CASCADE;
+DROP TABLE IF EXISTS onote.EtudiantSemestre CASCADE;
+DROP TABLE IF EXISTS onote.FPE CASCADE;
+DROP TABLE IF EXISTS onote.Etudiant CASCADE;
+DROP TABLE IF EXISTS onote.ConfigFPE CASCADE;
+DROP TABLE IF EXISTS onote.Illustration CASCADE;
+DROP TABLE IF EXISTS onote.Utilisateur CASCADE;
+DROP TABLE IF EXISTS onote.Matiere CASCADE;
+DROP TABLE IF EXISTS onote.Competence CASCADE;
+DROP TABLE IF EXISTS onote.Semestre CASCADE;
+DROP TABLE IF EXISTS onote.Etude    CASCADE;
 
 -- Création des tables
 
@@ -31,7 +31,7 @@ CREATE TABLE onote.Semestre (
 
 CREATE TABLE onote.Competence (
 	idCompetence VARCHAR( 10 ),
-	annee VARCHAR ( 9 ),
+	annee        VARCHAR( 9  ),
 	PRIMARY KEY( idCompetence, annee )
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE onote.Cursus (
 	numSemestre INT,
 	idCompetence VARCHAR( 10 ),
 	annee VARCHAR ( 9 ),
-	admission VARCHAR( 5 ),
+	admission VARCHAR( 5 ) CHECK (admission IN ('ADM','CMP','AJ','ADSUP')),
 	PRIMARY KEY ( codeNIP, numSemestre, idCompetence, annee ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( numSemestre ) REFERENCES onote.Semestre( numSemestre ),
@@ -123,6 +123,7 @@ CREATE TABLE onote.EstNote (
 	codeNIP INT,
 	idMatiere VARCHAR( 20 ),
 	moyenne DECIMAL( 15, 2 ),
+	PRIMARY KEY ( codeNIP, idMatiere ),
 	PRIMARY KEY ( codeNIP, idMatiere ),
 	FOREIGN KEY ( codeNIP ) REFERENCES onote.Etudiant( codeNIP ),
 	FOREIGN KEY ( idMatiere ) REFERENCES onote.Matiere( idMatiere )

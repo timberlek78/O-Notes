@@ -5,10 +5,12 @@ class Competence
 	private string $idcompetence;
 	private ?string $annee;
 
-	public function __construct( string $idCompetence="", $annee="" )
+		private $tabMatiere;
+
+	public function __construct( string $idcompetence="",string $annee=""="" )
 	{
-		$this->idcompetence = $idCompetence;
-		$this->annee   = $annee;
+		$this->idcompetence = $idcompetence;
+		$this->annee        = $annee;
 	}
 
 	public function getEqClesPrimaires( ) : array

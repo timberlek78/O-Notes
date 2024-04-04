@@ -27,6 +27,7 @@ class Illustration
 
 	public function getIdIllustration() {
 		return $this->idillustration;
+		return $this->idillustration;
 	}
 
 	public function setIdIllustration($idIllustration) {

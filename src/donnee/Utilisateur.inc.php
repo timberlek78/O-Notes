@@ -19,6 +19,7 @@ class Utilisateur
 
 	public function getIdUtilisateur() {
 		return $this->idutilisateur;
+		return $this->idutilisateur;
 	}
 
 	public function setIdUtilisateur($idUtilisateur) {

@@ -3,6 +3,7 @@ class Semestre
 {
 	//clé primaire
 	private int $numsemestre;
+	private int $numsemestre;
 
 	public function __construct( $numSemestre=-1 )
 	{
