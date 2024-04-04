@@ -21,15 +21,14 @@
 		public function getJsonVisualiser($numSemestre, $annee) : string
 		{
 			$lstCursus = $this->DB->selectAllWherePrecis (true, 'codenip', "Cursus", 'numsemestre', $numSemestre, 'AND', 'annee', $annee );
+			//var_dump($lstCodeNIP);
 			// $lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
 			$tabDonnees = array();
 			
-			foreach ( $lstCursus as $cursus )
+			foreach ( $lstCursus as $cursusEtd )
 			{
-				$codenip = $cursus->getCodeNIP ( );
-
-				$compmatDetails    = array ( );
-				$matiereCompetence = array ( );
+				$codenip = $cursusEtd->getCodeNIP ( );
+				
 
 				foreach ( $this->DB->selectAllWhere('Etudiant', 'codenip', $codenip) as $etudiant )
 				{
@@ -73,33 +72,39 @@
 		
 					$cursusDetails = array ( );
 					// Informations de la table Cursus
-
-					// Informations de la table CompetenceMatiere
-					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( ), 'AND', 'codenip', $codenip) as $compmat )
+					foreach ( $this->DB->selectAllWhere ( 'Cursus', 'codenip', $codenip, 'AND', 'numSemestre', $numSemestre) as $cursus )
 					{
-	
-						$matDetails = array
-						(
-							'libelle' => $compmat->getidMatiere ( ),
-							'coef'    => $compmat->getCoeff     ( )
-						);
-	
-						// Informations de la table EstNote
-						//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
-						foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
+						$compmatDetails    = array ( );
+						$matiereCompetence = array ( );
+
+						// Informations de la table CompetenceMatiere
+						foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( )) as $compmat )
 						{
-							$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
+		
+							$matDetails = array
+							(
+								'libelle' => $compmat->getidMatiere ( ),
+								'coef'    => $compmat->getCoeff     ( )
+							);
+		
+							// Informations de la table EstNote
+							//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
+							foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
+							{
+								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
+							}
+		
+							$matiereCompetence [ ] = $matDetails;
 						}
-	
-						$matiereCompetence [ ] = $matDetails;
+						
+						$compmatDetails [ 'matieres' ]  = $matiereCompetence;
+						$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
+						$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
+						// $cursus->getidCompetence ( )
+						$etudiantDetails [ 'cursus' ] = $cursusDetails;
 					}
+
 					
-					$compmatDetails [ 'matieres' ]  = $matiereCompetence;
-					$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
-					$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
-	
-					// $cursus->getidCompetence ( )
-					$etudiantDetails [ 'cursus' ] = $cursusDetails;
 		
 					// Informations de la table FPE
 					foreach ( $this->DB->selectAllWhere ( 'FPE', 'codenip', $codenip ) as $fpe )
