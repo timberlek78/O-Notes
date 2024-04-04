@@ -2,7 +2,7 @@
 
 include_once "ObjetDAO.inc.php";
 
-class EstNote
+class EstNote extends ObjetDAO
 {
 	//clé primaire
 	private string $codenip;

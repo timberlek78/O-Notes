@@ -193,7 +193,7 @@ class DB
 	/*        Fonctions DELETE         */
 	/***********************************/
 
-	public function delete ( $nomTable, $objet ) //TODO: vérifier que la méthode fonctionne
+	public function delete ( $nomTable, ObjetDAO $objet ) //TODO: vérifier que la méthode fonctionne
 	{
 		$requete = 'DELETE FROM '.DB::$schema.'.'.$nomTable.' WHERE '.$this->getColumnsNames ( $nomTable )[0].' = ?';
 		$tparam  = array ( array_values ( $objet->getEqAttributs ( ) )[0] );
@@ -208,7 +208,7 @@ class DB
 	/*        Fonctions INSERT         */
 	/***********************************/
 
-	public function insert ( $nomTable, $objet )
+	public function insert ( $nomTable, ObjetDAO $objet )
 	{
 		// Construire la requête d'insertion
 		$requete = $this->constructionRequeteInsert ( $nomTable, $objet );
@@ -226,7 +226,7 @@ class DB
 		$this->execMaj ( $requeteAvecValeurs );
 	}
 
-	private function constructionRequeteInsert ( $nomClasse, $objet )
+	private function constructionRequeteInsert ( $nomClasse,ObjetDAO $objet )
 	{
 		$requete    = 'INSERT INTO '.DB::$schema.'.'.$nomClasse;
 
@@ -251,7 +251,7 @@ class DB
 	/*        Fonctions UPDATE         */
 	/***********************************/
 
-	public function update( $nomTable, $objet )
+	public function update( $nomTable, ObjetDAO $objet )
 	{
 		$requete = $this->constructionRequeteUpdate ( $nomTable, $objet );
 
@@ -273,7 +273,7 @@ class DB
 		return $this->execMaj( $requeteAvecValeurs );
 	}
 
-	private function constructionRequeteUpdate ( $nomClasse, $objet )
+	private function constructionRequeteUpdate ( $nomClasse, ObjetDAO $objet )
 	{
 		$requete    = 'UPDATE ' . DB::$schema.'.'.$nomClasse;
 		$parametres = ' SET ';

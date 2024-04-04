@@ -12,7 +12,7 @@ class ConfigurationDB
 	
 	public function __construct ( )
 	{
-		$dotenv = Dotenv::createImmutable ( __DIR__  );
+		$dotenv = Dotenv::createImmutable ( __DIR__ );
 		$dotenv->load ( );
 
 		$dotenv->required ( [ 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASS' ] );
