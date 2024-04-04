@@ -169,6 +169,8 @@ function ajouterEtudiantTableau ( etudiant )
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>${nbUEs}/${Object.keys ( competences ).length}</td>`;
 	
 	tabResumeComptence.appendChild ( tabResumeligneResume );
+
+	ajouterDonneePopupCompetence ( );
 };
 
 function calculerMoyenneCompetence ( donnee )
@@ -195,10 +197,17 @@ function genererEntete ( tabEntete )
 
 	tabEntete.forEach ( function ( entete )
 	{
-		enteteTab.innerHTML += `<th>${entete}</th>`;
+		enteteTab.innerHTML += `<th ${'class=bin id=bin' + entete.charAt ( entete.length - 1 ) } >${entete}</th>`;
 	} );
 
 	enteteTab.innerHTML += `<th>UEs</th>`;
 
 	tabResumeComptence2.appendChild ( enteteTab );
+}
+
+function ajouterDonneePopupCompetence ( )
+{
+	// Ajout du listeneur sur les colonnes
+	console.log("je suis dans ajouterDonneePopupCompetence")
+	ajoutListener ();
 }
