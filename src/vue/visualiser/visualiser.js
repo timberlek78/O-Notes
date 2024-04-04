@@ -15,6 +15,11 @@ table2.addEventListener ( 'scroll', function ( )
 	table1.scrollTop = table2.scrollTop;
 } );
 
+
+/*                        */
+/*   ADAPTATION HAUTEUR   */
+/*                        */
+
 /* Fonction qui permet d'adapter la hauteur de l'entête du tableau selon la hauteur maximal entre les deux tableaux */
 function adaptationHauteur ( )
 {
