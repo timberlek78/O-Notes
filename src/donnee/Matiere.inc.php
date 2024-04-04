@@ -1,13 +1,22 @@
 <?php
 
-class Matiere {
+class Matiere
+{
+	//clé primaire
 	private string $idmatiere;
+
+	//attributs
 	private bool $alternant;
 
 	public function __construct( $idMatiere="", $alternant=false )
 	{
 		$this->idmatiere = $idMatiere;
 		$this->alternant = $alternant;
+	}
+
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "idmatiere" => $this->idmatiere );
 	}
 
 	public function getAttributs() : array

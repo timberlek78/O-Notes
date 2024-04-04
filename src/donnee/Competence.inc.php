@@ -3,14 +3,18 @@ class Competence
 {
 	//clé primaire
 	private string $idcompetence;
-
-	//attributs
 	private ?string $annee;
 
 	public function __construct( string $idCompetence="", $annee="" )
 	{
 		$this->idcompetence = $idCompetence;
 		$this->annee   = $annee;
+	}
+
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "idcompetence" => $this->idcompetence,
+					  "annee"        => $this->annee );
 	}
 
 	public function getAttributs( ) : array
@@ -45,7 +49,7 @@ class Competence
 
 	public function equals( Competence $competence ) : bool
 	{
-		return $this->idcompetence == $competence->getIdCompetence( );
+		return $this->idcompetence == $competence->getIdCompetence( ) && $this->annee == $competence->getAnnee( );
 	}
 }
 ?>

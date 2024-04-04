@@ -11,33 +11,67 @@ class ConfigFPE {
 		$this->anneepromo = $anneePromo;
 	}
 
+	public function getEqClesPrimaires() : array
+	{
+		return array("idconfigfpe" => $this->idconfigfpe);
+	}
+
 	public function getAttributs() : array
 	{
 		return get_object_vars($this);
 	}
 
-	public function getIdConfigFPE() {
+	public function getIdConfigFPE()
+	{
 		return $this->idconfigfpe;
 	}
 
-	public function setIdConfigFPE($idConfigFPE) {
+	public function setIdConfigFPE($idConfigFPE)
+	{
 		$this->idconfigfpe = $idConfigFPE;
 	}
 
-	public function getNomDirecteur() {
+	public function getNomDirecteur()
+	{
 		return $this->nomdirecteur;
 	}
 
-	public function setNomDirecteur($nomDirecteur) {
+	public function setNomDirecteur($nomDirecteur)
+	{
 		$this->nomdirecteur = $nomDirecteur;
 	}
 
-	public function getAnneePromo() {
+	public function getAnneePromo()
+	{
 		return $this->anneepromo;
 	}
 
-	public function setAnneePromo($anneePromo) {
+	public function setAnneePromo($anneePromo)
+	{
 		$this->anneepromo = $anneePromo;
+	}
+
+	public function __toString()
+	{
+		return "ConfigFPE : idconfigfpe = " . $this->idconfigfpe . ", nomdirecteur = " . $this->nomdirecteur . ", anneepromo = " . $this->anneepromo;
+	}
+
+	//TODO: probablement un meilleur equals
+	/*public function equals( ConfigFPE $configFPE ) : bool
+	{
+		$sontEgaux = false;
+
+		foreach( $this->getEqClesPrimaires() as $cle => $valeur )
+		{
+			$sontEgaux = $sontEgaux && $valeur == $configFPE->getAttributs()[$cle];
+		}
+
+		return $sontEgaux;
+	}*/
+
+	public function equals( ConfigFPE $configFPE ) : bool
+	{
+		return $this->idconfigfpe == $configFPE->getIdConfigFPE();
 	}
 }
 

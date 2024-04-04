@@ -5,11 +5,16 @@ class Etude
 	private ?string $specialite;
 	private ?string $typebac;
 
-
 	public function __construct( string $specialite="", string $typebac="" )
 	{
 		$this->specialite = $specialite;
 		$this->typebac    = $typebac;
+	}
+
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "specialite" => $this->specialite,
+					  "typebac"    => $this->typebac );
 	}
 	
 	public function getAttributs() : array
