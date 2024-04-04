@@ -59,6 +59,9 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 
 // TODO: Fetch selon le semestre sélectionné
 
+// Test déclaration des valeurs à l'extérieur pour y avoir accès
+var ensDetailCompetence = new Map ( );
+
 function fetchDonneeEtudiant()
 {
 	if ( ! semestreSelectionne || ! anneeSelectionnee )
@@ -76,6 +79,13 @@ function fetchDonneeEtudiant()
 			try
 			{
 				genererEntete ( Object.keys ( donnees[0].cursus ) );
+
+				ensDetailCompetence.forEach ( (value, key) =>
+				{
+					genererEntetePopup ( key, donnees[0].cursus[key].matieres );
+				} );
+
+				ajoutListener ( );
 			}
 			catch ( error )
 			{
@@ -85,9 +95,9 @@ function fetchDonneeEtudiant()
 			donnees.forEach ( function ( etudiant )
 			{
 				ajouterEtudiantTableau ( etudiant );
+				//ajouterEtudiantPopup   ( etudiant );
 			} );
-
-		})
+		} )
 		.catch ( erreur => console.error ( erreur ) )
 }
 
@@ -112,7 +122,7 @@ function ajouterEtudiantTableau ( etudiant )
 	const tabNomPrenomligneEtudiant = document.createElement ( 'tr' );
 
 	tabNomPrenomligneEtudiant.classList.add ( 'cellule-cliquable-nom')
-	tabNomPrenomligneEtudiant.addEventListener('click', function ( ) 
+	tabNomPrenomligneEtudiant.addEventListener ('click', function ( )
 	{
 		ouverturePopupEtudiant ( );
 		majPopupEtudiant ( etudiant );
@@ -129,25 +139,29 @@ function ajouterEtudiantTableau ( etudiant )
 	/*|    TABLEAU : RESUMÉ COMPETENCE    |*/
 	/*+-----------------------------------+*/
 
-	// TODO: Mettre la couleur sur les en-tete
-
 	const tabResumeComptence   = document.querySelector ( '.tableau-note-etd tbody' );
 	const tabResumeligneResume = document.createElement ( 'tr' );
 
 	var htmlResume = "";
-	var nbUEs = 0;
+	var nbUEs      = 0;
 	
 	const moysCompetence = new Array ( );
 	const competences    = etudiant.cursus;
 
 	for ( const competence in competences )
 	{
-		var moyCompetence  = new Map ( );
+		var moyCompetence       = new Map   ( );
+		var ensembleNoteMatiere = new Array ( );
 		var ensMatiere = competences[competence].matieres;
+		
+		// Calcul les ues validés par l'étudiant
 		var admission  = competences[competence].admission
 
-		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP')
+		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP' )
 			nbUEs += 1;
+
+		// Ajoute le Bonus à la ligne de l'étudiant
+		ensembleNoteMatiere.push ( `<td> ${ensMatiere[0].moyenne} </td>` );
 
 		let counter = 0;
 		ensMatiere.forEach ( matiere =>
@@ -155,25 +169,33 @@ function ajouterEtudiantTableau ( etudiant )
 			if ( counter !== 0 )
 			{
 				moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ]);
+				ensembleNoteMatiere.push ( `<td> ${matiere.moyenne} </td>` );
 			}
 			counter++;
 		} );
 
 		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + ensMatiere[0].moyenne ).toFixed ( 2 ) ;
-		 
+
+		// Met la moyenne de la compétence au début du tableau
+		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
+
+		// Ajoute les notes de l'étudiant dans le détail des compétences
+		ensDetailCompetence.get ( competence ).push ( ensembleNoteMatiere );
+		
 		moysCompetence.push ( moyenneEnCours );
 
 		htmlResume += `<td>${moyenneEnCours}</td>`;
 	}
 
-	const somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
-	const moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
+	// Calcul de la moyenne générale du semestre
+	var somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
+	var moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
 
+	// Information sur l'étudiant
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>${nbUEs}/${Object.keys ( competences ).length}</td>`;
 	
+	// Ajoute la ligne de l'étudiant
 	tabResumeComptence.appendChild ( tabResumeligneResume );
-
-	ajouterDonneePopupCompetence ( );
 };
 
 function calculerMoyenneCompetence ( donnee )
@@ -202,6 +224,7 @@ function genererEntete ( tabEntete )
 	tabEntete.forEach ( function ( entete )
 	{
 		enteteTab.innerHTML += `<th ${'class=bin id=bin' + entete.charAt ( entete.length - 1 ) } >${entete}</th>`;
+		ensDetailCompetence.set ( entete, new Array ( ) );
 	} );
 
 	enteteTab.innerHTML += `<th>UEs</th>`;
@@ -209,9 +232,16 @@ function genererEntete ( tabEntete )
 	tabResumeComptence2.appendChild ( enteteTab );
 }
 
-function ajouterDonneePopupCompetence ( )
+function genererEntetePopup ( competence, tabEntete )
 {
-	// Ajout du listeneur sur les colonnes
-	console.log("je suis dans ajouterDonneePopupCompetence")
-	ajoutListener ();
+	var enteteTab = document.createElement ( 'tr' );
+
+	enteteTab.innerHTML += `<th>Moyenne compétence</th>`
+
+	tabEntete.forEach ( function ( entete )
+	{
+		enteteTab.innerHTML += `<th>${entete.libelle}</th>`;
+	} );
+
+	ensDetailCompetence.get ( competence ).push ( enteteTab );
 }
