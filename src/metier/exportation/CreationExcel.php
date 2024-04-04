@@ -294,7 +294,7 @@ class ExcelExporter
 		{
 			echo "<br>";
 			$feuille->setCellValue($this->getColonneFINI().$ligne, $etudiant->getUe());
-			$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
+			//$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
 
 
 			$feuille->setCellValue(chr((ord($this->getColonneFINI()) + 1  )).$ligne, $etudiant->getMoyenneG());
