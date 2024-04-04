@@ -196,6 +196,8 @@
 			}
 
 			print_r($tabImports);
+
+			//TODO: faire appel à la méthode qui importe dans la bado
 		}
 	}
 
