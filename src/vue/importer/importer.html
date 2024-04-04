@@ -8,12 +8,11 @@
 </head>
 <body>
 	<div class="conteneur-import">
-		<div class="cadre-import">
-			<div class="titre">SEMESTRE</div>
-			<div class="jury infos-import">   Jury : {nom}</div>
-			<div class="moyenne infos-import">Moyenne : {nom}</div>
-			<button class="btn-supprimer">Supprimer</button>
-		</div>
+		
+	</div>
+
+	<div class="bienvenue">
+		<p>Merci d'importer vos fichiers.</p>
 	</div>
 
 	<!-- Pop-up -->
@@ -27,17 +26,16 @@
 			<div class="selection-semestre">
 				<div class="sous-titre">Semestre</div>
 				<select name="" id="choix-semestre">
-					<option value="" disabled selected>Choisir un semestre</option>
+					<option value="default" disabled selected>Choisir un semestre</option>
 	
-					<option value="S1"> S1            </option>
-					<option value="S2"> S2            </option>
-					<option value="S3"> S3            </option>
-					<option value="S4"> S4            </option>
-					<option value="S4A">S4 - Alternant</option>
-					<option value="S5"> S5            </option>
-					<option value="S5A">S5 - Alternant</option>
-					<option value="S6"> S6            </option>
-					<option value="S6A">S6 - Alternant</option>
+					<option value="S1">            S1            </option>
+					<option value="S2">            S2            </option>
+					<option value="S3">            S3            </option>
+					<option value="S4">            S4            </option>
+					<option value="S5">            S5            </option>
+					<option value="S5 - Alternant">S5 - Alternant</option>
+					<option value="S6">            S6            </option>
+					<option value="S6 - Alternant">S6 - Alternant</option>
 				</select>
 		</div>
 		</div>
@@ -48,8 +46,7 @@
 				<div class="ajout-document ajout-jury">
 					<svg id="svg-jury" width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" width="154" height="40" rx="12" fill="var(--orange-peps)"/>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
-						test
+						<path id="svg-design" fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
 					</svg>
 					Jury
 
@@ -58,7 +55,7 @@
 				<div class="ajout-document ajout-moyenne">
 					<svg id="svg-moyenne" width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" width="154" height="40" rx="12" fill="var(--orange-peps)"/>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
+						<path id="svg-design" fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
 					</svg>
 					Moyenne
 
@@ -74,10 +71,15 @@
 	</div>
 
 	<div class="pied-de-page">
-		<button class="btn-ajout-semestre btn-pied">
-			Ajouter un semestre
-		</button>
-		<button class="btn-import btn-pied">
+		<div class="ajouts">
+			<button class="btn-ajout-semestre btn-pied">
+				Ajouter un semestre
+			</button>
+			<button class="btn-ajout-coeff btn-pied">
+				Ajouter les coefficients
+			</button>
+		</div>
+		<button class="btn-import btn-pied" disabled>
 			Importer
 		</button>
 	</div>
