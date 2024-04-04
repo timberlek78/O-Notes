@@ -37,8 +37,6 @@ class DB
 			$stmt = $this->connect->prepare ( 'SET search_path TO '.DB::$schema );
 			$stmt->execute ( );
 		
-			echo 'search_path défini avec succès sur : '.DB::$schema;
-			echo "<br>";
 		}
 		catch ( PDOException $e )
 		{
