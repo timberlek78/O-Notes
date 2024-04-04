@@ -184,4 +184,13 @@
 	{
 		echo json_encode(['erreur' => 'ID de semestre ou annee manquant']);
 	}
+
+	if ($_FILES && isset($_POST['fichiers']))
+	{
+		echo json_encode(['success' => true]);
+	}
+	else
+	{
+		echo json_encode(['error' => 'Aucun fichier envoyé ou informations manquantes.']);
+	}
 ?>

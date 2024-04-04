@@ -2,13 +2,25 @@
 @import url(./popupImport.css);
 
 .conteneur-import {
-	display: grid;
+	display: none;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 	grid-column-gap: 10.5vw;
 	grid-row-gap: 6.08vh;
 
 	padding: 5.45vh 0;
+}
+
+.bienvenue {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 30vh;
+}
+
+.bienvenue p {
+	font-style: italic;
+	font-size: 1.1em;
 }
 
 .cadre-import {
@@ -58,6 +70,15 @@ button {
 	background-color: var(--violet-moyen);
 }
 
+.btn-ajout-coeff {
+	background-color: var(--violet-action);
+}
+
 .btn-import {
 	background-color: var(--orange-peps);
+}
+
+.btn-import:disabled {
+	cursor: default;
+	background-color: lightgray;
 }
