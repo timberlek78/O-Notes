@@ -26,6 +26,10 @@ class ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe
             'voku\\helper\\' => 12,
             'voku\\' => 5,
         ),
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'Z' => 
         array (
             'ZipStream\\' => 10,
@@ -80,6 +84,10 @@ class ComposerStaticInit1ede96da65959bca76e1e3ddf0049bfe
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
             1 => __DIR__ . '/..' . '/voku/portable-utf8/src/voku',
+        ),
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
         ),
         'ZipStream\\' => 
         array (
