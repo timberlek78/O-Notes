@@ -4,6 +4,7 @@ require_once 'AnalyseStructureMoyennes.inc.php';
 require_once 'AnalyseStructureJury.inc.php';
 
 require_once __DIR__.'/../../../donnee/IncludeAll.php';
+require_once __DIR__.'/../../../donnee/DonneesONote.inc.php';
 
 class AnalyseDataFichiers
 {

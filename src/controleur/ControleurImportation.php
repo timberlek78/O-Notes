@@ -7,7 +7,7 @@
 
 	include_once __DIR__.'/../metier/importation/OuvrirLectureExcel.inc.php';
 	include_once __DIR__.'/../metier/importation/analyse/AnalyseDataFichiers.inc.php';
-	include_once __DIR__.'/../metier/DonneesONote.inc.php';
+	include_once __DIR__.'/../donnee/DonneesONote.inc.php';
 	include_once __DIR__.'/../metier/conversion/TableauToBado.inc.php';
 
 	function genererDonnees( $dataMoyenne, $dataJury ) : DonneesONote

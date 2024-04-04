@@ -3,6 +3,7 @@
 
 	include ( __DIR__."/../../controleur/ControleurDB.inc.php" );
 	require_once __DIR__.'/../../donnee/IncludeAll.php';
+	require_once __DIR__.'/../../donnee/DonneesONote.inc.php';
 
 
 	class TableauToBado
