@@ -19,7 +19,7 @@
 			<input type="text" id="semestre" name="semestre" />
 			<label for="promotion">Promotion</label>
 			<input type="text" id="promotion" name="promotion" />
-			<label for="alternant">En alternance</label>
+			<label for="alternance">En alternance</label>
 			<input type="checkbox" id="alternance" name="alternance" />
 			<input type="submit">
 		</form>
