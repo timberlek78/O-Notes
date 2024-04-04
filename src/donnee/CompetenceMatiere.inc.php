@@ -5,14 +5,23 @@ class CompetenceMatiere
 	private string $idcompetence;
 	private string $annee;
 	private string $idmatiere;
+
+	//attributs
 	private int $coeff;
 
-	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="", int $coeff=0 )
+	public function __construct( string $idCompetence="", string $annee ="",string $idMatiere="", int $coeff=1 )
 	{
 		$this->idcompetence = $idCompetence;
 		$this->annee        = $annee;
 		$this->idmatiere    = $idMatiere;
 		$this->coeff        = $coeff;
+	}
+
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "idcompetence" => $this->idcompetence,
+					  "annee"        => $this->annee,
+					  "idmatiere"    => $this->idmatiere);
 	}
 
 	public function getAttributs() : array
@@ -60,7 +69,7 @@ class CompetenceMatiere
 		return "CompetenceMatiere : idcompetence = ".$this->idcompetence.", annee = ".$this->annee.", idmatiere = ".$this->idmatiere;
 	}
 
-	private function setCoeff( int $coeff )
+	public function setCoeff( int $coeff )
 	{
 		$this->coeff = $coeff;
 	}

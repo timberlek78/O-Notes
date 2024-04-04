@@ -25,6 +25,11 @@ class Etudiant
 		$this->typebac        = $typebac;
 	}
 
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "codenip" => $this->codenip );
+	}
+
 	public function getCodeNIP(): int
 	{
 		return $this->codenip;

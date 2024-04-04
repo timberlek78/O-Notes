@@ -6,6 +6,8 @@ class Cursus
 	private int     $numsemestre;
 	private string  $idcompetence;
 	private string  $annee;
+
+	//attributs
 	private ?string $admission;
 
 	public function __construct( string $codenip="", int $numsemestre=-1, string $idcompetence="", string $annee="", string $admission="" )
@@ -15,6 +17,14 @@ class Cursus
 		$this->idcompetence = $idcompetence;
 		$this->annee        = $annee;
 		$this->admission    = $admission;
+	}
+
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "codenip"      => $this->codenip,
+					  "numsemestre"  => $this->numsemestre,
+					  "idcompetence" => $this->idcompetence,
+					  "annee"        => $this->annee );
 	}
 
 	public function getAttributs() : array

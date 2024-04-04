@@ -9,8 +9,17 @@ class Semestre
 		$this->numsemestre = $numSemestre;
 	}
 
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "numsemestre" => $this->numsemestre );
+	}
+
 	public function getAttributs() : array { return get_object_vars($this);}
-	public function getId       () : int   { return $this->numsemestre;    }
+
+	public function getNumSemestre( ) : int
+	{
+		return $this->numsemestre;
+	}
 
 	public function setNumSemestre( int $numSemestre )
 	{

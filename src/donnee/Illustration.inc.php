@@ -1,7 +1,11 @@
 <?php
 
-class Illustration {
+class Illustration
+{
+	//clé primaire
 	private $idillustration;
+
+	//attributs
 	private $img;
 	private $alternative;
 
@@ -9,6 +13,11 @@ class Illustration {
 		$this->idillustration = $idIllustration;
 		$this->img = $img;
 		$this->alternative = $alternative;
+	}
+
+	public function getEqClesPrimaires() : array
+	{
+		return array("idillustration" => $this->idillustration);
 	}
 
 	public function getAttributs() : array
@@ -38,6 +47,14 @@ class Illustration {
 
 	public function setAlternative($alternative) {
 		$this->alternative = $alternative;
+	}
+
+	public function __toString() {
+		return "Illustration : idillustration = ".$this->idillustration.", img = ".$this->img.", alternative = ".$this->alternative;
+	}
+
+	public function equals(Illustration $illustration) : bool {
+		return $this->idillustration == $illustration->getIdIllustration();
 	}
 }
 
