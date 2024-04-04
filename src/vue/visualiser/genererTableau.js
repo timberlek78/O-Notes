@@ -137,25 +137,29 @@ function ajouterEtudiantTableau ( etudiant )
 	var htmlResume = "";
 	var nbUEs = 0;
 	
-	const moyCompetence  = new Map   ( );
 	const moysCompetence = new Array ( );
 	const competences    = etudiant.cursus;
 
 	for ( const competence in competences )
 	{
-		const ensMatiere = competences[competence].matieres;
-
-		var admission = competences[competence].admission
+		var moyCompetence  = new Map ( );
+		var ensMatiere = competences[competence].matieres;
+		var admission  = competences[competence].admission
 
 		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP')
 			nbUEs += 1;
 
+		let counter = 0;
 		ensMatiere.forEach ( matiere =>
 		{
-			moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ] );
+			if ( counter !== 0 )
+			{
+				moyCompetence.set ( matiere.libelle, [ matiere.moyenne, matiere.coef ]);
+			}
+			counter++;
 		} );
 
-		var moyenneEnCours = calculerMoyenneCompetence ( moyCompetence );
+		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + ensMatiere[0].moyenne ).toFixed ( 2 ) ;
 		 
 		moysCompetence.push ( moyenneEnCours );
 
@@ -164,7 +168,6 @@ function ajouterEtudiantTableau ( etudiant )
 
 	const somme           = moysCompetence.reduce ( ( a, b ) => a + parseFloat ( b ), 0 );
 	const moyenneSemestre = ( somme / moysCompetence.length ).toFixed ( 2 );
-
 
 	tabResumeligneResume.innerHTML = `<td>${moyenneSemestre}</td>${htmlResume}<td>${nbUEs}/${Object.keys ( competences ).length}</td>`;
 	
@@ -176,11 +179,12 @@ function ajouterEtudiantTableau ( etudiant )
 function calculerMoyenneCompetence ( donnee )
 {
 	let totalNote  = 0;
-	let totalCoeff = 1;
+	let totalCoeff = 0;
 
 	donnee.forEach ( ( matière ) =>
 	{
-		const [note, coeff] = matière;
+		let [note, coeff] = matière;
+
 		totalNote  += note * coeff;
 		totalCoeff += coeff;
 	} );
