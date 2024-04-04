@@ -189,6 +189,15 @@ class DB
 		return $this->execQuery ( $requete, $parametres, $nomTable );
 	}
 
+	public function selectAllWherePrecis ( $distinct=false, $colonne="", $nomTable, $condition, $valeur )
+	{
+		$requete = 'SELECT ' . ( $distinct ? 'DISTINCT' : '' ) . ' ' . $colonne . ' FROM ' . DB::$schema. '.' . $nomTable . ' WHERE ' . $condition . ' = ?';
+
+		$parametres = array ( $valeur );
+
+		return $this->execQuery ( $requete, $parametres, $nomTable);
+	}
+
 	/***********************************/
 	/*        Fonctions DELETE         */
 	/***********************************/
