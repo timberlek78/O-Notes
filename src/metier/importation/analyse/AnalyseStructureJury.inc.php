@@ -27,7 +27,7 @@ class AnalyseStructureJury
 
 	private function definirIndicesColonnesCompetences( int $semestre )
 	{
-		$regexCompetence = "/^BIN" . $semestre . "\d$/";
+		$regexCompetence = "/^BIN" . $semestre . "\dA?$/";
 		for( $cptCol=0; $cptCol<$this->nbColonnes; $cptCol++ )
 		{
 			$colonne = $this->colonnesTitres[ $cptCol ];

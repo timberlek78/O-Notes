@@ -1,7 +1,11 @@
 <?php
 
-class FPE {
+class FPE
+{
+	//clé primaire
 	private $idfpe;
+
+	//attributs
 	private $avismaster;
 	private $avisecoleinge;
 	private $commentaire;
@@ -15,10 +19,18 @@ class FPE {
 		$this->codenip = $codenip;
 	}
 
-
-	public function getAttributs() : array
+	public function getEqClesPrimaires() : array
 	{
-		return get_object_vars($this);
+		return array( "idfpe" => $this->idfpe );
+	}
+
+	public function getEqAttributs() : array
+	{
+		return array( "idfpe"         => $this->idfpe,
+					  "avismaster"    => $this->avismaster,
+					  "avisecoleinge" => $this->avisecoleinge,
+					  "commentaire"   => $this->commentaire,
+					  "codenip"       => $this->codenip);
 	}
 
 	public function getIdFPE() {
@@ -59,6 +71,14 @@ class FPE {
 
 	public function setCodeNIP($codeNIP) {
 		$this->codenip = $codeNIP;
+	}
+
+	public function __toString() {
+		return "FPE : idfpe = ".$this->idfpe.", avismaster = ".$this->avismaster.", avisecoleinge = ".$this->avisecoleinge.", commentaire = ".$this->commentaire.", codenip = ".$this->codenip;
+	}
+
+	public function equals(FPE $fpe) : bool {
+		return $this->idfpe == $fpe->getIdFPE();
 	}
 }
 

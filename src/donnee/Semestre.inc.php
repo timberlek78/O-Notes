@@ -9,8 +9,17 @@ class Semestre
 		$this->numsemestre = $numSemestre;
 	}
 
-	public function getAttributs() : array { return get_object_vars($this);}
-	public function getId       () : int   { return $this->numsemestre;    }
+	public function getEqClesPrimaires( ) : array
+	{
+		return array( "numsemestre" => $this->numsemestre );
+	}
+
+	public function getEqAttributs() : array { return array( "numsemestre" => $this->numsemestre );}
+
+	public function getNumSemestre( ) : int
+	{
+		return $this->numsemestre;
+	}
 
 	public function setNumSemestre( int $numSemestre )
 	{
@@ -24,7 +33,7 @@ class Semestre
 
 	public function equals( Semestre $semestre ) : bool
 	{
-		return $this->numsemestre == $semestre->getId( );
+		return $this->numsemestre == $semestre->getNumSemestre( );
 	}
 }
 ?>

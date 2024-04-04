@@ -11,18 +11,12 @@
 			error_reporting(E_ALL);
 
 			include ("../controleur/ControleurDB.inc.php");
+			include ("../metier/exportation/CreationExcel.php");
 
-			$db = DB::getInstance();
+			$db    = DB::getInstance();
+			$objet = new CreationExcel();
 
-			$objet = new FPE("Duflot",2021,2023);
-
-			echo $db->insert("FPE",$objet);
-
-			$tab = $db->selectAll("FPE");
-
-			var_dump($tab[1]->getId());
-	
-			var_dump($db->selectAll("FPE"));
+			$objet->fichierJury();
 		?>
 	</body>
 </html>

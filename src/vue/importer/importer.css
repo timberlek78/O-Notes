@@ -71,6 +71,7 @@ button {
 }
 
 .btn-ajout-coeff {
+	display: none;
 	background-color: var(--violet-action);
 }
 

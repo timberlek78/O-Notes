@@ -8,7 +8,8 @@ const btnImporter      = document.querySelector(".btn-import");
 var fichierJury;
 var fichierMoyenne;
 
-const tabFichiers = [];
+const tabFichiers = new FormData();
+var   nbFD = 0;
 
 //TODO: tableau de fichiers
 
@@ -35,16 +36,22 @@ function validationImport ( )
 
 	if ( !verificationImport ( semestreChoisi, anneeChoisie ) ) return;
 
-	// Stockage des fichiers sous format json
-	var fichiers =
-	{
-		annee: anneeChoisie,
-		semestre: semestreChoisi,
-		fichierJury: fichierJury,
-		fichierMoyenne : fichierMoyenne
-	};
+	// var formData = new FormData();
+	// formData.append('annee', anneeChoisie);
+	// formData.append('semestre', semestreChoisi);
+	// formData.append('fichierJury', fichierJury);
+	// formData.append('fichierMoyenne', fichierMoyenne);
 
-	tabFichiers.push(fichiers); // Ajout du json au tableau de tous les json
+	// Stockage des fichiers sous format json
+
+	// tabFichiers.append('formData' + nbFD, formData); // Ajout du json au tableau de tous les json
+
+	tabFichiers.append('annee[]', anneeChoisie);
+	tabFichiers.append('semestre[]', semestreChoisi);
+	tabFichiers.append('fichierJury[]', fichierJury);
+	tabFichiers.append('fichierMoyenne[]', fichierMoyenne)
+
+	console.log(nbFD);	
 
 	popupImportation.classList.remove ( 'ouvert' );       // Fermeture du popup
 	
@@ -65,6 +72,7 @@ function validationImport ( )
 	// Remettre à 0 le pop-up
 	resetPopup ( );
 
+	nbFD++;
 }
 
 function verificationImport(semestre, annee)
@@ -88,6 +96,7 @@ function verificationImport(semestre, annee)
 		return false;
 	}
 
+	//FIXME: valeur par défaut fonctionne
 	if ( !semestre )
 	{
 		alert ( "Vous deves sélectionner un semestre" );
@@ -100,11 +109,14 @@ function verificationImport(semestre, annee)
 		return false;
 	}
 
-	if (tabFichiers.some(fichier => fichier.annee === annee && fichier.semestre === semestre))
-	{
-		alert ( "Des fichiers sont déjà importés pour le semestre " + semestre + " de l'année " + annee + ". Veuillez d'abord les supprimer." );
-		return false;
-	}
+	//FIXME:
+	// let existeDeja = Array.from(tabFichiers.values()).some(valeur => fichier.annee === annee && fichier.semestre === semestre);
+
+	// if (existeDeja)
+	// {
+	// 	alert ( "Des fichiers sont déjà importés pour le semestre " + semestre + " de l'année " + annee + ". Veuillez d'abord les supprimer." );
+	// 	return false;
+	// }
 
 	return true;
 }
@@ -114,6 +126,7 @@ function creationCadreImport(parent, semestre, annee)
 	// Cadre contenant tout
 	cadreImport = document.createElement ( 'div' );
 	cadreImport.classList.add ( 'cadre-import' );
+	cadreImport.classList.add ( 'index' + nbFD);
 	parent.appendChild ( cadreImport );
 
 	// Titre
@@ -142,6 +155,7 @@ function creationCadreImport(parent, semestre, annee)
 	cadreImport.appendChild ( btnSupprimer );
 }
 
+//FIXME: Fichier resté importé ? (à voir avec input file)
 function resetPopup ()
 {
 	document.getElementById('choix-semestre').value = "default";
@@ -161,18 +175,13 @@ function resetNomFichier(svg)
 function supprimerCadreImport ( event )
 {
 	console.log ( event.target.parentNode );
+	divEvent = event.target.parentNode;
 
-	var titre = event.target.parentNode.querySelector('.titre');
-	infos = titre.innerText.split('(');
-	console.log(infos);
+	indiceASuppr = Array.from(divEvent.classList)[1].match(/\d+/g).map(Number);
 
-	semestre = infos[0].substring(0, infos[0].length-1);
+	tabFichiers.delete('formData'+indiceASuppr);
 
-	annee = infos[1].substring(0, infos[1].length-1);
-
-	console.log("semestre " + semestre + " annee " + annee);
-	
-	tabFichiers.splice ( tabFichiers.findIndex ( fichier => fichier.annee === annee && fichier.semestre === semestre ), 1 );
+	console.log(tabFichiers)
 	
 	event.target.parentNode.remove ( );
 }
@@ -239,4 +248,18 @@ btnImporter.addEventListener ( 'click', envoyerDocuments );
 function envoyerDocuments ( )
 {
 	// Fetch vers le ControleurVue pour envoyer le json des documents
+
+	fetch ( '../../controleur/ControleurVue.inc.php',
+	{
+		method: 'POST',
+		body: tabFichiers
+	})
+	.then ( reponse =>
+		{
+			console.log ( reponse );
+		} )
+	.catch ( erreur => 
+		{
+			console.log ( erreur );
+		})
 }

@@ -1,6 +1,8 @@
 <?php
 
-class Possede {
+class Possede
+{
+	//clé primaire
 	private $idillustration;
 	private $idconfigfpe;
 
@@ -9,9 +11,16 @@ class Possede {
 		$this->idconfigfpe = $idConfigFPE;
 	}
 
-	public function getAttributs() : array
+	public function getEqClesPrimaires() : array
 	{
-		return get_object_vars($this);
+		return array( "idillustration" => $this->idillustration,
+					  "idconfigfpe" => $this->idconfigfpe );
+	}
+
+	public function getEqAttributs() : array
+	{
+		return array( "idillustration" => $this->idillustration,
+					  "idconfigfpe" => $this->idconfigfpe );
 	}
 
 	public function getIdIllustration() {
@@ -28,6 +37,14 @@ class Possede {
 
 	public function setIdConfigFPE($idConfigFPE) {
 		$this->idconfigfpe = $idConfigFPE;
+	}
+
+	public function __toString() {
+		return "Possede : idillustration = ".$this->idillustration.", idconfigfpe = ".$this->idconfigfpe;
+	}
+
+	public function equals(Possede $possede) : bool {
+		return $this->idillustration == $possede->getIdIllustration() && $this->idconfigfpe == $possede->getIdConfigFPE();
 	}
 }
 
