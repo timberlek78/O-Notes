@@ -69,18 +69,18 @@
 					$matiereCompetence = array ( );
 
 					// Informations de la table CompetenceMatiere
-					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getidCompetence ( ) ) as $compmat )
+					foreach ( $this->DB->selectAllWhere ( 'CompetenceMatiere', 'idcompetence', $cursus->getIdCompetence ( ) ) as $compmat )
 					{
 	
 						$matDetails = array
 						(
-							'libelle' => $compmat->getidMatiere ( ),
+							'libelle' => $compmat->getIdMatiere ( ),
 							'coef'    => $compmat->getCoeff     ( )
 						);
 	
 						// Informations de la table EstNote
 						//FIXME: foreach inutile ?????????? (ptete pas enft sinon ça met des null)
-						foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getidMatiere ( ) ) as $moyMat )
+						foreach ( $this->DB->selectAllWhere ( 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $compmat->getIdMatiere ( ) ) as $moyMat )
 						{
 							$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
 						}
@@ -90,7 +90,7 @@
 					
 					$compmatDetails [ 'matieres' ]  = $matiereCompetence;
 					$compmatDetails [ 'admission' ] = $cursus->getAdmission ( );
-					$cursusDetails [ $cursus->getidCompetence ( ) ] = $compmatDetails ;
+					$cursusDetails [ $cursus->getIdCompetence ( ) ] = $compmatDetails ;
 	
 					// $cursus->getidCompetence ( )
 					$etudiantDetails [ 'cursus' ] = $cursusDetails;

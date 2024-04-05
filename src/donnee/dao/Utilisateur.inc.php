@@ -2,49 +2,48 @@
 
 require_once "ObjetDAO.inc.php";
 
-class Utilisateur extends ObjetDAO
+class Utilisateur
 {
 	//clé primaire
-	private string $idutilisateur;
+	private $nomutilisateur;
 
 	//attributs
-	private string $mdp;
+	private $mdp;
+	private $acces;
 
-	public function __construct ( string $idUtilisateur, string $mdp )
+	public function __construct ( $nomutilisateur = "", $mdp = "", $acces = "" )
 	{
-		$this->idutilisateur = $idUtilisateur;
-		$this->mdp           = $mdp;
+		$this->nomutilisateur = $nomutilisateur;
+		$this->mdp            = $mdp;
+		$this->acces          = $acces;
 	}
 
 	public function getEqClesPrimaires ( ) : array
 	{
-		return array ( "idutilisateur" => $this->idutilisateur );
+		return array ( "nomutilisateur" => $this->nomutilisateur );
 	}
 
 	public function getEqAttributs ( ) : array
 	{
-		return array ( "idutilisateur" => $this->idutilisateur,
-					   "mdp"           => $this->mdp );
+		return $this->getEqClesPrimaires ( );
 	}
 
-	public function getIdUtilisateur ( ) : string
+	public function getNomUtilisateur ( ) { return $this->nomutilisateur; }
+	public function getMdp            ( ) { return $this->mdp;            }
+	public function getAcces          ( ) { return $this->acces;          }
+
+	public function setNomUtilisateur ( $nomutilisateur ) { $this->nomutilisateur = $nomutilisateur; }
+	public function setMdp            ( $mdp            ) { $this->mdp            = $mdp;            }
+	public function setAcces          ( $acces          ) { $this->acces          = $acces;          }
+
+	public function __toString()
 	{
-		return $this->idutilisateur;
+		return "Utilisateur : nomutilisateur = ".$this->nomutilisateur.", mdp = ".$this->mdp;
 	}
 
-	public function setIdUtilisateur ( $idUtilisateur )
+	public function equals ( Utilisateur $utilisateur ) : bool
 	{
-		$this->idutilisateur = $idUtilisateur;
-	}
-
-	public function getMdp ( ) : string
-	{
-		return $this->mdp;
-	}
-
-	public function setMdp ( $mdp )
-	{
-		$this->mdp = $mdp;
+		return $this->nomutilisateur == $utilisateur->getnomutilisateur ( );
 	}
 }
 ?>
