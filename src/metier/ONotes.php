@@ -83,8 +83,6 @@ class ONote
 				$competence = $this->selectByIdEtAnnee( $cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
-
-
 				for($j = 0; $j<count($tabMatiere); $j++)
 				{
 					$lastChar = substr($tabMatiere[$j]->getIdMatiere(), -1);

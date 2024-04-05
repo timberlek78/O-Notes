@@ -35,7 +35,8 @@ class ExportEtudiantToPDF
 		$ligne   = '10';
 		for($i= 0;$i<3;$i++ ) 
 		{
-			$sheet->setCellValue($colonne.$ligne,$this->etudiant->estApprentie('BUT'.$i));
+			var_dump($this->etudiant->estApprentie());
+			$sheet->setCellValue($colonne.$ligne,$this->etudiant->estApprentie());
 			$colonne = chr(ord($colonne) + 2);
 		}
 
@@ -54,32 +55,121 @@ class ExportEtudiantToPDF
 	}
 
 	public function informationCompetence1()
-	{
-		$sheet = $this->spreadsheet->getActiveSheet();
+{
+    $sheet = $this->spreadsheet->getActiveSheet();
 
-		$colonne = 'D';
-		$ligne   = 19;
-		foreach($this->etudiant->getTabMoyenne() as $moyenne)
+    $ligne = 31; // Ligne de départ pour les compétences
+    $colonne = 'D'; // Colonne de départ pour les compétences
+
+    $bins = $this->etudiant->getTabMoyenne(); // Stocker le tableau tabMoyenne dans une variable pour faciliter l'accès
+
+    $fillCompetencesCalled = false; // Variable pour garder une trace de l'appel à fillCompetences
+
+    foreach ($bins as $bin => $moyenne) 
+    {
+        // Vérifier si le premier chiffre de BIN est pair
+        $firstDigit = (int)$bin[3]; // Obtenez le premier chiffre de BIN (par exemple, 2 pour "BIN21")
+        $binne = substr($bin,0,4);
+
+        if ($firstDigit % 2 === 0) 
+        {
+            // Définir les compétences associées
+            $this->fillCompetences($sheet, $colonne, $ligne, $binne, $bins);
+            $fillCompetencesCalled = true; // Marquer fillCompetences appelé
+
+            // Rechercher la prochaine BIN pair
+            while (++$firstDigit % 2 !== 0 && $firstDigit <= 4) {
+                $binne = "BIN" . ++$firstDigit;
+            }
+
+            if ($firstDigit > 4) {
+                // Il n'y a plus de BIN pair après BIN4
+                break;
+            }
+        }
+
+        if ($firstDigit === 5 && !$fillCompetencesCalled) {
+            // Si firstDigit est 5 et fillCompetences n'a pas été appelé, appeler fillCompetences une fois
+            $this->fillCompetences($sheet, $colonne, $ligne, $binne, $bins);
+            $fillCompetencesCalled = true; // Marquer fillCompetences appelé
+        }
+    }
+
+    // Remplir les cellules restantes avec des nombres aléatoires
+    $nombre_aleatoire = rand(0, 2000) / 100;
+    $sheet->setCellValue('D25', number_format($nombre_aleatoire, 2) );
+
+    $nombre_aleatoire = rand(0, 2000) / 100;
+    $sheet->setCellValue('D26', number_format($nombre_aleatoire, 2) );
+
+    $nombre_aleatoire = rand(0, 2000) / 100;
+    $sheet->setCellValue('F25', number_format($nombre_aleatoire, 2) );
+
+    $nombre_aleatoire = rand(0, 2000) / 100;
+    $sheet->setCellValue('F26', number_format($nombre_aleatoire, 2) );
+}
+
+
+	private function fillCompetences($sheet, &$colonne, &$ligne, $binne, $bins)
+	{
+		for ($i = 1; $i <= 6; $i++) 
 		{
-			$sheet->setCellValue($colonne.$ligne, $moyenne);
+			echo $binne.$i."<br>";
+			var_dump($bins[$binne.$i]);
+			$sheet->setCellValue($colonne . $ligne, $bins[$binne.$i]);
 			$ligne++;
 		}
-	}
 
+		// Sauter 2 colonnes pour la prochaine BIN
+		$colonne = chr(ord($colonne) + 2);
+	}
 
 
 	public function informationCompetence2()
 	{
 		$sheet = $this->spreadsheet->getActiveSheet();
-
-		$colonne = 'D';
-		$ligne   = 31;
-		foreach($this->etudiant->getTabMoyenne() as $moyenne)
+	
+		$ligne = 19; // Ligne de départ pour les compétences
+		$colonne = 'D'; // Colonne de départ pour les compétences
+	
+		$bins = $this->etudiant->getTabMoyenne(); // Stocker le tableau tabMoyenne dans une variable pour faciliter l'accès
+	
+		$fillCompetencesCalled = false; // Variable pour garder une trace de l'appel à fillCompetences
+	
+		foreach ($bins as $bin => $moyenne) 
 		{
-			$sheet->setCellValue($colonne.$ligne, $moyenne);
-			$ligne++;
+			// Vérifier si le premier chiffre de BIN est pair
+			$firstDigit = (int)$bin[3]; // Obtenez le premier chiffre de BIN (par exemple, 2 pour "BIN21")
+			$binne = substr($bin,0,4);
+	
+			
+			if ($firstDigit == 5) 
+			{
+				// Définir les compétences associées
+				$this->fillCompetences($sheet, $colonne, $ligne, $binne, $bins);
+	
+				// Rechercher la prochaine BIN pair
+				while (++$firstDigit % 2 !== 0 && $firstDigit <= 4) {
+					$binne = "BIN" . ++$firstDigit;
+				}
+	
+			}
 		}
+	
+		// Remplir les cellules restantes avec des nombres aléatoires
+		$nombre_aleatoire = rand(0, 2000) / 100;
+		$sheet->setCellValue('D25', number_format($nombre_aleatoire, 2) );
+	
+		$nombre_aleatoire = rand(0, 2000) / 100;
+		$sheet->setCellValue('D26', number_format($nombre_aleatoire, 2) );
+	
+		$nombre_aleatoire = rand(0, 2000) / 100;
+		$sheet->setCellValue('F25', number_format($nombre_aleatoire, 2) );
+	
+		$nombre_aleatoire = rand(0, 2000) / 100;
+		$sheet->setCellValue('F26', number_format($nombre_aleatoire, 2) );
 	}
+	
 
 	public function fillSkillsTable($data)
 	{
