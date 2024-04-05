@@ -192,7 +192,10 @@ class Etudiant extends ObjetDAO
 		$nbUe = 0;
 		foreach ( array_values ( $this->tabMoyenne ) as $moyenne )
 		{
+			if($nbUe >= 6) break;
 			if ( $moyenne > 10 ) $nbUe += 1;
+
+			
 		}
 		$this->setUe ( "".$nbUe."/".count ( array_keys ( $this->tabMoyenne ) ) );
 	}

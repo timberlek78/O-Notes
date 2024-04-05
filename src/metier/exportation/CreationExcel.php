@@ -270,16 +270,6 @@ class ExcelExporter
 
 		$feuille->mergeCells($espace);
 		$feuille->getStyle  ($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
-
-		/*// Récupérer les coordonnées de la première cellule et la dernière cellule de la zone $encadrer
-		//list($startCell, $endCell) = explode(":", $encadrer);
-		$startCell = 'G7';
-		$endCell   = 'J7';
-		// Appliquer le style de bordure aux cellules des bords gauche, droit, haut et bas de la zone
-		$feuille->getStyle($startCell)->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
-		$feuille->getStyle($endCell  )->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
-		$feuille->getStyle($startCell[0] . ($startCell[1]+8) . ":" . $startCell[0] . ($endCell[1] + 8))->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
-		$feuille->getStyle($startCell[0] . ($endCell[1] + 1) . ":" . $endCell[0] . ($endCell[1] + 1))->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);*/
 	}
 
 	public function estCool($admis)
