@@ -164,8 +164,6 @@ function ajouterEtudiantTableau ( etudiant )
 		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP' )
 			nbUEs += 1;
 
-		// Ajoute le Bonus à la ligne de l'étudiant
-		ensembleNoteMatiere.push ( `<td> ${ensMatiere[0].moyenne} </td>` );
 
 		let counter = 0;
 		ensMatiere.forEach ( matiere =>
@@ -182,6 +180,8 @@ function ajouterEtudiantTableau ( etudiant )
 
 		// Met la moyenne de la compétence au début du tableau
 		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
+		// Ajoute le Bonus à la ligne de l'étudiant
+		ensembleNoteMatiere.unshift ( `<td> ${ensMatiere[0].moyenne} </td>` );
 
 		// Ajoute les notes de l'étudiant dans le détail des compétences
 		ensDetailCompetence.get ( competence ).push ( ensembleNoteMatiere );
