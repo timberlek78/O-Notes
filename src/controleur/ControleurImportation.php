@@ -11,7 +11,7 @@
 	include_once __DIR__.'/../donnee/DonneesONote.inc.php';
 	include_once __DIR__.'/../metier/conversion/TableauToBado.inc.php';
 
-	function importerAvecTableau ( array $tabImports ) //FIXME: REMARQUE: pret pour le futur json
+	function importerAvecTableau ( array $tabImports )
 	{
 		/*$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel ( $tabImports->getFichierCoef ( ) ); */
 	
@@ -36,7 +36,7 @@
 				$donnees = genererDonnees( $dataMoyenne, $dataJury, $import->getAnnee(), $import->getSemestre(), $import->estAlternance() );
 			
 
-				if (isset($tabImports['fichierCoeff']) && !empty($tabImports['fichierCoeff']))
+				if ( ! empty( $dataCoef ) )
 				{
 					// print_r($tabImports['fichierCoeff']);
 					$NB_SEMESTRES = 6;
