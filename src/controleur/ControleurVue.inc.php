@@ -8,7 +8,7 @@
 	include_once 'ControleurImportation.php';
 	include_once '../metier/importation/Import.inc.php';
 	
-	// header('Content-Type: application/json');
+	header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -141,7 +141,23 @@
 		public function getJsonExporter($annee) : string
 		{
 			$anneeSortie = substr($annee, 5, 4);
-			$lstEtudiant = $this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie );
+			$tabDonnees = $this->getJsonExporterTab($this->DB->selectAllWhere ( "Etudiant", 'SPLIT_PART(promotion, \'-\', 2)', $anneeSortie ));
+			
+			foreach ($this->getJsonExporterTab($this->DB->selectAllWhere ( "Etudiant", 'CAST(SPLIT_PART(promotion, \'-\', 2) AS INTEGER) - 1', $anneeSortie )) as $donnee)
+			{
+				$tabDonnees[] = $donnee;
+			}
+
+			foreach ($this->getJsonExporterTab($this->DB->selectAllWhere ( "Etudiant", 'CAST(SPLIT_PART(promotion, \'-\', 2) AS INTEGER) - 1', $anneeSortie )) as $donnee)
+			{
+				$tabDonnees[] = $donnee;
+			}
+
+			return json_encode($tabDonnees);
+		}
+
+		private function getJsonExporterTab($lstEtudiant)
+		{
 			$tabDonnees = array ( );
 				
 			foreach ( $lstEtudiant as $etudiant )
@@ -161,7 +177,7 @@
 				$tabDonnees [ ] = $etudiantDetails;
 			}
 
-			return json_encode ( $tabDonnees );
+			return $tabDonnees;
 		}
 
 		public function getJsonAnnee() : string
@@ -209,10 +225,29 @@
 				$tabImports[ $cpt ]->setFichierMoyenneTmpName( $_FILES [ 'fichierMoyenne' ] [ 'tmp_name'] [ $cpt ] );
 			}
 
+			//TODO: tabImport[fichierImport] = _FILES[fichierImport]
 			//print_r($tabImports);
 
 			//TODO: faire appel à la méthode qui importe dans la bado
 			importerAvecTableau ( $tabImports );
+		}
+
+		public function exportAvis()
+		{
+			$chefDept         = $_POST ['chefDept'        ];
+			$fichierLogoUn    = $_FILES['fichierLogoUn'   ];
+			$fichierLogoDeux  = $_FILES['fichierLogoDeux' ];
+			$fichierSignature = $_FILES['fichierSignature'];
+		}
+
+		public function exportJury()
+		{
+			$promotion = $_POST ['promotion'       ];
+			$semestre  = $_POST ['semestre'        ];
+
+			// echo "promo : $promotion annee : $semestre";
+
+			//TODO: appeler une fonction pour générer l'export jury
 		}
 	}
 
@@ -222,15 +257,6 @@
 	{
 		$numSem = $_GET['numSemestre'];
 		$annee = $_GET['annee'];
-
-		// TEST
-		// $tempsDebut = microtime(true);
-		// $resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
-		// $tempsFin = microtime(true);
-
-		// $tempsExecution = $tempsFin - $tempsDebut;
-		// echo "<h1>Temps : $tempsExecution s</h1>";
-		// echo $resultat;
 
 		//TODO: remettre juste ça
 		echo $controleurVue->getJsonVisualiser($numSem, $annee);
@@ -276,9 +302,24 @@
 	// 	echo "Aucun fichier n'a été téléchargé.";
 	// }
 
-	if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['annee']))
+	if ($_SERVER["REQUEST_METHOD"] === "POST")
 	{
-		$controleurVue->import();
-		echo json_encode(['succes' => 'Fichiers transmis']);
+		if (isset($_POST['annee']))
+		{
+			$controleurVue->import();
+			echo json_encode(['succes' => 'Fichiers transmis']);
+		}
+
+		if (isset($_POST['chefDept']))
+		{
+			$controleurVue->exportAvis();
+			echo json_encode(['succes' => 'Fichiers transmis']);
+		}
+
+		if (isset($_POST['promotion']) && isset($_POST['semestre']))
+		{
+			$controleurVue->exportJury();
+			echo json_encode(['succes' => 'Fichiers transmis']);
+		}
 	}
 ?>

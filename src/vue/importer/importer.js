@@ -51,7 +51,7 @@ function validationImport ( )
 	tabFichiers.append('fichierJury[]', fichierJury);
 	tabFichiers.append('fichierMoyenne[]', fichierMoyenne)
 
-	console.log(nbFD);	
+	console.log(nbFD);
 
 	popupImportation.classList.remove ( 'ouvert' );       // Fermeture du popup
 	
