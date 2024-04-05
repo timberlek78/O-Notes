@@ -1,6 +1,6 @@
 <?php
 	session_start ( );
-	include "../../donnee/Utilisateurs";
+	include "../../donnee/dao/Utilisateur.inc.php";
 	require "../../controleur/ControleurDB.inc.php";
 	
 	$nom      = isset ( $_REQUEST['nomUtilisateur'] ) ? $_REQUEST['nomUtilisateur'] : '';
@@ -8,11 +8,9 @@
 
 	if ( $nom !== '' && $password !== '' )
 	{
-		if ( verification ( $nom, $password ) )
+		$un_utilisateur = verification ( $nom, $password );
+		if ( $un_utilisateur != null )
 		{
-			//TODO: récupérer le niveau de droit de l'utilisateur
-			$un_utilisateur = new Utilisateur ( $nom, null, null );
-			
 			$_SESSION['utilisateur'] = serialize ( $un_utilisateur );
 			
 			header ( "Location: ../../vue/importer/importer.php" );
@@ -30,20 +28,21 @@
 		exit ( );
 	}
 
-	function verification ( $nom, $pass )
+	function verification ( $nom, $pass ) : Utilisateur
 	{
-		return true;
 		$lstUtilisateur =  DB::getInstance ( )->selectAll ( "utilisateur" );
 
 		foreach ( $lstUtilisateur as $utilisateur )
 		{
 			$nomUtilisateur = $utilisateur->getNomUtilisateur ( );
 			$motDePasse     = $utilisateur->getMdp            ( );
+			$acces          = $utilisateur->getAcces          ( );
 
 			if ( strcmp ( $nomUtilisateur, $nom ) && password_verify ( $pass, $motDePasse ) )
-				return true;
+			{
+				return new Utilisateur ( $nomUtilisateur, $motDePasse, $acces );
+			}
 		}
-
-		return false;
+		return null;
 	}
 ?>
