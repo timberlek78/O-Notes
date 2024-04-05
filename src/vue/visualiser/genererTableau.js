@@ -107,6 +107,8 @@ function reinitialiserPage ( )
 	tabNomPrenom            .innerHTML = "";
 	tabResumeComptence      .innerHTML = "";
 	tabResumeComptenceEnTete.innerHTML = "";
+
+	ensDetailCompetence = new Map ( );
 }
 
 function ajouterEtudiantTableau ( etudiant )
