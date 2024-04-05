@@ -7,11 +7,14 @@
 
 	include_once __DIR__.'/../metier/importation/OuvrirLectureExcel.inc.php';
 	include_once __DIR__.'/../metier/importation/analyse/AnalyseDataFichiers.inc.php';
+	include_once __DIR__.'/../metier/importation/analyse/AnalyseDataCoefficients.inc.php';
 	include_once __DIR__.'/../donnee/DonneesONote.inc.php';
 	include_once __DIR__.'/../metier/conversion/TableauToBado.inc.php';
 
-	function importerAvecTableau ( array $tabImports )
+	function importerAvecTableau ( array $tabImports ) //FIXME: REMARQUE: pret pour le futur json
 	{
+		$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'coef' ] ); 
+
 		foreach ( $tabImports as $import )
 		{
 			$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierMoyenne() );
@@ -24,7 +27,9 @@
 
 			$donnees = genererDonnees( $dataMoyenne, $dataJury, $import->getAnnee(), $import->getSemestre(), $import->estAlternance() );
 
-			//echo $donnees;
+			$NB_SEMESTRES = 6;
+			$analyse = new AnalyseDataCoefficients( $dataCoef, $import->getAnnee(), $NB_SEMESTRES, $import->estAlternance() );
+			$analyse->completer( $donnees );
 
 			// echo "debut du traitement";
 			$conversion = new TableauToBado( $donnees );
@@ -34,10 +39,29 @@
 		}
 	}
 
+	function genererDonnees( $dataMoyenne, $dataJury, string $promotion, int $semestre, bool $enAlternance ) : DonneesONote
+	{
+		$donnees = new DonneesONote( );
+
+		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $promotion, $semestre, $enAlternance );
+		$analyse->ajouterCompetencesDansDonnees( $donnees );
+		$analyse->ajouterEtudiantsDansDonnees( $donnees );
+
+		if( ! empty( $dataCoef ) )
+		{
+			$NB_SEMESTRES = 6;
+			$analyse = new AnalyseDataCoefficients( $dataCoef, $promotion, $NB_SEMESTRES, $enAlternance );
+			$analyse->completer( $donnees );
+		}
+
+		return $donnees;
+	}
+
 	function importerSansTableau ( )
 	{
 		$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'moyenne' ] );
 		$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'jury' ] );
+		$dataCoef    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'coef' ] );
 		if( empty( $dataMoyenne ) || empty( $dataJury ) )
 		{
 			echo "Impossible d'ouvrir le fichier";
@@ -46,24 +70,32 @@
 
 		$enAlternance = ( isset( $_POST['alternance'] ) && $_POST['alternance'] == '1' );
 
-		$donnees = genererDonnees( $dataMoyenne, $dataJury, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
+		$donnees = genererDonneesAvecCoef( $dataMoyenne, $dataJury, $dataCoef, $_POST[ 'promotion' ], $_POST[ 'semestre' ], $enAlternance );
 
-		//echo $donnees;
+		echo $donnees;
 
 		$conversion = new TableauToBado( $donnees );
 		$conversion->insertAll( );
 	}
 
-	function genererDonnees( $dataMoyenne, $dataJury, string $promotion, int $semestre, bool $enAlternance ) : DonneesONote
+	function genererDonneesAvecCoef( $dataMoyenne, $dataJury, $dataCoef, string $promotion, int $semestre, bool $enAlternance ) : DonneesONote
 	{
-		$donnes = new DonneesONote( );
+		$donnees = new DonneesONote( );
 
 		$analyse = new AnalyseDataFichiers( $dataMoyenne, $dataJury, $promotion, $semestre, $enAlternance );
-		$analyse->ajouterCompetencesDansDonnees( $donnes );
-		$analyse->ajouterEtudiantsDansDonnees( $donnes );
+		$analyse->ajouterCompetencesDansDonnees( $donnees );
+		$analyse->ajouterEtudiantsDansDonnees( $donnees );
 
-		return $donnes;
+		if( ! empty( $dataCoef ) )
+		{
+			$NB_SEMESTRES = 6;
+			$analyse = new AnalyseDataCoefficients( $dataCoef, $promotion, $NB_SEMESTRES, $enAlternance );
+			$analyse->completer( $donnees );
+		}
+
+		return $donnees;
 	}
 
+	//à décommenter pour les test avec "testLectureExcel"
 	//importerSansTableau( );
 ?>
