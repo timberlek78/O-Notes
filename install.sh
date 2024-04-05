@@ -17,10 +17,10 @@ read -sp "Mot de passe : " mdp
 ## Ecriture des donnees
 fichier="src/metier/db/.env"
 touch $fichier
-echo "DB_HOST=$host" > $fichier
-echo "DB_PORT=$port" >> $fichier
-echo "DB_USER=$login" >> $fichier
-echo "DB_PASS=$mdp" >> $fichier
+echo "DB_HOST=\"$host\"" > $fichier
+echo "DB_PORT=\"$port\"" >> $fichier
+echo "DB_USER=\"$login\"" >> $fichier
+echo "DB_PASS=\"$mdp\"" >> $fichier
 
 ## Fin
 echo "Installation terminée"
