@@ -3,16 +3,22 @@
 /*                                          */
 var popupEtudiant          = document.querySelector ( '.popup-etudiant'            );
 var tabEtudiant            = document.querySelector ( '.conteneur-tableau-etd'     );
+
 var indiceLigneSelectionne = -1;
 
 function ouverturePopupEtudiant ( )
 {
 	let lignesNote   = document.querySelectorAll ( '.tableau-note-etd tr'       );
+	let tabCompetence = document.querySelectorAll ( '.tableau-competence-etd tr' );
+
 	let boutonFermer = document.querySelector    ( '.fermeture'                 );
 	var ligne  = event.target.parentNode;
 
 	boutonFermer.addEventListener ( 'click', fermeturePopupEtudiant );
 	indiceLigneSelectionne = Array.from ( ligne.parentNode.children ).indexOf ( ligne ) + 1;
+
+	if ( tabCompetence.length !== 0 )
+		surbrillance ( tabCompetence );
 
 	surbrillance ( lignesNote );
 

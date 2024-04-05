@@ -249,14 +249,26 @@ function envoyerDocuments ( )
 {
 	// Fetch vers le ControleurVue pour envoyer le json des documents
 
+	const chargement = document.querySelector('.chargement');
+	chargement.style.display = 'flex';
+
+	const conteneurImport = document.querySelector ( '.conteneur-import' );
+	conteneurImport.style.display = 'none';
+
 	fetch ( '../../controleur/ControleurVue.inc.php',
 	{
 		method: 'POST',
 		body: tabFichiers
 	})
-	.then ( reponse =>
+	.then ( reponse => reponse.json())
+	.then (data => 
 		{
-			console.log ( reponse );
+			console.log('reponse : ');
+			console.log(data);
+			if (data.succes)
+			{
+				window.location.href = '../visualiser/visualiser.php';
+			}
 		} )
 	.catch ( erreur => 
 		{

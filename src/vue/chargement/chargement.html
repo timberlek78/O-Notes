@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chargement</title>
+	<link rel="stylesheet" href="chargement.css">
+</head>
+<body>
+	<div class="loader-wrapper" id="loader-wrapper">
+		<div class="loader"></div>
+	</div>
+</body>
+
+<script>
+	
+	window.onload = function() {
+		setTimeout(function() {
+			document.getElementById("loader-wrapper").style.display = "none";
+		}, 3000);
+	};
+</script>
+</html>

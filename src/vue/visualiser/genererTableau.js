@@ -74,6 +74,7 @@ function fetchDonneeEtudiant()
 		.then ( reponse => reponse.json ( ) )
 		.then ( donnees =>
 		{
+			console.log(donnees);
 			try
 			{
 				genererEntete ( Object.keys ( donnees[0].cursus ) );
@@ -107,10 +108,14 @@ function reinitialiserPage ( )
 	tabNomPrenom            .innerHTML = "";
 	tabResumeComptence      .innerHTML = "";
 	tabResumeComptenceEnTete.innerHTML = "";
+
+	ensDetailCompetence = new Map ( );
 }
 
 function ajouterEtudiantTableau ( etudiant )
 {
+	console.log (etudiant)
+	
 	/*+-----------------------------------+*/
 	/*|      TABLEAU : NOM - PRENOM       |*/
 	/*+-----------------------------------+*/
@@ -171,7 +176,7 @@ function ajouterEtudiantTableau ( etudiant )
 			counter++;
 		} );
 
-		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + ensMatiere[0].moyenne ).toFixed ( 2 ) ;
+		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[ensMatiere.length-1].moyenne) ).toFixed ( 2 ) ;
 
 		// Met la moyenne de la compétence au début du tableau
 		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
@@ -193,16 +198,6 @@ function ajouterEtudiantTableau ( etudiant )
 	
 	// Ajoute la ligne de l'étudiant
 	tabResumeComptence.appendChild ( tabResumeligneResume );
-
-	/*+-----------------------------------+*/
-	/*|        AJOUT DES LISTENERS        |*/
-	/*+-----------------------------------+*/
-
-	tabNomPrenomligneEtudiant.addEventListener ('click', function ( )
-	{
-		ouverturePopupEtudiant ( );
-		majPopupEtudiant ( etudiant );
-	} );
 };
 
 function calculerMoyenneCompetence ( donnee )
@@ -215,6 +210,7 @@ function calculerMoyenneCompetence ( donnee )
 		let [note, coeff] = matière;
 
 		totalNote  += note * coeff;
+
 		totalCoeff += coeff;
 	} );
 
