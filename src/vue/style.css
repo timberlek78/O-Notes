@@ -73,7 +73,6 @@
 	border-radius: var(--arrondi);
 	padding: 1.5vh 1vh;
 	cursor: pointer;
-	width: 10vw;
 }
 
 .button a {
