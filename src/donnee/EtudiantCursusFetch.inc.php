@@ -45,12 +45,13 @@ class EtudiantCursusFetch
 		$admission = $cursus['admission'];
 		$idmatiere = $cursus['idmatiere'];
 		$coeff = $cursus['coeff'];
+		$moyenne = $cursus['moyenne'];
 
 		// Vérifiez si nous avons déjà un CursusFetch pour cet idcompetence
 		if (isset($this->tabCursus[$idcompetence]))
 		{
 			// Si c'est le cas, ajoutez simplement la matiere à son tableau de matieres
-			$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff);
+			$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff, 'moyenne' => $moyenne);
 			$this->tabCursus[$idcompetence]->addMatiere($matiere);
 		}
 		else
@@ -59,7 +60,7 @@ class EtudiantCursusFetch
 			// var_dump($resultat);
 			// Sinon, créez un nouvel objet CursusFetch et ajoutez-le à $tabRet
 			$cursusFetch = new CursusFetch($idcompetence, $admission);
-			$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff);
+			$matiere = array('libelle' => $idmatiere, 'coeff' => $coeff, 'moyenne' => $moyenne);
 			$cursusFetch->addMatiere($matiere);
 			$this->tabCursus[$idcompetence] = $cursusFetch;
 		}

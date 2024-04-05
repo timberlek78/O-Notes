@@ -74,6 +74,7 @@ function fetchDonneeEtudiant()
 		.then ( reponse => reponse.json ( ) )
 		.then ( donnees =>
 		{
+			console.log(donnees);
 			try
 			{
 				genererEntete ( Object.keys ( donnees[0].cursus ) );
@@ -173,7 +174,7 @@ function ajouterEtudiantTableau ( etudiant )
 			counter++;
 		} );
 
-		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + ensMatiere[0].moyenne ).toFixed ( 2 ) ;
+		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[0].moyenne) ).toFixed ( 2 ) ;
 
 		// Met la moyenne de la compétence au début du tableau
 		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
@@ -207,6 +208,7 @@ function calculerMoyenneCompetence ( donnee )
 		let [note, coeff] = matière;
 
 		totalNote  += note * coeff;
+
 		totalCoeff += coeff;
 	} );
 

@@ -36,7 +36,7 @@
 				$codenip = $cursusEtd->getCodeNIP ( );
 				
 
-				foreach ( $this->DB->selectJoin(array('Etudiant', 'EtudiantSemestre', 'Cursus', 'CompetenceMatiere'), 'EtudiantCursusFetch', 'numsemestre', $numSemestre, 'codenip', $codenip, 'annee', $annee) as $etudcursusfetch )
+				foreach ( $this->DB->selectJoin(array('Etudiant', 'EtudiantSemestre', 'Cursus', 'CompetenceMatiere', 'EstNote'), 'EtudiantCursusFetch', 'numsemestre', $numSemestre, 'codenip', $codenip, 'annee', $annee) as $etudcursusfetch )
 				{
 					// var_dump($etudcursusfetch);
 					// echo 'testTEST';
@@ -89,19 +89,20 @@
 						// var_dump($cursusfetch->tabMatiere);
 						foreach ( $cursusfetch->tabMatiere as $matiere )
 						{
-							// echo 'TESTTTTTTTTTTTTTTT';
+							// echo '<br>TEST<br>';
 							// var_dump($matiere);
 
 							$matDetails = array
 							(
 								'libelle' => $matiere['libelle'],
-								'coef'    => $matiere['coeff']
+								'coef'    => $matiere['coeff'],
+								'moyenne' => $matiere['moyenne']
 							);
 
-							foreach ( $this->DB->selectAllWhere ('EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $matiere['libelle'] ) as $moyMat )
-							{
-								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
-							}
+							// foreach ( $this->DB->selectAllWhere ('EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $matiere['libelle'] ) as $moyMat )
+							// {
+							// 	$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
+							// }
 							$matiereCompetence [ ] = $matDetails;
 						}
 						
@@ -184,8 +185,6 @@
 
 		public function import()
 		{
-			echo "test";
-
 			$tabImports = array();
 			foreach ($_POST['annee'] as $cle => $valeur)
 			{
@@ -219,7 +218,6 @@
 
 	$controleurVue = new ControleurVue();
 	
-	//echo 'test';
 	if (isset($_GET['numSemestre']) && !empty($_GET['numSemestre']) && isset($_GET['annee']) && !empty ($_GET['annee']))
 	{
 		$numSem = $_GET['numSemestre'];
@@ -278,8 +276,9 @@
 	// 	echo "Aucun fichier n'a été téléchargé.";
 	// }
 
-	if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['annee'])) //POST[annee][0] = "2002-2003" POST[annee][1]
+	if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['annee']))
 	{
 		$controleurVue->import();
+		echo json_encode(['succes' => 'Fichiers transmis']);
 	}
 ?>
