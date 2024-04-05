@@ -8,7 +8,7 @@
 	include_once 'ControleurImportation.php';
 	include_once '../metier/importation/Import.inc.php';
 	
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -223,17 +223,17 @@
 		$numSem = $_GET['numSemestre'];
 		$annee = $_GET['annee'];
 
-		// TEST
-		$tempsDebut = microtime(true);
-		$resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
-		$tempsFin = microtime(true);
+		// // TEST
+		// $tempsDebut = microtime(true);
+		// $resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
+		// $tempsFin = microtime(true);
 
-		$tempsExecution = $tempsFin - $tempsDebut;
-		echo "<h1>Temps : $tempsExecution s</h1>";
-		echo $resultat;
+		// $tempsExecution = $tempsFin - $tempsDebut;
+		// echo "<h1>Temps : $tempsExecution s</h1>";
+		// echo $resultat;
 
 		//TODO: remettre juste ça
-		// echo $controleurVue->getJsonVisualiser($numSem, $annee);
+		echo $controleurVue->getJsonVisualiser($numSem, $annee);
 	}
 	else if (isset($_GET['annee']) && !empty ($_GET['annee']))
 	{

@@ -42,7 +42,6 @@
 
 			if ( strcmp ( $nomUtilisateur, $nom ) && password_verify ( $pass, $motDePasse ) )
 				return true;
-
 		}
 
 		return false;
