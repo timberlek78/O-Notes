@@ -1,0 +1,101 @@
+@import url('../style.css');
+
+#popup-edition-etudiant {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	text-align: center;
+	background-color: white;
+	z-index: 9999;
+	
+	animation-name: ouverturePopup;
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
+}
+
+@keyframes ouverturePopup {
+	from { transform: translate(-50%, -50%) scale(0); }
+	to   { transform: translate(-50%, -50%) scale(1); }
+}
+
+#popup-edition-etudiant.ouvert {
+	display: block;
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.titre-popup {
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--violet-fonce);
+	padding: 1.96vh 10.25vw;
+	border-radius: var(--arrondi-entete);
+	font-weight: 600;
+	font-size: 1.58em;
+	margin-bottom: 1.27vh;
+}
+
+.identite-etd {
+	font-size: 1.4em;
+	font-weight: 600;
+	color: var(--violet-fonce);
+	margin-bottom: 3.27vh;
+}
+
+.sous-titre {
+	color: var(--violet-fonce);
+	font-weight: 600;
+	font-size: 1.1em;
+	padding: 1vh 0;
+}
+
+.avis-ecoles {
+	display: grid;
+}
+
+.avis-ecole {
+	color: var(--violet-fonce);
+	font-weight: 500;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 100px;
+	gap: 1.70vw;
+	align-items: center;
+}
+
+.entree {
+	background-color: white;
+	border: 1px solid var(--violet-fonce);
+	border-radius: var(--arrondi);
+	color: var(--violet-fonce);
+}
+
+#selection-avis {
+	padding: 0.8vh 0;
+	width: 18vw;
+	text-align: center;
+	font-size: 1em;
+	margin: 1.5vh 0;
+}
+
+#txt-commentaire {
+	width: 26vw;
+	padding: 1vw;
+	font-family: 'Urbanist', sans-serif;
+}
+
+.btns-popup {
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-annuler {
+	background: var(--violet-fonce);
+}
+
+.btn-valider {
+	background: var(--orange-peps);
+}

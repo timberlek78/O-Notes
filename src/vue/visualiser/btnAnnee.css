@@ -1,0 +1,17 @@
+#choix-annee {
+	background-color: var(--violet-moyen);
+	color: white;
+	text-align: center;
+}
+
+#choix-annee option {
+	background-color: white;
+	border-radius: 0;
+	color: black;
+}
+
+.btn-annee {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

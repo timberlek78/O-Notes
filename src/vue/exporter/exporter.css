@@ -1,0 +1,88 @@
+@import url(../style.css);
+@import url(./popupAvis.css);
+@import url(./popupJury.css);
+
+.conteneur-export {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto;
+	grid-column-gap: 2vw;
+	overflow: auto; 
+	max-height: 70vh; /* Par exemple, une hauteur maximale de 300 pixels */
+	padding: 1.5vh;
+}
+
+.cadre-export {
+	width: 17.9vw;
+	color: var(--violet-action);
+}
+
+.conteneur-information {
+	background-color: white;
+	text-align: center;
+	border-radius: var(--arrondi);
+	box-shadow: var(--ombre-value);
+	padding: 6vh 0 2vh 0vh;
+}
+
+.conteneur-information.selectionne {
+	background-color: var(--violet-action);
+	color: white;
+}
+
+.conteneur-information p {
+	margin: 1vh;
+	font-size: 1.4rem;
+}
+
+.photo-etudiant {
+	border: 3px solid var(--violet-action);
+	width: 6vw;
+	height: 6vw;
+	border-radius: 50%;
+	box-shadow: var(--ombre-value);
+}
+
+.conteneur-image-etudiant {
+	transform: translate(0%, 50%);
+	display: flex;
+	justify-content: center;
+}
+
+.pied-de-page button {
+	background-color: var(--orange-peps);
+	margin-right: 2vh;
+}
+
+.pied-de-page {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	bottom: 0px;
+	height: fit-content;
+	width: 100vw;
+	margin-bottom: 2vh;
+}
+
+.selection-annee {
+	display: flex;
+	justify-content: center;
+}
+
+#choix-annee {
+	background-color: var(--violet-moyen);
+	color: white;
+	text-align: center;
+	height: 4vh;
+}
+
+#choix-annee option {
+	background-color: white;
+	border-radius: 0;
+	color: black;
+}
+
+.btn-annee {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

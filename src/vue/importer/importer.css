@@ -1,13 +1,118 @@
 @import url(../style.css);
+@import url(./popupImport.css);
 
-.container {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-template-rows: auto auto auto;
-	grid-gap: 50px;
+.conteneur-import {
+	display: none;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-column-gap: 10.5vw;
+	grid-row-gap: 6.08vh;
+
+	padding: 5.45vh 0;
+}
+
+.bienvenue {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 30vh;
+}
+
+.bienvenue p {
+	font-style: italic;
+	font-size: 1.1em;
 }
 
 .cadre-import {
+	text-align: center;
+	box-shadow: var(--ombre-value);
+	border-radius: var(--arrondi);
+	width: 25.6vw;
+	height: 15.73vh;
+}
+
+.titre {
+	font-family: "Inter Tight", serif;
+	color: white;
 	background-color: var(--violet-moyen);
-	border: 1px solid black;
+	border-radius: var(--arrondi-entete);
+	padding: 1.06vh 0;
+}
+
+.infos-import {
+	margin: 1.06vh 0;
+}
+
+.btn-supprimer {
+	background-color: var(--violet-moyen);
+	border-radius: var(--arrondi);
+	color: white;
+	padding: 0.6vh 1.05vw;
+	cursor: pointer;
+	border: none;
+	font-size: 80%;
+	font-weight: 600;
+}
+
+button {
+	border-radius: var(--arrondi);
+	color: white;
+	cursor: pointer;
+	border: none
+}
+
+.pied-de-page {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2vh;
+}
+
+.pied-de-page button {
+	margin-right: 2vh;
+}
+
+.btn-ajout-semestre {
+	background-color: var(--violet-moyen);
+}
+
+.btn-ajout-coeff {
+	background-color: var(--violet-action);
+}
+
+.btn-import {
+	background-color: var(--orange-peps);
+}
+
+/****************************************/
+/****************CHARGEMENT**************/
+/****************************************/
+.roue-chargement {
+	border: 8px solid #f3f3f3; /* Couleur de la bordure */
+	border-top: 8px solid var(--orange-peps); /* Couleur de la bordure supérieure */
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	animation: spin 1s linear infinite; /* Animation de rotation */
+	margin: 50px auto; /* Centrage */
+}
+ 
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.chargement {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white; /* Fond semi-transparent pour masquer le contenu */
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999; /* Assure que le loader est au-dessus de tous les autres éléments */
 }

@@ -1,0 +1,109 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.popup-etudiant {
+	position: relative;
+	display: none;
+	width: var(--largeur);
+	height: var(--hauteur);
+	box-shadow: var(--ombre-value);
+	border-radius: 0 var(--arrondi) var(--arrondi) var(--arrondi);
+	padding-top: 3.85vh;
+	box-sizing: border-box;
+}
+
+.popup-etudiant.ouvert {
+	display: block;
+}
+
+.edition {
+	position: absolute;
+	top: 2.15vh;
+	right: 1.06vw;
+	cursor: pointer;
+}
+
+.cadre-image-etudiant {
+	display: flex;
+	flex-direction: row;
+	margin: 0 4.10vw 2vh 3vw;
+	width: calc(100% - 7.2vw);
+}
+
+.photo-etudiant {
+	border: 3px solid var(--selectionne-couleur);
+	width: 6vw;
+	height: 6vw;
+	border-radius: 50%;
+	box-shadow: var(--ombre-value);
+}
+
+.conteneur-image-etudiant {
+	transform: translate(0%, 50%);
+	display: flex;
+	justify-content: center;
+}
+
+.conteneur-information {
+	color: var(--selectionne-couleur);
+	font-weight: bold;
+	font-size: 2.12vw;
+	flex: 1;
+	padding-left: 0.5em; 
+	padding-top: 0.5em;
+}
+
+.conteneur-information p {
+	margin: 0;
+}
+
+.conteneur-cadre-infos {
+	display: grid;
+	grid-template-columns: auto;
+	height: 50vh;
+	margin: 0 3.10vw 0 3.10vw;
+}
+
+.cadre-info {
+	background-color: var(--selectionne-couleur);
+	border-radius: var(--arrondi);
+	padding: 1vh 1vw;
+	margin: 0 1vw 1vh 1vw;
+	height: 6vh;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4vh;
+	box-sizing: border-box;
+}
+
+.cadre-info p:first-of-type {
+	color: black;
+	font-size: 0.7vw;
+	margin: 0;
+}
+
+.cadre-info p:last-of-type {
+	color: white;
+	font-size: 0.9vw; 
+	margin: 0;
+	padding-bottom: 0.8vh;
+}
+
+body {
+	font-family: 'Urbanist', sans-serif;
+}
+
+.fermeture {
+	color: var(--selectionne-couleur);
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	position: absolute;
+	top: 0vh;
+	cursor: pointer;
+	transform: translate(0%,-99%);
+	border-radius: 6px 6px 0 0;
+	width: 2vw;
+	height: 3.4vh;
+	box-shadow: var(--ombre-value);
+}	

@@ -1,0 +1,88 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.liste-note {
+	width: var(--largeurGrandTableau);
+	height: var(--hauteurGrandTableau);
+	background-color: white;
+	border-radius: var(--arrondi);
+	box-shadow: var(--ombre-value);
+	overflow: auto;
+}
+
+.tableau-note-etd {
+	max-width: var(--largeurGrandTableau);
+	max-height: var(--hauteurGrandTableau);
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.tableau-note-etd.fermer {
+	display: none;
+}
+
+.tableau-note-etd th {
+	font-weight: normal;
+	border: none;
+	background-color: var(--violet-moyen);
+	color: white;
+	padding: 1.5vh 0;
+	position: sticky;
+	top: 0;
+	background-clip: padding-box;
+	z-index: 1;
+}
+
+.tableau-note-etd td {
+	padding: 1.5vh 0;
+	max-height: 10px;
+	text-align: center;
+}
+
+.tableau-note-etd th:not(:last-child),
+.tableau-note-etd td:not(:last-child) {
+	border-right: 0.38vw solid white;
+}
+
+.tableau-note-etd tr{
+	background-color: var(--classic-impair);
+}
+
+.tableau-note-etd tr:nth-child(even) {
+	background-color: var(--classic-pair);
+}
+
+#bin1 {
+	background-color: #C00001;
+	color: white;
+}
+
+#bin2 {
+	background-color: #F79152;
+	color: white;
+}
+
+#bin3 {
+	background-color: #FEC000;
+	color: white;
+}
+
+#bin4 {
+	background-color: #91CF50;
+	color: white;
+}
+
+#bin5 {
+	background-color: #08348F;
+	color: white;
+}
+
+#bin6 {
+	background-color: #7B02BE;
+	color: white;
+}
+
+.bin:hover {
+	opacity: 50%;
+}

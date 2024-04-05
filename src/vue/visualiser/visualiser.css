@@ -1,0 +1,78 @@
+@import url('../style.css');
+@import url('./constantes_visualisation.css');
+
+.conteneur-visualiser {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: auto auto;
+	justify-content: center;
+	gap: 2.76vw;
+	grid-row-gap: 1.5vh;
+}
+
+.conteneur-tableau-etd {
+	display: block;
+}
+
+.conteneur-tableau-etd.cache {
+	display: none;
+}
+
+.liste-etd {
+	width: var(--largeur);
+	height: var(--hauteur);
+	background-color: white;
+	border-radius: var(--arrondi);
+	box-shadow: var(--ombre-value);
+	overflow: auto;
+	scrollbar-width: none;
+}
+
+.tableau-nom-etd {
+	border-collapse: collapse;
+	max-width: var(--largeur);
+	max-height: var(--hauteur);
+	width: 100%;
+	table-layout: fixed;
+}
+
+.tableau-nom-etd th {
+	font-weight: normal;
+	background-color: var(--selectionne-couleur);
+	color: white;
+	padding: 1.5vh 0;
+	position: sticky;
+	top: 0;
+	background-clip: padding-box;
+}
+
+.tableau-nom-etd th:not(:last-child),
+.tableau-nom-etd td:not(:last-child) {
+	border-right: 0.38vw solid white;
+}
+
+.tableau-nom-etd td {
+	padding: 1.5vh 0;
+	max-height: 10px;
+	padding-left: 0.77vw;
+}
+
+.tableau-nom-etd tr{
+	background-color: var(--selectionne-impair);
+}
+
+.tableau-nom-etd tr:nth-child(even) {
+	background-color: var(--selectionne-pair);
+}
+
+.cellule-cliquable-nom {
+	cursor: pointer;
+}
+
+.ligneAutre {
+	filter: blur(2px);
+}
+
+.ligneValeur {
+	box-shadow: var(--ombre-value);
+}

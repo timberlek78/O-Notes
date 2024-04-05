@@ -8,29 +8,29 @@ body {
 	height: 100vh;
 }
 
-.conteneur {
-	display: inline;
-}
-
 .conteneur-connexion
 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: flex-start;
 	background-color: var(--violet-fonce);
 	border-radius: 12px;
 	padding: 5vh;
+	padding-top: 10.5vh;
+	box-shadow: 0px 0px 10px 5px #bababa;
+	z-index: -1;
 }
 
 input[type="text"],
 input[type="password"]
 {
-	padding: 2vh;
 	border: none;
 	border-radius: 12px;
 	font-size: 20px;
-	margin-bottom: 1.5vh;
-	width: 80%;
+	width: 27.7vw;
+	height: 7.2vh;
+	text-indent:1vw;
 }
 
 .bouton {
@@ -42,5 +42,25 @@ input[type="password"]
 	cursor: pointer;
 	font-size: 24px;
 	text-transform: uppercase;
-	margin: 2vh 5vw 0vh 5vw;
+	margin: 4.5vh 5vw 0vh 5vw;
+}
+
+.conteneur-image-profil {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.photoProfile {
+	align-self: center;
+}
+
+.champs-saisie {
+	display: flex;
+	flex-direction:row;
+	border-radius: 12px;
+	background-color: white;
+	margin-top: 2.33vh;
 }
