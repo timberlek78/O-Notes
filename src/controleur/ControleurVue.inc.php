@@ -225,6 +225,11 @@
 				$tabImports[ $cpt ]->setFichierMoyenneTmpName( $_FILES [ 'fichierMoyenne' ] [ 'tmp_name'] [ $cpt ] );
 			}
 
+			if (isset($_FILES['fichierCoeff']))
+			{
+				$tabImports['fichierCoeff'] = $_FILES['fichierCoeff'];
+			}
+
 			//TODO: tabImport[fichierImport] = _FILES[fichierImport]
 			//print_r($tabImports);
 

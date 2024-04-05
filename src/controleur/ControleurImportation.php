@@ -1,7 +1,7 @@
 <?php
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
 
 	require __DIR__.'/../../lib/vendor/autoload.php';
 
@@ -13,29 +13,41 @@
 
 	function importerAvecTableau ( array $tabImports ) //FIXME: REMARQUE: pret pour le futur json
 	{
-		$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'coef' ] ); 
-
+		$dataCoef = array();
+		if (isset($tabImports['fichierCoeff']) && !empty($tabImports['fichierCoeff']))
+		{
+			$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $tabImports[ 'fichierCoeff' ] ); 
+		}
+		
 		foreach ( $tabImports as $import )
 		{
-			$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierMoyenne() );
-			$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierJury() );
-			if( empty( $dataMoyenne ) || empty( $dataJury ) )
+			if ($import instanceof Import)
 			{
-				// echo "Impossible d'ouvrir le fichier";
-				exit( );
+				$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierMoyenne() );
+				$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierJury() );
+				if( empty( $dataMoyenne ) || empty( $dataJury ) )
+				{
+					// echo "Impossible d'ouvrir le fichier";
+					exit( );
+				}
+
+				$donnees = genererDonnees( $dataMoyenne, $dataJury, $import->getAnnee(), $import->getSemestre(), $import->estAlternance() );
+			
+
+				if (isset($tabImports['fichierCoeff']) && !empty($tabImports['fichierCoeff']))
+				{
+					// print_r($tabImports['fichierCoeff']);
+					$NB_SEMESTRES = 6;
+					$analyse = new AnalyseDataCoefficients( $dataCoef, $import->getAnnee(), $NB_SEMESTRES, $import->estAlternance() );
+					$analyse->completer( $donnees );
+				}
+				
+				// echo "debut du traitement";
+				$conversion = new TableauToBado( $donnees );
+				// echo "fin du traitement, début de l'insertion";
+				$conversion->insertAll( );
+				// echo "fin de l'insertion";
 			}
-
-			$donnees = genererDonnees( $dataMoyenne, $dataJury, $import->getAnnee(), $import->getSemestre(), $import->estAlternance() );
-
-			$NB_SEMESTRES = 6;
-			$analyse = new AnalyseDataCoefficients( $dataCoef, $import->getAnnee(), $NB_SEMESTRES, $import->estAlternance() );
-			$analyse->completer( $donnees );
-
-			// echo "debut du traitement";
-			$conversion = new TableauToBado( $donnees );
-			// echo "fin du traitement, début de l'insertion";
-			$conversion->insertAll( );
-			// echo "fin de l'insertion";
 		}
 	}
 

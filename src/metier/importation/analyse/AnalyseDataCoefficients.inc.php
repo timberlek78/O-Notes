@@ -19,6 +19,7 @@ class AnalyseDataCoefficients
 
 	function __construct( array $tableauCoef, string $annee, int $nbSemestre, bool $alternance )
 	{
+		// print_r($tableauCoef);
 		$this->tableauCoef = $tableauCoef;
 		$this->annee = $annee;
 		$this->nbSemestre = $nbSemestre;
