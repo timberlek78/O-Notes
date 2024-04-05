@@ -89,6 +89,7 @@ validerSession ( );
 			</button>
 			<button class="btn-ajout-coeff btn-pied">
 				Ajouter les coefficients
+				<input type="file" name="" id="entree-coeff" style="display: none;">
 			</button>
 		</div>
 		<button class="btn-import btn-pied">

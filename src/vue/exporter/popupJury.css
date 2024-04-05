@@ -7,7 +7,7 @@ button {
 	border: none
 }
 
-#popup-avis-poursuite {
+#popup-jury {
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -29,7 +29,7 @@ button {
 	to   { transform: translate(-50%, -50%) scale(1); }
 }
 
-#popup-avis-poursuite.ouvert {
+#popup-jury.ouvert {
 	display: block;
 	transform: translate(-50%, -50%) scale(1);
 }
@@ -53,6 +53,22 @@ button {
 	padding: 1vh 0;
 }
 
+#entree-texte {
+	background-color: white;
+	border: 1px solid var(--violet-fonce);
+	border-radius: var(--arrondi);
+	padding: 1vh 10vw;
+	text-align: center;
+	color: var(--violet-fonce);
+	font-size: 1em;
+	margin-bottom: 3vh;
+}
+
+.btn-imports {
+	display: flex;
+	justify-content: center;
+}
+
 .btns-popup {
 	display: flex;
 	justify-content: space-between;
@@ -64,41 +80,4 @@ button {
 
 .btn-valider {
 	background: var(--orange-peps);
-}
-
-#choix-annee {
-	background-color: var(--violet-moyen);
-	color: white;
-	text-align: center;
-}
-
-#choix-annee option {
-	background-color: white;
-	border-radius: 0;
-	color: black;
-}
-
-.btn-annee {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.btn-annuler-jury {
-	background-color: var(--violet-fonce);
-}
-
-.btn-valider-jury {
-	background-color: var(--orange-peps);
-}
-
-#entree-semestre {
-	background-color: white;
-	border: 1px solid var(--violet-fonce);
-	border-radius: var(--arrondi);
-	padding: 1vh 5vw;
-	text-align: center;
-	color: var(--violet-fonce);
-	font-size: 1em;
-	margin-bottom: 3vh;
 }
