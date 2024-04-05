@@ -54,15 +54,15 @@
 			self::insertOuUpdate( "Matiere", $this->donneesONote->ensMatiere );
 			// echo "Matiere insérée <br>";
 			self::insertOuUpdate( "CompetenceMatiere", $this->donneesONote->ensCompetenceMatiere );
-			echo "CompetenceMatiere insérée <br>";
+			// echo "CompetenceMatiere insérée <br>";
 			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
-			echo "EtudiantSemestre inséré <br>";
+			// echo "EtudiantSemestre inséré <br>";
 			self::insertOuUpdate( "Cursus", $this->donneesONote->ensCursus );
 			// echo "Cursus inséré <br>";
 			self::insertOuUpdate( "EstNote", $this->donneesONote->ensEstNote );
-			echo "EstNote inséré <br>";
+			// echo "EstNote inséré <br>";
 			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
-			echo "EtudiantSemestre inséré <br>";
+			// echo "EtudiantSemestre inséré <br>";
 		}
 		
 	}
