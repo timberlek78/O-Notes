@@ -78,7 +78,7 @@ $un_utilisateur = unserialize ( $_SESSION['utilisateur'] );
 				</div>
 				<div class="cadre-image-etudiant">
 					<div class="conteneur-image">
-						<img class="photo-etudiant" alt="photo-etudiant" src="../../../res/image/image.png">
+						<img class="photo-etudiant" alt="photo-etudiant" src="../../../res/image/PERSONA.jpg">
 					</div>
 					<div class="conteneur-information">
 						<p id="popup-prenom">Prénom</p>
