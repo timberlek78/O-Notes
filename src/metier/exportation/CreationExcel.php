@@ -349,7 +349,7 @@ $generateurDonnees  = new GenerateurDonnees();
 $donneesEtudiants   = $generateurDonnees->genererDonneesEtudiant  ();
 $donneesCompetences = $generateurDonnees->genererDonneesCompetence();
 
-$exportateur = new ExcelExporter('exemple.xlsx', '../../../data', 1);
+$exportateur = new ExcelExporter('exemple.xlsx', '../../../data', 6);
 $exportateur->creerFeuilleEtudiant    ( $donneesEtudiants );
 $exportateur->creerColonneBUT         ( $donneesEtudiants );
 $exportateur->remplierColonneBUT      ( $donneesEtudiants );
