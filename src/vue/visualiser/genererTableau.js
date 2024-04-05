@@ -154,6 +154,7 @@ function ajouterEtudiantTableau ( etudiant )
 
 	for ( const competence in competences )
 	{
+		console.log (etudiant)
 		var moyCompetence       = new Map   ( );
 		var ensembleNoteMatiere = new Array ( );
 		var ensMatiere = competences[competence].matieres;
@@ -161,6 +162,8 @@ function ajouterEtudiantTableau ( etudiant )
 		// Calcul les ues validés par l'étudiant
 		var admission  = competences[competence].admission
 
+		
+		
 		if ( admission === 'ADM' || admission === 'CMP' || admission === 'ADSUP' )
 			nbUEs += 1;
 
@@ -176,12 +179,13 @@ function ajouterEtudiantTableau ( etudiant )
 			counter++;
 		} );
 
-		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[ensMatiere.length-1].moyenne) ).toFixed ( 2 ) ;
+		var moyenneEnCours = parseFloat ( ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[ensMatiere.length-1].moyenne) ) ).toFixed ( 2 ) ;
+
+		// Ajoute le Bonus à la ligne de l'étudiant
+		ensembleNoteMatiere.push ( `<td> ${ensMatiere[ensMatiere.length-1].moyenne} </td>` );
 
 		// Met la moyenne de la compétence au début du tableau
 		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
-		// Ajoute le Bonus à la ligne de l'étudiant
-		ensembleNoteMatiere.unshift ( `<td> ${ensMatiere[0].moyenne} </td>` );
 
 		// Ajoute les notes de l'étudiant dans le détail des compétences
 		ensDetailCompetence.get ( competence ).push ( ensembleNoteMatiere );
