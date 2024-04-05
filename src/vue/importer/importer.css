@@ -79,17 +79,11 @@ button {
 }
 
 .btn-ajout-coeff {
-	display: none;
 	background-color: var(--violet-action);
 }
 
 .btn-import {
 	background-color: var(--orange-peps);
-}
-
-.btn-import:disabled {
-	cursor: default;
-	background-color: lightgray;
 }
 
 /****************************************/

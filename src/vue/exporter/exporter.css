@@ -1,5 +1,6 @@
 @import url(../style.css);
 @import url(./popupAvis.css);
+@import url(./popupJury.css);
 
 .conteneur-export {
 	display: grid;

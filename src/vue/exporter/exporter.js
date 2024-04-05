@@ -22,9 +22,11 @@ function creerOption ( annee )
 	choixAnnee.appendChild ( option );
 }
 
+var anneeChoisie;
 choixAnnee.addEventListener('change', function()
 {
-	fetchAnneeData(choixAnnee.value)
+	anneeChoisie = choixAnnee.value;
+	fetchAnneeData(anneeChoisie)
 	reinitialiserPage();
 })
 
@@ -105,9 +107,188 @@ btnAvis.onclick = function()
 }
 
 btnAnnuler.onclick = fermerPopUp ;
-btnValider.onclick = fermerPopUp;
+btnValider.onclick = exporterAvis;
 
 function fermerPopUp ( )
 {
 	popupExportation.classList.remove('ouvert');
+}
+
+/*Récupération des fichiers*/
+var fichierLogoUn;
+var fichierLogoDeux;
+var fichierSignature;
+
+selectionLogoUn = document.querySelector ('.ajout-logo-un');
+inputFileLogoUn = document.getElementById('entree-logo-un');
+
+selectionLogoUn.addEventListener('click', function() 
+{
+	inputFileLogoUn.click();
+});
+
+selectionLogoDeux = document.querySelector ('.ajout-logo-deux');
+inputFileLogoDeux = document.getElementById('entree-logo-deux');
+
+selectionLogoDeux.addEventListener('click', function() 
+{
+	inputFileLogoDeux.click();
+});
+
+selectionSignature = document.querySelector ('.ajout-signature');
+inputFileSignature = document.getElementById('entree-signature');
+
+selectionSignature.addEventListener('click', function() 
+{
+	inputFileSignature.click();
+});
+
+inputFileLogoUn.addEventListener('change', function()
+{
+	fichierLogoUn = inputFileLogoUn.files[0];
+
+	if (fichierLogoUn)
+	{
+		svg = document.getElementById('svg-logo-un');
+
+		remplacerFichier(svg, fichierLogoUn)
+	}
+});
+
+inputFileLogoDeux.addEventListener('change', function()
+{
+	fichierLogoDeux = inputFileLogoUn.files[0];
+
+	if (fichierLogoDeux)
+	{
+		svg = document.getElementById('svg-logo-deux');
+
+		remplacerFichier(svg, fichierLogoDeux)
+	}
+});
+
+inputFileSignature.addEventListener('change', function()
+{
+	fichierSignature = inputFileSignature.files[0];
+
+	if (fichierSignature)
+	{
+		svg = document.getElementById('svg-signature');
+
+		remplacerFichier(svg, fichierSignature)
+	}
+});
+
+/* VALIDATION DE L'AVIS DE POURSUITE D'ETUDE */
+function exporterAvis ( )
+{
+	const entreeChef = document.getElementById('entree-texte');
+	chefSaisi = entreeChef.value;
+
+	if (!verifierPopupAvis(chefSaisi)) return;
+
+	formData = new FormData();
+
+	formData.append('chefDept', chefSaisi);
+	formData.append('fichierLogoUn', fichierLogoUn),
+	formData.append('fichierLogoDeux', fichierLogoDeux);
+	formData.append('fichierSignature', fichierSignature);
+
+	fetch ( '../../controleur/ControleurVue.inc.php',
+	{
+		method: 'POST',
+		body: formData
+	})
+	.then ( reponse => reponse.json())
+	.catch ( erreur => 
+		{
+			console.log ( erreur );
+		})
+}
+
+function verifierPopupAvis(chef)
+{
+	if (!chef)
+	{
+		alert('Un chef de département doit être saisi');
+		return false;
+	}
+
+	if (!fichierLogoUn || !fichierLogoDeux || !fichierSignature)
+	{
+		alert('Veuillez renseigner tous les documents.');
+		return false;
+	}
+
+	return true;
+}
+
+function remplacerFichier ( svg, fichier )
+{
+	var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+	text.setAttribute('x', '50%'); // Définir la position horizontale du texte
+	text.setAttribute('y', '50%'); // Définir la position verticale du texte
+	text.setAttribute('text-anchor', 'middle'); // Aligner le texte au centre
+	text.setAttribute('dominant-baseline', 'middle'); // Aligner le texte verticalement au centre
+	text.setAttribute('fill', 'white'); // Couleur du texte
+	text.setAttribute('font-size', '12'); // Taille de la police
+	text.setAttribute('id', 'svg-design'); // Définir l'id du texte
+	text.textContent = fichier.name; // Contenu du texte
+
+	svg.replaceChild(text, svg.querySelector('#svg-design'))
+}
+
+btnJury = document.querySelector('.btn-jury');
+
+btnJury.onclick = ouverturePopupJury;
+
+const popupJury = document.getElementById('popup-jury');
+
+btnAnnulerJury = document.querySelector('.btn-annuler-jury');
+btnValiderJury = document.querySelector('.btn-valider-jury');
+
+btnAnnulerJury.onclick = fermeturePopupJury;
+btnValiderJury.onclick = exporterJury;
+
+function ouverturePopupJury()
+{
+	popupJury.classList.add('ouvert');
+}
+
+function fermeturePopupJury()
+{
+	popupJury.classList.remove('ouvert');
+}
+
+function exporterJury()
+{
+	entreeSemestre = document.getElementById('entree-semestre');
+	semestre = entreeSemestre.value;
+
+	if (semestre === "default") return;
+
+	annee = parseInt(parseInt(semestre.substring(1,2))/2+0.5);
+
+	anneeFin = parseInt(anneeChoisie.substring(5, 9)) + (3-annee);
+
+	promotion = anneeFin-3 + "-" + anneeFin;
+
+	console.log('promo : ' + promotion);
+
+	formData = new FormData();
+	formData.append('promotion', promotion);
+	formData.append('semestre',  parseInt(semestre.substring(1,2)));
+
+	fetch ( '../../controleur/ControleurVue.inc.php',
+	{
+		method: 'POST',
+		body: formData
+	})
+	.then ( reponse => console.log(reponse))
+	.catch ( erreur => 
+		{
+			console.log ( erreur );
+		})
+
+	fermeturePopupJury();
 }

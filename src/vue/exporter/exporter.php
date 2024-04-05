@@ -47,26 +47,29 @@ validerSession ( );
 		<div class="images-import">
 			<div class="sous-titre">Images à importer</div>
 			<div class="btn-imports">
-				<div class="ajout-document">
-					<svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<div class="ajout-document ajout-logo-un">
+					<svg id="svg-logo-un" width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" width="154" height="40" rx="12" fill="var(--orange-peps)"/>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
+						<path id="svg-design" fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
 					</svg>
 					Logo 1
+					<input type="file" name="" id="entree-logo-un" style="display: none;">
 				</div>
-				<div class="ajout-document">
-					<svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<div class="ajout-document ajout-logo-deux">
+					<svg id="svg-logo-deux" width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" width="154" height="40" rx="12" fill="var(--orange-peps)"/>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
+						<path id="svg-design" fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
 					</svg>
 					Logo 2
+					<input type="file" name="" id="entree-logo-deux" style="display: none;">
 				</div>
-				<div class="ajout-document">
-					<svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<div class="ajout-document ajout-signature">
+					<svg id="svg-signature" width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" width="154" height="40" rx="12" fill="var(--orange-peps)"/>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
+						<path id="svg-design" fill-rule="evenodd" clip-rule="evenodd" d="M89.375 34V11.5H80.375V13.75H87.125V31.75H66.875V13.75H73.625V11.5H64.625V34H89.375ZM75.875 19.375H71.375L77 26.125L82.625 19.375H78.125V7H75.875V19.375Z" fill="white"/>
 					</svg>
 					Signature
+					<input type="file" name="" id="entree-signature" style="display: none;">
 				</div>
 			</div>
 		</div>
@@ -74,6 +77,31 @@ validerSession ( );
 		<div class="btns-popup">
 			<button class="btn-annuler btn-popup">Annuler</button>
 			<button class="btn-valider btn-popup">Valider</button>
+		</div>
+	</div>
+
+	<!------------------------------------>
+	<!-- Pop-Up Génération JURY         -->
+	<!-- --------------------------------->
+
+	<div id="popup-jury">
+		<div class="titre-popup">Fiche de jury</div>
+		<div class="selection-nom-chef-dep">
+			<div class="sous-titre">Sélectionner un semestre à exporter</div>
+			<select name="" id="entree-semestre">
+				<option value="default" disabled selected>Semestre</option>
+				<option value="S1">S1</option>
+				<option value="S2">S2</option>
+				<option value="S3">S3</option>
+				<option value="S4">S4</option>
+				<option value="S5">S5</option>
+				<option value="S6">S6</option>
+			</select>
+		</div>
+
+		<div class="btns-popup">
+			<button class="btn-annuler-jury btn-popup">Annuler</button>
+			<button class="btn-valider-jury btn-popup">Valider</button>
 		</div>
 	</div>
 

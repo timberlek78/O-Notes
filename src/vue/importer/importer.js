@@ -51,7 +51,7 @@ function validationImport ( )
 	tabFichiers.append('fichierJury[]', fichierJury);
 	tabFichiers.append('fichierMoyenne[]', fichierMoyenne)
 
-	console.log(nbFD);	
+	console.log(nbFD);
 
 	popupImportation.classList.remove ( 'ouvert' );       // Fermeture du popup
 	
@@ -245,6 +245,28 @@ function remplacerFichier ( svg, fichier )
 
 btnImporter.addEventListener ( 'click', envoyerDocuments );
 
+// ENTREE COEFFICIENTS
+const btnAjoutCoeff = document.querySelector('.btn-ajout-coeff');
+const inputCoeff    = document.getElementById('entree-coeff');
+
+var fichierCoeff = null;
+
+btnAjoutCoeff.addEventListener('click', function()
+{
+	console.log('test');
+	inputCoeff.click();
+});
+
+inputCoeff    .addEventListener('change', function()
+{
+	fichierCoeff = inputFileJury.files[0];
+
+	if (fichierCoeff)
+	{
+		btnAjoutCoeff.innerText = fichierCoeff.name;
+	}
+});
+
 function envoyerDocuments ( )
 {
 	// Fetch vers le ControleurVue pour envoyer le json des documents
@@ -254,6 +276,8 @@ function envoyerDocuments ( )
 
 	const conteneurImport = document.querySelector ( '.conteneur-import' );
 	conteneurImport.style.display = 'none';
+
+	tabFichiers.append('fichierCoeff', fichierCoeff);
 
 	fetch ( '../../controleur/ControleurVue.inc.php',
 	{
