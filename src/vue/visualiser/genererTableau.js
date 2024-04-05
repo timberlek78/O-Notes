@@ -114,6 +114,8 @@ function reinitialiserPage ( )
 
 function ajouterEtudiantTableau ( etudiant )
 {
+	console.log (etudiant)
+	
 	/*+-----------------------------------+*/
 	/*|      TABLEAU : NOM - PRENOM       |*/
 	/*+-----------------------------------+*/
@@ -174,7 +176,7 @@ function ajouterEtudiantTableau ( etudiant )
 			counter++;
 		} );
 
-		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[0].moyenne) ).toFixed ( 2 ) ;
+		var moyenneEnCours = ( parseFloat ( calculerMoyenneCompetence ( moyCompetence ) ) + parseFloat(ensMatiere[ensMatiere.length-1].moyenne) ).toFixed ( 2 ) ;
 
 		// Met la moyenne de la compétence au début du tableau
 		ensembleNoteMatiere.unshift ( `<td> ${moyenneEnCours} </td>` );
