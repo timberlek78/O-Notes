@@ -23,7 +23,38 @@ $un_utilisateur = unserialize ( $_SESSION['utilisateur'] );
 	<link rel="stylesheet" href="popupCompetence.css">
 </head>
 <body>
-<div class="conteneur"><div class="navbar"><div class="logo"><img src="../ressources/logo.png" alt="Logo Menu"/></div><div class="menu"><ul><li><a href="../importer/importer.php">Importation</a></li><li><a href="../visualiser/visualiser.php">Visualisation</a></li><li><a href="../exporter/exporter.php">Exportation</a></li></ul></div><div class="contient-button"><div class="button"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_168_56)"><circle cx="9.70603" cy="4.79451" r="4.79451" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19.178 19.9998C19.178 14.7039 14.8849 9.35498 9.58901 9.35498C4.29315 9.35498 0 14.7039 0 19.9998H9.58901H19.178Z" fill="white"/></g><defs><clipPath id="clip0_168_56"><rect width="20" height="20" fill="white"/></clipPath></defs></svg><a href="#" class="connecter"><?php echo $un_utilisateur->getNomUtilisateur();?></a></div></div></div></div>		<div class="conteneur-visualiser">
+<div class="conteneur">
+		<div class="navbar">
+			<div class="logo">
+				<img src="../ressources/logo.png" alt="Logo Menu"/>
+			</div>
+			<div class="menu">
+				<ul>
+					<li><a href="../importer/importer.php">Importation</a></li>
+					<li><a href="../visualiser/visualiser.php">Visualisation</a></li
+					><li><a href="../exporter/exporter.php">Exportation</a></li>
+				</ul>
+			</div>
+			<div class="contient-button">
+				<form action="../../metier/authentification/bye.php" method="post">
+					<button class="exit">
+						<div class="button">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g clip-path="url(#clip0_168_56)"><circle cx="9.70603" cy="4.79451" r="4.79451" fill="white"/>
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M19.178 19.9998C19.178 14.7039 14.8849 9.35498 9.58901 9.35498C4.29315 9.35498 0 14.7039 0 19.9998H9.58901H19.178Z" fill="white"/>
+							</g>
+									<defs>
+										<clipPath id="clip0_168_56"><rect width="20" height="20" fill="white"/>
+									</clipPath>
+								</defs>
+							</svg>
+							<a class="connecter"><?php echo $un_utilisateur->getNomUtilisateur()?></a>
+						</div>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div><div class="conteneur-visualiser">
 			<select name="" id="choix-annee" class="btn-pied">
 				<option value="" disabled selected>Année</option>
 			</select>

@@ -59,6 +59,7 @@ ensBoutonsSemestre.forEach ( function ( bouton )
 
 // Test déclaration des valeurs à l'extérieur pour y avoir accès
 var ensDetailCompetence = new Map ( );
+var tailleDonnee;
 
 function fetchDonneeEtudiant()
 {
@@ -77,6 +78,7 @@ function fetchDonneeEtudiant()
 			console.log(donnees);
 			try
 			{
+				tailleDonnee = donnees.length;
 				genererEntete ( Object.keys ( donnees[0].cursus ) );
 
 				ensDetailCompetence.forEach ( (value, key) =>

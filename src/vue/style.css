@@ -140,6 +140,14 @@ body {
 	font-family: 'Urbanist', sans-serif;
 }
 
+.exit {
+	border-radius: var(--arrondi);
+	color: white;
+	cursor: pointer;
+	border: none;
+	background-color: white;
+}
+
 :root {
 	/* Couleurs */
 	--violet-fonce: #5B374D;
