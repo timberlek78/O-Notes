@@ -62,7 +62,7 @@ function majPopupEtudiant ( etudiant )
 	cadreInfos[2].children[1].innerText = etudiant.promotion;
 	cadreInfos[3].children[1].innerText = etudiant.typeBac;
 	cadreInfos[4].children[1].innerText = etudiant.specialite;
-	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang;
+	cadreInfos[5].children[1].innerText = etudiant.etudsem.rang + " / " + tailleDonnee;
 	cadreInfos[6].children[1].innerText = etudiant.etudsem.nbAbsence;
 }
 
