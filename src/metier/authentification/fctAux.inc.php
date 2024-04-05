@@ -6,7 +6,7 @@ function validerSession ( )
 {
 	if( ! isset ( $_SESSION['utilisateur'] ) )
 	{
-		header('Location: connexion.php');
+		header ( "Location: ../../vue/authentifier/authentifier.php" );
 	}
 }
 ?>

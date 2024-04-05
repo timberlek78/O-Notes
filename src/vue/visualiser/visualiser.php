@@ -1,3 +1,10 @@
+<?php
+
+include "../../metier/authentification/fctAux.inc.php";
+
+validerSession ( );
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

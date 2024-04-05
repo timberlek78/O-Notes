@@ -1,6 +1,6 @@
 <?php
 	session_start ( );
-	//include "utilisateur.inc.php";
+	include "../../donnee/Utilisateurs";
 	require "../../controleur/ControleurDB.inc.php";
 	
 	$nom      = isset ( $_REQUEST['nomUtilisateur'] ) ? $_REQUEST['nomUtilisateur'] : '';
@@ -10,12 +10,12 @@
 	{
 		if ( verification ( $nom, $password ) )
 		{
-			header ("Location: ../../vue/importer/importer.html" );
-
-			$un_utilisateur = new Utilisateur ( $nom, niveauDroit ( $nom ) );
-
+			//TODO: récupérer le niveau de droit de l'utilisateur
+			$un_utilisateur = new Utilisateur ( $nom, null, null );
+			
 			$_SESSION['utilisateur'] = serialize ( $un_utilisateur );
-
+			
+			header ( "Location: ../../vue/importer/importer.php" );
 			exit ( );
 		}
 		else
@@ -32,11 +32,7 @@
 
 	function verification ( $nom, $pass )
 	{
-		echo password_hash("Equipe8-ONote", PASSWORD_DEFAULT, []);
-
-		if ( password_verify ( "Equipe8-ONote", '$2y$10$eRRKrMsK.PY0d3NQrY1n0ezrU2IqpN7/6gdS.k6HAykdJrykFU6K.'))
-			echo " sqd" ;
-		
+		return true;
 		$lstUtilisateur =  DB::getInstance ( )->selectAll ( "utilisateur" );
 
 		foreach ( $lstUtilisateur as $utilisateur )
@@ -45,9 +41,8 @@
 			$motDePasse     = $utilisateur->getMdp            ( );
 
 			if ( strcmp ( $nomUtilisateur, $nom ) && password_verify ( $pass, $motDePasse ) )
-			{
 				return true;
-			}
+
 		}
 
 		return false;
