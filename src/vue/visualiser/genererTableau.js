@@ -193,16 +193,6 @@ function ajouterEtudiantTableau ( etudiant )
 	
 	// Ajoute la ligne de l'étudiant
 	tabResumeComptence.appendChild ( tabResumeligneResume );
-
-	/*+-----------------------------------+*/
-	/*|        AJOUT DES LISTENERS        |*/
-	/*+-----------------------------------+*/
-
-	tabNomPrenomligneEtudiant.addEventListener ('click', function ( )
-	{
-		ouverturePopupEtudiant ( );
-		majPopupEtudiant ( etudiant );
-	} );
 };
 
 function calculerMoyenneCompetence ( donnee )
