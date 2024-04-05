@@ -62,8 +62,16 @@ button {
 }
 
 .pied-de-page {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 2vh;
+}
+
+.pied-de-page button {
+	margin-right: 2vh;
 }
 
 .btn-ajout-semestre {

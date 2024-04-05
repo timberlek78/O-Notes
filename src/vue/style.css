@@ -15,18 +15,19 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 16vh;
+	height: 13vh;
 	gap: 7vw;
 }
 
 .logo {
-	width: 13vw;
 	display: flex;
+	width: 10vw;
 	justify-content: center;
 }
 
 .logo img{
-	width: 9vw;
+	height: 7.5vw;
+	
 }
 
 .menu {
@@ -152,7 +153,7 @@ body {
 	/* EN DESSOUS CA MARCHE PAS */
 
 	/* Ombre */
-	--ombre-value: 0vh 0vh 1.2vh 0.1vw rgba(0, 0, 0, 0.5);
+	--ombre-value: 0vh 0vh 1.2vh 0.1vw rgba(0, 0, 0, 0.20);
 
 	/* Arrondi */
 	--arrondi: 12px;

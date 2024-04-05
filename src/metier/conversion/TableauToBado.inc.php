@@ -21,20 +21,16 @@
 		{
 			foreach( $ensElement as $element )
 			{
-				//$this->DB->beginTransaction();
-
 				try
 				{
 					//echo "Test insertion de " . $classeElement . " : " . $element . "<br>";
 					$this->DB->insert( $classeElement, $element );
-					//$this->DB->commit();
 				}
 				catch( Exception $e )
 				{
 					try
 					{
 						//echo "Test mise à jour de " . $classeElement . " : " . $element . "<br>";
-						//if( $classeElement == "Etudiant" or $classeElement == "Semestre" or $classeElement == "Competence" )
 						$this->DB->update( $classeElement, $element );
 					}
 					catch( Exception $e )
@@ -58,13 +54,15 @@
 			self::insertOuUpdate( "Matiere", $this->donneesONote->ensMatiere );
 			// echo "Matiere insérée <br>";
 			self::insertOuUpdate( "CompetenceMatiere", $this->donneesONote->ensCompetenceMatiere );
-			// echo "CompetenceMatiere insérée <br>";
+			echo "CompetenceMatiere insérée <br>";
+			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
+			echo "EtudiantSemestre inséré <br>";
 			self::insertOuUpdate( "Cursus", $this->donneesONote->ensCursus );
 			// echo "Cursus inséré <br>";
 			self::insertOuUpdate( "EstNote", $this->donneesONote->ensEstNote );
-			// echo "EstNote inséré <br>";
+			echo "EstNote inséré <br>";
 			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
-			// echo "EtudiantSemestre inséré <br>";
+			echo "EtudiantSemestre inséré <br>";
 		}
 		
 	}
