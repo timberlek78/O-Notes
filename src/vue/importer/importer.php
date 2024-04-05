@@ -22,6 +22,10 @@ validerSession ( );
 		<p>Merci d'importer vos fichiers.</p>
 	</div>
 
+	<div class="chargement">
+		<div class="roue-chargement"></div>
+	</div>
+
 	<!-- Pop-up -->
 	<div id="popup-ajout-semestre">
 		<div class="titre-popup">Ajout d'un semestre</div>

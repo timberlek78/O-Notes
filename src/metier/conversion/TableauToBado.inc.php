@@ -39,7 +39,7 @@
 					}
 					catch( Exception $e )
 					{
-						echo "<span style='color:RED'>Remarque :</span> " . $e->getMessage() . "<br>";
+						// echo "<span style='color:RED'>Remarque :</span> " . $e->getMessage() . "<br>";
 					}
 				}
 			}
@@ -48,23 +48,23 @@
 		public function insertAll()
 		{
 			self::insertOuUpdate( "Etude", $this->donneesONote->ensEtude );
-			echo "Etude insérée <br>";
+			// echo "Etude insérée <br>";
 			self::insertOuUpdate( "Etudiant", $this->donneesONote->ensEtudiant );
-			echo "Etudiant inséré <br>";
+			// echo "Etudiant inséré <br>";
 			self::insertOuUpdate( "Competence", $this->donneesONote->ensCompetence );
-			echo "Competence insérée <br>";
+			// echo "Competence insérée <br>";
 			self::insertOuUpdate( "Semestre", $this->donneesONote->ensSemestre );
-			echo "Semestre inséré <br>";
+			// echo "Semestre inséré <br>";
 			self::insertOuUpdate( "Matiere", $this->donneesONote->ensMatiere );
-			echo "Matiere insérée <br>";
+			// echo "Matiere insérée <br>";
 			self::insertOuUpdate( "CompetenceMatiere", $this->donneesONote->ensCompetenceMatiere );
-			echo "CompetenceMatiere insérée <br>";
+			// echo "CompetenceMatiere insérée <br>";
 			self::insertOuUpdate( "Cursus", $this->donneesONote->ensCursus );
-			echo "Cursus inséré <br>";
+			// echo "Cursus inséré <br>";
 			self::insertOuUpdate( "EstNote", $this->donneesONote->ensEstNote );
-			echo "EstNote inséré <br>";
+			// echo "EstNote inséré <br>";
 			self::insertOuUpdate( "EtudiantSemestre", $this->donneesONote->ensEtudiantSemestre );
-			echo "EtudiantSemestre inséré <br>";
+			// echo "EtudiantSemestre inséré <br>";
 		}
 		
 	}

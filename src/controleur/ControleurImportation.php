@@ -18,7 +18,7 @@
 			$dataJury    = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierJury() );
 			if( empty( $dataMoyenne ) || empty( $dataJury ) )
 			{
-				echo "Impossible d'ouvrir le fichier";
+				// echo "Impossible d'ouvrir le fichier";
 				exit( );
 			}
 
@@ -26,11 +26,11 @@
 
 			//echo $donnees;
 
-			echo "debut du traitement";
+			// echo "debut du traitement";
 			$conversion = new TableauToBado( $donnees );
-			echo "fin du traitement, début de l'insertion";
+			// echo "fin du traitement, début de l'insertion";
 			$conversion->insertAll( );
-			echo "fin de l'insertion";
+			// echo "fin de l'insertion";
 		}
 	}
 

@@ -43,8 +43,8 @@ class DB
 		}
 		catch ( PDOException $e )
 		{
-			echo $configDB->host;
-			echo "problème de connexion : ".$e->getMessage ( );
+			// echo $configDB->host;
+			// echo "problème de connexion : ".$e->getMessage ( );
 		}
 	}
 
@@ -148,6 +148,11 @@ class DB
 			}
 		}
 
+		if ($nomClasse === 'EtudiantCursusFetch')
+		{
+			$requete .= ' ORDER BY idcompetence, idmatiere';
+		}
+
 		$prepareStatement = $this->connect->prepare($requete);
 
 		$prepareStatement->execute($parametres);
@@ -164,6 +169,7 @@ class DB
 			foreach ($resultats as $resultat)
 			{
 				// var_dump($resultat);
+				// echo '<br>';
 				$codenip    = $resultat['codenip'];
 				$nom        = $resultat['nom'];
 				$prenom     = $resultat['prenom'];
@@ -180,18 +186,19 @@ class DB
 				$admission = $resultat['admission'];
 				$idmatiere = $resultat['idmatiere'];
 				$coeff = $resultat['coeff'];
+				$moyenne = $resultat['moyenne'];
 
 				// Vérifiez si nous avons déjà un CursusFetch pour cet idcompetence
 				if (isset($tabRet[$codenip]))
 				{
 					// Si c'est le cas, ajoutez simplement la matiere à son tableau de matieres
-					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff);
+					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff, 'moyenne' => $moyenne);
 					$tabRet[$codenip]->addCursus($cursus);
 				}
 				else
 				{
 					$etudiantcursusfetch = new EtudiantCursusFetch($codenip, $nom, $prenom, $parcours, $promotion, $specialite, $typebac, $passage, $rang, $nbabs);
-					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff);
+					$cursus = array('idcompetence' => $idcompetence, 'admission' => $admission, 'idmatiere' => $idmatiere, 'coeff' => $coeff, 'moyenne' => $moyenne);
 					$etudiantcursusfetch->addCursus($cursus);
 					$tabRet[$codenip] = $etudiantcursusfetch;
 				}
