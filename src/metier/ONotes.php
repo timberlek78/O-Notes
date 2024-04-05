@@ -4,7 +4,7 @@
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 	
-	include '../controleur/ControleurDB.inc.php';
+	include __DIR__.'/../controleur/ControleurDB.inc.php';
 	include '../donnee/Competence.inc.php';
 	include '../donnee/CompetenceMatiere.inc.php';
 	include '../donnee/Cursus.inc.php';
@@ -56,7 +56,7 @@ class ONote
 	{
 		foreach ($tab as $index => $etudiant) 
 		{
-			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant->getCodeNIP()));
+			$etudiant->setTabMoyenne($this->determinerMoyenneCompetenceEtudiant($etudiant));
 			$etudiant->setTabBUT    ($this->determinerTabCompetence            ($etudiant->getCodeNIP()));
 			$etudiant->setTabCursus( $etudiant->definirTableCursus() );
 			$etudiant->calculeMoyenneG();
@@ -72,18 +72,26 @@ class ONote
 		}
 	}
 
-	public function determinerMoyenneCompetenceEtudiant($id) //determine le tab des moyennes de l'étudiant paser en parametre
+	public function determinerMoyenneCompetenceEtudiant($etudiant) //determine le tab des moyennes de l'étudiant paser en parametre
 	{
 		$tab        = $this->getEnsCursus();
 		$tabMoyenne = array();
 		foreach($tab as $cursus) // Parcours de la table Cursus
-			if($cursus->getCodeNIP() == $id)
+			if($cursus->getCodeNIP() == $etudiant->getCodeNIP())
 			{
 				$somme      = 0;
 				$competence = $this->selectByIdEtAnnee( $cursus->getIdCompetence(), $cursus->getAnnee(), $this->getEnsCompetence() );
 				$tabMatiere = $competence->getTabMatieres();
 
-				for($j = 0; $j<count($tabMatiere); $j++) $somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getIdMatiere(), $id);
+
+
+				for($j = 0; $j<count($tabMatiere); $j++)
+				{
+					$lastChar = substr($tabMatiere[$j]->getIdMatiere(), -1);
+					if( $lastChar == "A") $etudiant->setApprentie("OUI");
+
+					$somme += $this->selectMoyenneParEtudiant($tabMatiere[$j]->getIdMatiere(), $etudiant->getCodeNIP());
+				}
 
 				$tabMoyenne[$competence->getIdCompetence()] =round($somme / count($tabMatiere),2);
 			}
@@ -168,22 +176,11 @@ class ONote
 		$taille     = count($this->getEnsCompetenceMatiere());
 		$tab        =       $this->getEnsCompetenceMatiere();
 		$tabMatiere = array();
-
-		echo "<br> annee";
-		var_dump($annee);
-		echo "<br> id";
-		var_dump($id);
 		
 		foreach($tab as $competenceMatiere)
 		{
-			echo "<br>\$competenceMatiere->getIdCompetence()";
-			var_dump($competenceMatiere->getIdCompetence());
-			echo "<br>\$competenceMatiere->getAnnee()";
-			var_dump($competenceMatiere->getAnnee());
-
 			if($competenceMatiere->getIdCompetence() == $id && $competenceMatiere->getAnnee() == $annee)
 			{
-				var_dump($this->selectById($competenceMatiere->getIdMatiere(), $this->getEnsMatiere()));
 				$tabMatiere[] = $this->selectById($competenceMatiere->getIdMatiere(), $this->getEnsMatiere());
 			}
 		}

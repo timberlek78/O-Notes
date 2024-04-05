@@ -8,7 +8,7 @@ class Utilisateur
 	//attributs
 	private $mdp;
 
-	public function __construct($idUtilisateur, $mdp) {
+	public function __construct($idUtilisateur = "", $mdp = "") {
 		$this->idutilisateur = $idUtilisateur;
 		$this->mdp = $mdp;
 	}

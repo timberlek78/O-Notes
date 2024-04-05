@@ -21,6 +21,7 @@ class Etudiant
 	private $tabBUT;
 	private $Ue;
 	private $moyenneG;
+	private $alternant;
 
 	public function __construct( string $codenip="", string $nom="", string $prenom="", string $parcours="", string $promotion="", string $specialite="", string $typebac="" )
 	{
@@ -187,6 +188,11 @@ class Etudiant
 		$this->cursus = $tabCursus;
 	}
 
+	public function getTabCursus()
+	{
+		return $this->cursus;
+	}
+
 
 	public function setTabBUT(array $tabBUT)
 	{
@@ -246,6 +252,17 @@ class Etudiant
 	public function setIdEtude($idEtude)
 	{
 		$this->idEtude = $idEtude;
+	}
+
+
+	public function estApprentie()
+	{
+		return $this->alternant;
+	}
+
+	public function setApprentie($str)
+	{
+		$this->alternant = $str;
 	}
 }
 ?>

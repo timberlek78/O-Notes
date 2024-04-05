@@ -169,7 +169,7 @@ class DB
 	/*        Fonctions SELECT         */
 	/***********************************/
 
-	public function selectAll ( $nomTable )
+	public function selectAll ( $nomTable ) :array
 	{
 		$requete = 'SELECT * FROM '.DB::$schema.'.'.$nomTable;
 		return $this->execQuery ( $requete, null, $nomTable );
