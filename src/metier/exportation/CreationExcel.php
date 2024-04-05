@@ -235,13 +235,13 @@ class ExcelExporter
 		$ligne           = 7;
 		$ligneCompetence = 8;
 		$colonneArrive   = chr(ord($colonne) + count(array_keys($tabCompetence))- 1);
-		$ligneArrive     = $ligne + $nbEtudiant;
+		$ligneArrive     = $ligne + $nbEtudiant + 1;
 		$espace          = $colonne.$ligne.':'.$colonneArrive.$ligne;
-		$encadrer        = $colonne.$ligne.':'.$colonneArrive.$ligne + $nbEtudiant;
+		$encadrer        = $colonne.($ligne+1).':'.$colonneArrive.$ligneArrive;
 
 		$feuille = $this->spreadsheet->getActiveSheet();
 		$feuille->setCellValue($colonne.$ligne, strtoupper($but));
-		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(array_merge( ExcelExporter::STYLE_TITRE , ExcelExporter::STYLE_BORDURE_GRAS ));
+		$feuille->getCell     ($colonne.$ligne)->getStyle()->applyFromArray(ExcelExporter::STYLE_TITRE);
 
 		$index = 1;
 
@@ -264,7 +264,7 @@ class ExcelExporter
 		}
 
 		$feuille->mergeCells($espace);
-		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE_GRAS);
+		$feuille->getStyle($encadrer)->applyFromArray(ExcelExporter::STYLE_BORDURE);
 	}
 
 	public function estCool($admis)
@@ -282,7 +282,7 @@ class ExcelExporter
 
 		var_dump($tabCompetence);
 
-		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true, count($donneeEtudiant)-1);
+		$this->creerEncadreCompetence("UE du S".$this->getLimiteSemestre() ,$this->getColonneFINI(),$tabCompetence, true, count($donneeEtudiant));
 	}
 
 	public function remplirColonneMoyenne($donneeEtudiant)
@@ -294,7 +294,7 @@ class ExcelExporter
 		{
 			echo "<br>";
 			$feuille->setCellValue($this->getColonneFINI().$ligne, $etudiant->getUe());
-			$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
+			//$feuille->getCell     ($this->getColonneFINI().$ligne)->getStyle()->applyFromArray($this->appliquerStyleUe($etudiant->getUe()));
 
 
 			$feuille->setCellValue(chr((ord($this->getColonneFINI()) + 1  )).$ligne, $etudiant->getMoyenneG());
@@ -362,5 +362,3 @@ $cheminFichier = $exportateur->enregistrer();
 
 echo "<br>Le fichier Excel a été créé avec succès : $cheminFichier";
 ?>
-
-

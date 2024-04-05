@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../../lib/vendor/autoload.php';
+require __DIR__.'/../../../lib/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 class ConfigurationDB
@@ -10,12 +10,12 @@ class ConfigurationDB
 	public $user;
 	public $pass;
 	
-	public function __construct( )
+	public function __construct ( )
 	{
-		$dotenv = Dotenv::createImmutable( __DIR__ );
-		$dotenv->load( );
+		$dotenv = Dotenv::createImmutable ( __DIR__ );
+		$dotenv->load ( );
 
-		$dotenv->required( [ 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASS' ] );
+		$dotenv->required ( [ 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASS' ] );
 
 		$this->host = $_ENV[ 'DB_HOST' ];
 		$this->port = $_ENV[ 'DB_PORT' ];
@@ -23,7 +23,7 @@ class ConfigurationDB
 		$this->pass = $_ENV[ 'DB_PASS' ];
 	}
 
-	public function __toString( )
+	public function __toString ( )
 	{
 		return 	"<ul>".
 			"<li>host: $this->host </li>". 
@@ -32,9 +32,9 @@ class ConfigurationDB
 			"<li>pass: $this->pass </li></ul>";
 	}
 
-	private static function test( )
+	private static function test ( )
 	{
-		$configuration = new ConfigurationDB( );
+		$configuration = new ConfigurationDB ( );
 		echo $configuration;
 	}
 }
