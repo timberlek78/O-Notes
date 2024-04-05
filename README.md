@@ -9,16 +9,16 @@
 
 ### B) Configuration générale
 
-- Donner les droits en lecture/écriture au dossier "tmp" : `chmod -R 777 src/back-end/data/tmp/`.
+- Donner les droits en lecture/écriture au dossier "data" : `chmod -R 777 src/back-end/data/`.
 
 ### C) Configuration des logins
 
-- Créer le fichier ".env" : `O-Notes\src\controleur\.env`
+- Créer le fichier ".env" : `O-Notes\src\metier\bd\.env`
 - A partir du modèle ".env.example" compléter le nouveau fichier avec les bons identifiants.
 
 ### D) Utilisation
 
-- Accéder à la page : [http://localhost/~USER/O-Notes/src/vue/index.php](http://localhost/~USER/O-Notes/src/vue/index.php)
+- Accéder à la page : [http://localhost/~USER/O-Notes/src/vue/authentifier/authentifier.php](http://localhost/~USER/O-Notes/src/vue/authentifier/authentifier.php)
 
 ---
 
@@ -35,7 +35,7 @@
 
 ### C) Configuration des logins
 
-- Créer le fichier ".env" : `C:\xampp\htdocs\O-Notes\src\controleur\.env`
+- Créer le fichier ".env" : `C:\xampp\htdocs\O-Notes\src\metier\bd\.env`
 - A partir du modèle ".env.example" compléter le nouveau fichier avec les bons identifiants.
 
 ### D) Utilisation
