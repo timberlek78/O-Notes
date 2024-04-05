@@ -59,7 +59,7 @@ class AnalyseDetailCompetencesMoyenne
 		//exemple normal    : "Bonus BIN11" ou "BINR101" ou "BINS101"
 		//exemple alternant : "Bonus BIN11A" ou "BIN11A"
 		$regexBonus = "/^Bonus " . $nomCompetence . "A?$/";
-		$regexRessource = "/^BIN" . "[RS]" . $semestre . "\d\dA?$/";
+		$regexRessource = "/^BIN" . "[RSP]" . $semestre . "\d\dA?$/";
 
 		$estBonus = preg_match( $regexBonus, $nomColonne );
 		$estRessource = preg_match( $regexRessource, $nomColonne );

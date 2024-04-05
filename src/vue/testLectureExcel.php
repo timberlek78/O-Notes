@@ -6,12 +6,16 @@
 	<body>
 		<form action="../controleur/ControleurImportation.php" method="post" enctype="multipart/form-data">
 			<div>
-				<label for="moyennes">Fichier moyennes</label>
-				<input type="file" id="moyennes" name="moyennes" accept=".xlsx, excel" />
+				<label for="moyenne">Fichier moyennes</label>
+				<input type="file" id="moyenne" name="moyenne" accept=".xlsx, excel" />
 			</div>
 			<div>
 				<label for="jury">Fichier jury</label>
 				<input type="file" id="jury" name="jury" accept=".xlsx, excel" />
+			</div>
+			<div>
+				<label for="coef">Fichier coef</label>
+				<input type="file" id="coef" name="coef" accept=".xlsx, excel" />
 			</div>
 			
 			<br>
