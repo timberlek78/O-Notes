@@ -254,7 +254,7 @@ class DB
 			// }
 
 			// $tabRet = array_map("unserialize", array_unique(array_map("serialize", $tabRet)));
-			var_dump($tabRet);
+			// var_dump($tabRet);
 		}
 		else if ($nomClasse === 'EtudiantEtudiantSemestre')
 		{
@@ -267,6 +267,7 @@ class DB
 
 		// $prepareStatement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $nomClasse);
 
+		
 		return $tabRet;
 	}
 
