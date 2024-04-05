@@ -15,7 +15,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 16vh;
+	height: 13vh;
 	gap: 7vw;
 }
 
@@ -152,7 +152,7 @@ body {
 	/* EN DESSOUS CA MARCHE PAS */
 
 	/* Ombre */
-	--ombre-value: 0vh 0vh 1.2vh 0.1vw rgba(0, 0, 0, 0.5);
+	--ombre-value: 0vh 0vh 1.2vh 0.1vw rgba(0, 0, 0, 0.20);
 
 	/* Arrondi */
 	--arrondi: 12px;

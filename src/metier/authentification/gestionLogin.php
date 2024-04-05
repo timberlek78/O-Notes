@@ -30,7 +30,6 @@
 
 	function verification ( $nom, $pass ) : Utilisateur
 	{
-		return new Utilisateur ( "fds", "dsfs", "dsfs" );
 		$lstUtilisateur =  DB::getInstance ( )->selectAll ( "utilisateur" );
 
 		foreach ( $lstUtilisateur as $utilisateur )

@@ -1,11 +1,6 @@
 @import url(../style.css);
 @import url(./popupAvis.css);
 
-body {
-	padding: 0px;
-	margin: 0px;
-}
-
 .conteneur-export {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto;
@@ -73,7 +68,6 @@ body {
 }
 
 #choix-annee {
-	margin-top: 5vh;
 	background-color: var(--violet-moyen);
 	color: white;
 	text-align: center;
