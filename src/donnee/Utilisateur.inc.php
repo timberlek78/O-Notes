@@ -34,7 +34,7 @@ class Utilisateur
 	public function setMdp            ( $mdp            ) { $this->mdp            = $mdp;            }
 	public function setAcces          ( $acces          ) { $this->acces          = $acces;          }
 
-	public function __toString()
+	public function __toString ( )
 	{
 		return "Utilisateur : nomutilisateur = ".$this->nomutilisateur.", mdp = ".$this->mdp;
 	}
