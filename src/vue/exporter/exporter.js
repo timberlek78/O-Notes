@@ -63,7 +63,7 @@ function creerEncadre ( jsonEtudiant )
 	conteneurCadreExport.appendChild ( conteneurImageEtudiant );
 
 	// Création de l'image de profil
-	conteneurImageEtudiant.innerHTML = '<img class="photo-etudiant" alt="photo-etudiant" src="../../../res/image/image.png"></img>';
+	conteneurImageEtudiant.innerHTML = '<img class="photo-etudiant" alt="photo-etudiant" src="../../../res/image/PERSONA.jpg"></img>';
 	
 	// Création de la div conteneur-information
 	conteneurInformation = document.createElement ( 'div' );

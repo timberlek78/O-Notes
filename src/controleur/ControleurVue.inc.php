@@ -326,5 +326,10 @@
 			$controleurVue->exportJury();
 			echo json_encode(['succes' => 'Fichiers transmis']);
 		}
+
+		/*  if (isset($_POST['codenip']))
+		{
+			
+		} */
 	}
 ?>

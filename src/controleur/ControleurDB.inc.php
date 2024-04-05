@@ -150,7 +150,7 @@ class DB
 
 		if ($nomClasse === 'EtudiantCursusFetch')
 		{
-			$requete .= ' ORDER BY idcompetence, idmatiere';
+			$requete .= ' ORDER BY nom, idcompetence, idmatiere';
 		}
 
 		$prepareStatement = $this->connect->prepare($requete);

@@ -8,6 +8,7 @@ const btnValider           = document.querySelector  ( '.btn-valider'           
 
 btnEdition.addEventListener ( 'click', ouverturePopupEditionEtudiant );
 btnAnnuler.addEventListener ( 'click', fermeturePopupEditionEtudiant );
+btnValider.addEventListener ( 'click', fermeturePopupEditionEtudiant );
 
 function ouverturePopupEditionEtudiant ( )
 {
