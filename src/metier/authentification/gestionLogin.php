@@ -9,6 +9,7 @@
 	if ( $nom !== '' && $password !== '' )
 	{
 		$un_utilisateur = verification ( $nom, $password );
+
 		if ( $un_utilisateur != null )
 		{
 			$_SESSION['utilisateur'] = serialize ( $un_utilisateur );
@@ -28,19 +29,18 @@
 		exit ( );
 	}
 
-	function verification ( $nom, $pass ) : Utilisateur
+	function verification ( $nom, $pass )
 	{
-		$lstUtilisateur =  DB::getInstance ( )->selectAll ( "utilisateur" );
+		$lstUtilisateur =  DB::getInstance ( )->selectAllWhere ( "utilisateur", 'nomutilisateur', $nom );
 
 		foreach ( $lstUtilisateur as $utilisateur )
 		{
-			$nomUtilisateur = $utilisateur->getNomUtilisateur ( );
 			$motDePasse     = $utilisateur->getMdp            ( );
 			$acces          = $utilisateur->getAcces          ( );
 
-			if ( strcmp ( $nomUtilisateur, $nom ) && password_verify ( $pass, $motDePasse ) )
+			if ( password_verify ( $pass, $motDePasse ) )
 			{
-				return new Utilisateur ( $nomUtilisateur, $motDePasse, $acces );
+				return new Utilisateur ( $nom, $motDePasse, $acces );
 			}
 		}
 		return null;
