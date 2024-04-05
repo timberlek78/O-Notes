@@ -13,7 +13,7 @@
 
 ### C) Configuration des logins
 
-- Créer le fichier ".env" : `O-Notes\src\metier\bd\.env`
+- Créer le fichier ".env" : `O-Notes\src\metier\db\.env`
 - A partir du modèle ".env.example" compléter le nouveau fichier avec les bons identifiants.
 
 ### D) Utilisation
@@ -35,7 +35,7 @@
 
 ### C) Configuration des logins
 
-- Créer le fichier ".env" : `C:\xampp\htdocs\O-Notes\src\metier\bd\.env`
+- Créer le fichier ".env" : `C:\xampp\htdocs\O-Notes\src\metier\db\.env`
 - A partir du modèle ".env.example" compléter le nouveau fichier avec les bons identifiants.
 
 ### D) Utilisation

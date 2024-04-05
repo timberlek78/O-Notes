@@ -13,8 +13,8 @@
 
 	function importerAvecTableau ( array $tabImports ) //FIXME: REMARQUE: pret pour le futur json
 	{
-		$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $_FILES[ 'coef' ] ); 
-
+		$dataCoef = OuvrirLectureExcel::OuvrirEtObtenirDataExcel ( $tabImports->getFichierCoef ( ) ); 
+	
 		foreach ( $tabImports as $import )
 		{
 			$dataMoyenne = OuvrirLectureExcel::OuvrirEtObtenirDataExcel( $import->getFichierMoyenne() );
