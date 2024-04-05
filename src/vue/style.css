@@ -20,13 +20,14 @@
 }
 
 .logo {
-	width: 13vw;
 	display: flex;
+	width: 10vw;
 	justify-content: center;
 }
 
 .logo img{
-	width: 9vw;
+	height: 7.5vw;
+	
 }
 
 .menu {
@@ -72,6 +73,7 @@
 	border-radius: var(--arrondi);
 	padding: 1.5vh 1vh;
 	cursor: pointer;
+	width: 10vw;
 }
 
 .button a {
