@@ -42,8 +42,9 @@ CREATE TABLE onote.Matiere (
 );
 
 CREATE TABLE onote.Utilisateur (
-	idUtilisateur VARCHAR( 15 ) PRIMARY KEY,
-	mdp VARCHAR( 10 )
+	nomUtilisateur VARCHAR( 15 ) PRIMARY KEY,
+	mdp VARCHAR( 20 ),
+	acces VARCHAR( 20 )
 );
 
 CREATE TABLE onote.Illustration (
