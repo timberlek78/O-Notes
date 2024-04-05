@@ -5,6 +5,9 @@
 
 require_once __DIR__.'/../metier/db/ConfigurationDB.inc.php';
 require_once __DIR__.'/../donnee/IncludeAll.php';
+require_once __DIR__.'/../donnee/EtudiantEtudiantSemestre.inc.php';
+require_once __DIR__.'/../donnee/EtudiantCursusFetch.inc.php';
+require_once __DIR__.'/../donnee/CursusFetch.inc.php';
 
 class DB
 {

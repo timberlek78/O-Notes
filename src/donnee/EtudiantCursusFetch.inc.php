@@ -36,7 +36,7 @@ class EtudiantCursusFetch
 		$this->rang    = $rang;
 		$this->nbabs   = $nbabs;
 
-		$this->tabCursusFetch = array();
+		// $this->tabCursusFetch = array();
 	}
 
 	public function addCursus($cursus)
