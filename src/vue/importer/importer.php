@@ -6,6 +6,9 @@ include "../../donnee/dao/Utilisateur.inc.php";
 validerSession ( );
 $un_utilisateur = unserialize ( $_SESSION['utilisateur'] );
 
+if ( $un_utilisateur->getNomUtilisateur ( ) == "utilisateur" )
+	header ( "Location: ../../vue/visualiser/visualiser.php" );
+
 ?>
 
 <!DOCTYPE html>
