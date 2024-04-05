@@ -55,7 +55,8 @@ class Illustration
 		return "Illustration : idillustration = ".$this->idillustration.", img = ".$this->img.", alternative = ".$this->alternative;
 	}
 
-	public function equals(Illustration $illustration) : bool {
+	public function equals(Illustration $illustration) : bool 
+	{
 		return $this->idillustration == $illustration->getIdIllustration();
 	}
 }
