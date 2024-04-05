@@ -8,7 +8,7 @@
 	include_once 'ControleurImportation.php';
 	include_once '../metier/importation/Import.inc.php';
 	
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	class ControleurVue
 	{
@@ -38,6 +38,7 @@
 
 				foreach ( $this->DB->selectJoin(array('Etudiant', 'EtudiantSemestre', 'Cursus', 'CompetenceMatiere'), 'EtudiantCursusFetch', 'numsemestre', $numSemestre, 'codenip', $codenip, 'annee', $annee) as $etudcursusfetch )
 				{
+					// var_dump($etudcursusfetch);
 					// echo 'testTEST';
 					// Informations de la table Etudiant
 					$etudiantDetails = array
@@ -96,7 +97,8 @@
 								'libelle' => $matiere['libelle'],
 								'coef'    => $matiere['coeff']
 							);
-							foreach ( $this->DB->selectAllWhere (false, 'moyenne', 'EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $matiere['libelle'] ) as $moyMat )
+
+							foreach ( $this->DB->selectAllWhere ('EstNote', 'codenip', $codenip, 'AND', 'idmatiere', $matiere['libelle'] ) as $moyMat )
 							{
 								$matDetails [ 'moyenne' ] = $moyMat->getMoyenne ( );
 							}
@@ -114,7 +116,7 @@
 					
 		
 					// Informations de la table FPE
-					foreach ( $this->DB->selectAllWhere (false, 'avismaster, avisecoleinge, commentaire', 'FPE', 'codenip', $codenip ) as $fpe )
+					foreach ( $this->DB->selectAllWhere ('FPE', 'codenip', $codenip ) as $fpe )
 					{
 						$fpeDetails = array
 						(
@@ -224,16 +226,16 @@
 		$annee = $_GET['annee'];
 
 		// TEST
-		$tempsDebut = microtime(true);
-		$resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
-		$tempsFin = microtime(true);
+		// $tempsDebut = microtime(true);
+		// $resultat =  $controleurVue->getJsonVisualiser($numSem, $annee);
+		// $tempsFin = microtime(true);
 
-		$tempsExecution = $tempsFin - $tempsDebut;
-		echo "<h1>Temps : $tempsExecution s</h1>";
-		echo $resultat;
+		// $tempsExecution = $tempsFin - $tempsDebut;
+		// echo "<h1>Temps : $tempsExecution s</h1>";
+		// echo $resultat;
 
 		//TODO: remettre juste ça
-		// echo $controleurVue->getJsonVisualiser($numSem, $annee);
+		echo $controleurVue->getJsonVisualiser($numSem, $annee);
 	}
 	else if (isset($_GET['annee']) && !empty ($_GET['annee']))
 	{

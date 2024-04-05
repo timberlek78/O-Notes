@@ -79,7 +79,7 @@ class AnalyseDataFichiers
 	private function majPassageEtudiantSemestre( DonneesONote $donnees, array $ligneJury, EtudiantSemestre $etudiantSemestre )
 	{
 		$indice = $this->structureJury->getIndiceColonne( "admission" );
-		$admission = $ligneJury[ $indice ] . ""; //REMARQUE : je n'ai pas trouvé pourquoi il fallait ajouter une chaine vide
+		$admission = $ligneJury[ $indice ] . ""; //Les valeurs peuvent être nulles donc on concatène avec une chaine vide
 		$etudiantSemestre->setPassage( $admission );
 	}
 
@@ -91,7 +91,7 @@ class AnalyseDataFichiers
 			$cursus = $this->creerCursus( $codeNIP, $nomCompetence );
 			
 			$colonneApresMoyenne = $this->structureJury->getIndiceColonne( $nomCompetence ) + 1;
-			$cursus->setAdmission( $ligneJury[ $colonneApresMoyenne ] );
+			$cursus->setAdmission( $ligneJury[ $colonneApresMoyenne ] . "" );
 
 			$donnees->ensCursus[] = $cursus;
 		}
