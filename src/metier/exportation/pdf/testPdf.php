@@ -12,7 +12,7 @@ $onote = new ONote();
 $creationPdf = new ExportEtudiantToPDF($onote->getEnsEtudiant()[0],"../../../../data/templatePDF.xlsx");
 
 // Exporter vers PDF
-$outputPath = "../../../../dataexport.xlsx";
+$outputPath = "../../../../data/export.xlsx";
 $creationPdf->exportToPDF($outputPath);
 
 echo "Le fichier a été exporter";

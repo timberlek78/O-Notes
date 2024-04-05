@@ -56,6 +56,7 @@ class ExportEtudiantToPDF
 
 	public function informationCompetence1()
 {
+	echo "je usi sa";
     $sheet = $this->spreadsheet->getActiveSheet();
 
     $ligne = 31; // Ligne de départ pour les compétences
@@ -67,6 +68,7 @@ class ExportEtudiantToPDF
 
     foreach ($bins as $bin => $moyenne) 
     {
+		echo "je suis la";
         // Vérifier si le premier chiffre de BIN est pair
         $firstDigit = (int)$bin[3]; // Obtenez le premier chiffre de BIN (par exemple, 2 pour "BIN21")
         $binne = substr($bin,0,4);
@@ -114,9 +116,10 @@ class ExportEtudiantToPDF
 	{
 		for ($i = 1; $i <= 6; $i++) 
 		{
-			echo $binne.$i."<br>";
-			var_dump($bins[$binne.$i]);
-			$sheet->setCellValue($colonne . $ligne, $bins[$binne.$i]);
+
+			$nombre_aleatoire = rand(0, 2000) / 100;
+    		$sheet->setCellValue('D25', number_format($nombre_aleatoire, 2) );
+			$sheet->setCellValue($colonne . $ligne, $nombre_aleatoire);
 			$ligne++;
 		}
 
@@ -185,7 +188,7 @@ class ExportEtudiantToPDF
 		// Convert Excel to PDF
 		$tempFile = tempnam(sys_get_temp_dir(), 'excel');
 		$writer        = new Xlsx($this->spreadsheet);
-		$writer->save($tempFile);
+		$writer->save($outputPath);
 
 
 		// Output PDF to file
